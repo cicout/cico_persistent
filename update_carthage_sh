@@ -1,0 +1,2 @@
+carthage update --platform iOS --cache-builds --new-resolver
+

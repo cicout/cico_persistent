@@ -8,14 +8,12 @@
 
 import Foundation
 
-private let kRootDirName = "public"
-
-public class CICOPublicPersistentService: CICOBasePersistentService {
+public class CICOPublicPersistentService: CICOPersistentService {
     public static let shared: CICOPublicPersistentService = {
         return CICOPublicPersistentService.init(rootDirURL: CICOPublicPersistentService.publicDirURL())
     }()
     
     public static func publicDirURL() -> URL {
-        return CICOPathAide.docFileURL(withSubPath: kRootDirName)
+        return CICOPathAide.defaultPublicFileURL(withSubPath: nil)
     }
 }

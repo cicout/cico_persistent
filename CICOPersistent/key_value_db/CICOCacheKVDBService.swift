@@ -19,6 +19,7 @@ public class CICOCacheKVDBService: CICOKVDBService {
         return CICOPathAide.defaultCacheFileURL(withSubPath: kDBSubPath)
     }
     
+    // TODO
 //    public func clearAll() -> Bool {
 //        let removeResult = CICOPathAide.removeFile(with: self.rootDirURL)
 //        let createResult = CICOPathAide.createDir(with: self.rootDirURL, option: true)

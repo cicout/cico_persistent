@@ -20,11 +20,11 @@ open class CICOKVDBService {
     private var dbQueue: FMDatabaseQueue?
     
     deinit {
-        print("CICOKVDB deinit")
+        print("\(self) deinit")
         self.dbQueue?.close()
     }
     
-    init(fileURL: URL) {
+    public init(fileURL: URL) {
         self.fileURL = fileURL
         self.initDB()
     }
@@ -129,7 +129,7 @@ open class CICOKVDBService {
         self.dbQueue?.inDatabase { (db) in
             let updateTime = Date().timeIntervalSince1970
 //            print("write time \(updateTime)")
-            let updateSQL = "REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName), \(kJSONDataColumnName), \(kUpdateTimeColumnName)) values (?, ?, ?);"
+            let updateSQL = "REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName), \(kJSONDataColumnName), \(kUpdateTimeColumnName)) VALUES (?, ?, ?);"
             result = db.executeUpdate(updateSQL, withArgumentsIn: [jsonKey, jsonData, updateTime])
             if !result {
                 print("[ERROR]: write database record failed\nurl: \(self.fileURL)")

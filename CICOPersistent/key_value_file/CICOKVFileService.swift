@@ -14,10 +14,10 @@ open class CICOKVFileService {
     private let fileLock = NSLock()
     
     deinit {
-        print("CICOKVFileService deinit")
+        print("\(self) deinit")
     }
     
-    init(rootDirURL: URL) {
+    public init(rootDirURL: URL) {
         self.rootDirURL = rootDirURL
         
         let result = CICOPathAide.createDir(with: self.rootDirURL, option: false)
@@ -94,6 +94,12 @@ open class CICOKVFileService {
     }
     
     private func readJSONData(fromFileURL fileURL: URL) -> Data? {
+        let exist = FileManager.default.fileExists(atPath: fileURL.path)
+        
+        guard exist else {
+            return nil
+        }
+        
         do {
             self.fileLock.lock()
             let jsonData = try Data.init(contentsOf: fileURL)

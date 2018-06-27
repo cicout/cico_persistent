@@ -40,6 +40,11 @@
 		E482ED1820CF6F3D001FF435 /* CICOPrivateKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1720CF6F3D001FF435 /* CICOPrivateKVFileService.swift */; };
 		E482ED1A20CF6F4B001FF435 /* CICOCacheKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1920CF6F4B001FF435 /* CICOCacheKVFileService.swift */; };
 		E482ED1C20CF6F57001FF435 /* CICOTempKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1B20CF6F57001FF435 /* CICOTempKVFileService.swift */; };
+		E484B44920DCA34600FE0AC9 /* CICOORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E484B44820DCA34600FE0AC9 /* CICOORMDBService.swift */; };
+		E484B45220DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E484B45120DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift */; };
+		E484B45420DDF5A300FE0AC9 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */; };
+		E484B45520DE287E00FE0AC9 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */; };
+		E484B45620DE287E00FE0AC9 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +66,7 @@
 			files = (
 				E41F766D20C9313000399E42 /* CICOPersistent.framework in Embed Frameworks */,
 				E482ED0420CE15EF001FF435 /* FMDB.framework in Embed Frameworks */,
+				E484B45620DE287E00FE0AC9 /* SwiftyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +107,9 @@
 		E482ED1720CF6F3D001FF435 /* CICOPrivateKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOPrivateKVFileService.swift; sourceTree = "<group>"; };
 		E482ED1920CF6F4B001FF435 /* CICOCacheKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOCacheKVFileService.swift; sourceTree = "<group>"; };
 		E482ED1B20CF6F57001FF435 /* CICOTempKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOTempKVFileService.swift; sourceTree = "<group>"; };
+		E484B44820DCA34600FE0AC9 /* CICOORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOORMDBService.swift; sourceTree = "<group>"; };
+		E484B45120DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOJSONORMDBService.swift; sourceTree = "<group>"; };
+		E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E484B45420DDF5A300FE0AC9 /* SwiftyJSON.framework in Frameworks */,
 				E482ED0220CE15E7001FF435 /* FMDB.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +128,7 @@
 			files = (
 				E41F766C20C9313000399E42 /* CICOPersistent.framework in Frameworks */,
 				E482ED0320CE15EF001FF435 /* FMDB.framework in Frameworks */,
+				E484B45520DE287E00FE0AC9 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,9 +157,10 @@
 		E41F763D20C8D2F300399E42 /* CICOPersistent */ = {
 			isa = PBXGroup;
 			children = (
-				E482ED1220CF6902001FF435 /* key_value_file */,
 				E482ED0520CE1613001FF435 /* key_value_db */,
+				E482ED1220CF6902001FF435 /* key_value_file */,
 				E41F764D20C9222500399E42 /* main */,
+				E484B44720DCA0E400FE0AC9 /* orm_db */,
 				E41F765120C92CAD00399E42 /* path */,
 				E41F764E20C9223000399E42 /* persistent */,
 				E41F764820C9221C00399E42 /* security */,
@@ -223,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				E482ED0120CE15E7001FF435 /* FMDB.framework */,
+				E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */,
 			);
 			name = Carthage;
 			sourceTree = "<group>";
@@ -249,6 +262,15 @@
 				E482ED1B20CF6F57001FF435 /* CICOTempKVFileService.swift */,
 			);
 			path = key_value_file;
+			sourceTree = "<group>";
+		};
+		E484B44720DCA0E400FE0AC9 /* orm_db */ = {
+			isa = PBXGroup;
+			children = (
+				E484B45120DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift */,
+				E484B44820DCA34600FE0AC9 /* CICOORMDBService.swift */,
+			);
+			path = orm_db;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -368,6 +390,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E484B45220DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift in Sources */,
 				E41F767E20C93D3D00399E42 /* CICOPrivatePersistentService.swift in Sources */,
 				E482ED1820CF6F3D001FF435 /* CICOPrivateKVFileService.swift in Sources */,
 				E482ED0F20CF5FC6001FF435 /* CICOCacheKVDBService.swift in Sources */,
@@ -382,6 +405,7 @@
 				E41F767C20C93D3D00399E42 /* CICOTempPersistentService.swift in Sources */,
 				E482ED1A20CF6F4B001FF435 /* CICOCacheKVFileService.swift in Sources */,
 				E482ED1420CF6950001FF435 /* CICOKVFileService.swift in Sources */,
+				E484B44920DCA34600FE0AC9 /* CICOORMDBService.swift in Sources */,
 				E41F764C20C9221C00399E42 /* CICOSecurityAide.m in Sources */,
 				E482ED0B20CE4E37001FF435 /* CICOPublicKVDBService.swift in Sources */,
 				E482ED0D20CF5F64001FF435 /* CICOPrivateKVDBService.swift in Sources */,

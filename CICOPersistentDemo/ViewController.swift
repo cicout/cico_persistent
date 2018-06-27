@@ -10,10 +10,13 @@ import UIKit
 import CICOPersistent
 
 class ViewController: UIViewController {
-
+    private var jsonORMDBService: CICOJSONORMDBService?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        print("\(CICOPathAide.docPath(withSubPath: nil))")
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,7 +27,8 @@ class ViewController: UIViewController {
     @IBAction func testBtnAction(_ sender: Any) {
 //        self.doPersistentTest()
 //        self.doKVFileTest()
-        self.doKVDBTest()
+//        self.doKVDBTest()
+        self.doJSONORMDBTest()
     }
     
     private func doPersistentTest() {
@@ -88,6 +92,18 @@ class ViewController: UIViewController {
         if let object2 = try? self.defaultJSONDecoder().decode(TCodableStruct.self, from: jsonData) {
             self.testKVDB(object2)
         }
+    }
+    
+    private func doJSONORMDBTest() {
+        self.jsonORMDBService = CICOJSONORMDBService.init(fileURL: CICOPathAide.docFileURL(withSubPath: "json_orm.db"))
+        
+        let jsonString = self.jsonString(name: "default")
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            print("[ERROR]")
+            return
+        }
+        
+        let _ = self.jsonORMDBService?.writeJSON(jsonData: jsonData, tableName: "test_table", className: "test_class", primaryKeyName: "name")
     }
     
     private func testPersistent<T: Codable>(_ value: T) {

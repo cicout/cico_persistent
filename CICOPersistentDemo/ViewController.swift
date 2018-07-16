@@ -10,7 +10,7 @@ import UIKit
 import CICOPersistent
 
 class ViewController: UIViewController {
-    private var jsonORMDBService: CICOJSONORMDBService?
+    private var ormDBService: CICOORMDBService?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
 //        self.doPersistentTest()
 //        self.doKVFileTest()
 //        self.doKVDBTest()
-        self.doJSONORMDBTest()
+        self.doORMDBTest()
     }
     
     private func doPersistentTest() {
@@ -94,8 +94,8 @@ class ViewController: UIViewController {
         }
     }
     
-    private func doJSONORMDBTest() {
-        self.jsonORMDBService = CICOJSONORMDBService.init(fileURL: CICOPathAide.docFileURL(withSubPath: "json_orm.db"))
+    private func doORMDBTest() {
+        self.ormDBService = CICOORMDBService.init(fileURL: CICOPathAide.docFileURL(withSubPath: "orm.db"))
         
         let jsonString = self.jsonString(name: "default")
         guard let jsonData = jsonString.data(using: .utf8) else {
@@ -103,7 +103,17 @@ class ViewController: UIViewController {
             return
         }
         
-        let _ = self.jsonORMDBService?.writeJSON(jsonData: jsonData, tableName: "test_table", className: "test_class", primaryKeyName: "name")
+        guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
+            print("[ERROR]")
+            return
+        }
+        
+        let _ = self.ormDBService?.writeObject(object, customTableName: "custom_table_name")
+        
+        
+        if let objectX = self.ormDBService?.readObject(ofType: TCodableClass.self, forPrimaryKey: "name", customTableName: "custom_table_name") {
+            print("\(objectX)")
+        }
     }
     
     private func testPersistent<T: Codable>(_ value: T) {

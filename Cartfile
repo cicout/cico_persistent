@@ -1,3 +1,4 @@
 github "ccgus/fmdb"
-gitHub "SwiftyJSON/SwiftyJSON"
+github "SwiftyJSON/SwiftyJSON"
+github "cicout/cico_auto_codable"
 

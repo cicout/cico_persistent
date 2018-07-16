@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CICOAutoCodable
 
-class TCodableClass: NSObject, Codable {
+class TCodableClass: CICOAutoCodable {
     private(set) var name: String?
     private(set) var stringValue: String?
 //    private(set) var stringValue: Int?

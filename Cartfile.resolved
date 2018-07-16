@@ -1,2 +1,3 @@
 github "SwiftyJSON/SwiftyJSON" "4.1.0"
 github "ccgus/fmdb" "2.7.4"
+github "cicout/cico_auto_codable" "0.7.5"

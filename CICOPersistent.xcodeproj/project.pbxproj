@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E41958BB20F8971D007EA4B4 /* CICOSQLiteRecordDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41958BA20F8971D007EA4B4 /* CICOSQLiteRecordDecoder.swift */; };
 		E41F764020C8D2F300399E42 /* CICOPersistent.h in Headers */ = {isa = PBXBuildFile; fileRef = E41F763E20C8D2F300399E42 /* CICOPersistent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E41F764720C8D32A00399E42 /* CICOPersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F764620C8D32A00399E42 /* CICOPersistentService.swift */; };
 		E41F764B20C9221C00399E42 /* CICOSecurityAide.h in Headers */ = {isa = PBXBuildFile; fileRef = E41F764920C9221C00399E42 /* CICOSecurityAide.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -27,6 +28,7 @@
 		E41F767C20C93D3D00399E42 /* CICOTempPersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767920C93D3D00399E42 /* CICOTempPersistentService.swift */; };
 		E41F767D20C93D3D00399E42 /* CICOCachePersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767A20C93D3D00399E42 /* CICOCachePersistentService.swift */; };
 		E41F767E20C93D3D00399E42 /* CICOPrivatePersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767B20C93D3D00399E42 /* CICOPrivatePersistentService.swift */; };
+		E420CDB320F84EF900D1BA63 /* CICOTypeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420CDB220F84EF900D1BA63 /* CICOTypeProperty.swift */; };
 		E482ED0220CE15E7001FF435 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; };
 		E482ED0320CE15EF001FF435 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; };
 		E482ED0420CE15EF001FF435 /* FMDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -41,10 +43,14 @@
 		E482ED1A20CF6F4B001FF435 /* CICOCacheKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1920CF6F4B001FF435 /* CICOCacheKVFileService.swift */; };
 		E482ED1C20CF6F57001FF435 /* CICOTempKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1B20CF6F57001FF435 /* CICOTempKVFileService.swift */; };
 		E484B44920DCA34600FE0AC9 /* CICOORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E484B44820DCA34600FE0AC9 /* CICOORMDBService.swift */; };
-		E484B45220DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E484B45120DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift */; };
 		E484B45420DDF5A300FE0AC9 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */; };
 		E484B45520DE287E00FE0AC9 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */; };
 		E484B45620DE287E00FE0AC9 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E492B4B220EB188200BC48A4 /* CICOSQLiteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492B4B120EB188200BC48A4 /* CICOSQLiteType.swift */; };
+		E492B4DD20EC6FB200BC48A4 /* CICOSQLiteTypeDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492B4DC20EC6FB200BC48A4 /* CICOSQLiteTypeDecoder.swift */; };
+		E492B4DF20EC793500BC48A4 /* CICOAutoCodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; };
+		E492B4E020EC7BDB00BC48A4 /* CICOAutoCodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; };
+		E492B4E120EC7BDB00BC48A4 /* CICOAutoCodable.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +72,7 @@
 			files = (
 				E41F766D20C9313000399E42 /* CICOPersistent.framework in Embed Frameworks */,
 				E482ED0420CE15EF001FF435 /* FMDB.framework in Embed Frameworks */,
+				E492B4E120EC7BDB00BC48A4 /* CICOAutoCodable.framework in Embed Frameworks */,
 				E484B45620DE287E00FE0AC9 /* SwiftyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -74,6 +81,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E41958BA20F8971D007EA4B4 /* CICOSQLiteRecordDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOSQLiteRecordDecoder.swift; sourceTree = "<group>"; };
 		E41F763B20C8D2F300399E42 /* CICOPersistent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CICOPersistent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E41F763E20C8D2F300399E42 /* CICOPersistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOPersistent.h; sourceTree = "<group>"; };
 		E41F763F20C8D2F300399E42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,6 +104,7 @@
 		E41F767920C93D3D00399E42 /* CICOTempPersistentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOTempPersistentService.swift; sourceTree = "<group>"; };
 		E41F767A20C93D3D00399E42 /* CICOCachePersistentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOCachePersistentService.swift; sourceTree = "<group>"; };
 		E41F767B20C93D3D00399E42 /* CICOPrivatePersistentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOPrivatePersistentService.swift; sourceTree = "<group>"; };
+		E420CDB220F84EF900D1BA63 /* CICOTypeProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOTypeProperty.swift; sourceTree = "<group>"; };
 		E482ED0120CE15E7001FF435 /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
 		E482ED0620CE167B001FF435 /* CICOKVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKVDBService.swift; sourceTree = "<group>"; };
 		E482ED0A20CE4E37001FF435 /* CICOPublicKVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOPublicKVDBService.swift; sourceTree = "<group>"; };
@@ -108,8 +117,10 @@
 		E482ED1920CF6F4B001FF435 /* CICOCacheKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOCacheKVFileService.swift; sourceTree = "<group>"; };
 		E482ED1B20CF6F57001FF435 /* CICOTempKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOTempKVFileService.swift; sourceTree = "<group>"; };
 		E484B44820DCA34600FE0AC9 /* CICOORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOORMDBService.swift; sourceTree = "<group>"; };
-		E484B45120DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOJSONORMDBService.swift; sourceTree = "<group>"; };
 		E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		E492B4B120EB188200BC48A4 /* CICOSQLiteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOSQLiteType.swift; sourceTree = "<group>"; };
+		E492B4DC20EC6FB200BC48A4 /* CICOSQLiteTypeDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOSQLiteTypeDecoder.swift; sourceTree = "<group>"; };
+		E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CICOAutoCodable.framework; path = Carthage/Build/iOS/CICOAutoCodable.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +130,7 @@
 			files = (
 				E484B45420DDF5A300FE0AC9 /* SwiftyJSON.framework in Frameworks */,
 				E482ED0220CE15E7001FF435 /* FMDB.framework in Frameworks */,
+				E492B4DF20EC793500BC48A4 /* CICOAutoCodable.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +140,7 @@
 			files = (
 				E41F766C20C9313000399E42 /* CICOPersistent.framework in Frameworks */,
 				E482ED0320CE15EF001FF435 /* FMDB.framework in Frameworks */,
+				E492B4E020EC7BDB00BC48A4 /* CICOAutoCodable.framework in Frameworks */,
 				E484B45520DE287E00FE0AC9 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,6 +247,7 @@
 		E482ED0020CE15D5001FF435 /* Carthage */ = {
 			isa = PBXGroup;
 			children = (
+				E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */,
 				E482ED0120CE15E7001FF435 /* FMDB.framework */,
 				E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */,
 			);
@@ -267,8 +281,11 @@
 		E484B44720DCA0E400FE0AC9 /* orm_db */ = {
 			isa = PBXGroup;
 			children = (
-				E484B45120DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift */,
 				E484B44820DCA34600FE0AC9 /* CICOORMDBService.swift */,
+				E41958BA20F8971D007EA4B4 /* CICOSQLiteRecordDecoder.swift */,
+				E492B4B120EB188200BC48A4 /* CICOSQLiteType.swift */,
+				E492B4DC20EC6FB200BC48A4 /* CICOSQLiteTypeDecoder.swift */,
+				E420CDB220F84EF900D1BA63 /* CICOTypeProperty.swift */,
 			);
 			path = orm_db;
 			sourceTree = "<group>";
@@ -390,10 +407,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E484B45220DDF0AB00FE0AC9 /* CICOJSONORMDBService.swift in Sources */,
 				E41F767E20C93D3D00399E42 /* CICOPrivatePersistentService.swift in Sources */,
 				E482ED1820CF6F3D001FF435 /* CICOPrivateKVFileService.swift in Sources */,
 				E482ED0F20CF5FC6001FF435 /* CICOCacheKVDBService.swift in Sources */,
+				E492B4B220EB188200BC48A4 /* CICOSQLiteType.swift in Sources */,
 				E482ED0720CE167B001FF435 /* CICOKVDBService.swift in Sources */,
 				E41F767D20C93D3D00399E42 /* CICOCachePersistentService.swift in Sources */,
 				E41F764720C8D32A00399E42 /* CICOPersistentService.swift in Sources */,
@@ -403,11 +420,14 @@
 				E482ED1C20CF6F57001FF435 /* CICOTempKVFileService.swift in Sources */,
 				E482ED1120CF6014001FF435 /* CICOTempKVDBService.swift in Sources */,
 				E41F767C20C93D3D00399E42 /* CICOTempPersistentService.swift in Sources */,
+				E492B4DD20EC6FB200BC48A4 /* CICOSQLiteTypeDecoder.swift in Sources */,
 				E482ED1A20CF6F4B001FF435 /* CICOCacheKVFileService.swift in Sources */,
 				E482ED1420CF6950001FF435 /* CICOKVFileService.swift in Sources */,
 				E484B44920DCA34600FE0AC9 /* CICOORMDBService.swift in Sources */,
 				E41F764C20C9221C00399E42 /* CICOSecurityAide.m in Sources */,
 				E482ED0B20CE4E37001FF435 /* CICOPublicKVDBService.swift in Sources */,
+				E420CDB320F84EF900D1BA63 /* CICOTypeProperty.swift in Sources */,
+				E41958BB20F8971D007EA4B4 /* CICOSQLiteRecordDecoder.swift in Sources */,
 				E482ED0D20CF5F64001FF435 /* CICOPrivateKVDBService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

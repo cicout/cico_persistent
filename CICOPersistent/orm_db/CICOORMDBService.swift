@@ -45,9 +45,6 @@ open class CICOORMDBService {
                 return
             }
             
-            let sqliteTypes = CICOSQLiteTypeDecoder.allSQLiteTypes(of: objectType)
-            print("\nsqliteTypes: \(sqliteTypes)")
-            
             let primaryKeyName = "name"
             let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeyName) = ? LIMIT 1;"
             
@@ -75,14 +72,6 @@ open class CICOORMDBService {
     open func writeObject<T: Codable>(_ object: T, customTableName: String? = nil) -> Bool {
         var result = false
         
-        guard let jsonData = object.toJSONData() else {
-            return result
-        }
-        
-        guard let json = self.json(fromJSONData: jsonData) else {
-            return result
-        }
-        
         let objectType = T.self
         let typeName = "\(objectType)"
         var tableName = typeName
@@ -105,7 +94,7 @@ open class CICOORMDBService {
             }
             
             // replace table record
-            result = self.replaceRecord(json: json, db: db, tableName: tableName)
+            result = self.replaceRecord(object: object, db: db, tableName: tableName)
             if !result {
                 rollback.pointee = true
             }
@@ -196,8 +185,8 @@ open class CICOORMDBService {
         
         let exist = self.isTableExist(db: db, tableName: tableName, typeName: typeName)
         if !exist {
-            let sqliteTypes = CICOSQLiteTypeDecoder.allSQLiteTypes(of: objectType)
-            print("\nsqliteTypes: \(sqliteTypes)")
+            let sqliteTypes = CICOSQLiteTypeDecoder.allTypeProperties(of: objectType)
+//            print("\nsqliteTypes: \(sqliteTypes)")
             
             var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
             var isFirst = true
@@ -237,53 +226,19 @@ open class CICOORMDBService {
         result = true
         return result
     }
-    
-    private func replaceRecord(json: JSON, db: FMDatabase, tableName: String) -> Bool {
+
+    private func replaceRecord<T: Codable>(object: T, db: FMDatabase, tableName: String) -> Bool {
         var result = false
         
-        guard let dic = json.dictionary, dic.count > 0 else {
+        let (sql, arguments) =
+            CICOSQLiteRecordEncoder.encodeObjectToSQL(object: object, tableName: tableName)
+        
+        guard let replaceSQL = sql, let argumentArray = arguments else {
             return result
         }
         
-        let propertyNameArray = dic.map() {$0.key}
-        var propertyValueArray = [Any]()
-        
-        var replaceSQL = "REPLACE INTO \(tableName) ("
-        var isFirst = true
-        propertyNameArray.forEach({ (name) in
-            if isFirst {
-                isFirst = false
-                replaceSQL.append("\(name)")
-            } else {
-                replaceSQL.append(", \(name)")
-            }
-            
-            let propertyValue: Any
-            let jsonValue = json[name]
-            if jsonValue.type == .dictionary || jsonValue.type == .array {
-                do {
-                    propertyValue = try jsonValue.rawData()
-                } catch let error {
-                    print("[ERROR]: invalid data\n\(error)")
-                    return
-                }
-            } else {
-                propertyValue = jsonValue.rawValue
-            }
-            propertyValueArray.append(propertyValue)
-        })
-        replaceSQL.append(") VALUES (")
-        for i in 0..<propertyNameArray.count {
-            if 0 == i {
-                replaceSQL.append("?")
-            } else {
-                replaceSQL.append(", ?")
-            }
-        }
-        replaceSQL.append(");")
-        
         print("[REPLACE_SQL]: \(replaceSQL)")
-        let replaceResult = db.executeUpdate(replaceSQL, withArgumentsIn: propertyValueArray)
+        let replaceResult = db.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
         if !replaceResult {
             print("[ERROR]: write database record failed\nurl: \(self.fileURL)")
             return result

@@ -111,3 +111,9 @@ extension Decodable {
         return .BLOB
     }
 }
+
+extension Encodable {
+    static var sqliteType: CICOSQLiteType {
+        return .BLOB
+    }
+}

@@ -23,14 +23,14 @@ import Foundation
 class CICOSQLiteTypeDecoder: Decoder {
     private var typeDic: [String: CICOTypeProperty] = [:]
 
-    static func allSQLiteTypes(of type: Decodable.Type) -> [String: CICOTypeProperty] {
+    static func allTypeProperties(of type: Decodable.Type) -> [String: CICOTypeProperty] {
         let decoder = CICOSQLiteTypeDecoder()
         _ = try? type.init(from: decoder)
         return decoder.typeDic
     }
 
-    func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> where Key: CodingKey {
-        return KeyedDecodingContainer(CICOTypeKeyedDecodingContainer<Key>(with: self))
+    func container<KEY>(keyedBy type: KEY.Type) throws -> KeyedDecodingContainer<KEY> where KEY: CodingKey {
+        return KeyedDecodingContainer(CICOTypeKeyedDecodingContainer<KEY>(with: self))
     }
 
     var codingPath: [CodingKey] {
@@ -49,7 +49,7 @@ class CICOSQLiteTypeDecoder: Decoder {
         fatalError("[ERROR]: NOT IMPLEMENTED")
     }
     
-    private class CICOTypeKeyedDecodingContainer<CodingKeys: CodingKey>: KeyedDecodingContainerProtocol {
+    private class CICOTypeKeyedDecodingContainer<KEY: CodingKey>: KeyedDecodingContainerProtocol {
         private struct SizedPointer {
             private let pointer: UnsafeMutableRawPointer
             private let size: Int
@@ -85,17 +85,17 @@ class CICOSQLiteTypeDecoder: Decoder {
             fatalError("[ERROR]: NOT IMPLEMENTED")
         }
         
-        var allKeys: [CodingKeys] {
+        var allKeys: [KEY] {
             fatalError("[ERROR]: NOT IMPLEMENTED")
         }
         
         func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type,
-                                        forKey key: CodingKeys)
+                                        forKey key: KEY)
             throws -> KeyedDecodingContainer<NestedKey> where NestedKey: CodingKey {
                 fatalError("[ERROR]: NOT IMPLEMENTED")
         }
         
-        func nestedUnkeyedContainer(forKey key: CodingKeys) throws -> UnkeyedDecodingContainer {
+        func nestedUnkeyedContainer(forKey key: KEY) throws -> UnkeyedDecodingContainer {
             fatalError("[ERROR]: NOT IMPLEMENTED")
         }
         
@@ -103,98 +103,118 @@ class CICOSQLiteTypeDecoder: Decoder {
             fatalError("[ERROR]: NOT IMPLEMENTED")
         }
         
-        func superDecoder(forKey key: CodingKeys) throws -> Decoder {
+        func superDecoder(forKey key: KEY) throws -> Decoder {
             fatalError("[ERROR]: NOT IMPLEMENTED")
         }
         
-        func contains(_ key: CodingKeys) -> Bool {
+        func contains(_ key: KEY) -> Bool {
             return true
         }
 
-        func decodeNil(forKey key: CodingKeys) throws -> Bool {
+        func decodeNil(forKey key: KEY) throws -> Bool {
             return false
         }
 
-        func decode<T>(_ type: T.Type, forKey key: CodingKeys) throws -> T where T: Decodable {
+        func decode<T>(_ type: T.Type, forKey key: KEY) throws -> T where T: Decodable {
             if type == Date.self || type == NSDate.self {
-                decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: Date.self, sqliteType: Date.sqliteType)
-            } else {
-                decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: T.self, sqliteType: T.sqliteType)
+                return try self.decode(Date.self, forKey: key) as! T
             }
-
+            
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: T.self, sqliteType: T.sqliteType, value: 0)
             let sizedPointer = SizedPointer(of: T.self)
             sizedPointers.append(sizedPointer)
             return sizedPointer.getPointee()
         }
         
-        func decode(_ type: Bool.Type, forKey key: CodingKeys) throws -> Bool {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: Bool.self, sqliteType: Bool.sqliteType)
+        func decode(_ type: Bool.Type, forKey key: KEY) throws -> Bool {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: Bool.self, sqliteType: Bool.sqliteType, value: 0)
             return false
         }
         
-        func decode(_ type: Int.Type, forKey key: CodingKeys) throws -> Int {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: Int.self, sqliteType: Int.sqliteType)
+        func decode(_ type: Int.Type, forKey key: KEY) throws -> Int {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: Int.self, sqliteType: Int.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: Int8.Type, forKey key: CodingKeys) throws -> Int8 {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: Int8.self, sqliteType: Int8.sqliteType)
+        func decode(_ type: Int8.Type, forKey key: KEY) throws -> Int8 {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: Int8.self, sqliteType: Int8.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: Int16.Type, forKey key: CodingKeys) throws -> Int16 {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: Int16.self, sqliteType: Int16.sqliteType)
+        func decode(_ type: Int16.Type, forKey key: KEY) throws -> Int16 {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: Int16.self, sqliteType: Int16.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: Int32.Type, forKey key: CodingKeys) throws -> Int32 {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: Int32.self, sqliteType: Int32.sqliteType)
+        func decode(_ type: Int32.Type, forKey key: KEY) throws -> Int32 {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: Int32.self, sqliteType: Int32.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: Int64.Type, forKey key: CodingKeys) throws -> Int64 {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: Int64.self, sqliteType: Int64.sqliteType)
+        func decode(_ type: Int64.Type, forKey key: KEY) throws -> Int64 {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: Int64.self, sqliteType: Int64.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: UInt.Type, forKey key: CodingKeys) throws -> UInt {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: UInt.self, sqliteType: UInt.sqliteType)
+        func decode(_ type: UInt.Type, forKey key: KEY) throws -> UInt {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: UInt.self, sqliteType: UInt.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: UInt8.Type, forKey key: CodingKeys) throws -> UInt8 {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: UInt8.self, sqliteType: UInt8.sqliteType)
+        func decode(_ type: UInt8.Type, forKey key: KEY) throws -> UInt8 {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: UInt8.self, sqliteType: UInt8.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: UInt16.Type, forKey key: CodingKeys) throws -> UInt16 {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: UInt16.self, sqliteType: UInt16.sqliteType)
+        func decode(_ type: UInt16.Type, forKey key: KEY) throws -> UInt16 {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: UInt16.self, sqliteType: UInt16.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: UInt32.Type, forKey key: CodingKeys) throws -> UInt32 {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: UInt32.self, sqliteType: UInt32.sqliteType)
+        func decode(_ type: UInt32.Type, forKey key: KEY) throws -> UInt32 {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: UInt32.self, sqliteType: UInt32.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: UInt64.Type, forKey key: CodingKeys) throws -> UInt64 {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: UInt64.self, sqliteType: UInt64.sqliteType)
+        func decode(_ type: UInt64.Type, forKey key: KEY) throws -> UInt64 {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: UInt64.self, sqliteType: UInt64.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: Float.Type, forKey key: CodingKeys) throws -> Float {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: Float.self, sqliteType: Float.sqliteType)
+        func decode(_ type: Float.Type, forKey key: KEY) throws -> Float {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: Float.self, sqliteType: Float.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: Double.Type, forKey key: CodingKeys) throws -> Double {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: Double.self, sqliteType: Double.sqliteType)
+        func decode(_ type: Double.Type, forKey key: KEY) throws -> Double {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: Double.self, sqliteType: Double.sqliteType, value: 0)
             return 0
         }
         
-        func decode(_ type: String.Type, forKey key: CodingKeys) throws -> String {
-            decoder.typeDic[key.stringValue] = CICOTypeProperty.init(name: key.stringValue, swiftType: String.self, sqliteType: String.sqliteType)
+        func decode(_ type: String.Type, forKey key: KEY) throws -> String {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: String.self, sqliteType: String.sqliteType, value: 0)
             return ""
+        }
+        
+        func decode(_ type: Date.Type, forKey key: KEY) throws -> Date {
+            decoder.typeDic[key.stringValue] =
+                CICOTypeProperty.init(name: key.stringValue, swiftType: Date.self, sqliteType: Date.sqliteType, value: 0)
+            return Date.init()
         }
     }
 }

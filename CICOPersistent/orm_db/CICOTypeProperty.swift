@@ -12,14 +12,16 @@ class CICOTypeProperty {
     let name: String
     let swiftType: Any.Type
     let sqliteType: CICOSQLiteType
+    let value: Any
     
     var description: String {
-        return "(\(self.name), \(self.swiftType), \(self.sqliteType))"
+        return "name: \(self.name)\nswiftType: \(self.swiftType)\nsqliteType: \(self.sqliteType)\nvalue: \(self.value)"
     }
     
-    init(name: String, swiftType: Any.Type, sqliteType: CICOSQLiteType) {
+    init(name: String, swiftType: Any.Type, sqliteType: CICOSQLiteType, value: Any) {
         self.name = name
         self.swiftType = swiftType
         self.sqliteType = sqliteType
+        self.value = value
     }
 }

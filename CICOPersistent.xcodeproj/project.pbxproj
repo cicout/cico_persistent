@@ -27,6 +27,7 @@
 		E41F767C20C93D3D00399E42 /* CICOTempPersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767920C93D3D00399E42 /* CICOTempPersistentService.swift */; };
 		E41F767D20C93D3D00399E42 /* CICOCachePersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767A20C93D3D00399E42 /* CICOCachePersistentService.swift */; };
 		E41F767E20C93D3D00399E42 /* CICOPrivatePersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767B20C93D3D00399E42 /* CICOPrivatePersistentService.swift */; };
+		E42B669E21008842006EBAC2 /* CICOURLKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B669D21008842006EBAC2 /* CICOURLKVFileService.swift */; };
 		E482ED0220CE15E7001FF435 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; };
 		E482ED0320CE15EF001FF435 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; };
 		E482ED0420CE15EF001FF435 /* FMDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -90,6 +91,7 @@
 		E41F767920C93D3D00399E42 /* CICOTempPersistentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOTempPersistentService.swift; sourceTree = "<group>"; };
 		E41F767A20C93D3D00399E42 /* CICOCachePersistentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOCachePersistentService.swift; sourceTree = "<group>"; };
 		E41F767B20C93D3D00399E42 /* CICOPrivatePersistentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOPrivatePersistentService.swift; sourceTree = "<group>"; };
+		E42B669D21008842006EBAC2 /* CICOURLKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOURLKVFileService.swift; sourceTree = "<group>"; };
 		E482ED0120CE15E7001FF435 /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
 		E482ED0620CE167B001FF435 /* CICOKVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKVDBService.swift; sourceTree = "<group>"; };
 		E482ED0A20CE4E37001FF435 /* CICOPublicKVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOPublicKVDBService.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 		E482ED1220CF6902001FF435 /* key_value_file */ = {
 			isa = PBXGroup;
 			children = (
+				E42B669D21008842006EBAC2 /* CICOURLKVFileService.swift */,
 				E482ED1320CF6950001FF435 /* CICOKVFileService.swift */,
 				E482ED1520CF6F2F001FF435 /* CICOPublicKVFileService.swift */,
 				E482ED1720CF6F3D001FF435 /* CICOPrivateKVFileService.swift */,
@@ -378,6 +381,7 @@
 				E41F767220C9327E00399E42 /* CICOPublicPersistentService.swift in Sources */,
 				E41F765420C92CAD00399E42 /* CICOPathAide.m in Sources */,
 				E482ED1C20CF6F57001FF435 /* CICOTempKVFileService.swift in Sources */,
+				E42B669E21008842006EBAC2 /* CICOURLKVFileService.swift in Sources */,
 				E482ED1120CF6014001FF435 /* CICOTempKVDBService.swift in Sources */,
 				E41F767C20C93D3D00399E42 /* CICOTempPersistentService.swift in Sources */,
 				E482ED1A20CF6F4B001FF435 /* CICOCacheKVFileService.swift in Sources */,

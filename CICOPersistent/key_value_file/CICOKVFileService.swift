@@ -8,11 +8,9 @@
 
 import Foundation
 
-open class CICOKVFileService {
+open class CICOKVFileService: CICOURLKVFileService {
     public let rootDirURL: URL
-    
-    private let fileLock = NSLock()
-    
+
     deinit {
         print("\(self) deinit")
     }
@@ -34,17 +32,7 @@ open class CICOKVFileService {
         
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
         
-        guard let jsonData = self.readJSONData(fromFileURL: fileURL) else {
-            return nil
-        }
-        
-        do {
-            let objectArray = try JSONDecoder().decode([T].self, from: jsonData)
-            return objectArray.first
-        } catch let error {
-            print("[JSON_DECODE_ERROR]: \(error)")
-            return nil
-        }
+        return self.readObject(type, fromFileURL: fileURL)
     }
     
     open func writeObject<T: Encodable>(_ object: T, forKey userKey: String) -> Bool {
@@ -54,13 +42,7 @@ open class CICOKVFileService {
         
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
         
-        do {
-            let jsonData = try JSONEncoder().encode([object])
-            return self.writeJSONData(jsonData, toFileURL: fileURL)
-        } catch let error {
-            print("[JSON_ENCODE_ERROR]: \(error)")
-            return false
-        }
+        return self.writeObject(object, fromFileURL: fileURL)
     }
     
     open func removeObject(forKey userKey: String) -> Bool {
@@ -70,13 +52,7 @@ open class CICOKVFileService {
         
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
         
-        do {
-            try FileManager.default.removeItem(at: fileURL)
-            return true
-        } catch let error {
-            print("[REMOVE_JSON_FILE_ERROR]: \(error)")
-            return false
-        }
+        return self.removeObject(fromFileURL: fileURL)
     }
     
     private func jsonKey(forUserKey userKey: String) -> String? {
@@ -91,37 +67,5 @@ open class CICOKVFileService {
         var fileURL = self.rootDirURL
         fileURL.appendPathComponent(jsonKey)
         return fileURL
-    }
-    
-    private func readJSONData(fromFileURL fileURL: URL) -> Data? {
-        let exist = FileManager.default.fileExists(atPath: fileURL.path)
-        
-        guard exist else {
-            return nil
-        }
-        
-        do {
-            self.fileLock.lock()
-            let jsonData = try Data.init(contentsOf: fileURL)
-            self.fileLock.unlock()
-            return jsonData
-        } catch let error {
-            self.fileLock.unlock()
-            print("[READ_JSON_FILE_ERROR]: \(error)")
-            return nil
-        }
-    }
-    
-    private func writeJSONData(_ jsonData: Data, toFileURL fileURL: URL) -> Bool {
-        do {
-            self.fileLock.lock()
-            try jsonData.write(to: fileURL, options: .atomic)
-            self.fileLock.unlock()
-            return true
-        } catch let error {
-            self.fileLock.unlock()
-            print("[WRITE_JSON_FILE_ERROR]: \(error)")
-            return false
-        }
     }
 }

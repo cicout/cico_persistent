@@ -31,7 +31,7 @@ open class CICOURLKVFileService {
         }
     }
     
-    open func writeObject<T: Encodable>(_ object: T, fromFileURL fileURL: URL) -> Bool {
+    open func writeObject<T: Encodable>(_ object: T, toFileURL fileURL: URL) -> Bool {
         do {
             let jsonData = try JSONEncoder().encode([object])
             return self.writeJSONData(jsonData, toFileURL: fileURL)
@@ -41,7 +41,7 @@ open class CICOURLKVFileService {
         }
     }
     
-    open func removeObject(fromFileURL fileURL: URL) -> Bool {
+    open func removeObject(forFileURL fileURL: URL) -> Bool {
         do {
             try FileManager.default.removeItem(at: fileURL)
             return true

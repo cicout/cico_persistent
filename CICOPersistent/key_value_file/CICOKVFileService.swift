@@ -42,7 +42,7 @@ open class CICOKVFileService: CICOURLKVFileService {
         
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
         
-        return self.writeObject(object, fromFileURL: fileURL)
+        return self.writeObject(object, toFileURL: fileURL)
     }
     
     open func removeObject(forKey userKey: String) -> Bool {
@@ -52,7 +52,7 @@ open class CICOKVFileService: CICOURLKVFileService {
         
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
         
-        return self.removeObject(fromFileURL: fileURL)
+        return self.removeObject(forFileURL: fileURL)
     }
     
     private func jsonKey(forUserKey userKey: String) -> String? {

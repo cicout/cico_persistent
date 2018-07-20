@@ -97,23 +97,50 @@ class ViewController: UIViewController {
     private func doORMDBTest() {
         self.ormDBService = CICOORMDBService.init(fileURL: CICOPathAide.docFileURL(withSubPath: "orm.db"))
         
+        // read json
         let jsonString = self.jsonString(name: "default")
         guard let jsonData = jsonString.data(using: .utf8) else {
             print("[ERROR]")
             return
         }
         
-        guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
-            print("[ERROR]")
-            return
+        // write
+//        guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
+//            print("[ERROR]")
+//            return
+//        }
+//
+//        let _ = self.ormDBService?.writeObject(object, customTableName: "custom_table_name")
+        
+        // read
+//        if let objectX = self.ormDBService?.readObject(ofType: TCodableClass.self, forPrimaryKey: "name", customTableName: "custom_table_name") {
+//            print("\(objectX)")
+//        }
+        
+        // write array
+//        var objectArray = [TCodableClass]()
+//        for i in 0..<50 {
+//            guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
+//                print("[ERROR]")
+//                return
+//            }
+//            object.name = "name_\(i)"
+//            objectArray.append(object)
+//        }
+//        let _ = self.ormDBService?.writeObjectArray(objectArray, customTableName: "custom_table_name")
+        
+        // read array
+        if let arrayX = self.ormDBService?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10, customTableName: "custom_table_name") {
+            print("\(arrayX)")
         }
         
-        let _ = self.ormDBService?.writeObject(object, customTableName: "custom_table_name")
+        // remove object
+//        let result = self.ormDBService!.removeObject(ofType: TCodableClass.self, forPrimaryKey: "name_0", customTableName: "custom_table_name")
+//        print("result = \(result)")
         
-        
-        if let objectX = self.ormDBService?.readObject(ofType: TCodableClass.self, forPrimaryKey: "name", customTableName: "custom_table_name") {
-            print("\(objectX)")
-        }
+        // remove table
+//        let result = self.ormDBService!.removeObjectTable(ofType: TCodableClass.self, customTableName: "custom_table_name")
+//        print("result = \(result)")
     }
     
     private func testPersistent<T: Codable>(_ value: T) {

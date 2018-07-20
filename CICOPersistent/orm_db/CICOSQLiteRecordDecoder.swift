@@ -29,7 +29,6 @@ class CICOSQLiteRecordDecoder: Decoder {
         let decoder = CICOSQLiteRecordDecoder.init(resultSet: resultSet)
         do {
             let obj = try type.init(from: decoder)
-            print("\(obj)")
             return obj
         } catch let error {
             print("[DECODE_SQLITE_RECORD_ERROR]: %@", error)
@@ -103,10 +102,8 @@ class CICOSQLiteRecordDecoder: Decoder {
 
         func decodeNil(forKey key: KEY) throws -> Bool {
             if decoder.resultSet.columnIsNull(key.stringValue) {
-                print("(\(key.stringValue), true)")
                 return true
             } else {
-                print("(\(key.stringValue), false)")
                 return false
             }
         }
@@ -121,15 +118,10 @@ class CICOSQLiteRecordDecoder: Decoder {
         }
         
         func decode(_ type: Bool.Type, forKey key: KEY) throws -> Bool {
-            let s = key.stringValue
-            print("decode<Bool>: \(s)")
-            
             return decoder.resultSet.bool(forColumn: key.stringValue)
         }
         
         func decode(_ type: Int.Type, forKey key: KEY) throws -> Int {
-            let s = key.stringValue
-            print("decode<Int>: \(s), \(Int(decoder.resultSet.longLongInt(forColumn: key.stringValue)))")
             return Int(decoder.resultSet.longLongInt(forColumn: key.stringValue))
         }
         

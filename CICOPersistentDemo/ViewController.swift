@@ -10,10 +10,13 @@ import UIKit
 import CICOPersistent
 
 class ViewController: UIViewController {
-
+    private var ormDBService: CICOORMDBService?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        print("\(CICOPathAide.docPath(withSubPath: nil))")
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,7 +27,8 @@ class ViewController: UIViewController {
     @IBAction func testBtnAction(_ sender: Any) {
 //        self.doPersistentTest()
 //        self.doKVFileTest()
-        self.doKVDBTest()
+//        self.doKVDBTest()
+        self.doORMDBTest()
     }
     
     private func doPersistentTest() {
@@ -88,6 +92,55 @@ class ViewController: UIViewController {
         if let object2 = try? self.defaultJSONDecoder().decode(TCodableStruct.self, from: jsonData) {
             self.testKVDB(object2)
         }
+    }
+    
+    private func doORMDBTest() {
+        self.ormDBService = CICOORMDBService.init(fileURL: CICOPathAide.docFileURL(withSubPath: "orm.db"))
+        
+        // read json
+        let jsonString = self.jsonString(name: "default")
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            print("[ERROR]")
+            return
+        }
+        
+        // write
+//        guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
+//            print("[ERROR]")
+//            return
+//        }
+//
+//        let _ = self.ormDBService?.writeObject(object, customTableName: "custom_table_name")
+        
+        // read
+//        if let objectX = self.ormDBService?.readObject(ofType: TCodableClass.self, forPrimaryKey: "name", customTableName: "custom_table_name") {
+//            print("[READ]: \(objectX)")
+//        }
+        
+        // write array
+        var objectArray = [TCodableClass]()
+        for i in 0..<50 {
+            guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
+                print("[ERROR]")
+                return
+            }
+            object.name = "name_\(i)"
+            objectArray.append(object)
+        }
+        let _ = self.ormDBService?.writeObjectArray(objectArray, customTableName: "custom_table_name")
+        
+        // read array
+        if let arrayX = self.ormDBService?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10, customTableName: "custom_table_name") {
+            print("[READ]: \(arrayX)")
+        }
+        
+        // remove object
+//        let result = self.ormDBService!.removeObject(ofType: TCodableClass.self, forPrimaryKey: "name_0", customTableName: "custom_table_name")
+//        print("result = \(result)")
+        
+        // remove table
+//        let result = self.ormDBService!.removeObjectTable(ofType: TCodableClass.self, customTableName: "custom_table_name")
+//        print("result = \(result)")
     }
     
     private func testPersistent<T: Codable>(_ value: T) {

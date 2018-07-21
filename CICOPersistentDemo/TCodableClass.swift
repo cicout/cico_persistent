@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import CICOAutoCodable
+import CICOPersistent
 
-class TCodableClass: NSObject, Codable {
-    private(set) var name: String?
+class TCodableClass: CICOAutoCodable {
+//    private(set) var name: String?
+    var name: String?
     private(set) var stringValue: String?
 //    private(set) var stringValue: Int?
     private(set) var dateValue: Date?
@@ -39,5 +42,11 @@ extension TCodableClass {
         case name
         case dicValue
 // sourcery:end
+    }
+}
+
+extension TCodableClass: CICOORMProtocol {
+    static func cicoORMPrimaryKeyName() -> String {
+        return CodingKeys.name.stringValue
     }
 }

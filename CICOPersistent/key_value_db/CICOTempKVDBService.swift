@@ -8,21 +8,11 @@
 
 import Foundation
 
-private let kDBSubPath = "json_db/db.sqlite"
+private let kDBSubPath = "cico_kv_db/db.sqlite"
 
 public class CICOTempKVDBService: CICOKVDBService {
     public static let shared: CICOTempKVDBService = {
-        return CICOTempKVDBService.init(fileURL: CICOTempKVDBService.dbFileURL())
+        let dbURL = CICOPathAide.defaultTempFileURL(withSubPath: kDBSubPath)!
+        return CICOTempKVDBService.init(fileURL: dbURL)
     }()
-    
-    public static func dbFileURL() -> URL {
-        return CICOPathAide.defaultTempFileURL(withSubPath: kDBSubPath)
-    }
-    
-    // TODO
-//    public func clearAll() -> Bool {
-//        let removeResult = CICOPathAide.removeFile(with: self.rootDirURL)
-//        let createResult = CICOPathAide.createDir(with: self.rootDirURL, option: true)
-//        return (removeResult && createResult)
-//    }
 }

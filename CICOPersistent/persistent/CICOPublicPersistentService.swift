@@ -8,12 +8,26 @@
 
 import Foundation
 
+private let kRootDirName = "cico_persistent"
+
 public class CICOPublicPersistentService: CICOPersistentService {
     public static let shared: CICOPublicPersistentService = {
-        return CICOPublicPersistentService.init(rootDirURL: CICOPublicPersistentService.publicDirURL())
+        let rootDirURL = CICOPathAide.defaultPublicFileURL(withSubPath: kRootDirName)!
+        return CICOPublicPersistentService.init(rootDirURL: rootDirURL)
     }()
     
-    public static func publicDirURL() -> URL {
-        return CICOPathAide.defaultPublicFileURL(withSubPath: nil)
+    public override func clearAllKVFile() -> Bool {
+        print("[ERROR]: FORBIDDEN!")
+        return false
+    }
+    
+    public override func clearAllKVDB() -> Bool {
+        print("[ERROR]: FORBIDDEN!")
+        return false
+    }
+    
+    public override func clearAllORMDB() -> Bool {
+        print("[ERROR]: FORBIDDEN!")
+        return false
     }
 }

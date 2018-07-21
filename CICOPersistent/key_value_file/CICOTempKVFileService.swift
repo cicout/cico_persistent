@@ -8,20 +8,11 @@
 
 import Foundation
 
-private let kRootDirName = "json_data"
+private let kRootDirName = "cico_kv_file"
 
 public class CICOTempKVFileService: CICOKVFileService {
     public static let shared: CICOTempKVFileService = {
-        return CICOTempKVFileService.init(rootDirURL: CICOTempKVFileService.tempDirURL())
+        let rootDirURL = CICOPathAide.defaultTempFileURL(withSubPath: kRootDirName)!
+        return CICOTempKVFileService.init(rootDirURL: rootDirURL)
     }()
-    
-    public static func tempDirURL() -> URL {
-        return CICOPathAide.defaultTempFileURL(withSubPath: kRootDirName)
-    }
-    
-    public func clearAll() -> Bool {
-        let removeResult = CICOPathAide.removeFile(with: self.rootDirURL)
-        let createResult = CICOPathAide.createDir(with: self.rootDirURL, option: true)
-        return (removeResult && createResult)
-    }
 }

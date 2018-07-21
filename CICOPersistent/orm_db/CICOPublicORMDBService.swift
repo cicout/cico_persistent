@@ -15,4 +15,9 @@ public class CICOPublicORMDBService: CICOORMDBService {
         let dbURL = CICOPathAide.defaultPublicFileURL(withSubPath: kDBSubPath)!
         return CICOPublicORMDBService.init(fileURL: dbURL)
     }()
+    
+    public override func clearAll() -> Bool {
+        print("[ERROR]: FORBIDDEN!")
+        return false
+    }
 }

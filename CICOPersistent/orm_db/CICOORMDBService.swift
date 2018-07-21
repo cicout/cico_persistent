@@ -128,6 +128,13 @@ open class CICOORMDBService {
         return self.pRemoveObjectTable(ofType: objectType, tableName: tableName)
     }
     
+    open func clearAll() -> Bool {
+        self.dbQueue = nil
+        let result = CICOPathAide.removeFile(with: self.fileURL)
+        self.dbQueue = FMDatabaseQueue.init(url: self.fileURL)
+        return result
+    }
+    
     /********************
      * PRIVATE FUNCTIONS
      ********************/

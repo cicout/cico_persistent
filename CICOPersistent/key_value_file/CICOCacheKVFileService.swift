@@ -8,20 +8,11 @@
 
 import Foundation
 
-private let kRootDirName = "json_data"
+private let kRootDirName = "cico_kv_file"
 
 public class CICOCacheKVFileService: CICOKVFileService {
     public static let shared: CICOCacheKVFileService = {
-        return CICOCacheKVFileService.init(rootDirURL: CICOCacheKVFileService.cacheDirURL())
+        let rootDirURL = CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)!
+        return CICOCacheKVFileService.init(rootDirURL: rootDirURL)
     }()
-    
-    public static func cacheDirURL() -> URL {
-        return CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)
-    }
-    
-    public func clearAll() -> Bool {
-        let removeResult = CICOPathAide.removeFile(with: self.rootDirURL)
-        let createResult = CICOPathAide.createDir(with: self.rootDirURL, option: true)
-        return (removeResult && createResult)
-    }
 }

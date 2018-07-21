@@ -8,14 +8,16 @@
 
 import Foundation
 
-private let kDBSubPath = "json_db/db.sqlite"
+private let kDBSubPath = "cico_kv_db/db.sqlite"
 
 public class CICOPublicKVDBService: CICOKVDBService {
     public static let shared: CICOPublicKVDBService = {
-        return CICOPublicKVDBService.init(fileURL: CICOPublicKVDBService.dbFileURL())
+        let dbURL = CICOPathAide.defaultPublicFileURL(withSubPath: kDBSubPath)!
+        return CICOPublicKVDBService.init(fileURL: dbURL)
     }()
     
-    public static func dbFileURL() -> URL {
-        return CICOPathAide.defaultPublicFileURL(withSubPath: kDBSubPath)
+    public override func clearAll() -> Bool {
+        print("[ERROR]: FORBIDDEN!")
+        return false
     }
 }

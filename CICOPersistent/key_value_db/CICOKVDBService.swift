@@ -69,6 +69,13 @@ open class CICOKVDBService {
         return self.removeJSONData(jsonKey:jsonKey)
     }
     
+    open func clearAll() -> Bool {
+        self.dbQueue = nil
+        let result = CICOPathAide.removeFile(with: self.fileURL)
+        self.dbQueue = FMDatabaseQueue.init(url: self.fileURL)
+        return result
+    }
+    
     private func initDB() {
         let dirURL = self.fileURL.deletingLastPathComponent()
         let result = CICOPathAide.createDir(with: dirURL, option: false)

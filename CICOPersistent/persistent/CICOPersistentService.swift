@@ -8,8 +8,8 @@
 
 import Foundation
 
-private let kKVFileDirName = "json_data"
-private let kKVDBFileSubPath = "json_db/db.sqlite"
+private let kKVFileDirName = "kv_file"
+private let kKVDBFileSubPath = "kv_db/db.sqlite"
 private let kORMDBFileSubPath = "orm_db/db.sqlite"
 
 open class CICOPersistentService {
@@ -80,6 +80,10 @@ open class CICOPersistentService {
         return self.kvFileService.removeObject(forKey: userKey)
     }
     
+    open func clearAllKVFile() -> Bool {
+        return self.kvFileService.clearAll()
+    }
+    
     /****************************************
      * Codable Key:Value Database Persistent
      ****************************************/
@@ -94,6 +98,10 @@ open class CICOPersistentService {
     
     open func removeKVDBObject(forKey userKey: String) -> Bool {
         return self.kvDBService.removeObject(forKey: userKey)
+    }
+    
+    open func clearAllKVDB() -> Bool {
+        return self.kvDBService.clearAll()
     }
     
     /**********************************
@@ -140,6 +148,10 @@ open class CICOPersistentService {
     
     open func removeObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type, customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObjectTable(ofType: objectType, customTableName: customTableName)
+    }
+    
+    open func clearAllORMDB() -> Bool {
+        return self.ormDBService.clearAll()
     }
     
     /**********************

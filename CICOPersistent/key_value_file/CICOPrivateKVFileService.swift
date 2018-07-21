@@ -8,14 +8,16 @@
 
 import Foundation
 
-private let kRootDirName = "json_data"
+private let kRootDirName = "cico_kv_file"
 
 public class CICOPrivateKVFileService: CICOKVFileService {
     public static let shared: CICOPrivateKVFileService = {
-        return CICOPrivateKVFileService.init(rootDirURL: CICOPrivateKVFileService.privateDirURL())
+        let rootDirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kRootDirName)!
+        return CICOPrivateKVFileService.init(rootDirURL: rootDirURL)
     }()
     
-    public static func privateDirURL() -> URL {
-        return CICOPathAide.defaultPrivateFileURL(withSubPath: kRootDirName)
+    public override func clearAll() -> Bool {
+        print("[ERROR]: FORBIDDEN!")
+        return false
     }
 }

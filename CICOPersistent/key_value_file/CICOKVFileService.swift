@@ -55,6 +55,12 @@ open class CICOKVFileService: CICOURLKVFileService {
         return self.removeObject(forFileURL: fileURL)
     }
     
+    open func clearAll() -> Bool {
+        let removeResult = CICOPathAide.removeFile(with: self.rootDirURL)
+        let createResult = CICOPathAide.createDir(with: self.rootDirURL, option: false)
+        return (removeResult && createResult)
+    }
+    
     private func jsonKey(forUserKey userKey: String) -> String? {
         guard userKey.count > 0 else {
             return nil

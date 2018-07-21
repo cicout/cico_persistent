@@ -8,19 +8,11 @@
 
 import Foundation
 
+private let kRootDirName = "cico_persistent"
+
 public class CICOCachePersistentService: CICOPersistentService {
     public static let shared: CICOCachePersistentService = {
-        return CICOCachePersistentService.init(rootDirURL: CICOCachePersistentService.cacheDirURL())
+        let rootDirURL = CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)!
+        return CICOCachePersistentService.init(rootDirURL: rootDirURL)
     }()
-    
-    public static func cacheDirURL() -> URL {
-        return CICOPathAide.defaultCacheFileURL(withSubPath: nil)
-    }
-    
-    // TODO
-//    public func clearAll() -> Bool {
-//        let removeResult = CICOPathAide.removeFile(with: self.rootDirURL)
-//        let createResult = CICOPathAide.createDir(with: self.rootDirURL, option: true)
-//        return (removeResult && createResult)
-//    }
 }

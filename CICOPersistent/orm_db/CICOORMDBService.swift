@@ -11,7 +11,7 @@ import FMDB
 import CICOAutoCodable
 import SwiftyJSON
 
-private let kJSONORMTableName = "json_orm_table_name"
+private let kORMTableName = "cico_orm_table_name"
 private let kTableNameColumnName = "table_name"
 private let kObjectTypeNameColumnName = "object_type_name"
 
@@ -30,9 +30,13 @@ open class CICOORMDBService {
         self.initDB()
     }
     
-    open func readObject<T: Codable>(ofType objectType: T.Type,
-                                     forPrimaryKey primaryKeyValue: Codable,
-                                     customTableName: String? = nil) -> T? {
+    /*******************
+     * PUBLIC FUNCTIONS
+     *******************/
+    
+    open func readObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+                                                    forPrimaryKey primaryKeyValue: Codable,
+                                                    customTableName: String? = nil) -> T? {
         let tableName: String
         if let customTableName = customTableName {
             tableName = customTableName
@@ -40,37 +44,36 @@ open class CICOORMDBService {
             tableName = "\(objectType)"
         }
         
-        // TODO:
-        let primaryKeyName = "name"
+        let primaryKeyName = T.cicoORMPrimaryKeyName()
         
-        return self.readObject(ofType: objectType,
-                               tableName: tableName,
-                               primaryKeyName: primaryKeyName,
-                               primaryKeyValue: primaryKeyValue)
+        return self.pReadObject(ofType: objectType,
+                                tableName: tableName,
+                                primaryKeyName: primaryKeyName,
+                                primaryKeyValue: primaryKeyValue)
     }
     
-    open func readObjectArray<T: Codable>(ofType objectType: T.Type,
-                                          whereString: String? = nil,
-                                          orderByName: String? = nil,
-                                          descending: Bool = true,
-                                          limit: Int? = nil,
-                                          customTableName: String? = nil) -> [T]? {
+    open func readObjectArray<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+                                                         whereString: String? = nil,
+                                                         orderByName: String? = nil,
+                                                         descending: Bool = true,
+                                                         limit: Int? = nil,
+                                                         customTableName: String? = nil) -> [T]? {
         let tableName: String
         if let customTableName = customTableName {
             tableName = customTableName
         } else {
             tableName = "\(objectType)"
         }
-
-        return self.readObjectArray(ofType: objectType,
-                                    tableName: tableName,
-                                    whereString: whereString,
-                                    orderByName: orderByName,
-                                    descending: descending,
-                                    limit: limit)
+        
+        return self.pReadObjectArray(ofType: objectType,
+                                     tableName: tableName,
+                                     whereString: whereString,
+                                     orderByName: orderByName,
+                                     descending: descending,
+                                     limit: limit)
     }
     
-    open func writeObject<T: Codable>(_ object: T, customTableName: String? = nil) -> Bool {
+    open func writeObject<T: CICOORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
         let tableName: String
         if let customTableName = customTableName {
             tableName = customTableName
@@ -78,13 +81,12 @@ open class CICOORMDBService {
             tableName = "\(T.self)"
         }
         
-        // TODO:
-        let primaryKeyName = "name"
+        let primaryKeyName = T.cicoORMPrimaryKeyName()
         
-        return self.writeObject(object, tableName: tableName, primaryKeyName: primaryKeyName)
+        return self.pWriteObject(object, tableName: tableName, primaryKeyName: primaryKeyName)
     }
     
-    open func writeObjectArray<T: Codable>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
+    open func writeObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
         let tableName: String
         if let customTableName = customTableName {
             tableName = customTableName
@@ -92,15 +94,14 @@ open class CICOORMDBService {
             tableName = "\(T.self)"
         }
         
-        // TODO:
-        let primaryKeyName = "name"
+        let primaryKeyName = T.cicoORMPrimaryKeyName()
         
-        return self.writeObjectArray(objectArray, tableName: tableName, primaryKeyName: primaryKeyName)
+        return self.pWriteObjectArray(objectArray, tableName: tableName, primaryKeyName: primaryKeyName)
     }
     
-    open func removeObject<T: Codable>(ofType objectType: T.Type,
-                                       forPrimaryKey primaryKeyValue: Codable,
-                                       customTableName: String? = nil) -> Bool {
+    open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+                                                      forPrimaryKey primaryKeyValue: Codable,
+                                                      customTableName: String? = nil) -> Bool {
         let tableName: String
         if let customTableName = customTableName {
             tableName = customTableName
@@ -108,16 +109,15 @@ open class CICOORMDBService {
             tableName = "\(objectType)"
         }
         
-        // TODO:
-        let primaryKeyName = "name"
+        let primaryKeyName = T.cicoORMPrimaryKeyName()
         
-        return self.removeObject(ofType: objectType,
-                                 tableName: tableName,
-                                 primaryKeyName: primaryKeyName,
-                                 primaryKeyValue: primaryKeyValue)
+        return self.pRemoveObject(ofType: objectType,
+                                  tableName: tableName,
+                                  primaryKeyName: primaryKeyName,
+                                  primaryKeyValue: primaryKeyValue)
     }
-
-    open func removeObjectTable<T: Codable>(ofType objectType: T.Type, customTableName: String? = nil) -> Bool {
+    
+    open func removeObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type, customTableName: String? = nil) -> Bool {
         let tableName: String
         if let customTableName = customTableName {
             tableName = customTableName
@@ -125,26 +125,30 @@ open class CICOORMDBService {
             tableName = "\(objectType)"
         }
         
-        return self.removeObjectTable(ofType: objectType, tableName: tableName)
+        return self.pRemoveObjectTable(ofType: objectType, tableName: tableName)
     }
-
-    private func readObject<T: Codable>(ofType objectType: T.Type,
-                                        tableName: String,
-                                        primaryKeyName: String,
-                                        primaryKeyValue: Codable) -> T? {
+    
+    /********************
+     * PRIVATE FUNCTIONS
+     ********************/
+    
+    private func pReadObject<T: Codable>(ofType objectType: T.Type,
+                                         tableName: String,
+                                         primaryKeyName: String,
+                                         primaryKeyValue: Codable) -> T? {
         var object: T? = nil
         
         let objectTypeName = "\(objectType)"
         print("\n[READ]:\nobjectType = \(objectType)\ntableName = \(tableName)\nprimaryKeyName = \(primaryKeyName)\nprimaryKeyValue = \(primaryKeyValue)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
-            guard isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
+            guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
                 return
             }
             
             let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeyName) = ? LIMIT 1;"
             
-            print("[SQL]: \(querySQL)")
+//            print("[SQL]: \(querySQL)")
             guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: [primaryKeyValue]) else {
                 return
             }
@@ -159,19 +163,19 @@ open class CICOORMDBService {
         return object
     }
     
-    private func readObjectArray<T: Codable>(ofType objectType: T.Type,
-                                             tableName: String,
-                                             whereString: String? = nil,
-                                             orderByName: String? = nil,
-                                             descending: Bool = true,
-                                             limit: Int? = nil) -> [T]? {
+    private func pReadObjectArray<T: Codable>(ofType objectType: T.Type,
+                                              tableName: String,
+                                              whereString: String? = nil,
+                                              orderByName: String? = nil,
+                                              descending: Bool = true,
+                                              limit: Int? = nil) -> [T]? {
         var array: [T]? = nil
         
         let objectTypeName = "\(objectType)"
         print("\n[READ]:\nobjectType = \(objectType)\ntableName = \(tableName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
-            guard isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
+            guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
                 return
             }
             
@@ -198,7 +202,7 @@ open class CICOORMDBService {
             
             querySQL.append(";")
             
-            print("[SQL]: \(querySQL)")
+//            print("[SQL]: \(querySQL)")
             guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: argumentArray) else {
                 return
             }
@@ -220,7 +224,7 @@ open class CICOORMDBService {
         return array
     }
     
-    private func writeObject<T: Codable>(_ object: T, tableName: String, primaryKeyName: String) -> Bool {
+    private func pWriteObject<T: Codable>(_ object: T, tableName: String, primaryKeyName: String) -> Bool {
         var result = false
         
         let objectType = T.self
@@ -242,13 +246,14 @@ open class CICOORMDBService {
             result = self.replaceRecord(db: db, tableName: tableName, object: object)
             if !result {
                 rollback.pointee = true
+                return
             }
         })
         
         return result
     }
     
-    private func writeObjectArray<T: Codable>(_ objectArray: [T], tableName: String, primaryKeyName: String) -> Bool {
+    private func pWriteObjectArray<T: Codable>(_ objectArray: [T], tableName: String, primaryKeyName: String) -> Bool {
         var result = false
         
         let objectType = T.self
@@ -279,61 +284,57 @@ open class CICOORMDBService {
         return result
     }
     
-    private func removeObject<T: Codable>(ofType objectType: T.Type,
-                                          tableName: String,
-                                          primaryKeyName: String,
-                                          primaryKeyValue: Codable) -> Bool {
+    private func pRemoveObject<T: Codable>(ofType objectType: T.Type,
+                                           tableName: String,
+                                           primaryKeyName: String,
+                                           primaryKeyValue: Codable) -> Bool {
         var result = false
         
         let objectTypeName = "\(objectType)"
         print("\n[REMOVE]:\nobjectType = \(objectType)\ntableName = \(tableName)\nprimaryKeyName = \(primaryKeyName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
-            guard isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
+            guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
                 result = true
                 return
             }
             
-            let deleteSQL = "DELETE FROM \(tableName) WHERE \(primaryKeyName) = ?;"
-            
-            print("[SQL]: \(deleteSQL)")
-            result = db.executeUpdate(deleteSQL, withArgumentsIn: [primaryKeyValue])
+            result = self.deleteRecord(db: db,
+                                       tableName: tableName,
+                                       primaryKeyName: primaryKeyName,
+                                       primaryKeyValue: primaryKeyValue)
             if !result {
-                print("[ERROR]: delete database record failed")
+                rollback.pointee = true
+                return
             }
         })
         
         return result
     }
     
-    private func removeObjectTable<T: Codable>(ofType objectType: T.Type, tableName: String) -> Bool {
+    private func pRemoveObjectTable<T: Codable>(ofType objectType: T.Type, tableName: String) -> Bool {
         var result = false
         
         let objectTypeName = "\(objectType)"
         print("\n[REMOVE]:\nobjectType = \(objectType)\ntableName = \(tableName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
-            guard isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
+            guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
                 result = true
                 return
             }
             
-            let dropSQL = "DROP TABLE \(tableName);"
-            
-            print("[SQL]: \(dropSQL)")
-            result = db.executeUpdate(dropSQL, withArgumentsIn: [])
+            result = self.dropTable(db: db, tableName: tableName)
             if !result {
-                print("[ERROR]: drop table failed")
                 rollback.pointee = true
                 return
             }
             
-            let deleteSQL = "DELETE FROM \(kJSONORMTableName) WHERE \(kTableNameColumnName) = ?;"
-            
-            print("[SQL]: \(deleteSQL)")
-            result = db.executeUpdate(deleteSQL, withArgumentsIn: [tableName])
+            result = self.deleteRecord(db: db,
+                                       tableName: kORMTableName,
+                                       primaryKeyName: kTableNameColumnName,
+                                       primaryKeyValue: tableName)
             if !result {
-                print("[ERROR]: delete table name failed")
                 rollback.pointee = true
                 return
             }
@@ -356,7 +357,7 @@ open class CICOORMDBService {
         }
         
         dbQueue.inDatabase { (db) in
-            let createTableSQL = "CREATE TABLE IF NOT EXISTS \(kJSONORMTableName) (\(kTableNameColumnName) TEXT NOT NULL, \(kObjectTypeNameColumnName) TEXT NOT NULL, PRIMARY KEY(\(kTableNameColumnName)));"
+            let createTableSQL = "CREATE TABLE IF NOT EXISTS \(kORMTableName) (\(kTableNameColumnName) TEXT NOT NULL, \(kObjectTypeNameColumnName) TEXT NOT NULL, PRIMARY KEY(\(kTableNameColumnName)));"
             let result = db.executeUpdate(createTableSQL, withArgumentsIn: [])
             if result {
                 self.dbQueue = dbQueue
@@ -369,9 +370,9 @@ open class CICOORMDBService {
     private func isTableExist(db: FMDatabase, objectTypeName: String, tableName: String) -> Bool {
         var exist = false
         
-        let querySQL = "SELECT * FROM \(kJSONORMTableName) WHERE \(kTableNameColumnName) = ? LIMIT 1;"
+        let querySQL = "SELECT * FROM \(kORMTableName) WHERE \(kTableNameColumnName) = ? LIMIT 1;"
         
-        print("[SQL]: \(querySQL)")
+//        print("[SQL]: \(querySQL)")
         guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: [tableName]) else {
             return exist
         }
@@ -398,7 +399,7 @@ open class CICOORMDBService {
         let exist = self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName)
         if !exist {
             let sqliteTypes = CICOSQLiteTypeDecoder.allTypeProperties(of: objectType)
-//            print("\nsqliteTypes: \(sqliteTypes)")
+            //            print("\nsqliteTypes: \(sqliteTypes)")
             
             var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
             var isFirst = true
@@ -419,11 +420,11 @@ open class CICOORMDBService {
             createTableSQL.append(", PRIMARY KEY(\(primaryKeyName))")
             createTableSQL.append(");")
             
-            print("[SQL]: \(createTableSQL)")
+//            print("[SQL]: \(createTableSQL)")
             let createResult = db.executeUpdate(createTableSQL, withArgumentsIn: [])
             if createResult {
                 // insert table name and type name
-                let replaceSQL = "REPLACE INTO \(kJSONORMTableName) (\(kTableNameColumnName), \(kObjectTypeNameColumnName)) values (?, ?);"
+                let replaceSQL = "REPLACE INTO \(kORMTableName) (\(kTableNameColumnName), \(kObjectTypeNameColumnName)) values (?, ?);"
                 print("[SQL]: \(replaceSQL)")
                 let replaceResult = db.executeUpdate(replaceSQL, withArgumentsIn: [tableName, objectTypeName])
                 if !replaceResult {
@@ -439,7 +440,7 @@ open class CICOORMDBService {
         result = true
         return result
     }
-
+    
     private func replaceRecord<T: Codable>(db: FMDatabase, tableName: String, object: T) -> Bool {
         var result = false
         
@@ -450,14 +451,44 @@ open class CICOORMDBService {
             return result
         }
         
-        print("[SQL]: \(replaceSQL)")
-        let replaceResult = db.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
-        if !replaceResult {
+//        print("[SQL]: \(replaceSQL)")
+        result = db.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
+        if !result {
             print("[ERROR]: write database record failed")
-            return result
         }
         
-        result = true
+        return result
+    }
+    
+    private func deleteRecord(db: FMDatabase,
+                              tableName: String,
+                              primaryKeyName: String,
+                              primaryKeyValue: Codable) -> Bool {
+        var result = false
+        
+        let deleteSQL = "DELETE FROM \(tableName) WHERE \(primaryKeyName) = ?;"
+        
+//        print("[SQL]: \(deleteSQL)")
+        result = db.executeUpdate(deleteSQL, withArgumentsIn: [primaryKeyValue])
+        if !result {
+            print("[ERROR]: delete database record failed")
+        }
+        
+        return result
+    }
+    
+    private func dropTable(db: FMDatabase,
+                           tableName: String) -> Bool {
+        var result = false
+        
+        let dropSQL = "DROP TABLE \(tableName);"
+        
+//        print("[SQL]: \(dropSQL)")
+        result = db.executeUpdate(dropSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: drop table failed")
+        }
+        
         return result
     }
 }

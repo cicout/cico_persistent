@@ -8,6 +8,7 @@
 
 import UIKit
 import CICOAutoCodable
+import CICOPersistent
 
 class TCodableClass: CICOAutoCodable {
 //    private(set) var name: String?
@@ -41,5 +42,11 @@ extension TCodableClass {
         case name
         case dicValue
 // sourcery:end
+    }
+}
+
+extension TCodableClass: CICOORMProtocol {
+    static func cicoORMPrimaryKeyName() -> String {
+        return CodingKeys.name.stringValue
     }
 }

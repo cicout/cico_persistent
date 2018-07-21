@@ -118,16 +118,16 @@ class ViewController: UIViewController {
 //        }
         
         // write array
-//        var objectArray = [TCodableClass]()
-//        for i in 0..<50 {
-//            guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
-//                print("[ERROR]")
-//                return
-//            }
-//            object.name = "name_\(i)"
-//            objectArray.append(object)
-//        }
-//        let _ = self.ormDBService?.writeObjectArray(objectArray, customTableName: "custom_table_name")
+        var objectArray = [TCodableClass]()
+        for i in 0..<50 {
+            guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
+                print("[ERROR]")
+                return
+            }
+            object.name = "name_\(i)"
+            objectArray.append(object)
+        }
+        let _ = self.ormDBService?.writeObjectArray(objectArray, customTableName: "custom_table_name")
         
         // read array
         if let arrayX = self.ormDBService?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10, customTableName: "custom_table_name") {

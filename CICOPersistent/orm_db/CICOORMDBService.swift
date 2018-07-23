@@ -35,7 +35,7 @@ open class CICOORMDBService {
      *******************/
     
     open func readObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
-                                                    forPrimaryKey primaryKeyValue: Codable,
+                                                    primaryKeyValue: Codable,
                                                     customTableName: String? = nil) -> T? {
         let tableName: String
         if let customTableName = customTableName {
@@ -100,7 +100,7 @@ open class CICOORMDBService {
     }
     
     open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
-                                                      forPrimaryKey primaryKeyValue: Codable,
+                                                      primaryKeyValue: Codable,
                                                       customTableName: String? = nil) -> Bool {
         let tableName: String
         if let customTableName = customTableName {
@@ -298,7 +298,7 @@ open class CICOORMDBService {
         var result = false
         
         let objectTypeName = "\(objectType)"
-        print("\n[REMOVE]:\nobjectType = \(objectType)\ntableName = \(tableName)\nprimaryKeyName = \(primaryKeyName)")
+//        print("\n[REMOVE]:\nobjectType = \(objectType)\ntableName = \(tableName)\nprimaryKeyName = \(primaryKeyName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
@@ -323,7 +323,7 @@ open class CICOORMDBService {
         var result = false
         
         let objectTypeName = "\(objectType)"
-        print("\n[REMOVE]:\nobjectType = \(objectType)\ntableName = \(tableName)")
+//        print("\n[REMOVE]:\nobjectType = \(objectType)\ntableName = \(tableName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {

@@ -109,10 +109,10 @@ open class CICOPersistentService {
      **********************************/
     
     open func readObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
-                                                    forPrimaryKey primaryKeyValue: Codable,
+                                                    primaryKeyValue: Codable,
                                                     customTableName: String? = nil) -> T? {
         return self.ormDBService.readObject(ofType: objectType,
-                                            forPrimaryKey: primaryKeyValue,
+                                            primaryKeyValue: primaryKeyValue,
                                             customTableName: customTableName)
     }
     
@@ -139,10 +139,10 @@ open class CICOPersistentService {
     }
     
     open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
-                                                      forPrimaryKey primaryKeyValue: Codable,
+                                                      primaryKeyValue: Codable,
                                                       customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObject(ofType: objectType,
-                                              forPrimaryKey: primaryKeyValue,
+                                              primaryKeyValue: primaryKeyValue,
                                               customTableName: customTableName)
     }
     

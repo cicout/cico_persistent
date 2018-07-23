@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         self.doPersistentTest()
 //        self.doKVFileTest()
 //        self.doKVDBTest()
-//        self.doORMDBTest()
+        self.doORMDBTest()
     }
     
     private func doPersistentTest() {
@@ -105,17 +105,17 @@ class ViewController: UIViewController {
         }
         
         // write
-//        guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
-//            print("[ERROR]")
-//            return
-//        }
-//
-//        let _ = self.ormDBService?.writeObject(object, customTableName: "custom_table_name")
+        guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
+            print("[ERROR]")
+            return
+        }
+
+        let _ = self.ormDBService?.writeObject(object)
         
         // read
-//        if let objectX = self.ormDBService?.readObject(ofType: TCodableClass.self, forPrimaryKey: "name", customTableName: "custom_table_name") {
-//            print("[READ]: \(objectX)")
-//        }
+        if let objectX = self.ormDBService?.readObject(ofType: TCodableClass.self, primaryKeyValue: "name") {
+            print("[READ]: \(objectX)")
+        }
         
         // write array
         var objectArray = [TCodableClass]()
@@ -127,20 +127,20 @@ class ViewController: UIViewController {
             object.name = "name_\(i)"
             objectArray.append(object)
         }
-        let _ = self.ormDBService?.writeObjectArray(objectArray, customTableName: "custom_table_name")
+        let _ = self.ormDBService?.writeObjectArray(objectArray)
         
         // read array
-        if let arrayX = self.ormDBService?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10, customTableName: "custom_table_name") {
+        if let arrayX = self.ormDBService?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
             print("[READ]: \(arrayX)")
         }
         
         // remove object
-//        let result = self.ormDBService!.removeObject(ofType: TCodableClass.self, forPrimaryKey: "name_0", customTableName: "custom_table_name")
-//        print("result = \(result)")
+        let result = self.ormDBService!.removeObject(ofType: TCodableClass.self, primaryKeyValue: "name_0")
+        print("result = \(result)")
         
         // remove table
-//        let result = self.ormDBService!.removeObjectTable(ofType: TCodableClass.self, customTableName: "custom_table_name")
-//        print("result = \(result)")
+//        let resultX = self.ormDBService!.removeObjectTable(ofType: TCodableClass.self)
+//        print("result = \(resultX)")
     }
     
     private func testPersistent<T: Codable>(_ value: T) {

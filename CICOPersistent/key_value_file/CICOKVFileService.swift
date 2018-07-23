@@ -8,15 +8,18 @@
 
 import Foundation
 
-open class CICOKVFileService: CICOURLKVFileService {
+open class CICOKVFileService {
     public let rootDirURL: URL
 
+    private let urlFileService: CICOURLKVFileService
+    
     deinit {
         print("\(self) deinit")
     }
     
     public init(rootDirURL: URL) {
         self.rootDirURL = rootDirURL
+        self.urlFileService = CICOURLKVFileService.init()
         
         let result = CICOPathAide.createDir(with: self.rootDirURL, option: false)
         if !result {
@@ -32,7 +35,7 @@ open class CICOKVFileService: CICOURLKVFileService {
         
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
         
-        return self.readObject(type, fromFileURL: fileURL)
+        return self.urlFileService.readObject(type, fromFileURL: fileURL)
     }
     
     open func writeObject<T: Encodable>(_ object: T, forKey userKey: String) -> Bool {
@@ -42,7 +45,7 @@ open class CICOKVFileService: CICOURLKVFileService {
         
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
         
-        return self.writeObject(object, toFileURL: fileURL)
+        return self.urlFileService.writeObject(object, toFileURL: fileURL)
     }
     
     open func removeObject(forKey userKey: String) -> Bool {
@@ -52,7 +55,7 @@ open class CICOKVFileService: CICOURLKVFileService {
         
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
         
-        return self.removeObject(forFileURL: fileURL)
+        return self.urlFileService.removeObject(forFileURL: fileURL)
     }
     
     open func clearAll() -> Bool {

@@ -17,5 +17,6 @@
               "string1",
               "string2"
               ],
-    "private": "private_string"
+    "private": "private_string",
+    "new": "new_string"
 }

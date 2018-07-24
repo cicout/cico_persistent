@@ -95,7 +95,7 @@ open class CICOKVDBService {
             if result {
                 self.dbQueue = dbQueue
             } else {
-                print("[ERROR]: create database table failed\nurl: \(self.fileURL)")
+                print("[ERROR]: SQL = \(createTableSQL)")
             }
         }
     }
@@ -139,7 +139,7 @@ open class CICOKVDBService {
             let updateSQL = "REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName), \(kJSONDataColumnName), \(kUpdateTimeColumnName)) VALUES (?, ?, ?);"
             result = db.executeUpdate(updateSQL, withArgumentsIn: [jsonKey, jsonData, updateTime])
             if !result {
-                print("[ERROR]: write database record failed\nurl: \(self.fileURL)")
+                print("[ERROR]: SQL = \(updateSQL)")
             }
         }
         
@@ -153,7 +153,7 @@ open class CICOKVDBService {
             let deleteSQL = "DELETE FROM \(kJSONTableName) WHERE \(kJSONKeyColumnName) = ?;"
             result = db.executeUpdate(deleteSQL, withArgumentsIn: [jsonKey])
             if !result {
-                print("[ERROR]: delete database record failed\nurl: \(self.fileURL)")
+                print("[ERROR]: SQL = \(deleteSQL)")
             }
         }
         

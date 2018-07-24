@@ -25,6 +25,8 @@ class TCodableClass: CICOAutoCodable {
     private(set) var dicValue: [String: String]?
     
     private var privateStringValue: String?
+    
+    private var newStringValue: String?
 }
 
 extension TCodableClass {
@@ -37,6 +39,7 @@ extension TCodableClass {
         case next = "next"
         case arrayValue = "array"
         case privateStringValue = "private"
+        case newStringValue = "new"
 
 // sourcery:inline:auto:TCodableClass.CodingKeys.AutoCodable
         case name
@@ -48,5 +51,9 @@ extension TCodableClass {
 extension TCodableClass: CICOORMProtocol {
     static func cicoORMPrimaryKeyName() -> String {
         return CodingKeys.name.stringValue
+    }
+    
+    static func cicoORMObjectTypeVersion() -> Int {
+        return 2
     }
 }

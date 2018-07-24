@@ -11,9 +11,10 @@ import FMDB
 import CICOAutoCodable
 import SwiftyJSON
 
-private let kORMTableName = "cico_orm_table_name"
+private let kORMTableName = "cico_orm_table_info"
 private let kTableNameColumnName = "table_name"
 private let kObjectTypeNameColumnName = "object_type_name"
+private let kObjectTypeVersionColumnName = "object_type_version"
 
 open class CICOORMDBService {
     public let fileURL: URL
@@ -82,8 +83,12 @@ open class CICOORMDBService {
         }
         
         let primaryKeyName = T.cicoORMPrimaryKeyName()
+        let objectTypeVersion = T.cicoORMObjectTypeVersion()
         
-        return self.pWriteObject(object, tableName: tableName, primaryKeyName: primaryKeyName)
+        return self.pWriteObject(object,
+                                 tableName: tableName,
+                                 primaryKeyName: primaryKeyName,
+                                 objectTypeVersion: objectTypeVersion)
     }
     
     open func writeObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
@@ -95,8 +100,12 @@ open class CICOORMDBService {
         }
         
         let primaryKeyName = T.cicoORMPrimaryKeyName()
+        let objectTypeVersion = T.cicoORMObjectTypeVersion()
         
-        return self.pWriteObjectArray(objectArray, tableName: tableName, primaryKeyName: primaryKeyName)
+        return self.pWriteObjectArray(objectArray,
+                                      tableName: tableName,
+                                      primaryKeyName: primaryKeyName,
+                                      objectTypeVersion: objectTypeVersion)
     }
     
     open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
@@ -231,7 +240,10 @@ open class CICOORMDBService {
         return array
     }
     
-    private func pWriteObject<T: Codable>(_ object: T, tableName: String, primaryKeyName: String) -> Bool {
+    private func pWriteObject<T: Codable>(_ object: T,
+                                          tableName: String,
+                                          primaryKeyName: String,
+                                          objectTypeVersion: Int) -> Bool {
         var result = false
         
         let objectType = T.self
@@ -239,15 +251,19 @@ open class CICOORMDBService {
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             // create table if not exist
-            let isTableReady = self.createTableIfNotExist(db: db,
-                                                          objectType: objectType,
-                                                          tableName: tableName,
-                                                          primaryKeyName: primaryKeyName)
+            let isTableReady =
+                self.fixTableIfNeeded(db: db,
+                                      objectType: objectType,
+                                      tableName: tableName,
+                                      primaryKeyName: primaryKeyName,
+                                      objectTypeVersion: objectTypeVersion)
             
             if !isTableReady {
                 rollback.pointee = true
                 return
             }
+            
+            // TODO:
             
             // replace table record
             result = self.replaceRecord(db: db, tableName: tableName, object: object)
@@ -260,7 +276,10 @@ open class CICOORMDBService {
         return result
     }
     
-    private func pWriteObjectArray<T: Codable>(_ objectArray: [T], tableName: String, primaryKeyName: String) -> Bool {
+    private func pWriteObjectArray<T: Codable>(_ objectArray: [T],
+                                               tableName: String,
+                                               primaryKeyName: String,
+                                               objectTypeVersion: Int) -> Bool {
         var result = false
         
         let objectType = T.self
@@ -268,10 +287,12 @@ open class CICOORMDBService {
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             // create table if not exist
-            let isTableReady = self.createTableIfNotExist(db: db,
-                                                          objectType: objectType,
-                                                          tableName: tableName,
-                                                          primaryKeyName: primaryKeyName)
+            let isTableReady =
+                self.fixTableIfNeeded(db: db,
+                                      objectType: objectType,
+                                      tableName: tableName,
+                                      primaryKeyName: primaryKeyName,
+                                      objectTypeVersion: objectTypeVersion)
             
             if !isTableReady {
                 rollback.pointee = true
@@ -359,93 +380,199 @@ open class CICOORMDBService {
         }
         
         guard let dbQueue = FMDatabaseQueue.init(url: self.fileURL) else {
-            print("[ERROR]: create database failed\nurl: \(self.fileURL)")
+            print("[ERROR]: create database failed")
             return
         }
         
         dbQueue.inDatabase { (db) in
-            let createTableSQL = "CREATE TABLE IF NOT EXISTS \(kORMTableName) (\(kTableNameColumnName) TEXT NOT NULL, \(kObjectTypeNameColumnName) TEXT NOT NULL, PRIMARY KEY(\(kTableNameColumnName)));"
-            let result = db.executeUpdate(createTableSQL, withArgumentsIn: [])
+            let result = self.createORMTableInfoTableIfNotExists(db: db)
             if result {
                 self.dbQueue = dbQueue
-            } else {
-                print("[ERROR]: create database table failed")
             }
         }
     }
     
-    private func isTableExist(db: FMDatabase, objectTypeName: String, tableName: String) -> Bool {
-        var exist = false
+    private func createORMTableInfoTableIfNotExists(db: FMDatabase) -> Bool {
+        let createTableSQL =
+        "CREATE TABLE IF NOT EXISTS \(kORMTableName) (\(kTableNameColumnName) TEXT NOT NULL, \(kObjectTypeNameColumnName) TEXT NOT NULL, \(kObjectTypeVersionColumnName) INTEGER NOT NULL, PRIMARY KEY(\(kTableNameColumnName)));"
+        let result = db.executeUpdate(createTableSQL, withArgumentsIn: [])
+        if !result  {
+            print("[ERROR]: SQL = \(createTableSQL)")
+        }
+        
+        return result
+    }
+    
+    private func readORMTableInfo(db: FMDatabase, objectTypeName: String, tableName: String) -> CICOORMTableInfoModel? {
+        var tableInfo: CICOORMTableInfoModel? = nil
         
         let querySQL = "SELECT * FROM \(kORMTableName) WHERE \(kTableNameColumnName) = ? LIMIT 1;"
         
-//        print("[SQL]: \(querySQL)")
+        //        print("[SQL]: \(querySQL)")
         guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: [tableName]) else {
-            return exist
+            return tableInfo
         }
         
         if resultSet.next() {
-            if let typeNameValue = resultSet.string(forColumn: kObjectTypeNameColumnName), typeNameValue == objectTypeName {
-                exist = true
-            } else {
-                resultSet.close()
-                return exist
+            if let objectTypeNameValue = resultSet.string(forColumn: kObjectTypeNameColumnName),
+                objectTypeNameValue == objectTypeName {
+                let objectTypeVersion: Int = resultSet.long(forColumn: kObjectTypeVersionColumnName)
+                let temp = CICOORMTableInfoModel.init(tableName: tableName,
+                                                      objectTypeName: objectTypeNameValue,
+                                                      objectTypeVersion: objectTypeVersion)
+                tableInfo = temp
             }
         }
         
         resultSet.close()
         
-        return exist
+        return tableInfo
     }
     
-    private func createTableIfNotExist<T: Codable>(db: FMDatabase, objectType: T.Type, tableName: String, primaryKeyName: String) -> Bool {
+    private func writeORMTableInfo(db: FMDatabase, tableInfo: CICOORMTableInfoModel) -> Bool {
+        var result = false
+        
+        let replaceSQL = "REPLACE INTO \(kORMTableName) (\(kTableNameColumnName), \(kObjectTypeNameColumnName), \(kObjectTypeVersionColumnName)) values (?, ?, ?);"
+        let argumentArray: [Any] = [tableInfo.tableName, tableInfo.objectTypeName, tableInfo.objectTypeVersion]
+
+        //        print("[SQL]: \(replaceSQL)")
+        result = db.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
+        if !result {
+            print("[ERROR]: SQL = \(replaceSQL)")
+        }
+        
+        return result
+    }
+    
+    private func removeORMTableInfo(db: FMDatabase, tableName: String) -> Bool {
+        return self.deleteRecord(db: db,
+                                 tableName: kORMTableName,
+                                 primaryKeyName: kTableNameColumnName,
+                                 primaryKeyValue: tableName)
+    }
+    
+    private func fixTableIfNeeded<T: Codable>(db: FMDatabase,
+                                              objectType: T.Type,
+                                              tableName: String,
+                                              primaryKeyName: String,
+                                              objectTypeVersion: Int) -> Bool {
         var result = false
         
         let objectTypeName = "\(objectType)"
         
-        let exist = self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName)
-        if !exist {
-            let sqliteTypes = CICOSQLiteTypeDecoder.allTypeProperties(of: objectType)
-            //            print("\nsqliteTypes: \(sqliteTypes)")
+        guard let tableInfo = self.readORMTableInfo(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
+            result = self.createTable(db: db,
+                                      objectType: objectType,
+                                      tableName: tableName,
+                                      primaryKeyName: primaryKeyName,
+                                      objectTypeVersion: objectTypeVersion)
+            return result
+        }
+        
+        guard tableInfo.objectTypeVersion >= objectTypeVersion else {
+            let columnSet = self.queryTableColumns(db: db, tableName: tableName)
+            let sqliteTypeDic = CICOSQLiteTypeDecoder.allTypeProperties(of: objectType)
+            let newColumnSet = Set<String>.init(sqliteTypeDic.keys)
+            let needAddColumnSet = newColumnSet.subtracting(columnSet)
             
-            var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
-            var isFirst = true
-            sqliteTypes.forEach({ (name, sqliteType) in
-                if isFirst {
-                    isFirst = false
-                    createTableSQL.append("\(name)")
-                } else {
-                    createTableSQL.append(", \(name)")
+            var failed = false
+            for name in needAddColumnSet {
+                if let sqliteType = sqliteTypeDic[name] {
+                    let alterSQL = "ALTER TABLE \(tableName) ADD COLUMN \(name) \(sqliteType.sqliteType.rawValue)"
+                    let alterResult = db.executeUpdate(alterSQL, withArgumentsIn: [])
+                    if alterResult {
+                        continue
+                    }
                 }
                 
-                createTableSQL.append(" \(sqliteType.sqliteType.rawValue)")
-                
-                if name == primaryKeyName {
-                    createTableSQL.append(" NOT NULL")
-                }
-            })
-            createTableSQL.append(", PRIMARY KEY(\(primaryKeyName))")
-            createTableSQL.append(");")
+                failed = true
+                break
+            }
             
-//            print("[SQL]: \(createTableSQL)")
-            let createResult = db.executeUpdate(createTableSQL, withArgumentsIn: [])
-            if createResult {
-                // insert table name and type name
-                let replaceSQL = "REPLACE INTO \(kORMTableName) (\(kTableNameColumnName), \(kObjectTypeNameColumnName)) values (?, ?);"
-                print("[SQL]: \(replaceSQL)")
-                let replaceResult = db.executeUpdate(replaceSQL, withArgumentsIn: [tableName, objectTypeName])
-                if !replaceResult {
-                    print("[ERROR]: write database record failed")
-                    return result
-                }
-            } else {
-                print("[ERROR]: create database table failed")
+            guard !failed else {
                 return result
             }
+            
+            let newTableInfo = CICOORMTableInfoModel.init(tableName: tableName,
+                                                          objectTypeName: objectTypeName,
+                                                          objectTypeVersion: objectTypeVersion)
+            result = self.writeORMTableInfo(db: db, tableInfo: newTableInfo)
+            
+            return result
         }
         
         result = true
+        
         return result
+    }
+    
+    private func isTableExist(db: FMDatabase, objectTypeName: String, tableName: String) -> Bool {
+        if let _ = self.readORMTableInfo(db: db, objectTypeName: objectTypeName, tableName: tableName) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func createTable<T: Codable>(db: FMDatabase, objectType: T.Type, tableName: String, primaryKeyName: String, objectTypeVersion: Int) -> Bool {
+        var result = false
+        
+        let objectTypeName = "\(objectType)"
+        
+        let sqliteTypeDic = CICOSQLiteTypeDecoder.allTypeProperties(of: objectType)
+        //            print("\nsqliteTypes: \(sqliteTypes)")
+        
+        var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
+        var isFirst = true
+        sqliteTypeDic.forEach({ (name, sqliteType) in
+            if isFirst {
+                isFirst = false
+                createTableSQL.append("\(name)")
+            } else {
+                createTableSQL.append(", \(name)")
+            }
+            
+            createTableSQL.append(" \(sqliteType.sqliteType.rawValue)")
+            
+            if name == primaryKeyName {
+                createTableSQL.append(" NOT NULL")
+            }
+        })
+        createTableSQL.append(", PRIMARY KEY(\(primaryKeyName))")
+        createTableSQL.append(");")
+        
+        //            print("[SQL]: \(createTableSQL)")
+        result = db.executeUpdate(createTableSQL, withArgumentsIn: [])
+        if result {
+            let tableInfo = CICOORMTableInfoModel.init(tableName: tableName, objectTypeName: objectTypeName, objectTypeVersion: objectTypeVersion)
+            result = self.writeORMTableInfo(db: db, tableInfo: tableInfo)
+        } else {
+            print("[ERROR]: SQL = \(createTableSQL)")
+        }
+
+        return result
+    }
+    
+    private func queryTableColumns(db: FMDatabase, tableName: String) -> Set<String> {
+        var columnSet = Set<String>.init()
+        
+        let querySQL = "PRAGMA table_info(\(tableName));"
+        
+        guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: []) else {
+            return columnSet
+        }
+        
+        while resultSet.next() {
+            if let name = resultSet.string(forColumn: "name") {
+                columnSet.insert(name)
+            }
+        }
+        
+        resultSet.close()
+        
+//        print("\(columnSet)")
+        
+        return columnSet
     }
     
     private func replaceRecord<T: Codable>(db: FMDatabase, tableName: String, object: T) -> Bool {
@@ -461,7 +588,7 @@ open class CICOORMDBService {
 //        print("[SQL]: \(replaceSQL)")
         result = db.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
         if !result {
-            print("[ERROR]: write database record failed")
+            print("[ERROR]: SQL = \(replaceSQL)")
         }
         
         return result
@@ -478,14 +605,13 @@ open class CICOORMDBService {
 //        print("[SQL]: \(deleteSQL)")
         result = db.executeUpdate(deleteSQL, withArgumentsIn: [primaryKeyValue])
         if !result {
-            print("[ERROR]: delete database record failed")
+            print("[ERROR]: SQL = \(deleteSQL)")
         }
         
         return result
     }
     
-    private func dropTable(db: FMDatabase,
-                           tableName: String) -> Bool {
+    private func dropTable(db: FMDatabase, tableName: String) -> Bool {
         var result = false
         
         let dropSQL = "DROP TABLE \(tableName);"
@@ -493,7 +619,7 @@ open class CICOORMDBService {
 //        print("[SQL]: \(dropSQL)")
         result = db.executeUpdate(dropSQL, withArgumentsIn: [])
         if !result {
-            print("[ERROR]: drop table failed")
+            print("[ERROR]: SQL = \(dropSQL)")
         }
         
         return result

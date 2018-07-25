@@ -174,8 +174,8 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
         return nil;
     }
     
-    if (fileSize <= headIgnoreLength + tailIgnoreLength) {
-        NSLog(@"[WARNING]: no data left after ignoring, reset ignoring to zero\nfileSize = %lld, headIgnoreLength = %lld, tailIgnoreLength = %lld", fileSize, headIgnoreLength, tailIgnoreLength);
+    if (fileSize - headIgnoreLength - tailIgnoreLength < kBufferLength ) {
+        NSLog(@"[WARNING]: few data left after ignoring, reset ignoring to zero\nfileSize = %lld, headIgnoreLength = %lld, tailIgnoreLength = %lld", fileSize, headIgnoreLength, tailIgnoreLength);
         headIgnoreLength = 0;
         tailIgnoreLength = 0;
     }
@@ -230,6 +230,10 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     } while (loop);
     
     [fileHandle closeFile];
+    
+    const void *pSizeData = &fileSize;
+    CC_LONG sizelength = sizeof(fileSize);
+    CC_MD5_Update(&context, pSizeData, sizelength);
     
     unsigned char digest[CC_MD5_DIGEST_LENGTH];
     CC_MD5_Final(digest, &context);

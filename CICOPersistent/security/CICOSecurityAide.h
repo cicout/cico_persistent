@@ -22,7 +22,7 @@
 /**
  *  生成给定长度的随机二进制数据
  *
- *  @param length 给定长度，单位zijie（Byte）
+ *  @param length 给定长度，单位字节（Byte）
  *
  *  @return 随机二进制数据
  */

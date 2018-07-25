@@ -9,11 +9,16 @@
 import Foundation
 
 public protocol CICOORMProtocol {
-    static func cicoORMPrimaryKeyName() -> String
+    static func cicoORMPrimaryKeyColumnName() -> String
+    static func cicoORMIndexColumnNameArray() -> [String]?
     static func cicoORMObjectTypeVersion() -> Int
 }
 
 public extension CICOORMProtocol {
+    static func cicoORMIndexColumnNameArray() -> [String]? {
+        return nil
+    }
+    
     static func cicoORMObjectTypeVersion() -> Int {
         return 1
     }

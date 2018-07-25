@@ -49,11 +49,15 @@ extension TCodableClass {
 }
 
 extension TCodableClass: CICOORMProtocol {
-    static func cicoORMPrimaryKeyName() -> String {
+    static func cicoORMPrimaryKeyColumnName() -> String {
         return CodingKeys.name.stringValue
     }
     
+    static func cicoORMIndexColumnNameArray() -> [String]? {
+        return [CodingKeys.dateValue.stringValue, CodingKeys.intValue.stringValue]
+    }
+    
     static func cicoORMObjectTypeVersion() -> Int {
-        return 2
+        return 7
     }
 }

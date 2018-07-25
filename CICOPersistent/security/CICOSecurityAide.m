@@ -12,6 +12,10 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import <Security/Security.h>
 
+#pragma mark -
+
+static const NSUInteger kBufferLength = 1024 * 1024;
+
 #pragma mark - FUNCTION DECLARATION
 
 OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
@@ -29,7 +33,9 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
 + (NSData *)randomDataOfLength:(size_t)length {
     NSMutableData *data = [NSMutableData dataWithLength:length];
     int result = SecRandomCopyBytes(kSecRandomDefault, length, data.mutableBytes);
-    NSAssert(result == 0, @"Unable to generate random bytes.");
+    if (0 != result) {
+        NSAssert(NO, @"Unable to generate random bytes.");
+    }
     return data;
 }
 
@@ -79,6 +85,164 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
 + (NSString *)md5HashStringWithString:(NSString *)sourceString {
     NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
     NSString *string = [self md5HashStringWithData:sourceData];
+    return string;
+}
+
+#pragma mark - FILE MD5
+
++ (NSData *)fileMD5HashDataWithURL:(NSURL *)fileURL {
+    NSString *path = fileURL.path;
+    BOOL isDir = NO;
+    BOOL fileExist = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir];
+    if (!fileExist || isDir) {
+        NSLog(@"[WARNING]: file is not exists\npath: %@", path);
+        return nil;
+    }
+    
+    NSError *error = nil;
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingFromURL:fileURL error:&error];
+    if (error) {
+        NSLog(@"[ERROR]: read file failed\nerror: %@", error);
+        return nil;
+    }
+    
+    CC_MD5_CTX context;
+    CC_MD5_Init(&context);
+    
+    BOOL loop = YES;
+    do {
+        @autoreleasepool {
+            NSData *data = [fileHandle readDataOfLength:kBufferLength];
+            if (!data) {
+                loop = NO;
+                continue;
+            }
+            
+            const void *pData = [data bytes];
+            CC_LONG length = (CC_LONG)(data.length);
+            CC_MD5_Update(&context, pData, length);
+        }
+    } while (loop);
+    
+    [fileHandle closeFile];
+    
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5_Final(digest, &context);
+    
+    NSData *data = [NSData dataWithBytes:digest length:CC_MD5_DIGEST_LENGTH];
+    return data;
+}
+
++ (NSString *)fileMD5HashStringWithURL:(NSURL *)fileURL {
+    NSData *data = [self fileMD5HashDataWithURL:fileURL];
+    NSString *string = [self hexStringWithData:data];
+    return string;
+}
+
++ (NSData *)fastFileHashDataWithURL:(NSURL *)fileURL {
+    return [self fastFileHashDataWithURL:fileURL headIgnoreLength:0 tailIgnoreLength:0];
+}
+
++ (NSString *)fastFileHashStringWithURL:(NSURL *)fileURL {
+    NSData *data = [self fastFileHashDataWithURL:fileURL];
+    NSString *string = [self hexStringWithData:data];
+    return string;
+}
+
++ (NSData *)fastFileHashDataWithURL:(NSURL *)fileURL
+                   headIgnoreLength:(unsigned long long)headIgnoreLength
+                   tailIgnoreLength:(unsigned long long)tailIgnoreLength {
+    NSString *path = fileURL.path;
+    BOOL isDir = NO;
+    BOOL fileExist = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir];
+    if (!fileExist || isDir) {
+        NSLog(@"[WARNING]: file is not exists\npath: %@", path);
+        return nil;
+    }
+    
+    NSError *error = nil;
+    
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:&error];
+    if (error) {
+        NSLog(@"[ERROR]: read file attributes failed\nerror: %@", error);
+        return nil;
+    }
+    
+    unsigned long long fileSize = [attributes fileSize];
+    if (0 == fileSize) {
+        NSLog(@"[ERROR]: empty file\npath: %@", path);
+        return nil;
+    }
+    
+    if (fileSize <= headIgnoreLength + tailIgnoreLength) {
+        NSLog(@"[WARNING]: no data left after ignoring, reset ignoring to zero\nfileSize = %lld, headIgnoreLength = %lld, tailIgnoreLength = %lld", fileSize, headIgnoreLength, tailIgnoreLength);
+        headIgnoreLength = 0;
+        tailIgnoreLength = 0;
+    }
+    
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingFromURL:fileURL error:&error];
+    if (error) {
+        NSLog(@"[ERROR]: read file failed\nerror: %@", error);
+        return nil;
+    }
+    
+    [fileHandle seekToFileOffset:headIgnoreLength];
+    unsigned long long finalOffset = fileSize - tailIgnoreLength - kBufferLength;
+    BOOL readAll = (fileSize - headIgnoreLength - tailIgnoreLength < 4 * kBufferLength)? YES : NO;
+    
+    CC_MD5_CTX context;
+    CC_MD5_Init(&context);
+    
+    int readTimes = 0;
+    BOOL loop = YES;
+    do {
+        @autoreleasepool {
+            NSUInteger readLength = kBufferLength;
+            unsigned long long currentOffset = [fileHandle offsetInFile];
+            if (finalOffset <= currentOffset) {
+                readLength = finalOffset + kBufferLength - currentOffset;
+                loop = NO;
+            }
+            
+            NSData *data = [fileHandle readDataOfLength:readLength];
+            if (!data) {
+                loop = NO;
+                continue;
+            }
+            
+            const void *pData = [data bytes];
+            CC_LONG length = (CC_LONG)(data.length);
+            CC_MD5_Update(&context, pData, length);
+            
+            if (readAll) {
+                continue;
+            }
+            
+            ++readTimes;
+            
+            if (1 == readTimes) {
+                unsigned long long nextOffset = (headIgnoreLength + fileSize - tailIgnoreLength) / 2 - kBufferLength / 2;
+                [fileHandle seekToFileOffset:nextOffset];
+            } else if (2 == readTimes) {
+                [fileHandle seekToFileOffset:finalOffset];
+            }
+        }
+    } while (loop);
+    
+    [fileHandle closeFile];
+    
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5_Final(digest, &context);
+    
+    NSData *data = [NSData dataWithBytes:digest length:CC_MD5_DIGEST_LENGTH];
+    return data;
+}
+
++ (NSString *)fastFileHashStringWithURL:(NSURL *)fileURL
+                       headIgnoreLength:(unsigned long long)headIgnoreLength
+                       tailIgnoreLength:(unsigned long long)tailIgnoreLength {
+    NSData *data = [self fastFileHashDataWithURL:fileURL headIgnoreLength:headIgnoreLength tailIgnoreLength:headIgnoreLength];
+    NSString *string = [self hexStringWithData:data];
     return string;
 }
 
@@ -185,23 +349,13 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
 #pragma mark - URL ENCODE/DECODE
 
 + (NSString *)urlEncodeWithString:(NSString *)sourceString {
-    CFStringRef encodedCFString =
-    CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                            (__bridge CFStringRef)sourceString,
-                                            NULL,
-                                            CFSTR("!*'();:@&=+$,/?%#[]"),
-                                            kCFStringEncodingUTF8);
-    NSString *encodedString = CFBridgingRelease(encodedCFString);
+    NSString *encodedString =
+    [sourceString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     return encodedString;
 }
 
 + (NSString *)urlDecodeWithString:(NSString *)encodedString {
-    CFStringRef sourceCFString =
-    CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
-                                                            (__bridge CFStringRef)encodedString,
-                                                            CFSTR("!*'();:@&=+$,/?%#[]"),
-                                                            kCFStringEncodingUTF8);
-    NSString *sourceString = CFBridgingRelease(sourceCFString);
+    NSString *sourceString = [encodedString stringByRemovingPercentEncoding];
     return sourceString;
 }
 
@@ -338,7 +492,9 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
                                          sourceBufferSize,
                                          encryptedData.mutableBytes,
                                          &publicKeyBufferSize);
-    NSAssert(sanityCheck == noErr, @"Error encrypting, OSStatus == %d.", (int)sanityCheck);
+    if (noErr != sanityCheck) {
+        NSAssert(NO, @"Error encrypting, OSStatus == %d.", (int)sanityCheck);
+    }
     [encryptedData setLength:publicKeyBufferSize];
 
     return [encryptedData copy];
@@ -354,7 +510,9 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
                                          privateKeyBufferSize,
                                          [decryptedData mutableBytes],
                                          &encryptedBufferSize);
-    NSAssert(sanityCheck == noErr, @"Error decrypting, OSStatus == %d.", (int)sanityCheck);
+    if (noErr != sanityCheck) {
+        NSAssert(NO, @"Error decrypting, OSStatus == %d.", (int)sanityCheck);
+    }
     [decryptedData setLength:encryptedBufferSize];
 
     return [decryptedData copy];

@@ -22,7 +22,7 @@
 /**
  *  生成给定长度的随机二进制数据
  *
- *  @param length 给定长度，单位字节（Byte）
+ *  @param length 给定长度，单位zijie（Byte）
  *
  *  @return 随机二进制数据
  */
@@ -74,6 +74,24 @@
  *  @return MD5十六进制小写字符串
  */
 + (NSString *)md5HashStringWithString:(NSString *)sourceString;
+
+#pragma mark - FILE MD5
+
++ (NSData *)fileMD5HashDataWithURL:(NSURL *)fileURL;
+
++ (NSString *)fileMD5HashStringWithURL:(NSURL *)fileURL;
+
++ (NSData *)fastFileHashDataWithURL:(NSURL *)fileURL;
+
++ (NSString *)fastFileHashStringWithURL:(NSURL *)fileURL;
+
++ (NSData *)fastFileHashDataWithURL:(NSURL *)fileURL
+                   headIgnoreLength:(unsigned long long)headIgnoreLength
+                   tailIgnoreLength:(unsigned long long)tailIgnoreLength;
+
++ (NSString *)fastFileHashStringWithURL:(NSURL *)fileURL
+                       headIgnoreLength:(unsigned long long)headIgnoreLength
+                       tailIgnoreLength:(unsigned long long)tailIgnoreLength;
 
 #pragma mark - SHA1
 

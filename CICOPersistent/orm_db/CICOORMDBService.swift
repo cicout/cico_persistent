@@ -404,6 +404,8 @@ open class CICOORMDBService {
     private func createORMTableInfoTableIfNotExists(db: FMDatabase) -> Bool {
         let createTableSQL =
         "CREATE TABLE IF NOT EXISTS \(kORMTableName) (\(kTableNameColumnName) TEXT NOT NULL, \(kObjectTypeNameColumnName) TEXT NOT NULL, \(kObjectTypeVersionColumnName) INTEGER NOT NULL, PRIMARY KEY(\(kTableNameColumnName)));"
+        
+         //        print("[SQL]: \(createTableSQL)")
         let result = db.executeUpdate(createTableSQL, withArgumentsIn: [])
         if !result  {
             print("[ERROR]: SQL = \(createTableSQL)")
@@ -604,16 +606,14 @@ open class CICOORMDBService {
         if let indexColumnNameArray = indexColumnNameArray {
             for indexColumnName in indexColumnNameArray {
                 let indexName = self.indexName(indexColumnName: indexColumnName, tableName: tableName)
-                let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(indexColumnName));"
-                //print("[SQL]: \(createIndexSQL)")
-                result = db.executeUpdate(createIndexSQL, withArgumentsIn: [])
+                result = self.createIndex(db: db, indexName: indexName, tableName: tableName, indexColumnName: indexColumnName)
                 if !result {
-                    print("[ERROR]: SQL = \(createIndexSQL)")
                     return result
                 }
             }
         }
         
+        // save table info
         let tableInfo = CICOORMTableInfoModel.init(tableName: tableName, objectTypeName: objectTypeName, objectTypeVersion: objectTypeVersion)
         result = self.writeORMTableInfo(db: db, tableInfo: tableInfo)
         
@@ -675,6 +675,7 @@ open class CICOORMDBService {
         
         //            print("[SQL]: \(querySQL)")
         guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: [primaryKeyValue]) else {
+            print("[ERROR]: SQL = \(querySQL)")
             return object
         }
         
@@ -723,6 +724,7 @@ open class CICOORMDBService {
         
         //            print("[SQL]: \(querySQL)")
         guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: argumentArray) else {
+            print("[ERROR]: SQL = \(querySQL)")
             return array
         }
         

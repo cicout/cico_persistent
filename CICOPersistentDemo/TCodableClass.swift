@@ -58,6 +58,6 @@ extension TCodableClass: CICOORMProtocol {
 //    }
     
     static func cicoORMObjectTypeVersion() -> Int {
-        return 7
+        return 8
     }
 }

@@ -117,6 +117,23 @@ class ViewController: UIViewController {
             print("[READ]: \(objectX)")
         }
         
+        // update
+        self.ormDBService?.updateObject(ofType: TCodableClass.self,
+                                        primaryKeyValue: "name",
+                                        customTableName: nil,
+                                        updateClosure: { (object) -> TCodableClass? in
+                                            guard let object = object else {
+                                                return nil
+                                            }
+                                            
+                                            print("object = \(object)")
+                                            object.name = "name_x"
+                                            return object
+        },
+                                        completionClosure: { (result) in
+                                            print("result = \(result)")
+        })
+        
         // write array
         var objectArray = [TCodableClass]()
         for i in 0..<50 {

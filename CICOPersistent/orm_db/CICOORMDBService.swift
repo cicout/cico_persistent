@@ -89,6 +89,22 @@ open class CICOORMDBService {
                                       objectTypeVersion: objectTypeVersion)
     }
     
+    open func updateObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+                                                      primaryKeyValue: Codable,
+                                                      customTableName: String? = nil,
+                                                      updateClosure: (T?) -> T?,
+                                                      completionClosure: ((Bool) -> Void)?) {
+        let tableName = self.tableName(objectType: objectType, customTableName: customTableName)
+        let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
+        
+        self.pUpdateObject(ofType: objectType,
+                           tableName: tableName,
+                           primaryKeyColumnName: primaryKeyColumnName,
+                           primaryKeyValue: primaryKeyValue,
+                           updateClosure: updateClosure,
+                           completionClosure: completionClosure)
+    }
+    
     open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil) -> Bool {
@@ -125,25 +141,17 @@ open class CICOORMDBService {
         var object: T? = nil
         
         let objectTypeName = "\(objectType)"
-//        print("\n[READ]:\nobjectType = \(objectType)\ntableName = \(tableName)\nprimaryKeyColumnName = \(primaryKeyColumnName)\nprimaryKeyValue = \(primaryKeyValue)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
                 return
             }
             
-            let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeyColumnName) = ? LIMIT 1;"
-            
-//            print("[SQL]: \(querySQL)")
-            guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: [primaryKeyValue]) else {
-                return
-            }
-            
-            if resultSet.next() {
-                object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, type: objectType)
-            }
-            
-            resultSet.close()
+            object = self.readObject(db: db,
+                                     objectType: objectType,
+                                     tableName: tableName,
+                                     primaryKeyColumnName: primaryKeyColumnName,
+                                     primaryKeyValue: primaryKeyValue)
         })
         
         return object
@@ -158,53 +166,20 @@ open class CICOORMDBService {
         var array: [T]? = nil
         
         let objectTypeName = "\(objectType)"
-//        print("\n[READ]:\nobjectType = \(objectType)\ntableName = \(tableName)")
+        //        print("\n[READ]:\nobjectType = \(objectType)\ntableName = \(tableName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
                 return
             }
             
-            var querySQL = "SELECT * FROM \(tableName)"
-            var argumentArray = [Any]()
-            
-            if let whereString = whereString {
-                querySQL.append(" \(whereString)")
-            }
-            
-            if let orderByName = orderByName {
-                querySQL.append(" ORDER BY '\(orderByName)'")
-                if descending {
-                    querySQL.append(" DESC")
-                } else {
-                    querySQL.append(" ASC")
-                }
-            }
-            
-            if let limit = limit {
-                querySQL.append(" LIMIT ?")
-                argumentArray.append(limit)
-            }
-            
-            querySQL.append(";")
-            
-//            print("[SQL]: \(querySQL)")
-            guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: argumentArray) else {
-                return
-            }
-            
-            defer {
-                resultSet.close()
-            }
-            
-            var objectArray = [T]()
-            while resultSet.next() {
-                guard let object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, type: objectType) else {
-                    return
-                }
-                objectArray.append(object)
-            }
-            array = objectArray
+            array = self.readObjectArray(db: db,
+                                         objectType: objectType,
+                                         tableName: tableName,
+                                         whereString: whereString,
+                                         orderByName: orderByName,
+                                         descending: descending,
+                                         limit: limit)
         })
         
         return array
@@ -218,7 +193,7 @@ open class CICOORMDBService {
         var result = false
         
         let objectType = T.self
-//        print("\n[WRITE]:\nobjectTypeName = \(objectType)\ntableName = \(tableName)\nprimaryKeyColumnName = \(primaryKeyColumnName)")
+        //        print("\n[WRITE]:\nobjectTypeName = \(objectType)\ntableName = \(tableName)\nprimaryKeyColumnName = \(primaryKeyColumnName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             // create table if not exist and upgrade table if needed
@@ -254,7 +229,6 @@ open class CICOORMDBService {
         var result = false
         
         let objectType = T.self
-//        print("\n[WRITE]:\nobjectTypeName = \(objectType)\ntableName = \(tableName)\nprimaryKeyColumnName = \(primaryKeyColumnName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             // create table if not exist and upgrade table if needed
@@ -284,6 +258,36 @@ open class CICOORMDBService {
         return result
     }
     
+    private func pUpdateObject<T: Codable>(ofType objectType: T.Type,
+                                           tableName: String,
+                                           primaryKeyColumnName: String,
+                                           primaryKeyValue: Codable,
+                                           updateClosure: (T?) -> T?,
+                                           completionClosure: ((Bool) -> Void)?) {
+        let objectTypeName = "\(objectType)"
+        
+        self.dbQueue?.inTransaction({ (db, rollback) in
+            var object: T? = nil
+            
+            if self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) {
+                object = self.readObject(db: db,
+                                         objectType: objectType,
+                                         tableName: tableName,
+                                         primaryKeyColumnName: primaryKeyColumnName,
+                                         primaryKeyValue: primaryKeyValue)
+            }
+            
+            if let newObject = updateClosure(object) {
+                let result = self.replaceRecord(db: db, tableName: tableName, object: newObject)
+                if !result {
+                    rollback.pointee = true
+                }
+            } else {
+                completionClosure?(true)
+            }
+        })
+    }
+    
     private func pRemoveObject<T: Codable>(ofType objectType: T.Type,
                                            tableName: String,
                                            primaryKeyColumnName: String,
@@ -291,7 +295,6 @@ open class CICOORMDBService {
         var result = false
         
         let objectTypeName = "\(objectType)"
-//        print("\n[REMOVE]:\nobjectType = \(objectType)\ntableName = \(tableName)\nprimaryKeyColumnName = \(primaryKeyColumnName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
@@ -316,7 +319,6 @@ open class CICOORMDBService {
         var result = false
         
         let objectTypeName = "\(objectType)"
-//        print("\n[REMOVE]:\nobjectType = \(objectType)\ntableName = \(tableName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
@@ -364,6 +366,20 @@ open class CICOORMDBService {
         }
     }
     
+    private func tableName<T>(objectType: T.Type, customTableName: String? = nil) -> String {
+        let tableName: String
+        if let customTableName = customTableName {
+            tableName = customTableName
+        } else {
+            tableName = "table_\(objectType)"
+        }
+        return tableName
+    }
+    
+    private func indexName(indexColumnName: String, tableName: String) -> String {
+        return "index_\(indexColumnName)_of_\(tableName)"
+    }
+    
     private func createORMTableInfoTableIfNotExists(db: FMDatabase) -> Bool {
         let createTableSQL =
         "CREATE TABLE IF NOT EXISTS \(kORMTableName) (\(kTableNameColumnName) TEXT NOT NULL, \(kObjectTypeNameColumnName) TEXT NOT NULL, \(kObjectTypeVersionColumnName) INTEGER NOT NULL, PRIMARY KEY(\(kTableNameColumnName)));"
@@ -406,7 +422,7 @@ open class CICOORMDBService {
         
         let replaceSQL = "REPLACE INTO \(kORMTableName) (\(kTableNameColumnName), \(kObjectTypeNameColumnName), \(kObjectTypeVersionColumnName)) values (?, ?, ?);"
         let argumentArray: [Any] = [tableInfo.tableName, tableInfo.objectTypeName, tableInfo.objectTypeVersion]
-
+        
         //        print("[SQL]: \(replaceSQL)")
         result = db.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
         if !result {
@@ -435,11 +451,11 @@ open class CICOORMDBService {
         
         guard let tableInfo = self.readORMTableInfo(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
             result = self.createTableAndIndexs(db: db,
-                                      objectType: objectType,
-                                      tableName: tableName,
-                                      primaryKeyColumnName: primaryKeyColumnName,
-                                      indexColumnNameArray: indexColumnNameArray,
-                                      objectTypeVersion: objectTypeVersion)
+                                               objectType: objectType,
+                                               tableName: tableName,
+                                               primaryKeyColumnName: primaryKeyColumnName,
+                                               indexColumnNameArray: indexColumnNameArray,
+                                               objectTypeVersion: objectTypeVersion)
             return result
         }
         
@@ -450,23 +466,15 @@ open class CICOORMDBService {
             let newColumnSet = Set<String>.init(sqliteTypeDic.keys)
             let needAddColumnSet = newColumnSet.subtracting(columnSet)
             
-            for name in needAddColumnSet {
-                if let sqliteType = sqliteTypeDic[name] {
-                    let alterSQL = "ALTER TABLE \(tableName) ADD COLUMN \(name) \(sqliteType.sqliteType.rawValue);"
-                    result = db.executeUpdate(alterSQL, withArgumentsIn: [])
-                    if !result {
-                        print("[ERROR]: SQL = \(alterSQL)")
-                        return result
-                    }
+            for columnName in needAddColumnSet {
+                let sqliteType = sqliteTypeDic[columnName]!
+                result = self.addColumn(db: db,
+                                        tableName: tableName,
+                                        columnName: columnName,
+                                        columnType: sqliteType.sqliteType.rawValue)
+                if !result {
+                    return result
                 }
-            }
-            
-            let newTableInfo = CICOORMTableInfoModel.init(tableName: tableName,
-                                                          objectTypeName: objectTypeName,
-                                                          objectTypeVersion: objectTypeVersion)
-            result = self.writeORMTableInfo(db: db, tableInfo: newTableInfo)
-            if !result {
-                return result
             }
             
             // upgrade indexs
@@ -491,25 +499,28 @@ open class CICOORMDBService {
             let needAddIndexSet = newIndexSet.subtracting(indexSet)
             for indexName in needAddIndexSet {
                 let indexColumnName = newIndexDic[indexName]!
-                let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(indexColumnName));"
-                //print("[SQL]: \(createIndexSQL)")
-                result = db.executeUpdate(createIndexSQL, withArgumentsIn: [])
+                result = self.createIndex(db: db,
+                                          indexName: indexName,
+                                          tableName: tableName,
+                                          indexColumnName: indexColumnName)
                 if !result {
-                    print("[ERROR]: SQL = \(createIndexSQL)")
                     return result
                 }
             }
             
             let needDeleteIndexSet = indexSet.subtracting(newIndexSet)
             for indexName in needDeleteIndexSet {
-                let dropIndexSQL = "DROP INDEX \(indexName);"
-                //print("[SQL]: \(dropIndexSQL)")
-                result = db.executeUpdate(dropIndexSQL, withArgumentsIn: [])
+                result = self.dropIndex(db: db, indexName: indexName)
                 if !result {
-                    print("[ERROR]: SQL = \(dropIndexSQL)")
                     return result
                 }
             }
+            
+            // update objectTypeVersion
+            let newTableInfo = CICOORMTableInfoModel.init(tableName: tableName,
+                                                          objectTypeName: objectTypeName,
+                                                          objectTypeVersion: objectTypeVersion)
+            result = self.writeORMTableInfo(db: db, tableInfo: newTableInfo)
             
             return result
         }
@@ -605,7 +616,7 @@ open class CICOORMDBService {
         
         resultSet.close()
         
-//        print("\(columnSet)")
+        //        print("\(columnSet)")
         
         return columnSet
     }
@@ -632,6 +643,84 @@ open class CICOORMDBService {
         return indexSet
     }
     
+    private func readObject<T: Codable>(db: FMDatabase,
+                                        objectType: T.Type,
+                                        tableName: String,
+                                        primaryKeyColumnName: String,
+                                        primaryKeyValue: Codable) -> T? {
+        var object: T? = nil
+        
+        let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeyColumnName) = ? LIMIT 1;"
+        
+        //            print("[SQL]: \(querySQL)")
+        guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: [primaryKeyValue]) else {
+            return object
+        }
+        
+        if resultSet.next() {
+            object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, type: objectType)
+        }
+        
+        resultSet.close()
+        
+        return object
+    }
+    
+    private func readObjectArray<T: Codable>(db: FMDatabase,
+                                             objectType: T.Type,
+                                             tableName: String,
+                                             whereString: String? = nil,
+                                             orderByName: String? = nil,
+                                             descending: Bool = true,
+                                             limit: Int? = nil) -> [T]? {
+        var array: [T]? = nil
+        
+        let objectTypeName = "\(objectType)"
+        
+        var querySQL = "SELECT * FROM \(tableName)"
+        var argumentArray = [Any]()
+        
+        if let whereString = whereString {
+            querySQL.append(" \(whereString)")
+        }
+        
+        if let orderByName = orderByName {
+            querySQL.append(" ORDER BY '\(orderByName)'")
+            if descending {
+                querySQL.append(" DESC")
+            } else {
+                querySQL.append(" ASC")
+            }
+        }
+        
+        if let limit = limit {
+            querySQL.append(" LIMIT ?")
+            argumentArray.append(limit)
+        }
+        
+        querySQL.append(";")
+        
+        //            print("[SQL]: \(querySQL)")
+        guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: argumentArray) else {
+            return array
+        }
+        
+        defer {
+            resultSet.close()
+        }
+        
+        var tempArray = [T]()
+        while resultSet.next() {
+            guard let object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, type: objectType) else {
+                return array
+            }
+            tempArray.append(object)
+        }
+        array = tempArray
+        
+        return array
+    }
+    
     private func replaceRecord<T: Codable>(db: FMDatabase, tableName: String, object: T) -> Bool {
         var result = false
         
@@ -642,7 +731,7 @@ open class CICOORMDBService {
             return result
         }
         
-//        print("[SQL]: \(replaceSQL)")
+        //        print("[SQL]: \(replaceSQL)")
         result = db.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
         if !result {
             print("[ERROR]: SQL = \(replaceSQL)")
@@ -659,7 +748,7 @@ open class CICOORMDBService {
         
         let deleteSQL = "DELETE FROM \(tableName) WHERE \(primaryKeyColumnName) = ?;"
         
-//        print("[SQL]: \(deleteSQL)")
+        //        print("[SQL]: \(deleteSQL)")
         result = db.executeUpdate(deleteSQL, withArgumentsIn: [primaryKeyValue])
         if !result {
             print("[ERROR]: SQL = \(deleteSQL)")
@@ -673,7 +762,7 @@ open class CICOORMDBService {
         
         let dropSQL = "DROP TABLE \(tableName);"
         
-//        print("[SQL]: \(dropSQL)")
+        //        print("[SQL]: \(dropSQL)")
         result = db.executeUpdate(dropSQL, withArgumentsIn: [])
         if !result {
             print("[ERROR]: SQL = \(dropSQL)")
@@ -682,17 +771,39 @@ open class CICOORMDBService {
         return result
     }
     
-    private func tableName<T>(objectType: T.Type, customTableName: String? = nil) -> String {
-        let tableName: String
-        if let customTableName = customTableName {
-            tableName = customTableName
-        } else {
-            tableName = "table_\(objectType)"
+    private func addColumn(db: FMDatabase, tableName: String, columnName: String, columnType: String) -> Bool {
+        let alterSQL = "ALTER TABLE \(tableName) ADD COLUMN \(columnName) \(columnType);"
+        
+        //print("[SQL]: \(alterSQL)")
+        let result = db.executeUpdate(alterSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: SQL = \(alterSQL)")
         }
-        return tableName
+        
+        return result
     }
     
-    private func indexName(indexColumnName: String, tableName: String) -> String {
-        return "index_\(indexColumnName)_of_\(tableName)"
+    private func createIndex(db: FMDatabase, indexName: String, tableName: String, indexColumnName: String) -> Bool {
+        let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(indexColumnName));"
+        
+        //print("[SQL]: \(createIndexSQL)")
+        let result = db.executeUpdate(createIndexSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: SQL = \(createIndexSQL)")
+        }
+        
+        return result
+    }
+    
+    private func dropIndex(db: FMDatabase, indexName: String) -> Bool {
+        let dropIndexSQL = "DROP INDEX \(indexName);"
+        
+        //print("[SQL]: \(dropIndexSQL)")
+        let result = db.executeUpdate(dropIndexSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: SQL = \(dropIndexSQL)")
+        }
+        
+        return result
     }
 }

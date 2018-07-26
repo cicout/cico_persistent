@@ -96,11 +96,15 @@ open class CICOORMDBService {
                                                       completionClosure: ((Bool) -> Void)?) {
         let tableName = self.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
+        let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
+        let objectTypeVersion = T.cicoORMObjectTypeVersion()
         
         self.pUpdateObject(ofType: objectType,
                            tableName: tableName,
                            primaryKeyColumnName: primaryKeyColumnName,
                            primaryKeyValue: primaryKeyValue,
+                           indexColumnNameArray: indexColumnNameArray,
+                           objectTypeVersion: objectTypeVersion,
                            updateClosure: updateClosure,
                            completionClosure: completionClosure)
     }
@@ -166,7 +170,6 @@ open class CICOORMDBService {
         var array: [T]? = nil
         
         let objectTypeName = "\(objectType)"
-        //        print("\n[READ]:\nobjectType = \(objectType)\ntableName = \(tableName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             guard self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) else {
@@ -193,7 +196,6 @@ open class CICOORMDBService {
         var result = false
         
         let objectType = T.self
-        //        print("\n[WRITE]:\nobjectTypeName = \(objectType)\ntableName = \(tableName)\nprimaryKeyColumnName = \(primaryKeyColumnName)")
         
         self.dbQueue?.inTransaction({ (db, rollback) in
             // create table if not exist and upgrade table if needed
@@ -262,6 +264,8 @@ open class CICOORMDBService {
                                            tableName: String,
                                            primaryKeyColumnName: String,
                                            primaryKeyValue: Codable,
+                                           indexColumnNameArray: [String]?,
+                                           objectTypeVersion: Int,
                                            updateClosure: (T?) -> T?,
                                            completionClosure: ((Bool) -> Void)?) {
         let objectTypeName = "\(objectType)"
@@ -269,7 +273,8 @@ open class CICOORMDBService {
         self.dbQueue?.inTransaction({ (db, rollback) in
             var object: T? = nil
             
-            if self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName) {
+            let tableExist = self.isTableExist(db: db, objectTypeName: objectTypeName, tableName: tableName)
+            if tableExist {
                 object = self.readObject(db: db,
                                          objectType: objectType,
                                          tableName: tableName,
@@ -278,6 +283,22 @@ open class CICOORMDBService {
             }
             
             if let newObject = updateClosure(object) {
+                if !tableExist {
+                    // create table if not exist and upgrade table if needed
+                    let isTableReady =
+                        self.fixTableIfNeeded(db: db,
+                                              objectType: objectType,
+                                              tableName: tableName,
+                                              primaryKeyColumnName: primaryKeyColumnName,
+                                              indexColumnNameArray: indexColumnNameArray,
+                                              objectTypeVersion: objectTypeVersion)
+                    
+                    if !isTableReady {
+                        rollback.pointee = true
+                        return
+                    }
+                }
+                
                 let result = self.replaceRecord(db: db, tableName: tableName, object: newObject)
                 if !result {
                     rollback.pointee = true

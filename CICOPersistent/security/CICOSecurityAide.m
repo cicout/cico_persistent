@@ -174,7 +174,8 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
         return nil;
     }
     
-    if (fileSize - headIgnoreLength - tailIgnoreLength < kBufferLength ) {
+    if (headIgnoreLength + tailIgnoreLength > 0 &&
+        fileSize - headIgnoreLength - tailIgnoreLength < kBufferLength ) {
         NSLog(@"[WARNING]: few data left after ignoring, reset ignoring to zero\nfileSize = %lld, headIgnoreLength = %lld, tailIgnoreLength = %lld", fileSize, headIgnoreLength, tailIgnoreLength);
         headIgnoreLength = 0;
         tailIgnoreLength = 0;
@@ -200,8 +201,13 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
             NSUInteger readLength = kBufferLength;
             unsigned long long currentOffset = [fileHandle offsetInFile];
             if (finalOffset <= currentOffset) {
-                readLength = finalOffset + kBufferLength - currentOffset;
                 loop = NO;
+                long long needReadLength = finalOffset + kBufferLength - currentOffset;
+                if (needReadLength > 0) {
+                    readLength = needReadLength;
+                } else {
+                    continue;
+                }
             }
             
             NSData *data = [fileHandle readDataOfLength:readLength];

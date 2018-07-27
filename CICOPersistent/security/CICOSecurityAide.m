@@ -113,7 +113,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     do {
         @autoreleasepool {
             NSData *data = [fileHandle readDataOfLength:kBufferLength];
-            if (!data) {
+            if (data.length <= 0) {
                 loop = NO;
                 continue;
             }
@@ -188,7 +188,8 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     }
     
     [fileHandle seekToFileOffset:headIgnoreLength];
-    unsigned long long finalOffset = fileSize - tailIgnoreLength - kBufferLength;
+    long long offset = fileSize - tailIgnoreLength - kBufferLength;
+    unsigned long long finalOffset = (offset > 0) ? offset : 0;
     BOOL readAll = (fileSize - headIgnoreLength - tailIgnoreLength < 4 * kBufferLength)? YES : NO;
     
     CC_MD5_CTX context;
@@ -211,7 +212,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
             }
             
             NSData *data = [fileHandle readDataOfLength:readLength];
-            if (!data) {
+            if (data.length <= 0) {
                 loop = NO;
                 continue;
             }

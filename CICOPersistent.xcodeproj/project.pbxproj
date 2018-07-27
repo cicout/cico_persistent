@@ -59,6 +59,8 @@
 		E492B4DF20EC793500BC48A4 /* CICOAutoCodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; };
 		E492B4E020EC7BDB00BC48A4 /* CICOAutoCodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; };
 		E492B4E120EC7BDB00BC48A4 /* CICOAutoCodable.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E49F7CD6210AC18200CF24F0 /* CICOKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CD5210AC18200CF24F0 /* CICOKeyChainService.swift */; };
+		E49F7CD8210ACE8700CF24F0 /* CICOKVKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CD7210ACE8700CF24F0 /* CICOKVKeyChainService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +139,8 @@
 		E492B4B120EB188200BC48A4 /* CICOSQLiteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOSQLiteType.swift; sourceTree = "<group>"; };
 		E492B4DC20EC6FB200BC48A4 /* CICOSQLiteTypeDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CICOSQLiteTypeDecoder.swift; sourceTree = "<group>"; };
 		E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CICOAutoCodable.framework; path = Carthage/Build/iOS/CICOAutoCodable.framework; sourceTree = "<group>"; };
+		E49F7CD5210AC18200CF24F0 /* CICOKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKeyChainService.swift; sourceTree = "<group>"; };
+		E49F7CD7210ACE8700CF24F0 /* CICOKVKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKVKeyChainService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +190,7 @@
 		E41F763D20C8D2F300399E42 /* CICOPersistent */ = {
 			isa = PBXGroup;
 			children = (
+				E49F7CD3210AC14E00CF24F0 /* key_value_key_chain */,
 				E482ED0520CE1613001FF435 /* key_value_db */,
 				E482ED1220CF6902001FF435 /* key_value_file */,
 				E41F764D20C9222500399E42 /* main */,
@@ -322,6 +327,23 @@
 			path = orm_db;
 			sourceTree = "<group>";
 		};
+		E49F7CD3210AC14E00CF24F0 /* key_value_key_chain */ = {
+			isa = PBXGroup;
+			children = (
+				E49F7CD4210AC16200CF24F0 /* internal */,
+				E49F7CD7210ACE8700CF24F0 /* CICOKVKeyChainService.swift */,
+			);
+			path = key_value_key_chain;
+			sourceTree = "<group>";
+		};
+		E49F7CD4210AC16200CF24F0 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				E49F7CD5210AC18200CF24F0 /* CICOKeyChainService.swift */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -447,6 +469,7 @@
 				E42B66AB2102DD82006EBAC2 /* CICOCacheORMDBService.swift in Sources */,
 				E42B66A92102DD71006EBAC2 /* CICOPrivateORMDBService.swift in Sources */,
 				E42B66AD2102DD90006EBAC2 /* CICOTempORMDBService.swift in Sources */,
+				E49F7CD6210AC18200CF24F0 /* CICOKeyChainService.swift in Sources */,
 				E482ED0720CE167B001FF435 /* CICOKVDBService.swift in Sources */,
 				E41F767D20C93D3D00399E42 /* CICOCachePersistentService.swift in Sources */,
 				E42B66A42102CECE006EBAC2 /* CICOORMProtocol.swift in Sources */,
@@ -456,6 +479,7 @@
 				E41F767220C9327E00399E42 /* CICOPublicPersistentService.swift in Sources */,
 				E41F765420C92CAD00399E42 /* CICOPathAide.m in Sources */,
 				E482ED1C20CF6F57001FF435 /* CICOTempKVFileService.swift in Sources */,
+				E49F7CD8210ACE8700CF24F0 /* CICOKVKeyChainService.swift in Sources */,
 				E482ED1120CF6014001FF435 /* CICOTempKVDBService.swift in Sources */,
 				E41F767C20C93D3D00399E42 /* CICOTempPersistentService.swift in Sources */,
 				E492B4DD20EC6FB200BC48A4 /* CICOSQLiteTypeDecoder.swift in Sources */,

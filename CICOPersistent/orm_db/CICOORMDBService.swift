@@ -93,7 +93,7 @@ open class CICOORMDBService {
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil,
                                                       updateClosure: (T?) -> T?,
-                                                      completionClosure: ((Bool) -> Void)?) {
+                                                      completionClosure: ((Bool) -> Void)? = nil) {
         let tableName = self.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
         let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
@@ -282,29 +282,30 @@ open class CICOORMDBService {
                                          primaryKeyValue: primaryKeyValue)
             }
             
-            if let newObject = updateClosure(object) {
-                if !tableExist {
-                    // create table if not exist and upgrade table if needed
-                    let isTableReady =
-                        self.fixTableIfNeeded(db: db,
-                                              objectType: objectType,
-                                              tableName: tableName,
-                                              primaryKeyColumnName: primaryKeyColumnName,
-                                              indexColumnNameArray: indexColumnNameArray,
-                                              objectTypeVersion: objectTypeVersion)
-                    
-                    if !isTableReady {
-                        rollback.pointee = true
-                        return
-                    }
-                }
-                
-                let result = self.replaceRecord(db: db, tableName: tableName, object: newObject)
-                if !result {
-                    rollback.pointee = true
-                }
-            } else {
+            guard let newObject = updateClosure(object) else {
                 completionClosure?(true)
+                return
+            }
+            
+            if !tableExist {
+                // create table if not exist and upgrade table if needed
+                let isTableReady =
+                    self.fixTableIfNeeded(db: db,
+                                          objectType: objectType,
+                                          tableName: tableName,
+                                          primaryKeyColumnName: primaryKeyColumnName,
+                                          indexColumnNameArray: indexColumnNameArray,
+                                          objectTypeVersion: objectTypeVersion)
+                
+                if !isTableReady {
+                    rollback.pointee = true
+                    return
+                }
+            }
+            
+            let result = self.replaceRecord(db: db, tableName: tableName, object: newObject)
+            if !result {
+                rollback.pointee = true
             }
         })
     }

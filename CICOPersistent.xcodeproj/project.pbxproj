@@ -61,6 +61,7 @@
 		E492B4E120EC7BDB00BC48A4 /* CICOAutoCodable.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E49F7CD6210AC18200CF24F0 /* CICOKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CD5210AC18200CF24F0 /* CICOKeyChainService.swift */; };
 		E49F7CD8210ACE8700CF24F0 /* CICOKVKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CD7210ACE8700CF24F0 /* CICOKVKeyChainService.swift */; };
+		E49F7CF9210C447400CF24F0 /* CICOKVJSONAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CF8210C447400CF24F0 /* CICOKVJSONAide.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +143,7 @@
 		E49F7CD5210AC18200CF24F0 /* CICOKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKeyChainService.swift; sourceTree = "<group>"; };
 		E49F7CD7210ACE8700CF24F0 /* CICOKVKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKVKeyChainService.swift; sourceTree = "<group>"; };
 		E49F7CF6210C1CD800CF24F0 /* CICOPersistentDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CICOPersistentDemo.entitlements; sourceTree = "<group>"; };
+		E49F7CF8210C447400CF24F0 /* CICOKVJSONAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKVJSONAide.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +352,7 @@
 		E49F7CF7210C20EE00CF24F0 /* key_value_aide */ = {
 			isa = PBXGroup;
 			children = (
+				E49F7CF8210C447400CF24F0 /* CICOKVJSONAide.swift */,
 			);
 			path = key_value_aide;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				E42B66A42102CECE006EBAC2 /* CICOORMProtocol.swift in Sources */,
 				E41F764720C8D32A00399E42 /* CICOPersistentService.swift in Sources */,
 				E42B66A72102D996006EBAC2 /* CICOPublicORMDBService.swift in Sources */,
+				E49F7CF9210C447400CF24F0 /* CICOKVJSONAide.swift in Sources */,
 				E482ED1620CF6F2F001FF435 /* CICOPublicKVFileService.swift in Sources */,
 				E41F767220C9327E00399E42 /* CICOPublicPersistentService.swift in Sources */,
 				E41F765420C92CAD00399E42 /* CICOPathAide.m in Sources */,

@@ -28,7 +28,7 @@ open class CICOKVFileService {
         }
     }
     
-    open func readObject<T: Decodable>(_ type: T.Type, forKey userKey: String) -> T? {
+    open func readObject<T: Codable>(_ type: T.Type, forKey userKey: String) -> T? {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return nil
         }
@@ -38,7 +38,7 @@ open class CICOKVFileService {
         return self.urlFileService.readObject(type, fromFileURL: fileURL)
     }
     
-    open func writeObject<T: Encodable>(_ object: T, forKey userKey: String) -> Bool {
+    open func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false
         }

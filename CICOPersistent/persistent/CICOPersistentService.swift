@@ -68,11 +68,11 @@ open class CICOPersistentService {
      * Codable Key:Value Independent File Persistent
      ***********************************************/
     
-    open func readKVFileObject<T: Decodable>(_ type: T.Type, forKey userKey: String) -> T? {
+    open func readKVFileObject<T: Codable>(_ type: T.Type, forKey userKey: String) -> T? {
         return self.kvFileService.readObject(type, forKey: userKey)
     }
     
-    open func writeKVFileObject<T: Encodable>(_ object: T, forKey userKey: String) -> Bool {
+    open func writeKVFileObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         return self.kvFileService.writeObject(object, forKey: userKey)
     }
     
@@ -88,11 +88,11 @@ open class CICOPersistentService {
      * Codable Key:Value Database Persistent
      ****************************************/
     
-    open func readKVDBObject<T: Decodable>(_ type: T.Type, forKey userKey: String) -> T? {
+    open func readKVDBObject<T: Codable>(_ type: T.Type, forKey userKey: String) -> T? {
         return self.kvDBService.readObject(type, forKey: userKey)
     }
     
-    open func writeKVDBObject<T: Encodable>(_ object: T, forKey userKey: String) -> Bool {
+    open func writeKVDBObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         return self.kvDBService.writeObject(object, forKey: userKey)
     }
     

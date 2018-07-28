@@ -17,38 +17,29 @@ open class CICOURLKVFileService {
     
     public init() {}
     
-    open func readObject<T: Decodable>(_ type: T.Type, fromFileURL fileURL: URL) -> T? {
+    open func readObject<T: Codable>(_ type: T.Type, fromFileURL fileURL: URL) -> T? {
         guard let jsonData = self.readJSONData(fromFileURL: fileURL) else {
             return nil
         }
         
-        do {
-            let objectArray = try JSONDecoder().decode([T].self, from: jsonData)
-            return objectArray.first
-        } catch let error {
-            print("[JSON_DECODE_ERROR]: \(error)")
-            return nil
-        }
+        return CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: type)
     }
     
-    open func writeObject<T: Encodable>(_ object: T, toFileURL fileURL: URL) -> Bool {
-        do {
-            let jsonData = try JSONEncoder().encode([object])
-            return self.writeJSONData(jsonData, toFileURL: fileURL)
-        } catch let error {
-            print("[JSON_ENCODE_ERROR]: \(error)")
+    open func writeObject<T: Codable>(_ object: T, toFileURL fileURL: URL) -> Bool {
+        guard let jsonData = CICOKVJSONAide.transferObjectToJSONData(object) else {
             return false
         }
+        
+        return self.writeJSONData(jsonData, toFileURL: fileURL)
     }
     
     open func removeObject(forFileURL fileURL: URL) -> Bool {
-        do {
-            try FileManager.default.removeItem(at: fileURL)
-            return true
-        } catch let error {
-            print("[REMOVE_JSON_FILE_ERROR]: \(error)")
-            return false
+        self.fileLock.lock()
+        defer {
+            self.fileLock.unlock()
         }
+        
+        return CICOPathAide.removeFile(with: fileURL)
     }
 
     private func readJSONData(fromFileURL fileURL: URL) -> Data? {

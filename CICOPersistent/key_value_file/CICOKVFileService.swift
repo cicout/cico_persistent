@@ -48,6 +48,27 @@ open class CICOKVFileService {
         return self.urlFileService.writeObject(object, toFileURL: fileURL)
     }
     
+    open func updateObject<T: Codable>(_ objectType: T.Type,
+                                       forKey userKey: String,
+                                       updateClosure: (T?) -> T?,
+                                       completionClosure: ((Bool) -> Void)? = nil) {
+        guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
+            completionClosure?(false)
+            return
+        }
+        
+        let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
+        
+        self.urlFileService
+            .updateObject(objectType,
+                          fromFileURL: fileURL,
+                          updateClosure: { (object) -> T? in
+                            return updateClosure(object)
+            }) { (result) in
+                completionClosure?(result)
+        }
+    }
+    
     open func removeObject(forKey userKey: String) -> Bool {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false

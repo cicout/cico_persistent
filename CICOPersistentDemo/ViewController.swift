@@ -25,11 +25,11 @@ class ViewController: UIViewController {
     }
 
     @IBAction func testBtnAction(_ sender: Any) {
-//        self.doPersistentTest()
+        self.doPersistentTest()
 //        self.doKVFileTest()
 //        self.doKVDBTest()
 //        self.doORMDBTest()
-        self.doKVKeyChainTest()
+//        self.doKVKeyChainTest()
     }
     
     private func doPersistentTest() {

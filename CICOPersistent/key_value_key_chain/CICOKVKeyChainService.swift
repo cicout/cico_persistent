@@ -93,12 +93,15 @@ public class CICOKVKeyChainService {
         
         var object: T? = nil
         var exist = false
+        
+        // read
         if let encryptedData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
             exist = true
             let jsonData = self.decryptData(encryptedData: encryptedData)
             object = CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
         }
         
+        // update
         guard let newObject = updateClosure(object) else {
             result = true
             return
@@ -110,6 +113,7 @@ public class CICOKVKeyChainService {
         
         let newEncryptedData = self.encryptData(sourceData: newJSONData)
         
+        // write
         if exist {
             result = self.keyChainService.update(data: newEncryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         } else {

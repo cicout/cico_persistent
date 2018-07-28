@@ -53,6 +53,53 @@ open class CICOKVDBService {
         return self.writeJSONData(jsonData, forJSONKey: jsonKey)
     }
     
+    open func updateObject<T: Codable>(_ objectType: T.Type,
+                                       forKey userKey: String,
+                                       updateClosure: (T?) -> T?,
+                                       completionClosure: ((Bool) -> Void)? = nil) {
+        var result = false
+        defer {
+            completionClosure?(result)
+        }
+        
+        guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
+            return
+        }
+        
+        self.dbQueue?.inDatabase { (db) in
+            
+            var object: T? = nil
+            
+            // read
+            let querySQL = "SELECT * FROM \(kJSONTableName) WHERE \(kJSONKeyColumnName) = ? LIMIT 1;"
+            if let resultSet = db.executeQuery(querySQL, withArgumentsIn: [jsonKey]) {
+                if resultSet.next(),
+                    let jsonData = resultSet.data(forColumn: kJSONDataColumnName) {
+                    object = CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
+                }
+                resultSet.close()
+            }
+
+            // update
+            guard let newObject = updateClosure(object) else {
+                result = true
+                return
+            }
+            
+            guard let newJSONData = CICOKVJSONAide.transferObjectToJSONData(newObject) else {
+                return
+            }
+            
+            // write
+            let updateTime = Date().timeIntervalSinceReferenceDate
+            let updateSQL = "REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName), \(kJSONDataColumnName), \(kUpdateTimeColumnName)) VALUES (?, ?, ?);"
+            result = db.executeUpdate(updateSQL, withArgumentsIn: [jsonKey, newJSONData, updateTime])
+            if !result {
+                print("[ERROR]: SQL = \(updateSQL)")
+            }
+        }
+    }
+    
     open func removeObject(forKey userKey: String) -> Bool {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false
@@ -126,7 +173,7 @@ open class CICOKVDBService {
         var result = false
         
         self.dbQueue?.inDatabase { (db) in
-            let updateTime = Date().timeIntervalSince1970
+            let updateTime = Date().timeIntervalSinceReferenceDate
 //            print("write time \(updateTime)")
             let updateSQL = "REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName), \(kJSONDataColumnName), \(kUpdateTimeColumnName)) VALUES (?, ?, ?);"
             result = db.executeUpdate(updateSQL, withArgumentsIn: [jsonKey, jsonData, updateTime])

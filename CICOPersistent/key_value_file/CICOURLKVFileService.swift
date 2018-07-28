@@ -49,26 +49,30 @@ open class CICOURLKVFileService {
             return nil
         }
         
-        do {
-            self.fileLock.lock()
-            let jsonData = try Data.init(contentsOf: fileURL)
+        self.fileLock.lock()
+        defer {
             self.fileLock.unlock()
+        }
+        
+        do {
+            let jsonData = try Data.init(contentsOf: fileURL)
             return jsonData
         } catch let error {
-            self.fileLock.unlock()
             print("[READ_JSON_FILE_ERROR]: \(error)")
             return nil
         }
     }
     
     private func writeJSONData(_ jsonData: Data, toFileURL fileURL: URL) -> Bool {
-        do {
-            self.fileLock.lock()
-            try jsonData.write(to: fileURL, options: .atomic)
+        self.fileLock.lock()
+        defer {
             self.fileLock.unlock()
+        }
+        
+        do {
+            try jsonData.write(to: fileURL, options: .atomic)
             return true
         } catch let error {
-            self.fileLock.unlock()
             print("[WRITE_JSON_FILE_ERROR]: \(error)")
             return false
         }

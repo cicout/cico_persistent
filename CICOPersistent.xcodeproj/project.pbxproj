@@ -191,6 +191,7 @@
 		E41F763D20C8D2F300399E42 /* CICOPersistent */ = {
 			isa = PBXGroup;
 			children = (
+				E49F7CF7210C20EE00CF24F0 /* key_value_aide */,
 				E49F7CD3210AC14E00CF24F0 /* key_value_key_chain */,
 				E482ED0520CE1613001FF435 /* key_value_db */,
 				E482ED1220CF6902001FF435 /* key_value_file */,
@@ -344,6 +345,13 @@
 				E49F7CD5210AC18200CF24F0 /* CICOKeyChainService.swift */,
 			);
 			path = internal;
+			sourceTree = "<group>";
+		};
+		E49F7CF7210C20EE00CF24F0 /* key_value_aide */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = key_value_aide;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

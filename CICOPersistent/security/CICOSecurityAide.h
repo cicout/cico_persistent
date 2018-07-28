@@ -67,6 +67,15 @@
 + (NSString *)md5HashStringWithData:(NSData *)sourceData;
 
 /**
+ *  源字符串通过UTF8编码转成二进制数据再生成MD5数据
+ *
+ *  @param sourceString 源字符串，通过UTF8编码转成二进制数据再生成MD5
+ *
+ *  @return MD5数据
+ */
++ (NSData *)md5HashDataWithString:(NSString *)sourceString;
+
+/**
  *  源字符串通过UTF8编码转成二进制数据再生成MD5十六进制小写字符串
  *
  *  @param sourceString 源字符串，通过UTF8编码转成二进制数据再生成MD5
@@ -223,7 +232,7 @@
  *
  *  @return 源数据
  */
-+ (NSData *)aesDecryptWithKeyData:(NSData *)keyData encodedData:(NSData *)encodedData;
++ (NSData *)aesDecryptWithKeyData:(NSData *)keyData encryptedData:(NSData *)encodedData;
 
 #pragma mark - RSA
 

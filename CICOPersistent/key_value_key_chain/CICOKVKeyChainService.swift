@@ -14,19 +14,20 @@ private let kAccountKey = "cico_kv_account_key"
 
 public class CICOKVKeyChainService {
     public static let defaultService: CICOKVKeyChainService = {
-        let bundleID = Bundle.main.bundleIdentifier!
-        let keyChainService = CICOKVKeyChainService.init(accessGroup: nil)
-        return keyChainService
+        let key = Bundle.main.bundleIdentifier!
+        return CICOKVKeyChainService.init(encryptionKey: key)
     } ()
     
-    let keyChainService: CICOKeyChainService
-    let lock = NSLock()
+    private let encryptionKeyData: Data
+    private let keyChainService: CICOKeyChainService
+    private let lock = NSLock()
     
     deinit {
         print("\(self) deinit")
     }
     
-    init(accessGroup: String?) {
+    init(encryptionKey: String, accessGroup: String? = nil) {
+        self.encryptionKeyData = CICOSecurityAide.md5HashData(with: encryptionKey)
         self.keyChainService = CICOKeyChainService.init(accessGroup: accessGroup)
     }
     
@@ -40,10 +41,11 @@ public class CICOKVKeyChainService {
             self.lock.unlock()
         }
         
-        guard let jsonData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) else {
+        guard let encryptedData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) else {
             return nil
         }
         
+        let jsonData = self.decryptData(encryptedData: encryptedData)
         let objectArray = [T].init(jsonData: jsonData)
         
         return objectArray?.first
@@ -58,15 +60,17 @@ public class CICOKVKeyChainService {
             return false
         }
         
+        let encryptedData = self.encryptData(sourceData: jsonData)
+        
         self.lock.lock()
         defer {
             self.lock.unlock()
         }
         
         if let _ = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
-            return self.keyChainService.update(data: jsonData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
+            return self.keyChainService.update(data: encryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         } else {
-            return self.keyChainService.add(data: jsonData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
+            return self.keyChainService.add(data: encryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         }
     }
     
@@ -90,8 +94,9 @@ public class CICOKVKeyChainService {
         
         var object: T? = nil
         var exist = false
-        if let jsonData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
+        if let encryptedData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
             exist = true
+            let jsonData = self.decryptData(encryptedData: encryptedData)
             let objectArray = [T].init(jsonData: jsonData)
             object = objectArray?.first
         }
@@ -105,10 +110,12 @@ public class CICOKVKeyChainService {
             return
         }
         
+        let newEncryptedData = self.encryptData(sourceData: newJSONData)
+        
         if exist {
-            result = self.keyChainService.update(data: newJSONData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
+            result = self.keyChainService.update(data: newEncryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         } else {
-            result = self.keyChainService.add(data: newJSONData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
+            result = self.keyChainService.add(data: newEncryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         }
     }
     
@@ -126,5 +133,13 @@ public class CICOKVKeyChainService {
         }
         
         return CICOSecurityAide.md5HashString(with: userKey)
+    }
+    
+    private func encryptData(sourceData: Data) -> Data {
+        return CICOSecurityAide.aesEncrypt(withKeyData: self.encryptionKeyData, sourceData: sourceData)
+    }
+    
+    private func decryptData(encryptedData: Data) -> Data {
+        return CICOSecurityAide.aesDecrypt(withKeyData: self.encryptionKeyData, encryptedData: encryptedData)
     }
 }

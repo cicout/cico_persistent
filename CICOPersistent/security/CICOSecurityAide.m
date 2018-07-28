@@ -82,6 +82,12 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     return string;
 }
 
++ (NSData *)md5HashDataWithString:(NSString *)sourceString {
+    NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [self md5HashDataWithData:sourceData];
+    return data;
+}
+
 + (NSString *)md5HashStringWithString:(NSString *)sourceString {
     NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
     NSString *string = [self md5HashStringWithData:sourceData];
@@ -404,7 +410,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     return data;
 }
 
-+ (NSData *)aesDecryptWithKeyData:(NSData *)keyData encodedData:(NSData *)encodedData {
++ (NSData *)aesDecryptWithKeyData:(NSData *)keyData encryptedData:(NSData *)encryptedData {
     if (keyData.length != kCCKeySizeAES128 &&
         keyData.length != kCCKeySizeAES192 &&
         keyData.length != kCCKeySizeAES256) {
@@ -412,7 +418,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     }
     
     const char *keyBytes = [keyData bytes];
-    NSUInteger dataLength = [encodedData length];
+    NSUInteger dataLength = [encryptedData length];
     size_t bufferSize = dataLength + kCCBlockSizeAES128;
     void *buffer = malloc(bufferSize);
     memset(buffer, 0, bufferSize);
@@ -423,7 +429,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
                                           keyBytes,
                                           keyData.length,
                                           NULL /* initialization vector (optional) */,
-                                          [encodedData bytes],
+                                          [encryptedData bytes],
                                           dataLength, /* input */
                                           buffer,
                                           bufferSize, /* output */

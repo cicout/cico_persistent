@@ -13,6 +13,12 @@ private let kGenericKey = "cico_kv_generic_key"
 private let kAccountKey = "cico_kv_account_key"
 
 public class CICOKVKeyChainService {
+    public static let defaultService: CICOKVKeyChainService = {
+        let bundleID = Bundle.main.bundleIdentifier!
+        let keyChainService = CICOKVKeyChainService.init(accessGroup: nil)
+        return keyChainService
+    } ()
+    
     let keyChainService: CICOKeyChainService
     let lock = NSLock()
     
@@ -20,8 +26,8 @@ public class CICOKVKeyChainService {
         print("\(self) deinit")
     }
     
-    init(group: String) {
-        self.keyChainService = CICOKeyChainService.init(group: group)
+    init(accessGroup: String?) {
+        self.keyChainService = CICOKeyChainService.init(accessGroup: accessGroup)
     }
     
     public func readObject<T: Codable>(_ type: T.Type, forKey userKey: String) -> T? {
@@ -38,7 +44,9 @@ public class CICOKVKeyChainService {
             return nil
         }
         
-        return T.init(jsonData: jsonData)
+        let objectArray = [T].init(jsonData: jsonData)
+        
+        return objectArray?.first
     }
     
     public func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
@@ -46,7 +54,7 @@ public class CICOKVKeyChainService {
             return false
         }
         
-        guard let jsonData = object.toJSONData() else {
+        guard let jsonData = [object].toJSONData() else {
             return false
         }
         
@@ -66,8 +74,12 @@ public class CICOKVKeyChainService {
                                            forKey userKey: String,
                                            updateClosure: (T?) -> T?,
                                            completionClosure: ((Bool) -> Void)? = nil) {
+        var result = false
+        defer {
+            completionClosure?(result)
+        }
+        
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
-            completionClosure?(false)
             return
         }
         
@@ -80,25 +92,23 @@ public class CICOKVKeyChainService {
         var exist = false
         if let jsonData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
             exist = true
-            object = T.init(jsonData: jsonData)
+            let objectArray = [T].init(jsonData: jsonData)
+            object = objectArray?.first
         }
         
         guard let newObject = updateClosure(object) else {
-            completionClosure?(true)
+            result = true
             return
         }
         
-        guard let newJSONData = newObject.toJSONData() else {
-            completionClosure?(false)
+        guard let newJSONData = [newObject].toJSONData() else {
             return
         }
         
         if exist {
-            let result = self.keyChainService.update(data: newJSONData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
-            completionClosure?(result)
+            result = self.keyChainService.update(data: newJSONData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         } else {
-            let result = self.keyChainService.add(data: newJSONData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
-            completionClosure?(result)
+            result = self.keyChainService.add(data: newJSONData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         }
     }
     

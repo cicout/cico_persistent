@@ -10,28 +10,28 @@ import Foundation
 import Security
 
 class CICOKeyChainService {
-    let group: String
-    let accessibleType: String
-    let secClassType: String
+    private var accessGroup: String?
+    private let accessibleType: String
+    private let secClassType: String
     
     deinit {
         print("\(self) deinit")
     }
     
-    init(group: String,
+    init(accessGroup: String? = nil,
          accessibleType: String = kSecAttrAccessibleAlwaysThisDeviceOnly as String,
          secClassType: String = kSecClassGenericPassword as String) {
-        self.group = group
+        self.accessGroup = accessGroup
         self.accessibleType = accessibleType
         self.secClassType = secClassType
     }
     
     func add(data: Data, genericKey: String, accountKey: String, serviceKey: String) -> Bool {
-        var attributeDic = self.baseAttributeDic(genericKey: genericKey, accountKey: accountKey, serviceKey: serviceKey)
+        var queryDic = self.baseQueryDic(genericKey: genericKey, accountKey: accountKey, serviceKey: serviceKey)
         
-        attributeDic[kSecValueData as String] = data
+        queryDic[kSecValueData as String] = data
         
-        let status = SecItemAdd(attributeDic as CFDictionary, nil)
+        let status = SecItemAdd(queryDic as CFDictionary, nil)
         
         if status == errSecSuccess {
             return true
@@ -42,9 +42,9 @@ class CICOKeyChainService {
     }
     
     func delete(genericKey: String, accountKey: String, serviceKey: String) -> Bool {
-        let attributeDic = self.baseAttributeDic(genericKey: genericKey, accountKey: accountKey, serviceKey: serviceKey)
+        let queryDic = self.baseQueryDic(genericKey: genericKey, accountKey: accountKey, serviceKey: serviceKey)
 
-        let status = SecItemDelete(attributeDic as CFDictionary)
+        let status = SecItemDelete(queryDic as CFDictionary)
         
         if status == errSecSuccess || status == errSecItemNotFound {
             return true
@@ -55,11 +55,11 @@ class CICOKeyChainService {
     }
     
     func update(data: Data, genericKey: String, accountKey: String, serviceKey: String) -> Bool {
-        let attributeDic = self.baseAttributeDic(genericKey: genericKey, accountKey: accountKey, serviceKey: serviceKey)
+        let queryDic = self.baseQueryDic(genericKey: genericKey, accountKey: accountKey, serviceKey: serviceKey)
         
-        let newAttributeDic: [String: Any] = [kSecValueData as String: data]
+        let newqueryDic: [String: Any] = [kSecValueData as String: data]
         
-        let status = SecItemUpdate(attributeDic as CFDictionary, newAttributeDic as CFDictionary)
+        let status = SecItemUpdate(queryDic as CFDictionary, newqueryDic as CFDictionary)
         
         if status == errSecSuccess {
             return true
@@ -70,31 +70,37 @@ class CICOKeyChainService {
     }
     
     func query(genericKey: String, accountKey: String, serviceKey: String) -> Data? {
-        var attributeDic = self.baseAttributeDic(genericKey: genericKey, accountKey: accountKey, serviceKey: serviceKey)
+        var queryDic = self.baseQueryDic(genericKey: genericKey, accountKey: accountKey, serviceKey: serviceKey)
         
-        attributeDic[kSecMatchLimit as String] = kSecMatchLimitOne as String
-        attributeDic[kSecReturnData as String] = kSecReturnData as String
+        queryDic[kSecMatchLimit as String] = kSecMatchLimitOne
+        queryDic[kSecReturnData as String] = kCFBooleanTrue
         
         var valueRef: CFTypeRef? = nil
-        let status = SecItemCopyMatching(attributeDic as CFDictionary, &valueRef)
+        let status = SecItemCopyMatching(queryDic as CFDictionary, &valueRef)
         
         if status == errSecSuccess {
-            let data = valueRef as? Data
-            return data
+            return valueRef as? Data
+        } else if status == errSecItemNotFound {
+            return nil
         } else {
             print("[ERROR]: SecItemCopyMatching failed, status = \(status)")
             return nil
         }
     }
     
-    private func baseAttributeDic(genericKey: String, accountKey: String, serviceKey: String) -> [String: Any] {
-        var attributeDic = [String: Any]()
-        attributeDic[kSecAttrAccessGroup as String] = self.group
-        attributeDic[kSecAttrAccessible as String] = self.accessibleType
-        attributeDic[kSecClass as String] = self.secClassType
-        attributeDic[kSecAttrGeneric as String] = genericKey
-        attributeDic[kSecAttrAccount as String] = accountKey
-        attributeDic[kSecAttrService as String] = serviceKey
-        return attributeDic
+    private func baseQueryDic(genericKey: String, accountKey: String, serviceKey: String) -> [String: Any] {
+        var queryDic = [String: Any]()
+        
+        if let accessGroup = self.accessGroup {
+            queryDic[kSecAttrAccessGroup as String] = accessGroup
+        }
+        
+        queryDic[kSecAttrAccessible as String] = self.accessibleType
+        queryDic[kSecClass as String] = self.secClassType
+        queryDic[kSecAttrGeneric as String] = genericKey
+        queryDic[kSecAttrAccount as String] = accountKey
+        queryDic[kSecAttrService as String] = serviceKey
+        
+        return queryDic
     }
 }

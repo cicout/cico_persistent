@@ -28,7 +28,8 @@ class ViewController: UIViewController {
 //        self.doPersistentTest()
 //        self.doKVFileTest()
 //        self.doKVDBTest()
-        self.doORMDBTest()
+//        self.doORMDBTest()
+        self.doKVKeyChainTest()
     }
     
     private func doPersistentTest() {
@@ -158,6 +159,27 @@ class ViewController: UIViewController {
         // remove table
 //        let resultX = self.ormDBService!.removeObjectTable(ofType: TCodableClass.self)
 //        print("result = \(resultX)")
+    }
+    
+    private func doKVKeyChainTest() {
+        self.testKVKeyChain(123)
+        self.testKVKeyChain(2.5)
+        self.testKVKeyChain(false)
+        self.testKVKeyChain("test")
+        
+        let jsonString = self.jsonString(name: "default")
+        
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            return
+        }
+        
+        if let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) {
+            self.testKVKeyChain(object)
+        }
+        
+        if let object2 = try? self.defaultJSONDecoder().decode(TCodableStruct.self, from: jsonData) {
+            self.testKVKeyChain(object2)
+        }
     }
     
     private func testPersistent<T: Codable>(_ value: T) {
@@ -342,6 +364,39 @@ class ViewController: UIViewController {
         if let readValue4 = CICOTempKVDBService.shared.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue4)")
         }
+        
+        print("\n[***** END TESTING *****]\n")
+    }
+    
+    private func testKVKeyChain<T: Codable>(_ value: T) {
+        print("\n[***** START TESTING *****]\n")
+        
+        print("[ORIGINAL]: \(value)")
+        
+        let key = "test_\(T.self)"
+        
+        let result = CICOKVKeyChainService.defaultService.writeObject(value, forKey: key)
+        print("[WRITE]: \(result)")
+        
+        if let readValue = CICOKVKeyChainService.defaultService.readObject(T.self, forKey: key) {
+            print("[READ]: \(readValue)")
+        }
+        
+        CICOKVKeyChainService
+            .defaultService
+            .updateObject(T.self,
+                          forKey: key,
+                          updateClosure: { (object) -> T? in
+                            if let object = object {
+                                print("[UPDATE CLOSURE]: object = \(object)")
+                            }
+                            return nil
+            }) { (result) in
+                print("[UPDATE]: \(result)")
+        }
+        
+        let removeResult = CICOKVKeyChainService.defaultService.removeObject(forKey: key)
+        print("[REMOVE]: \(removeResult)")
         
         print("\n[***** END TESTING *****]\n")
     }

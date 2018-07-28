@@ -141,6 +141,7 @@
 		E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CICOAutoCodable.framework; path = Carthage/Build/iOS/CICOAutoCodable.framework; sourceTree = "<group>"; };
 		E49F7CD5210AC18200CF24F0 /* CICOKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKeyChainService.swift; sourceTree = "<group>"; };
 		E49F7CD7210ACE8700CF24F0 /* CICOKVKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKVKeyChainService.swift; sourceTree = "<group>"; };
+		E49F7CF6210C1CD800CF24F0 /* CICOPersistentDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CICOPersistentDemo.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +245,7 @@
 		E41F765B20C9302300399E42 /* CICOPersistentDemo */ = {
 			isa = PBXGroup;
 			children = (
+				E49F7CF6210C1CD800CF24F0 /* CICOPersistentDemo.entitlements */,
 				E41F765C20C9302300399E42 /* AppDelegate.swift */,
 				E41F765E20C9302300399E42 /* ViewController.swift */,
 				E41F767420C9384300399E42 /* default.json */,
@@ -413,6 +415,11 @@
 					};
 					E41F765920C9302300399E42 = {
 						CreatedOnToolsVersion = 9.3;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -723,7 +730,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CICOPersistentDemo/CICOPersistentDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UBX9CH9GDX;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -746,7 +755,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CICOPersistentDemo/CICOPersistentDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UBX9CH9GDX;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

@@ -442,6 +442,16 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     return data;
 }
 
++ (NSData *)aesEncryptWithKeyString:(NSString *)keyString sourceData:(NSData *)sourceData {
+    NSData *keyData = [self md5HashDataWithString:keyString];
+    return [self aesEncryptWithKeyData:keyData sourceData:sourceData];
+}
+
++ (NSData *)aesDecryptWithKeyString:(NSString *)keyString encryptedData:(NSData *)encryptedData {
+    NSData *keyData = [self md5HashDataWithString:keyString];
+    return [self aesDecryptWithKeyData:keyData encryptedData:encryptedData];
+}
+
 #pragma mark - RSA
 
 

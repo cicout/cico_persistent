@@ -18,3 +18,4 @@ FOUNDATION_EXPORT const unsigned char CICOPersistentVersionString[];
 
 #import <CICOPersistent/CICOSecurityAide.h>
 #import <CICOPersistent/CICOPathAide.h>
+#import <CICOPersistent/CICOFileManagerAide.h>

@@ -21,7 +21,7 @@ open class CICOKVFileService {
         self.rootDirURL = rootDirURL
         self.urlFileService = CICOURLKVFileService.init()
         
-        let result = CICOPathAide.createDir(with: self.rootDirURL, option: false)
+        let result = CICOFileManagerAide.createDir(with: self.rootDirURL, option: false)
         if !result {
             print("[ERROR]: create kv file dir failed\nurl: \(self.rootDirURL)")
             return
@@ -80,8 +80,8 @@ open class CICOKVFileService {
     }
     
     open func clearAll() -> Bool {
-        let removeResult = CICOPathAide.removeFile(with: self.rootDirURL)
-        let createResult = CICOPathAide.createDir(with: self.rootDirURL, option: false)
+        let removeResult = CICOFileManagerAide.removeFile(with: self.rootDirURL)
+        let createResult = CICOFileManagerAide.createDir(with: self.rootDirURL, option: false)
         return (removeResult && createResult)
     }
     

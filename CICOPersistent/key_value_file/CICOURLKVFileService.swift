@@ -84,7 +84,7 @@ open class CICOURLKVFileService {
             self.fileLock.unlock()
         }
         
-        return CICOPathAide.removeFile(with: fileURL)
+        return CICOFileManagerAide.removeFile(with: fileURL)
     }
 
     private func readJSONData(fromFileURL fileURL: URL) -> Data? {

@@ -22,7 +22,7 @@
 /**
  *  生成给定长度的随机二进制数据
  *
- *  @param length 给定长度，单位字节（Byte）
+ *  @param length 给定长度，单位字节（BYTE）
  *
  *  @return 随机二进制数据
  */
@@ -86,18 +86,68 @@
 
 #pragma mark - FILE MD5
 
+/**
+ *  根据文件路径读取所有文件数据并生成MD5数据
+ *
+ *  @param fileURL 文件路径
+ *
+ *  @return MD5数据
+ */
 + (NSData *)fileMD5HashDataWithURL:(NSURL *)fileURL;
 
+/**
+ *  根据文件路径读取所有文件数据并生成MD5十六进制小写字符串
+ *
+ *  @param fileURL 文件路径
+ *
+ *  @return MD5十六进制小写字符串
+ */
 + (NSString *)fileMD5HashStringWithURL:(NSURL *)fileURL;
 
+/**
+ *  根据文件路径读取部分文件数据并生成MD5数据
+ *  文件数据读取规则：如果文件小于4M则读取所有数据；大于等于4M则分别读取前/中/后三个位置各1M数据；
+ *
+ *  @param fileURL 文件路径
+ *
+ *  @return MD5数据
+ */
 + (NSData *)fastFileHashDataWithURL:(NSURL *)fileURL;
 
+/**
+ *  根据文件路径读取部分文件数据并生成MD5十六进制小写字符串
+ *  文件数据读取规则：如果文件小于4M则读取所有数据；大于等于4M则分别读取前/中/后三个位置各1M数据；
+ *
+ *  @param fileURL 文件路径
+ *
+ *  @return MD5十六进制小写字符串
+ */
 + (NSString *)fastFileHashStringWithURL:(NSURL *)fileURL;
 
+/**
+ *  根据文件路径读取部分文件数据并生成MD5数据
+ *  文件数据读取规则：忽略头部和尾部数据后，剩余数据如果小于4M则读取剩余所有数据；大于等于4M则分别读取前/中/后三个位置各1M数据；
+ *
+ *  @param fileURL 文件路径
+ *  @param headIgnoreLength 忽略头部数据长度，单位字节（BYTE），如果忽略后数据长度小于1M，将取消忽略，重置headIgnoreLength为0
+ *  @param tailIgnoreLength 忽略尾部数据长度，单位字节（BYTE），如果忽略后数据长度小于1M，将取消忽略，重置tailIgnoreLength为0
+ *
+ *  @return MD5数据
+ */
 + (NSData *)fastFileHashDataWithURL:(NSURL *)fileURL
                    headIgnoreLength:(unsigned long long)headIgnoreLength
                    tailIgnoreLength:(unsigned long long)tailIgnoreLength;
 
+/**
+ *  根据文件路径读取部分文件数据并生成MD5数据
+ *  文件数据读取规则：忽略头部和尾部数据后，剩余数据如果小于4M则读取剩余所有数据；大于等于4M则分别读取前/中/后三个位置各1M数据；
+ *
+ *  @param fileURL 文件路径
+ *  @param headIgnoreLength 忽略头部数据长度，单位字节（BYTE），如果忽略后数据长度小于1M，将取消忽略，重置headIgnoreLength为0
+ *  @param tailIgnoreLength 忽略尾部数据长度，单位字节（BYTE），如果忽略后数据长度小于1M，将取消忽略，重置tailIgnoreLength为0
+ *
+ *  @return MD5十六进制小写字符串
+ */
 + (NSString *)fastFileHashStringWithURL:(NSURL *)fileURL
                        headIgnoreLength:(unsigned long long)headIgnoreLength
                        tailIgnoreLength:(unsigned long long)tailIgnoreLength;
@@ -228,11 +278,31 @@
  *
  *  @param keyData     密码数据，可选择如下长度：
  *  kCCKeySizeAES128、kCCKeySizeAES192、kCCKeySizeAES256
- *  @param encodedData AES加密数据
+ *  @param encryptedData AES加密数据
  *
  *  @return 源数据
  */
-+ (NSData *)aesDecryptWithKeyData:(NSData *)keyData encryptedData:(NSData *)encodedData;
++ (NSData *)aesDecryptWithKeyData:(NSData *)keyData encryptedData:(NSData *)encryptedData;
+
+/**
+ *  AES加密
+ *
+ *  @param keyString  密码，转换为MD5数据作为AES加密的KEY
+ *  @param sourceData 源数据
+ *
+ *  @return AES加密数据
+ */
++ (NSData *)aesEncryptWithKeyString:(NSString *)keyString sourceData:(NSData *)sourceData;
+
+/**
+ *  AES解密
+ *
+ *  @param keyString     密码，转换为MD5数据作为AES解密的KEY
+ *  @param encryptedData AES加密数据
+ *
+ *  @return 源数据
+ */
++ (NSData *)aesDecryptWithKeyString:(NSString *)keyString encryptedData:(NSData *)encryptedData;
 
 #pragma mark - RSA
 

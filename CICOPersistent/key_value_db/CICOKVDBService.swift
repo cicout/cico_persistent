@@ -110,14 +110,14 @@ open class CICOKVDBService {
     
     open func clearAll() -> Bool {
         self.dbQueue = nil
-        let result = CICOPathAide.removeFile(with: self.fileURL)
+        let result = CICOFileManagerAide.removeFile(with: self.fileURL)
         self.dbQueue = FMDatabaseQueue.init(url: self.fileURL)
         return result
     }
     
     private func initDB() {
         let dirURL = self.fileURL.deletingLastPathComponent()
-        let result = CICOPathAide.createDir(with: dirURL, option: false)
+        let result = CICOFileManagerAide.createDir(with: dirURL, option: false)
         if !result {
             print("[ERROR]: create database dir failed\nurl: \(self.fileURL)")
             return

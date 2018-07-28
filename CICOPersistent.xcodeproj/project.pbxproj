@@ -62,6 +62,8 @@
 		E49F7CD6210AC18200CF24F0 /* CICOKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CD5210AC18200CF24F0 /* CICOKeyChainService.swift */; };
 		E49F7CD8210ACE8700CF24F0 /* CICOKVKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CD7210ACE8700CF24F0 /* CICOKVKeyChainService.swift */; };
 		E49F7CF9210C447400CF24F0 /* CICOKVJSONAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CF8210C447400CF24F0 /* CICOKVJSONAide.swift */; };
+		E49F7CFE210C640600CF24F0 /* CICOFileManagerAide.h in Headers */ = {isa = PBXBuildFile; fileRef = E49F7CFC210C640600CF24F0 /* CICOFileManagerAide.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E49F7CFF210C640600CF24F0 /* CICOFileManagerAide.m in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CFD210C640600CF24F0 /* CICOFileManagerAide.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +146,8 @@
 		E49F7CD7210ACE8700CF24F0 /* CICOKVKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKVKeyChainService.swift; sourceTree = "<group>"; };
 		E49F7CF6210C1CD800CF24F0 /* CICOPersistentDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CICOPersistentDemo.entitlements; sourceTree = "<group>"; };
 		E49F7CF8210C447400CF24F0 /* CICOKVJSONAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOKVJSONAide.swift; sourceTree = "<group>"; };
+		E49F7CFC210C640600CF24F0 /* CICOFileManagerAide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOFileManagerAide.h; sourceTree = "<group>"; };
+		E49F7CFD210C640600CF24F0 /* CICOFileManagerAide.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CICOFileManagerAide.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,14 +198,13 @@
 			isa = PBXGroup;
 			children = (
 				E49F7CF7210C20EE00CF24F0 /* key_value_aide */,
-				E49F7CD3210AC14E00CF24F0 /* key_value_key_chain */,
 				E482ED0520CE1613001FF435 /* key_value_db */,
 				E482ED1220CF6902001FF435 /* key_value_file */,
+				E49F7CD3210AC14E00CF24F0 /* key_value_key_chain */,
 				E41F764D20C9222500399E42 /* main */,
 				E484B44720DCA0E400FE0AC9 /* orm_db */,
-				E41F765120C92CAD00399E42 /* path */,
 				E41F764E20C9223000399E42 /* persistent */,
-				E41F764820C9221C00399E42 /* security */,
+				E49F7D00210C66B900CF24F0 /* tool */,
 			);
 			path = CICOPersistent;
 			sourceTree = "<group>";
@@ -239,6 +242,8 @@
 		E41F765120C92CAD00399E42 /* path */ = {
 			isa = PBXGroup;
 			children = (
+				E49F7CFC210C640600CF24F0 /* CICOFileManagerAide.h */,
+				E49F7CFD210C640600CF24F0 /* CICOFileManagerAide.m */,
 				E41F765320C92CAD00399E42 /* CICOPathAide.h */,
 				E41F765220C92CAD00399E42 /* CICOPathAide.m */,
 			);
@@ -357,6 +362,15 @@
 			path = key_value_aide;
 			sourceTree = "<group>";
 		};
+		E49F7D00210C66B900CF24F0 /* tool */ = {
+			isa = PBXGroup;
+			children = (
+				E41F765120C92CAD00399E42 /* path */,
+				E41F764820C9221C00399E42 /* security */,
+			);
+			path = tool;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -366,6 +380,7 @@
 			files = (
 				E41F764B20C9221C00399E42 /* CICOSecurityAide.h in Headers */,
 				E41F765520C92CAD00399E42 /* CICOPathAide.h in Headers */,
+				E49F7CFE210C640600CF24F0 /* CICOFileManagerAide.h in Headers */,
 				E41F764020C8D2F300399E42 /* CICOPersistent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,6 +498,7 @@
 				E42B66B12106D269006EBAC2 /* CICOORMTableInfoModel.swift in Sources */,
 				E482ED1820CF6F3D001FF435 /* CICOPrivateKVFileService.swift in Sources */,
 				E482ED0F20CF5FC6001FF435 /* CICOCacheKVDBService.swift in Sources */,
+				E49F7CFF210C640600CF24F0 /* CICOFileManagerAide.m in Sources */,
 				E492B4B220EB188200BC48A4 /* CICOSQLiteType.swift in Sources */,
 				E42B66AB2102DD82006EBAC2 /* CICOCacheORMDBService.swift in Sources */,
 				E42B66A92102DD71006EBAC2 /* CICOPrivateORMDBService.swift in Sources */,

@@ -8,6 +8,7 @@
 
 import UIKit
 import CICOPersistent
+import CICOAutoCodable
 
 class ViewController: UIViewController {
     private var ormDBService: CICOORMDBService?
@@ -44,11 +45,11 @@ class ViewController: UIViewController {
             return
         }
         
-        if let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) {
+        if let object = TCodableClass.init(jsonData: jsonData) {
             self.testPersistent(object)
         }
         
-        if let object2 = try? self.defaultJSONDecoder().decode(TCodableStruct.self, from: jsonData) {
+        if let object2 = TCodableStruct.init(jsonData: jsonData) {
             self.testPersistent(object2)
         }
     }
@@ -65,11 +66,11 @@ class ViewController: UIViewController {
             return
         }
         
-        if let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) {
+        if let object = TCodableClass.init(jsonData: jsonData) {
             self.testKVFile(object)
         }
         
-        if let object2 = try? self.defaultJSONDecoder().decode(TCodableStruct.self, from: jsonData) {
+        if let object2 = TCodableStruct.init(jsonData: jsonData) {
             self.testKVFile(object2)
         }
     }
@@ -86,11 +87,11 @@ class ViewController: UIViewController {
             return
         }
 
-        if let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) {
+        if let object = TCodableClass.init(jsonData: jsonData) {
             self.testKVDB(object)
         }
-
-        if let object2 = try? self.defaultJSONDecoder().decode(TCodableStruct.self, from: jsonData) {
+        
+        if let object2 = TCodableStruct.init(jsonData: jsonData) {
             self.testKVDB(object2)
         }
     }
@@ -106,7 +107,7 @@ class ViewController: UIViewController {
         }
         
         // write
-        guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
+        guard let object = TCodableClass.init(jsonData: jsonData) else {
             print("[ERROR]")
             return
         }
@@ -138,7 +139,7 @@ class ViewController: UIViewController {
         // write array
         var objectArray = [TCodableClass]()
         for i in 0..<50 {
-            guard let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) else {
+            guard let object = TCodableClass.init(jsonData: jsonData) else {
                 print("[ERROR]")
                 return
             }
@@ -173,11 +174,11 @@ class ViewController: UIViewController {
             return
         }
         
-        if let object = try? self.defaultJSONDecoder().decode(TCodableClass.self, from: jsonData) {
+        if let object = TCodableClass.init(jsonData: jsonData) {
             self.testKVKeyChain(object)
         }
         
-        if let object2 = try? self.defaultJSONDecoder().decode(TCodableStruct.self, from: jsonData) {
+        if let object2 = TCodableStruct.init(jsonData: jsonData) {
             self.testKVKeyChain(object2)
         }
     }
@@ -411,18 +412,6 @@ class ViewController: UIViewController {
         }
         
         return jsonString
-    }
-    
-    private func defaultJSONDecoder() -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .millisecondsSince1970
-        return decoder
-    }
-    
-    private func defaultJSONEncoder() -> JSONEncoder {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .millisecondsSince1970
-        return encoder
     }
 }
 

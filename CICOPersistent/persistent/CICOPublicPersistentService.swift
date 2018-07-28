@@ -16,6 +16,11 @@ public class CICOPublicPersistentService: CICOPersistentService {
         return CICOPublicPersistentService.init(rootDirURL: rootDirURL)
     }()
     
+    public override func clearAllPersistent() -> Bool {
+        print("[ERROR]: FORBIDDEN!")
+        return false
+    }
+    
     public override func clearAllKVFile() -> Bool {
         print("[ERROR]: FORBIDDEN!")
         return false

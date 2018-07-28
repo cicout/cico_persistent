@@ -40,6 +40,21 @@ open class CICOPersistentService {
         return self.rootDirURL.appendingPathComponent(subPath)
     }
     
+    /*****************
+     * All Persistent
+     *****************/
+    
+    /*
+     * Clear KVFile/KVDB/ORMDB Persistent;
+     * UserDefault/KVKeyChain will not cleared;
+     */
+    open func clearAllPersistent() -> Bool {
+        let result0 = self.clearAllKVFile()
+        let result1 = self.clearAllKVDB()
+        let result2 = self.clearAllORMDB()
+        return (result0 && result1 && result2)
+    }
+    
     /*************************
      * UserDefault Persistent
      *************************/
@@ -80,6 +95,16 @@ open class CICOPersistentService {
         return self.kvFileService.removeObject(forKey: userKey)
     }
     
+    open func updateKVFileObject<T: Codable>(_ objectType: T.Type,
+                                             forKey userKey: String,
+                                             updateClosure: (T?) -> T?,
+                                             completionClosure: ((Bool) -> Void)? = nil) {
+        return self.kvFileService.updateObject(objectType,
+                                               forKey: userKey,
+                                               updateClosure: updateClosure,
+                                               completionClosure: completionClosure)
+    }
+    
     open func clearAllKVFile() -> Bool {
         return self.kvFileService.clearAll()
     }
@@ -94,6 +119,16 @@ open class CICOPersistentService {
     
     open func writeKVDBObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         return self.kvDBService.writeObject(object, forKey: userKey)
+    }
+    
+    open func updateKVDBObject<T: Codable>(_ objectType: T.Type,
+                                           forKey userKey: String,
+                                           updateClosure: (T?) -> T?,
+                                           completionClosure: ((Bool) -> Void)? = nil) {
+        return self.kvDBService.updateObject(objectType,
+                                             forKey: userKey,
+                                             updateClosure: updateClosure,
+                                             completionClosure: completionClosure)
     }
     
     open func removeKVDBObject(forKey userKey: String) -> Bool {
@@ -138,6 +173,18 @@ open class CICOPersistentService {
         return self.ormDBService.writeObjectArray(objectArray, customTableName: customTableName)
     }
     
+    open func updateObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+                                                      primaryKeyValue: Codable,
+                                                      customTableName: String? = nil,
+                                                      updateClosure: (T?) -> T?,
+                                                      completionClosure: ((Bool) -> Void)? = nil) {
+        return self.ormDBService.updateObject(ofType: objectType,
+                                              primaryKeyValue: primaryKeyValue,
+                                              customTableName: customTableName,
+                                              updateClosure: updateClosure,
+                                              completionClosure: completionClosure)
+    }
+    
     open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil) -> Bool {
@@ -158,5 +205,25 @@ open class CICOPersistentService {
      * Keychain Persistent
      **********************/
     
-    // TODO
+    public func readObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
+        return CICOKVKeyChainService.defaultService.readObject(objectType, forKey: userKey)
+    }
+    
+    public func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
+        return CICOKVKeyChainService.defaultService.writeObject(object, forKey: userKey)
+    }
+    
+    public func updateObject<T: Codable>(_ objectType: T.Type,
+                                         forKey userKey: String,
+                                         updateClosure: (T?) -> T?,
+                                         completionClosure: ((Bool) -> Void)? = nil) {
+        CICOKVKeyChainService.defaultService.updateObject(objectType,
+                                                          forKey: userKey,
+                                                          updateClosure: updateClosure,
+                                                          completionClosure: completionClosure)
+    }
+    
+    public func removeObject(forKey userKey: String) -> Bool {
+        return CICOKVKeyChainService.defaultService.removeObject(forKey: userKey)
+    }
 }

@@ -31,7 +31,7 @@ public class CICOKVKeyChainService {
         self.keyChainService = CICOKeyChainService.init(accessGroup: accessGroup)
     }
     
-    public func readObject<T: Codable>(_ type: T.Type, forKey userKey: String) -> T? {
+    public func readObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return nil
         }
@@ -47,7 +47,7 @@ public class CICOKVKeyChainService {
         
         let jsonData = self.decryptData(encryptedData: encryptedData)
 
-        return CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: type)
+        return CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
     
     public func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
@@ -73,7 +73,7 @@ public class CICOKVKeyChainService {
         }
     }
     
-    public func updateObject<T: Codable>(_ type: T.Type,
+    public func updateObject<T: Codable>(_ objectType: T.Type,
                                            forKey userKey: String,
                                            updateClosure: (T?) -> T?,
                                            completionClosure: ((Bool) -> Void)? = nil) {
@@ -96,7 +96,7 @@ public class CICOKVKeyChainService {
         if let encryptedData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
             exist = true
             let jsonData = self.decryptData(encryptedData: encryptedData)
-            object = CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: type)
+            object = CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
         }
         
         guard let newObject = updateClosure(object) else {

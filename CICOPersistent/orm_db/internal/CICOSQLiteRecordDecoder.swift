@@ -25,10 +25,10 @@ import CICOAutoCodable
 class CICOSQLiteRecordDecoder: Decoder {
     private let resultSet: FMResultSet
 
-    static func decodeSQLiteRecord<T: Decodable>(resultSet: FMResultSet, type: T.Type) -> T? {
+    static func decodeSQLiteRecord<T: Decodable>(resultSet: FMResultSet, objectType: T.Type) -> T? {
         let decoder = CICOSQLiteRecordDecoder.init(resultSet: resultSet)
         do {
-            let obj = try type.init(from: decoder)
+            let obj = try objectType.init(from: decoder)
             return obj
         } catch let error {
             print("[DECODE_SQLITE_RECORD_ERROR]: %@", error)
@@ -108,8 +108,8 @@ class CICOSQLiteRecordDecoder: Decoder {
             }
         }
 
-        func decode<T>(_ type: T.Type, forKey key: KEY) throws -> T where T: Decodable {
-            if type == Date.self || type == NSDate.self {
+        func decode<T>(_ objectType: T.Type, forKey key: KEY) throws -> T where T: Decodable {
+            if objectType == Date.self || objectType == NSDate.self {
                 return try self.decode(Date.self, forKey: key) as! T
             }
             

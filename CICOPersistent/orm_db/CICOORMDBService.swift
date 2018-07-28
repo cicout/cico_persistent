@@ -681,7 +681,7 @@ open class CICOORMDBService {
         }
         
         if resultSet.next() {
-            object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, type: objectType)
+            object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, objectType: objectType)
         }
         
         resultSet.close()
@@ -735,7 +735,7 @@ open class CICOORMDBService {
         
         var tempArray = [T]()
         while resultSet.next() {
-            guard let object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, type: objectType) else {
+            guard let object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, objectType: objectType) else {
                 return array
             }
             tempArray.append(object)

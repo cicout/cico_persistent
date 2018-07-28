@@ -28,14 +28,14 @@ open class CICOKVFileService {
         }
     }
     
-    open func readObject<T: Codable>(_ type: T.Type, forKey userKey: String) -> T? {
+    open func readObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return nil
         }
         
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
         
-        return self.urlFileService.readObject(type, fromFileURL: fileURL)
+        return self.urlFileService.readObject(objectType, fromFileURL: fileURL)
     }
     
     open func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {

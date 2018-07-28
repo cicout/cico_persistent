@@ -44,11 +44,11 @@ open class CICOPersistentService {
      * UserDefault Persistent
      *************************/
     
-    open func objectFromUserDefault(forKey key: String) -> Any? {
+    open func readObjectFromUserDefault(forKey key: String) -> Any? {
         return UserDefaults.standard.object(forKey:key)
     }
     
-    open func valueFromUserDefault<T>(_ type: T.Type, forKey key: String) -> T? {
+    open func readValueFromUserDefault<T>(_ objectType: T.Type, forKey key: String) -> T? {
         if let value = UserDefaults.standard.object(forKey: key) as? T {
             return value
         } else {
@@ -68,8 +68,8 @@ open class CICOPersistentService {
      * Codable Key:Value Independent File Persistent
      ***********************************************/
     
-    open func readKVFileObject<T: Codable>(_ type: T.Type, forKey userKey: String) -> T? {
-        return self.kvFileService.readObject(type, forKey: userKey)
+    open func readKVFileObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
+        return self.kvFileService.readObject(objectType, forKey: userKey)
     }
     
     open func writeKVFileObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
@@ -88,8 +88,8 @@ open class CICOPersistentService {
      * Codable Key:Value Database Persistent
      ****************************************/
     
-    open func readKVDBObject<T: Codable>(_ type: T.Type, forKey userKey: String) -> T? {
-        return self.kvDBService.readObject(type, forKey: userKey)
+    open func readKVDBObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
+        return self.kvDBService.readObject(objectType, forKey: userKey)
     }
     
     open func writeKVDBObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {

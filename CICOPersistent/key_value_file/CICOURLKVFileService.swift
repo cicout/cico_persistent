@@ -17,12 +17,12 @@ open class CICOURLKVFileService {
     
     public init() {}
     
-    open func readObject<T: Codable>(_ type: T.Type, fromFileURL fileURL: URL) -> T? {
+    open func readObject<T: Codable>(_ objectType: T.Type, fromFileURL fileURL: URL) -> T? {
         guard let jsonData = self.readJSONData(fromFileURL: fileURL) else {
             return nil
         }
         
-        return CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: type)
+        return CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
     
     open func writeObject<T: Codable>(_ object: T, toFileURL fileURL: URL) -> Bool {

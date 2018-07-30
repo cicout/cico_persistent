@@ -91,9 +91,7 @@ open class PersistentService {
         return self.kvFileService.writeObject(object, forKey: userKey)
     }
     
-    open func removeKVFileObject(forKey userKey: String) -> Bool {
-        return self.kvFileService.removeObject(forKey: userKey)
-    }
+
     
     open func updateKVFileObject<T: Codable>(_ objectType: T.Type,
                                              forKey userKey: String,
@@ -103,6 +101,10 @@ open class PersistentService {
                                                forKey: userKey,
                                                updateClosure: updateClosure,
                                                completionClosure: completionClosure)
+    }
+    
+    open func removeKVFileObject(forKey userKey: String) -> Bool {
+        return self.kvFileService.removeObject(forKey: userKey)
     }
     
     open func clearAllKVFile() -> Bool {

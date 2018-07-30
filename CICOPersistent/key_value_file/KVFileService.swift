@@ -8,10 +8,10 @@
 
 import Foundation
 
-open class CICOKVFileService {
+open class KVFileService {
     public let rootDirURL: URL
 
-    private let urlFileService: CICOURLKVFileService
+    private let urlFileService: URLKVFileService
     
     deinit {
         print("\(self) deinit")
@@ -19,7 +19,7 @@ open class CICOKVFileService {
     
     public init(rootDirURL: URL) {
         self.rootDirURL = rootDirURL
-        self.urlFileService = CICOURLKVFileService.init()
+        self.urlFileService = URLKVFileService.init()
         
         let result = CICOFileManagerAide.createDir(with: self.rootDirURL, option: false)
         if !result {

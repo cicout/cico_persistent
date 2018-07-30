@@ -12,14 +12,14 @@ import CICOAutoCodable
 private let kGenericKey = "cico_kv_generic_key"
 private let kAccountKey = "cico_kv_account_key"
 
-public class CICOKVKeyChainService {
-    public static let defaultService: CICOKVKeyChainService = {
+public class KVKeyChainService {
+    public static let defaultService: KVKeyChainService = {
         let key = Bundle.main.bundleIdentifier!
-        return CICOKVKeyChainService.init(encryptionKey: key)
+        return KVKeyChainService.init(encryptionKey: key)
     } ()
     
     private let encryptionKeyData: Data
-    private let keyChainService: CICOKeyChainService
+    private let keyChainService: KeyChainService
     private let lock = NSLock()
     
     deinit {
@@ -28,7 +28,7 @@ public class CICOKVKeyChainService {
     
     init(encryptionKey: String, accessGroup: String? = nil) {
         self.encryptionKeyData = CICOSecurityAide.md5HashData(with: encryptionKey)
-        self.keyChainService = CICOKeyChainService.init(accessGroup: accessGroup)
+        self.keyChainService = KeyChainService.init(accessGroup: accessGroup)
     }
     
     public func readObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
@@ -47,7 +47,7 @@ public class CICOKVKeyChainService {
         
         let jsonData = self.decryptData(encryptedData: encryptedData)
 
-        return CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
+        return KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
     
     public func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
@@ -55,7 +55,7 @@ public class CICOKVKeyChainService {
             return false
         }
         
-        guard let jsonData = CICOKVJSONAide.transferObjectToJSONData(object) else {
+        guard let jsonData = KVJSONAide.transferObjectToJSONData(object) else {
             return false
         }
         
@@ -98,7 +98,7 @@ public class CICOKVKeyChainService {
         if let encryptedData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
             exist = true
             let jsonData = self.decryptData(encryptedData: encryptedData)
-            object = CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
+            object = KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
         }
         
         // update
@@ -107,7 +107,7 @@ public class CICOKVKeyChainService {
             return
         }
         
-        guard let newJSONData = CICOKVJSONAide.transferObjectToJSONData(newObject) else {
+        guard let newJSONData = KVJSONAide.transferObjectToJSONData(newObject) else {
             return
         }
         

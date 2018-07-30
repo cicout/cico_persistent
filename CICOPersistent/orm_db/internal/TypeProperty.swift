@@ -8,17 +8,17 @@
 
 import Foundation
 
-class CICOTypeProperty {
+class TypeProperty {
     let name: String
     let swiftType: Any.Type
-    let sqliteType: CICOSQLiteType
+    let sqliteType: SQLiteType
     let value: Any
     
     var description: String {
         return "name: \(self.name)\nswiftType: \(self.swiftType)\nsqliteType: \(self.sqliteType)\nvalue: \(self.value)"
     }
     
-    init(name: String, swiftType: Any.Type, sqliteType: CICOSQLiteType, value: Any) {
+    init(name: String, swiftType: Any.Type, sqliteType: SQLiteType, value: Any) {
         self.name = name
         self.swiftType = swiftType
         self.sqliteType = sqliteType

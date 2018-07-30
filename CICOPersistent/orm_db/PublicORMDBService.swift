@@ -1,5 +1,5 @@
 //
-//  CICOPrivateORMDBService.swift
+//  CICOPublicORMDBService.swift
 //  CICOPersistent
 //
 //  Created by lucky.li on 2018/7/21.
@@ -10,10 +10,10 @@ import Foundation
 
 private let kDBSubPath = "cico_orm_db/db.sqlite"
 
-public class CICOPrivateORMDBService: CICOORMDBService {
-    public static let shared: CICOPrivateORMDBService = {
-        let dbURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kDBSubPath)!
-        return CICOPrivateORMDBService.init(fileURL: dbURL)
+public class PublicORMDBService: ORMDBService {
+    public static let shared: PublicORMDBService = {
+        let dbURL = CICOPathAide.defaultPublicFileURL(withSubPath: kDBSubPath)!
+        return PublicORMDBService.init(fileURL: dbURL)
     }()
     
     public override func clearAll() -> Bool {

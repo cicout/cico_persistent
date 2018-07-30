@@ -10,10 +10,10 @@ import Foundation
 
 private let kRootDirName = "cico_kv_file"
 
-public class CICOPrivateKVFileService: CICOKVFileService {
-    public static let shared: CICOPrivateKVFileService = {
+public class PrivateKVFileService: KVFileService {
+    public static let shared: PrivateKVFileService = {
         let rootDirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kRootDirName)!
-        return CICOPrivateKVFileService.init(rootDirURL: rootDirURL)
+        return PrivateKVFileService.init(rootDirURL: rootDirURL)
     }()
     
     public override func clearAll() -> Bool {

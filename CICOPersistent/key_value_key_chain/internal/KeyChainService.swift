@@ -9,7 +9,7 @@
 import Foundation
 import Security
 
-class CICOKeyChainService {
+class KeyChainService {
     private var accessGroup: String?
     private let accessibleType: String
     private let secClassType: String

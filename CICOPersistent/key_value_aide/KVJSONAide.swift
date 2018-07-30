@@ -9,7 +9,7 @@
 import Foundation
 import CICOAutoCodable
 
-class CICOKVJSONAide {
+class KVJSONAide {
     static func transferJSONDataToObject<T: Codable>(_ jsonData: Data, objectType: T.Type) -> T? {
         let objectArray = [T].init(jsonData: jsonData)
         return objectArray?.first

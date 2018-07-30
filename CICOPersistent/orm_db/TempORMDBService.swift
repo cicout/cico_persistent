@@ -10,9 +10,9 @@ import Foundation
 
 private let kDBSubPath = "cico_orm_db/db.sqlite"
 
-public class CICOTempORMDBService: CICOORMDBService {
-    public static let shared: CICOTempORMDBService = {
+public class TempORMDBService: ORMDBService {
+    public static let shared: TempORMDBService = {
         let dbURL = CICOPathAide.defaultTempFileURL(withSubPath: kDBSubPath)!
-        return CICOTempORMDBService.init(fileURL: dbURL)
+        return TempORMDBService.init(fileURL: dbURL)
     }()
 }

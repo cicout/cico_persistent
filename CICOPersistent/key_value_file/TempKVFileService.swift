@@ -10,9 +10,9 @@ import Foundation
 
 private let kRootDirName = "cico_kv_file"
 
-public class CICOTempKVFileService: CICOKVFileService {
-    public static let shared: CICOTempKVFileService = {
+public class TempKVFileService: KVFileService {
+    public static let shared: TempKVFileService = {
         let rootDirURL = CICOPathAide.defaultTempFileURL(withSubPath: kRootDirName)!
-        return CICOTempKVFileService.init(rootDirURL: rootDirURL)
+        return TempKVFileService.init(rootDirURL: rootDirURL)
     }()
 }

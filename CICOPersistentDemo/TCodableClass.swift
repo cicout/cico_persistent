@@ -48,7 +48,7 @@ extension TCodableClass {
     }
 }
 
-extension TCodableClass: CICOORMProtocol {
+extension TCodableClass: ORMProtocol {
     static func cicoORMPrimaryKeyColumnName() -> String {
         return CodingKeys.name.stringValue
     }

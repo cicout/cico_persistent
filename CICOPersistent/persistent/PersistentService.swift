@@ -12,12 +12,12 @@ private let kKVFileDirName = "kv_file"
 private let kKVDBFileSubPath = "kv_db/db.sqlite"
 private let kORMDBFileSubPath = "orm_db/db.sqlite"
 
-open class CICOPersistentService {
+open class PersistentService {
     public let rootDirURL: URL
     
-    private let kvFileService: CICOKVFileService
-    private let kvDBService: CICOKVDBService
-    private let ormDBService: CICOORMDBService
+    private let kvFileService: KVFileService
+    private let kvDBService: KVDBService
+    private let ormDBService: ORMDBService
     
     deinit {
         print("\(self) deinit")
@@ -27,13 +27,13 @@ open class CICOPersistentService {
         self.rootDirURL = rootDirURL
         
         let kvFileDirURL = rootDirURL.appendingPathComponent(kKVFileDirName)
-        self.kvFileService = CICOKVFileService.init(rootDirURL: kvFileDirURL)
+        self.kvFileService = KVFileService.init(rootDirURL: kvFileDirURL)
         
         let kvDBFileURL = rootDirURL.appendingPathComponent(kKVDBFileSubPath)
-        self.kvDBService = CICOKVDBService.init(fileURL: kvDBFileURL)
+        self.kvDBService = KVDBService.init(fileURL: kvDBFileURL)
         
         let ormDBFileURL = rootDirURL.appendingPathComponent(kORMDBFileSubPath)
-        self.ormDBService = CICOORMDBService.init(fileURL: ormDBFileURL)
+        self.ormDBService = ORMDBService.init(fileURL: ormDBFileURL)
     }
     
     open func fileURL(subPath: String) -> URL {
@@ -206,24 +206,24 @@ open class CICOPersistentService {
      **********************/
     
     public func readObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
-        return CICOKVKeyChainService.defaultService.readObject(objectType, forKey: userKey)
+        return KVKeyChainService.defaultService.readObject(objectType, forKey: userKey)
     }
     
     public func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
-        return CICOKVKeyChainService.defaultService.writeObject(object, forKey: userKey)
+        return KVKeyChainService.defaultService.writeObject(object, forKey: userKey)
     }
     
     public func updateObject<T: Codable>(_ objectType: T.Type,
                                          forKey userKey: String,
                                          updateClosure: (T?) -> T?,
                                          completionClosure: ((Bool) -> Void)? = nil) {
-        CICOKVKeyChainService.defaultService.updateObject(objectType,
+        KVKeyChainService.defaultService.updateObject(objectType,
                                                           forKey: userKey,
                                                           updateClosure: updateClosure,
                                                           completionClosure: completionClosure)
     }
     
     public func removeObject(forKey userKey: String) -> Bool {
-        return CICOKVKeyChainService.defaultService.removeObject(forKey: userKey)
+        return KVKeyChainService.defaultService.removeObject(forKey: userKey)
     }
 }

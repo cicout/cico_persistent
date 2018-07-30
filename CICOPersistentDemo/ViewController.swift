@@ -11,7 +11,7 @@ import CICOPersistent
 import CICOAutoCodable
 
 class ViewController: UIViewController {
-    private var ormDBService: CICOORMDBService?
+    private var ormDBService: ORMDBService?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +26,8 @@ class ViewController: UIViewController {
     }
 
     @IBAction func testBtnAction(_ sender: Any) {
-        self.doSecurityTest()
-//        self.doPersistentTest()
+//        self.doSecurityTest()
+        self.doPersistentTest()
 //        self.doKVFileTest()
 //        self.doKVDBTest()
 //        self.doORMDBTest()
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
     }
     
     private func doORMDBTest() {
-        self.ormDBService = CICOORMDBService.init(fileURL: CICOPathAide.docFileURL(withSubPath: "orm.db"))
+        self.ormDBService = ORMDBService.init(fileURL: CICOPathAide.docFileURL(withSubPath: "orm.db"))
         
         // read json
         let jsonString = self.jsonString(name: "default")
@@ -199,79 +199,79 @@ class ViewController: UIViewController {
         
         print("[***** PUBLIC KVFILE *****]")
         
-        let result = CICOPublicPersistentService.shared.writeKVFileObject(value, forKey: key)
+        let result = PublicPersistentService.shared.writeKVFileObject(value, forKey: key)
         print("[WRITE]: \(result)")
         
-        if let readValue = CICOPublicPersistentService.shared.readKVFileObject(T.self, forKey: key) {
+        if let readValue = PublicPersistentService.shared.readKVFileObject(T.self, forKey: key) {
             print("[READ]: \(readValue)")
         }
         
-//        let removeResult = CICOPublicPersistentService.shared.removeKVFileObject(forKey: key)
+//        let removeResult = PublicPersistentService.shared.removeKVFileObject(forKey: key)
 //        print("[REMOVE]: \(removeResult)")
         
         print("[***** PRIVATE KVFILE *****]")
         
-        let result2 = CICOPrivatePersistentService.shared.writeKVFileObject(value, forKey: key)
+        let result2 = PrivatePersistentService.shared.writeKVFileObject(value, forKey: key)
         print("[WRITE]: \(result2)")
         
-        if let readValue2 = CICOPrivatePersistentService.shared.readKVFileObject(T.self, forKey: key) {
+        if let readValue2 = PrivatePersistentService.shared.readKVFileObject(T.self, forKey: key) {
             print("[READ]: \(readValue2)")
         }
         
         print("[***** CACHE KVFILE *****]")
         
-        let result3 = CICOCachePersistentService.shared.writeKVFileObject(value, forKey: key)
+        let result3 = CachePersistentService.shared.writeKVFileObject(value, forKey: key)
         print("[WRITE]: \(result3)")
         
-        if let readValue3 = CICOCachePersistentService.shared.readKVFileObject(T.self, forKey: key) {
+        if let readValue3 = CachePersistentService.shared.readKVFileObject(T.self, forKey: key) {
             print("[READ]: \(readValue3)")
         }
         
         print("[***** TEMP KVFILE *****]")
         
-        let result4 = CICOTempPersistentService.shared.writeKVFileObject(value, forKey: key)
+        let result4 = TempPersistentService.shared.writeKVFileObject(value, forKey: key)
         print("[WRITE]: \(result4)")
         
-        if let readValue4 = CICOTempPersistentService.shared.readKVFileObject(T.self, forKey: key) {
+        if let readValue4 = TempPersistentService.shared.readKVFileObject(T.self, forKey: key) {
             print("[READ]: \(readValue4)")
         }
         
         print("[***** PUBLIC KVDB *****]")
         
-        let resultx = CICOPublicPersistentService.shared.writeKVDBObject(value, forKey: key)
+        let resultx = PublicPersistentService.shared.writeKVDBObject(value, forKey: key)
         print("[WRITE]: \(resultx)")
         
-        if let readValuex = CICOPublicPersistentService.shared.readKVDBObject(T.self, forKey: key) {
+        if let readValuex = PublicPersistentService.shared.readKVDBObject(T.self, forKey: key) {
             print("[READ]: \(readValuex)")
         }
         
-//        let removeResultx = CICOPublicPersistentService.shared.removeKVDBObject(forKey: key)
+//        let removeResultx = PublicPersistentService.shared.removeKVDBObject(forKey: key)
 //        print("[REMOVE]: \(removeResultx)")
         
         print("[***** PRIVATE KVDB *****]")
         
-        let result2x = CICOPrivatePersistentService.shared.writeKVDBObject(value, forKey: key)
+        let result2x = PrivatePersistentService.shared.writeKVDBObject(value, forKey: key)
         print("[WRITE]: \(result2x)")
         
-        if let readValue2x = CICOPrivatePersistentService.shared.readKVDBObject(T.self, forKey: key) {
+        if let readValue2x = PrivatePersistentService.shared.readKVDBObject(T.self, forKey: key) {
             print("[READ]: \(readValue2x)")
         }
         
         print("[***** CACHE KVDB *****]")
         
-        let result3x = CICOCachePersistentService.shared.writeKVDBObject(value, forKey: key)
+        let result3x = CachePersistentService.shared.writeKVDBObject(value, forKey: key)
         print("[WRITE]: \(result3x)")
         
-        if let readValue3x = CICOCachePersistentService.shared.readKVDBObject(T.self, forKey: key) {
+        if let readValue3x = CachePersistentService.shared.readKVDBObject(T.self, forKey: key) {
             print("[READ]: \(readValue3x)")
         }
         
         print("[***** TEMP KVDB *****]")
         
-        let result4x = CICOTempPersistentService.shared.writeKVDBObject(value, forKey: key)
+        let result4x = TempPersistentService.shared.writeKVDBObject(value, forKey: key)
         print("[WRITE]: \(result4x)")
         
-        if let readValue4x = CICOTempPersistentService.shared.readKVDBObject(T.self, forKey: key) {
+        if let readValue4x = TempPersistentService.shared.readKVDBObject(T.self, forKey: key) {
             print("[READ]: \(readValue4x)")
         }
         
@@ -287,40 +287,40 @@ class ViewController: UIViewController {
         
         print("[***** PUBLIC *****]")
         
-        let result = CICOPublicKVFileService.shared.writeObject(value, forKey: key)
+        let result = PublicKVFileService.shared.writeObject(value, forKey: key)
         print("[WRITE]: \(result)")
         
-        if let readValue = CICOPublicKVFileService.shared.readObject(T.self, forKey: key) {
+        if let readValue = PublicKVFileService.shared.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue)")
         }
         
-//        let removeResult = CICOPublicKVFileService.shared.removeObject(forKey: key)
+//        let removeResult = PublicKVFileService.shared.removeObject(forKey: key)
 //        print("[REMOVE]: \(removeResult)")
         
         print("[***** PRIVATE *****]")
         
-        let result2 = CICOPrivateKVFileService.shared.writeObject(value, forKey: key)
+        let result2 = PrivateKVFileService.shared.writeObject(value, forKey: key)
         print("[WRITE]: \(result2)")
         
-        if let readValue2 = CICOPrivateKVFileService.shared.readObject(T.self, forKey: key) {
+        if let readValue2 = PrivateKVFileService.shared.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue2)")
         }
         
         print("[***** CACHE *****]")
         
-        let result3 = CICOCacheKVFileService.shared.writeObject(value, forKey: key)
+        let result3 = CacheKVFileService.shared.writeObject(value, forKey: key)
         print("[WRITE]: \(result3)")
         
-        if let readValue3 = CICOCacheKVFileService.shared.readObject(T.self, forKey: key) {
+        if let readValue3 = CacheKVFileService.shared.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue3)")
         }
         
         print("[***** TEMP *****]")
         
-        let result4 = CICOTempKVFileService.shared.writeObject(value, forKey: key)
+        let result4 = TempKVFileService.shared.writeObject(value, forKey: key)
         print("[WRITE]: \(result4)")
         
-        if let readValue4 = CICOTempKVFileService.shared.readObject(T.self, forKey: key) {
+        if let readValue4 = TempKVFileService.shared.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue4)")
         }
         
@@ -336,40 +336,40 @@ class ViewController: UIViewController {
         
         print("[***** PUBLIC *****]")
         
-        let result = CICOPublicKVDBService.shared.writeObject(value, forKey: key)
+        let result = PublicKVDBService.shared.writeObject(value, forKey: key)
         print("[WRITE]: \(result)")
         
-        if let readValue = CICOPublicKVDBService.shared.readObject(T.self, forKey: key) {
+        if let readValue = PublicKVDBService.shared.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue)")
         }
         
-//        let removeResult = CICOPublicKVDBService.shared.removeObject(forKey: key)
+//        let removeResult = PublicKVDBService.shared.removeObject(forKey: key)
 //        print("[REMOVE]: \(removeResult)")
         
         print("[***** PRIVATE *****]")
         
-        let result2 = CICOPrivateKVDBService.shared.writeObject(value, forKey: key)
+        let result2 = PrivateKVDBService.shared.writeObject(value, forKey: key)
         print("[WRITE]: \(result2)")
         
-        if let readValue2 = CICOPrivateKVDBService.shared.readObject(T.self, forKey: key) {
+        if let readValue2 = PrivateKVDBService.shared.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue2)")
         }
         
         print("[***** CACHE *****]")
         
-        let result3 = CICOCacheKVDBService.shared.writeObject(value, forKey: key)
+        let result3 = CacheKVDBService.shared.writeObject(value, forKey: key)
         print("[WRITE]: \(result3)")
         
-        if let readValue3 = CICOCacheKVDBService.shared.readObject(T.self, forKey: key) {
+        if let readValue3 = CacheKVDBService.shared.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue3)")
         }
         
         print("[***** TEMP *****]")
         
-        let result4 = CICOTempKVDBService.shared.writeObject(value, forKey: key)
+        let result4 = TempKVDBService.shared.writeObject(value, forKey: key)
         print("[WRITE]: \(result4)")
         
-        if let readValue4 = CICOTempKVDBService.shared.readObject(T.self, forKey: key) {
+        if let readValue4 = TempKVDBService.shared.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue4)")
         }
         
@@ -383,14 +383,14 @@ class ViewController: UIViewController {
         
         let key = "test_\(T.self)"
         
-        let result = CICOKVKeyChainService.defaultService.writeObject(value, forKey: key)
+        let result = KVKeyChainService.defaultService.writeObject(value, forKey: key)
         print("[WRITE]: \(result)")
         
-        if let readValue = CICOKVKeyChainService.defaultService.readObject(T.self, forKey: key) {
+        if let readValue = KVKeyChainService.defaultService.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue)")
         }
         
-        CICOKVKeyChainService
+        KVKeyChainService
             .defaultService
             .updateObject(T.self,
                           forKey: key,
@@ -403,7 +403,7 @@ class ViewController: UIViewController {
                 print("[UPDATE]: \(result)")
         }
         
-        let removeResult = CICOKVKeyChainService.defaultService.removeObject(forKey: key)
+        let removeResult = KVKeyChainService.defaultService.removeObject(forKey: key)
         print("[REMOVE]: \(removeResult)")
         
         print("\n[***** END TESTING *****]\n")

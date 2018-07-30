@@ -10,10 +10,10 @@ import Foundation
 
 private let kRootDirName = "cico_persistent"
 
-public class CICOPublicPersistentService: CICOPersistentService {
-    public static let shared: CICOPublicPersistentService = {
+public class PublicPersistentService: PersistentService {
+    public static let shared: PublicPersistentService = {
         let rootDirURL = CICOPathAide.defaultPublicFileURL(withSubPath: kRootDirName)!
-        return CICOPublicPersistentService.init(rootDirURL: rootDirURL)
+        return PublicPersistentService.init(rootDirURL: rootDirURL)
     }()
     
     public override func clearAllPersistent() -> Bool {

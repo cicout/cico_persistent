@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class CICOURLKVFileService {
+open class URLKVFileService {
     private let fileLock = NSLock()
     
     deinit {
@@ -27,11 +27,11 @@ open class CICOURLKVFileService {
             return nil
         }
         
-        return CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
+        return KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
     
     open func writeObject<T: Codable>(_ object: T, toFileURL fileURL: URL) -> Bool {
-        guard let jsonData = CICOKVJSONAide.transferObjectToJSONData(object) else {
+        guard let jsonData = KVJSONAide.transferObjectToJSONData(object) else {
             return false
         }
         
@@ -61,7 +61,7 @@ open class CICOURLKVFileService {
         
         // read
         if let jsonData = self.readJSONData(fromFileURL: fileURL) {
-            object = CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
+            object = KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
         }
         
         // update
@@ -70,7 +70,7 @@ open class CICOURLKVFileService {
             return
         }
         
-        guard let newJSONData = CICOKVJSONAide.transferObjectToJSONData(newObject) else {
+        guard let newJSONData = KVJSONAide.transferObjectToJSONData(newObject) else {
             return
         }
         

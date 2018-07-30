@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CICOORMTableInfoModel {
+class ORMTableInfoModel {
     let tableName: String
     let objectTypeName: String
     let objectTypeVersion: Int

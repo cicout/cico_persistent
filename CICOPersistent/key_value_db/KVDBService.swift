@@ -14,7 +14,7 @@ private let kJSONKeyColumnName = "json_key"
 private let kJSONDataColumnName = "json_data"
 private let kUpdateTimeColumnName = "update_time"
 
-open class CICOKVDBService {
+open class KVDBService {
     public let fileURL: URL
     
     private var dbQueue: FMDatabaseQueue?
@@ -38,7 +38,7 @@ open class CICOKVDBService {
             return nil
         }
         
-        return CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
+        return KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
     
     open func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
@@ -46,7 +46,7 @@ open class CICOKVDBService {
             return false
         }
         
-        guard let jsonData = CICOKVJSONAide.transferObjectToJSONData(object) else {
+        guard let jsonData = KVJSONAide.transferObjectToJSONData(object) else {
             return false
         }
         
@@ -75,7 +75,7 @@ open class CICOKVDBService {
             if let resultSet = db.executeQuery(querySQL, withArgumentsIn: [jsonKey]) {
                 if resultSet.next(),
                     let jsonData = resultSet.data(forColumn: kJSONDataColumnName) {
-                    object = CICOKVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
+                    object = KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
                 }
                 resultSet.close()
             }
@@ -86,7 +86,7 @@ open class CICOKVDBService {
                 return
             }
             
-            guard let newJSONData = CICOKVJSONAide.transferObjectToJSONData(newObject) else {
+            guard let newJSONData = KVJSONAide.transferObjectToJSONData(newObject) else {
                 return
             }
             

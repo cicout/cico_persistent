@@ -10,10 +10,10 @@ import Foundation
 
 private let kDBSubPath = "cico_kv_db/db.sqlite"
 
-public class CICOPrivateKVDBService: CICOKVDBService {
-    public static let shared: CICOPrivateKVDBService = {
+public class PrivateKVDBService: KVDBService {
+    public static let shared: PrivateKVDBService = {
         let dbURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kDBSubPath)!
-        return CICOPrivateKVDBService.init(fileURL: dbURL)
+        return PrivateKVDBService.init(fileURL: dbURL)
     }()
     
     public override func clearAll() -> Bool {

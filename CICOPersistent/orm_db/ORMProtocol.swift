@@ -8,13 +8,13 @@
 
 import Foundation
 
-public protocol CICOORMProtocol {
+public protocol ORMProtocol {
     static func cicoORMPrimaryKeyColumnName() -> String
     static func cicoORMIndexColumnNameArray() -> [String]?
     static func cicoORMObjectTypeVersion() -> Int
 }
 
-public extension CICOORMProtocol {
+public extension ORMProtocol {
     static func cicoORMIndexColumnNameArray() -> [String]? {
         return nil
     }
@@ -24,4 +24,4 @@ public extension CICOORMProtocol {
     }
 }
 
-public typealias CICOORMCodableProtocol = Codable & CICOORMProtocol
+public typealias CICOORMCodableProtocol = Codable & ORMProtocol

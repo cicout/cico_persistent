@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CICOSQLiteType: String {
+enum SQLiteType: String {
     case NULL
     case INTEGER
     case REAL
@@ -17,103 +17,103 @@ enum CICOSQLiteType: String {
 }
 
 extension Int8 {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension Int16 {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension Int32 {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension Int64 {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension Int {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension UInt8 {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension UInt16 {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension UInt32 {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension UInt64 {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension UInt {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension Bool {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .INTEGER
     }
 }
 
 extension Float {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .REAL
     }
 }
 
 extension Double {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .REAL
     }
 }
 
 extension String {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .TEXT
     }
 }
 
 extension Date {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .REAL
     }
 }
 
 extension Decodable {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .BLOB
     }
 }
 
 extension Encodable {
-    static var sqliteType: CICOSQLiteType {
+    static var sqliteType: SQLiteType {
         return .BLOB
     }
 }

@@ -16,7 +16,7 @@ private let kTableNameColumnName = "table_name"
 private let kObjectTypeNameColumnName = "object_type_name"
 private let kObjectTypeVersionColumnName = "object_type_version"
 
-open class CICOORMDBService {
+open class ORMDBService {
     public let fileURL: URL
     
     private var dbQueue: FMDatabaseQueue?
@@ -415,8 +415,8 @@ open class CICOORMDBService {
         return result
     }
     
-    private func readORMTableInfo(db: FMDatabase, objectTypeName: String, tableName: String) -> CICOORMTableInfoModel? {
-        var tableInfo: CICOORMTableInfoModel? = nil
+    private func readORMTableInfo(db: FMDatabase, objectTypeName: String, tableName: String) -> ORMTableInfoModel? {
+        var tableInfo: ORMTableInfoModel? = nil
         
         let querySQL = "SELECT * FROM \(kORMTableName) WHERE \(kTableNameColumnName) = ? LIMIT 1;"
         
@@ -429,7 +429,7 @@ open class CICOORMDBService {
             if let objectTypeNameValue = resultSet.string(forColumn: kObjectTypeNameColumnName),
                 objectTypeNameValue == objectTypeName {
                 let objectTypeVersion: Int = resultSet.long(forColumn: kObjectTypeVersionColumnName)
-                let temp = CICOORMTableInfoModel.init(tableName: tableName,
+                let temp = ORMTableInfoModel.init(tableName: tableName,
                                                       objectTypeName: objectTypeNameValue,
                                                       objectTypeVersion: objectTypeVersion)
                 tableInfo = temp
@@ -441,7 +441,7 @@ open class CICOORMDBService {
         return tableInfo
     }
     
-    private func writeORMTableInfo(db: FMDatabase, tableInfo: CICOORMTableInfoModel) -> Bool {
+    private func writeORMTableInfo(db: FMDatabase, tableInfo: ORMTableInfoModel) -> Bool {
         var result = false
         
         let replaceSQL = "REPLACE INTO \(kORMTableName) (\(kTableNameColumnName), \(kObjectTypeNameColumnName), \(kObjectTypeVersionColumnName)) values (?, ?, ?);"
@@ -486,7 +486,7 @@ open class CICOORMDBService {
         guard tableInfo.objectTypeVersion >= objectTypeVersion else {
             // upgrade column
             let columnSet = self.queryTableColumns(db: db, tableName: tableName)
-            let sqliteTypeDic = CICOSQLiteTypeDecoder.allTypeProperties(of: objectType)
+            let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
             let newColumnSet = Set<String>.init(sqliteTypeDic.keys)
             let needAddColumnSet = newColumnSet.subtracting(columnSet)
             
@@ -541,7 +541,7 @@ open class CICOORMDBService {
             }
             
             // update objectTypeVersion
-            let newTableInfo = CICOORMTableInfoModel.init(tableName: tableName,
+            let newTableInfo = ORMTableInfoModel.init(tableName: tableName,
                                                           objectTypeName: objectTypeName,
                                                           objectTypeVersion: objectTypeVersion)
             result = self.writeORMTableInfo(db: db, tableInfo: newTableInfo)
@@ -574,7 +574,7 @@ open class CICOORMDBService {
         
         // create table
         
-        let sqliteTypeDic = CICOSQLiteTypeDecoder.allTypeProperties(of: objectType)
+        let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
         //            print("\nsqliteTypes: \(sqliteTypes)")
         
         var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
@@ -615,7 +615,7 @@ open class CICOORMDBService {
         }
         
         // save table info
-        let tableInfo = CICOORMTableInfoModel.init(tableName: tableName, objectTypeName: objectTypeName, objectTypeVersion: objectTypeVersion)
+        let tableInfo = ORMTableInfoModel.init(tableName: tableName, objectTypeName: objectTypeName, objectTypeVersion: objectTypeVersion)
         result = self.writeORMTableInfo(db: db, tableInfo: tableInfo)
         
         return result
@@ -681,7 +681,7 @@ open class CICOORMDBService {
         }
         
         if resultSet.next() {
-            object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, objectType: objectType)
+            object = SQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, objectType: objectType)
         }
         
         resultSet.close()
@@ -735,7 +735,7 @@ open class CICOORMDBService {
         
         var tempArray = [T]()
         while resultSet.next() {
-            guard let object = CICOSQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, objectType: objectType) else {
+            guard let object = SQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, objectType: objectType) else {
                 return array
             }
             tempArray.append(object)
@@ -749,7 +749,7 @@ open class CICOORMDBService {
         var result = false
         
         let (sql, arguments) =
-            CICOSQLiteRecordEncoder.encodeObjectToSQL(object: object, tableName: tableName)
+            SQLiteRecordEncoder.encodeObjectToSQL(object: object, tableName: tableName)
         
         guard let replaceSQL = sql, let argumentArray = arguments else {
             return result

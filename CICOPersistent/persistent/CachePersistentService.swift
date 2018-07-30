@@ -10,9 +10,9 @@ import Foundation
 
 private let kRootDirName = "cico_persistent"
 
-public class CICOCachePersistentService: CICOPersistentService {
-    public static let shared: CICOCachePersistentService = {
+public class CachePersistentService: PersistentService {
+    public static let shared: CachePersistentService = {
         let rootDirURL = CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)!
-        return CICOCachePersistentService.init(rootDirURL: rootDirURL)
+        return CachePersistentService.init(rootDirURL: rootDirURL)
     }()
 }

@@ -268,6 +268,11 @@ open class ORMDBService {
                                            objectTypeVersion: Int,
                                            updateClosure: (T?) -> T?,
                                            completionClosure: ((Bool) -> Void)?) {
+        var result = false
+        defer {
+            completionClosure?(result)
+        }
+        
         let objectTypeName = "\(objectType)"
         
         self.dbQueue?.inTransaction({ (db, rollback) in
@@ -283,7 +288,7 @@ open class ORMDBService {
             }
             
             guard let newObject = updateClosure(object) else {
-                completionClosure?(true)
+                result = true
                 return
             }
             
@@ -303,7 +308,7 @@ open class ORMDBService {
                 }
             }
             
-            let result = self.replaceRecord(db: db, tableName: tableName, object: newObject)
+            result = self.replaceRecord(db: db, tableName: tableName, object: newObject)
             if !result {
                 rollback.pointee = true
             }

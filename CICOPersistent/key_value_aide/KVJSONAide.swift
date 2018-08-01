@@ -10,12 +10,12 @@ import Foundation
 import CICOAutoCodable
 
 class KVJSONAide {
-    static func transferJSONDataToObject<T: Codable>(_ jsonData: Data, objectType: T.Type) -> T? {
+    static func transferJSONDataToObject<T: Decodable>(_ jsonData: Data, objectType: T.Type) -> T? {
         let objectArray = [T].init(jsonData: jsonData)
         return objectArray?.first
     }
     
-    static func transferObjectToJSONData<T: Codable>(_ object: T) -> Data? {
+    static func transferObjectToJSONData<T: Encodable>(_ object: T) -> Data? {
         return [object].toJSONData()
     }
 }

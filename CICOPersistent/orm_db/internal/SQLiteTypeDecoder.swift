@@ -106,10 +106,13 @@ class SQLiteTypeDecoder: Decoder {
         func decode<T>(_ type: T.Type, forKey key: KEY) throws -> T where T: Decodable {
             if type == Date.self || type == NSDate.self {
                 return try self.decode(Date.self, forKey: key) as! T
+            } else if type == URL.self || type == NSURL.self {
+                return try self.decode(URL.self, forKey: key) as! T
             }
             
             decoder.typeDic[key.stringValue] =
-                TypeProperty.init(name: key.stringValue, swiftType: T.self, sqliteType: T.sqliteType, value: 0)
+                TypeProperty.init(name: key.stringValue, swiftType: T.self, sqliteType: .BLOB, value: 0)
+            
             let sizedPointer = SizedPointer(of: T.self)
             sizedPointers.append(sizedPointer)
             return sizedPointer.getPointee()
@@ -203,6 +206,12 @@ class SQLiteTypeDecoder: Decoder {
             decoder.typeDic[key.stringValue] =
                 TypeProperty.init(name: key.stringValue, swiftType: Date.self, sqliteType: Date.sqliteType, value: 0)
             return Date.init()
+        }
+        
+        func decode(_ type: URL.Type, forKey key: KEY) throws -> URL {
+            decoder.typeDic[key.stringValue] =
+                TypeProperty.init(name: key.stringValue, swiftType: URL.self, sqliteType: URL.sqliteType, value: 0)
+            return URL.init(string: "https://www.google.com")!
         }
     }
 }

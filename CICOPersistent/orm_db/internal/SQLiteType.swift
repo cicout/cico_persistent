@@ -106,14 +106,8 @@ extension Date {
     }
 }
 
-extension Decodable {
+extension URL {
     static var sqliteType: SQLiteType {
-        return .BLOB
-    }
-}
-
-extension Encodable {
-    static var sqliteType: SQLiteType {
-        return .BLOB
+        return .TEXT
     }
 }

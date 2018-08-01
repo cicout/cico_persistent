@@ -99,10 +99,12 @@ class SQLiteRecordDecoder: Decoder {
         func decode<T>(_ objectType: T.Type, forKey key: KEY) throws -> T where T: Decodable {
             if objectType == Date.self || objectType == NSDate.self {
                 return try self.decode(Date.self, forKey: key) as! T
+            } else if objectType == URL.self || objectType == NSURL.self {
+                return try self.decode(URL.self, forKey: key) as! T
             }
             
             let data = decoder.resultSet.data(forColumn: key.stringValue)!
-            return T.init(jsonData: data)!
+            return KVJSONAide.transferJSONDataToObject(data, objectType: objectType)!
         }
         
         func decode(_ type: Bool.Type, forKey key: KEY) throws -> Bool {
@@ -164,6 +166,11 @@ class SQLiteRecordDecoder: Decoder {
         func decode(_ type: Date.Type, forKey key: KEY) throws -> Date {
             let value = decoder.resultSet.double(forColumn: key.stringValue)
             return Date.init(timeIntervalSinceReferenceDate: value)
+        }
+        
+        func decode(_ type: URL.Type, forKey key: KEY) throws -> URL {
+            let urlString = decoder.resultSet.string(forColumn: key.stringValue)!
+            return URL.init(string: urlString)!
         }
     }
 }

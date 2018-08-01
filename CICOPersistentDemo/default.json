@@ -18,5 +18,6 @@
               "string2"
               ],
     "private": "private_string",
+    "url": "https://www.google.com",
     "new": "new_string"
 }

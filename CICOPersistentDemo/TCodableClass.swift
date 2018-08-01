@@ -27,6 +27,8 @@ class TCodableClass: CICOAutoCodable {
     private var privateStringValue: String?
     
     private var newStringValue: String?
+    
+    private var url: URL?
 }
 
 extension TCodableClass {
@@ -44,6 +46,7 @@ extension TCodableClass {
 // sourcery:inline:auto:TCodableClass.CodingKeys.AutoCodable
         case name
         case dicValue
+        case url
 // sourcery:end
     }
 }
@@ -58,6 +61,6 @@ extension TCodableClass: ORMProtocol {
 //    }
     
     static func cicoORMObjectTypeVersion() -> Int {
-        return 8
+        return 11
     }
 }

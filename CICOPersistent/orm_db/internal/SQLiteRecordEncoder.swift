@@ -109,11 +109,14 @@ class SQLiteRecordEncoder: Encoder {
             if let date = value as? Date {
                 try self.encode(date, forKey: key)
                 return
+            } else if let url = value as? URL {
+                try self.encode(url, forKey: key)
+                return
             }
             
-            if let data = value.toJSONData() {
+            if let data = KVJSONAide.transferObjectToJSONData(value) {
                 let property =
-                    TypeProperty.init(name: key.stringValue, swiftType: T.self, sqliteType: T.sqliteType, value: data)
+                    TypeProperty.init(name: key.stringValue, swiftType: T.self, sqliteType: .BLOB, value: data)
                 self.encoder.typePropertyArray.append(property)
             } else {
                 assert(false, "encode key = \(key.stringValue), value = \(value)")
@@ -208,6 +211,13 @@ class SQLiteRecordEncoder: Encoder {
             let time = value.timeIntervalSinceReferenceDate
             let property =
                 TypeProperty.init(name: key.stringValue, swiftType: Date.self, sqliteType: Date.sqliteType, value: time)
+            self.encoder.typePropertyArray.append(property)
+        }
+        
+        func encode(_ value: URL, forKey key: KEY) throws {
+            let urlString = value.absoluteString
+            let property =
+                TypeProperty.init(name: key.stringValue, swiftType: URL.self, sqliteType: URL.sqliteType, value: urlString)
             self.encoder.typePropertyArray.append(property)
         }
     }

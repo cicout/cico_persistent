@@ -64,10 +64,22 @@
 		E49F7CF9210C447400CF24F0 /* KVJSONAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CF8210C447400CF24F0 /* KVJSONAide.swift */; };
 		E49F7CFE210C640600CF24F0 /* CICOFileManagerAide.h in Headers */ = {isa = PBXBuildFile; fileRef = E49F7CFC210C640600CF24F0 /* CICOFileManagerAide.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E49F7CFF210C640600CF24F0 /* CICOFileManagerAide.m in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CFD210C640600CF24F0 /* CICOFileManagerAide.m */; };
+		E4FD6C9821129DBC00ECAF4E /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
+		E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */; };
+		E4FD6CEC21129F4D00ECAF4E /* show_all_type.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */; };
+		E4FD6D1321129F4D00ECAF4E /* show_all_type.stencil in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6CE021129F4D00ECAF4E /* show_all_type.stencil */; };
+		E4FD6D1421129F4D00ECAF4E /* cico_auto_codable.swifttemplate in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6CE121129F4D00ECAF4E /* cico_auto_codable.swifttemplate */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		E41F766E20C9313000399E42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E41F763220C8D2F300399E42 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E41F763A20C8D2F300399E42;
+			remoteInfo = CICOPersistent;
+		};
+		E4FD6C9921129DBC00ECAF4E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E41F763220C8D2F300399E42 /* Project object */;
 			proxyType = 1;
@@ -148,6 +160,12 @@
 		E49F7CF8210C447400CF24F0 /* KVJSONAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVJSONAide.swift; sourceTree = "<group>"; };
 		E49F7CFC210C640600CF24F0 /* CICOFileManagerAide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOFileManagerAide.h; sourceTree = "<group>"; };
 		E49F7CFD210C640600CF24F0 /* CICOFileManagerAide.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CICOFileManagerAide.m; sourceTree = "<group>"; };
+		E4FD6C9321129DBC00ECAF4E /* CICOPersistentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CICOPersistentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4FD6C9721129DBC00ECAF4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileServiceTests.swift; sourceTree = "<group>"; };
+		E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = show_all_type.generated.swift; sourceTree = "<group>"; };
+		E4FD6CE021129F4D00ECAF4E /* show_all_type.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = show_all_type.stencil; sourceTree = "<group>"; };
+		E4FD6CE121129F4D00ECAF4E /* cico_auto_codable.swifttemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cico_auto_codable.swifttemplate; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,15 +190,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4FD6C9021129DBC00ECAF4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4FD6C9821129DBC00ECAF4E /* CICOPersistent.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		E41F763120C8D2F300399E42 = {
 			isa = PBXGroup;
 			children = (
-				E482ECFE20CE15B4001FF435 /* Frameworks */,
+				E4FD6CA121129F4C00ECAF4E /* sourcery */,
 				E41F763D20C8D2F300399E42 /* CICOPersistent */,
 				E41F765B20C9302300399E42 /* CICOPersistentDemo */,
+				E4FD6C9421129DBC00ECAF4E /* CICOPersistentTests */,
+				E482ECFE20CE15B4001FF435 /* Frameworks */,
 				E41F763C20C8D2F300399E42 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -190,6 +218,7 @@
 			children = (
 				E41F763B20C8D2F300399E42 /* CICOPersistent.framework */,
 				E41F765A20C9302300399E42 /* CICOPersistentDemo.app */,
+				E4FD6C9321129DBC00ECAF4E /* CICOPersistentTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -371,6 +400,41 @@
 			path = tool;
 			sourceTree = "<group>";
 		};
+		E4FD6C9421129DBC00ECAF4E /* CICOPersistentTests */ = {
+			isa = PBXGroup;
+			children = (
+				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
+				E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */,
+			);
+			path = CICOPersistentTests;
+			sourceTree = "<group>";
+		};
+		E4FD6CA121129F4C00ECAF4E /* sourcery */ = {
+			isa = PBXGroup;
+			children = (
+				E4FD6CA221129F4C00ECAF4E /* auto_generated */,
+				E4FD6CDF21129F4D00ECAF4E /* templates */,
+			);
+			path = sourcery;
+			sourceTree = "<group>";
+		};
+		E4FD6CA221129F4C00ECAF4E /* auto_generated */ = {
+			isa = PBXGroup;
+			children = (
+				E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */,
+			);
+			path = auto_generated;
+			sourceTree = "<group>";
+		};
+		E4FD6CDF21129F4D00ECAF4E /* templates */ = {
+			isa = PBXGroup;
+			children = (
+				E4FD6CE021129F4D00ECAF4E /* show_all_type.stencil */,
+				E4FD6CE121129F4D00ECAF4E /* cico_auto_codable.swifttemplate */,
+			);
+			path = templates;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -414,6 +478,7 @@
 				E41F765720C9302300399E42 /* Frameworks */,
 				E41F765820C9302300399E42 /* Resources */,
 				E41F767020C9313000399E42 /* Embed Frameworks */,
+				E4FD6CA021129F2000ECAF4E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -425,13 +490,31 @@
 			productReference = E41F765A20C9302300399E42 /* CICOPersistentDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E4FD6C9221129DBC00ECAF4E /* CICOPersistentTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4FD6C9D21129DBC00ECAF4E /* Build configuration list for PBXNativeTarget "CICOPersistentTests" */;
+			buildPhases = (
+				E4FD6C8F21129DBC00ECAF4E /* Sources */,
+				E4FD6C9021129DBC00ECAF4E /* Frameworks */,
+				E4FD6C9121129DBC00ECAF4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4FD6C9A21129DBC00ECAF4E /* PBXTargetDependency */,
+			);
+			name = CICOPersistentTests;
+			productName = CICOPersistentTests;
+			productReference = E4FD6C9321129DBC00ECAF4E /* CICOPersistentTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		E41F763220C8D2F300399E42 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = cico;
 				TargetAttributes = {
@@ -446,6 +529,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					E4FD6C9221129DBC00ECAF4E = {
+						CreatedOnToolsVersion = 9.4;
 					};
 				};
 			};
@@ -464,6 +550,7 @@
 			targets = (
 				E41F763A20C8D2F300399E42 /* CICOPersistent */,
 				E41F765920C9302300399E42 /* CICOPersistentDemo */,
+				E4FD6C9221129DBC00ECAF4E /* CICOPersistentTests */,
 			);
 		};
 /* End PBXProject section */
@@ -473,6 +560,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4FD6D1321129F4D00ECAF4E /* show_all_type.stencil in Resources */,
+				E4FD6D1421129F4D00ECAF4E /* cico_auto_codable.swifttemplate in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,7 +576,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4FD6C9121129DBC00ECAF4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E4FD6CA021129F2000ECAF4E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\necho \"[***** Start Running CICOAutoCodable Script *****]\"\n./sourcery/source/Pods/Sourcery/bin/sourcery --sources ./CICOPersistentDemo --sources ./CICOPersistent --sources ./CICOPersistentTests --templates ./sourcery/templates/ --output ./sourcery/auto_generated\necho \"[***** End Running CICOAutoCodable Script *****]\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E41F763620C8D2F300399E42 /* Sources */ = {
@@ -517,6 +629,7 @@
 				E49F7CD8210ACE8700CF24F0 /* KVKeyChainService.swift in Sources */,
 				E482ED1120CF6014001FF435 /* TempKVDBService.swift in Sources */,
 				E41F767C20C93D3D00399E42 /* TempPersistentService.swift in Sources */,
+				E4FD6CEC21129F4D00ECAF4E /* show_all_type.generated.swift in Sources */,
 				E492B4DD20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift in Sources */,
 				E482ED1A20CF6F4B001FF435 /* CacheKVFileService.swift in Sources */,
 				E482ED1420CF6950001FF435 /* KVFileService.swift in Sources */,
@@ -542,6 +655,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4FD6C8F21129DBC00ECAF4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -549,6 +670,11 @@
 			isa = PBXTargetDependency;
 			target = E41F763A20C8D2F300399E42 /* CICOPersistent */;
 			targetProxy = E41F766E20C9313000399E42 /* PBXContainerItemProxy */;
+		};
+		E4FD6C9A21129DBC00ECAF4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E41F763A20C8D2F300399E42 /* CICOPersistent */;
+			targetProxy = E4FD6C9921129DBC00ECAF4E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -803,6 +929,42 @@
 			};
 			name = Release;
 		};
+		E4FD6C9B21129DBC00ECAF4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = CICOPersistentTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E4FD6C9C21129DBC00ECAF4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = CICOPersistentTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -829,6 +991,15 @@
 			buildConfigurations = (
 				E41F766A20C9302400399E42 /* Debug */,
 				E41F766B20C9302400399E42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4FD6C9D21129DBC00ECAF4E /* Build configuration list for PBXNativeTarget "CICOPersistentTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4FD6C9B21129DBC00ECAF4E /* Debug */,
+				E4FD6C9C21129DBC00ECAF4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

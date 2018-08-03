@@ -43,7 +43,7 @@ extension TCodableClass {
         case privateStringValue = "private"
         case newStringValue = "new"
 
-// sourcery:inline:auto:TCodableClass.CodingKeys.AutoCodable
+// sourcery:inline:auto:TCodableClass.CodingKeys.CICOAutoCodable_Auto_Generated_CodingKeys
         case name
         case dicValue
         case url

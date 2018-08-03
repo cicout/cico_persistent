@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CICOAutoCodable
 
-struct TCodableStruct: Codable {
+struct TCodableStruct: CICOAutoCodable {
     private(set) var name: String?
     private(set) var stringValue: String?
     //    private(set) var stringValue: Int?
@@ -35,7 +36,7 @@ extension TCodableStruct {
         case arrayValue = "array"
         case privateStringValue = "private"
 
-// sourcery:inline:auto:TCodableStruct.CodingKeys.AutoCodable
+// sourcery:inline:auto:TCodableStruct.CodingKeys.CICOAutoCodable_Auto_Generated_CodingKeys
         case name
         case dicValue
 // sourcery:end

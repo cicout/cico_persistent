@@ -67,8 +67,6 @@
 		E4FD6C9821129DBC00ECAF4E /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
 		E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */; };
 		E4FD6CEC21129F4D00ECAF4E /* show_all_type.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */; };
-		E4FD6D1321129F4D00ECAF4E /* show_all_type.stencil in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6CE021129F4D00ECAF4E /* show_all_type.stencil */; };
-		E4FD6D1421129F4D00ECAF4E /* cico_auto_codable.swifttemplate in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6CE121129F4D00ECAF4E /* cico_auto_codable.swifttemplate */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,8 +162,6 @@
 		E4FD6C9721129DBC00ECAF4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileServiceTests.swift; sourceTree = "<group>"; };
 		E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = show_all_type.generated.swift; sourceTree = "<group>"; };
-		E4FD6CE021129F4D00ECAF4E /* show_all_type.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = show_all_type.stencil; sourceTree = "<group>"; };
-		E4FD6CE121129F4D00ECAF4E /* cico_auto_codable.swifttemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cico_auto_codable.swifttemplate; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,7 +409,6 @@
 			isa = PBXGroup;
 			children = (
 				E4FD6CA221129F4C00ECAF4E /* auto_generated */,
-				E4FD6CDF21129F4D00ECAF4E /* templates */,
 			);
 			path = sourcery;
 			sourceTree = "<group>";
@@ -424,15 +419,6 @@
 				E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */,
 			);
 			path = auto_generated;
-			sourceTree = "<group>";
-		};
-		E4FD6CDF21129F4D00ECAF4E /* templates */ = {
-			isa = PBXGroup;
-			children = (
-				E4FD6CE021129F4D00ECAF4E /* show_all_type.stencil */,
-				E4FD6CE121129F4D00ECAF4E /* cico_auto_codable.swifttemplate */,
-			);
-			path = templates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -560,8 +546,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4FD6D1321129F4D00ECAF4E /* show_all_type.stencil in Resources */,
-				E4FD6D1421129F4D00ECAF4E /* cico_auto_codable.swifttemplate in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,7 +581,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\necho \"[***** Start Running CICOAutoCodable Script *****]\"\n./sourcery/source/Pods/Sourcery/bin/sourcery --sources ./CICOPersistentDemo --sources ./CICOPersistent --sources ./CICOPersistentTests --templates ./sourcery/templates/ --output ./sourcery/auto_generated\necho \"[***** End Running CICOAutoCodable Script *****]\"\nfi";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\necho \"[***** Start Running CICOAutoCodable Script *****]\"\n./sourcery/source/Pods/Sourcery/bin/sourcery --sources ./Carthage/Checkouts/cico_auto_codable/CICOAutoCodable --sources ./CICOPersistentDemo --sources ./CICOPersistent --sources ./CICOPersistentTests --templates ./Carthage/Checkouts/cico_auto_codable/sourcery/templates/ --output ./sourcery/auto_generated\necho \"[***** End Running CICOAutoCodable Script *****]\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 

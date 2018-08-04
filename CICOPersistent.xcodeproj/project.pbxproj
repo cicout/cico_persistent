@@ -74,6 +74,8 @@
 		E4FD6DB92115423C00ECAF4E /* CICOAutoCodable.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4FD6DBA2115423E00ECAF4E /* FMDB.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4FD6DBC21154B5E00ECAF4E /* URLKVFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DBB21154B5D00ECAF4E /* URLKVFileServiceTests.swift */; };
+		E4FD6DBE2115505A00ECAF4E /* KVKeyChainServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */; };
+		E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DBF211550E400ECAF4E /* KVDBServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +182,8 @@
 		E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = show_all_type.generated.swift; sourceTree = "<group>"; };
 		E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONStringAide.swift; sourceTree = "<group>"; };
 		E4FD6DBB21154B5D00ECAF4E /* URLKVFileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLKVFileServiceTests.swift; sourceTree = "<group>"; };
+		E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVKeyChainServiceTests.swift; sourceTree = "<group>"; };
+		E4FD6DBF211550E400ECAF4E /* KVDBServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,7 +418,9 @@
 			isa = PBXGroup;
 			children = (
 				E4FD6DB2211483BF00ECAF4E /* internal */,
+				E4FD6DBF211550E400ECAF4E /* KVDBServiceTests.swift */,
 				E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */,
+				E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */,
 				E4FD6DBB21154B5D00ECAF4E /* URLKVFileServiceTests.swift */,
 			);
 			path = CICOPersistentTests;
@@ -673,8 +679,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,
 				E4FD6DB421153E4900ECAF4E /* TCodableClass.swift in Sources */,
+				E4FD6DBE2115505A00ECAF4E /* KVKeyChainServiceTests.swift in Sources */,
 				E4FD6DBC21154B5E00ECAF4E /* URLKVFileServiceTests.swift in Sources */,
 				E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */,
 				E4FD6DB721153E8600ECAF4E /* JSONStringAide.swift in Sources */,

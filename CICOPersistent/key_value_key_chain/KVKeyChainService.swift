@@ -30,7 +30,7 @@ public class KVKeyChainService {
         print("\(self) deinit")
     }
     
-    init(encryptionKey: String, accessGroup: String? = nil) {
+    public init(encryptionKey: String, accessGroup: String? = nil) {
         self.encryptionKeyData = CICOSecurityAide.md5HashData(with: encryptionKey)
         self.keyChainService = KeyChainService.init(accessGroup: accessGroup)
     }

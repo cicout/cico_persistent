@@ -27,10 +27,10 @@ class ViewController: UIViewController {
 
     @IBAction func testBtnAction(_ sender: Any) {
 //        self.doSecurityTest()
-//        self.doPersistentTest()
+        self.doPersistentTest()
 //        self.doKVFileTest()
 //        self.doKVDBTest()
-        self.doORMDBTest()
+//        self.doORMDBTest()
 //        self.doKVKeyChainTest()
     }
     
@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         self.testPersistent(false)
         self.testPersistent("test")
         
-        let jsonString = self.jsonString(name: "default")
+        let jsonString = JSONStringAide.jsonString(name: "default")
         
         guard let jsonData = jsonString.data(using: .utf8) else {
             return
@@ -67,7 +67,7 @@ class ViewController: UIViewController {
         self.testKVFile(false)
         self.testKVFile("test")
         
-        let jsonString = self.jsonString(name: "default")
+        let jsonString = JSONStringAide.jsonString(name: "default")
         
         guard let jsonData = jsonString.data(using: .utf8) else {
             return
@@ -88,7 +88,7 @@ class ViewController: UIViewController {
         self.testKVDB(false)
         self.testKVDB("test")
         
-        let jsonString = self.jsonString(name: "default")
+        let jsonString = JSONStringAide.jsonString(name: "default")
 
         guard let jsonData = jsonString.data(using: .utf8) else {
             return
@@ -107,7 +107,7 @@ class ViewController: UIViewController {
         self.ormDBService = ORMDBService.init(fileURL: CICOPathAide.docFileURL(withSubPath: "orm.db"))
         
         // read json
-        let jsonString = self.jsonString(name: "default")
+        let jsonString = JSONStringAide.jsonString(name: "default")
         guard let jsonData = jsonString.data(using: .utf8) else {
             print("[ERROR]")
             return
@@ -175,7 +175,7 @@ class ViewController: UIViewController {
         self.testKVKeyChain(false)
         self.testKVKeyChain("test")
         
-        let jsonString = self.jsonString(name: "default")
+        let jsonString = JSONStringAide.jsonString(name: "default")
         
         guard let jsonData = jsonString.data(using: .utf8) else {
             return
@@ -407,18 +407,6 @@ class ViewController: UIViewController {
         print("[REMOVE]: \(removeResult)")
         
         print("\n[***** END TESTING *****]\n")
-    }
-    
-    private func jsonString(name: String) -> String {
-        guard let path = Bundle.main.path(forResource: name, ofType: "json") else {
-            return ""
-        }
-        
-        guard let jsonString = try? String(contentsOfFile: path, encoding: String.Encoding.utf8) else {
-            return ""
-        }
-        
-        return jsonString
     }
 }
 

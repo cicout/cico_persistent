@@ -9,13 +9,17 @@
 import Foundation
 import CICOAutoCodable
 
+private let kDefaultEncryptionkey = "cico_kv_key_chain_default_encryption_key"
 private let kGenericKey = "cico_kv_generic_key"
 private let kAccountKey = "cico_kv_account_key"
 
 public class KVKeyChainService {
     public static let defaultService: KVKeyChainService = {
-        let key = Bundle.main.bundleIdentifier!
-        return KVKeyChainService.init(encryptionKey: key)
+        if let key = Bundle.main.bundleIdentifier {
+            return KVKeyChainService.init(encryptionKey: key)
+        } else {
+            return KVKeyChainService.init(encryptionKey: kDefaultEncryptionkey)
+        }
     } ()
     
     private let encryptionKeyData: Data

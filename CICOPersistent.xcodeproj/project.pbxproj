@@ -51,9 +51,6 @@
 		E482ED1A20CF6F4B001FF435 /* CacheKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1920CF6F4B001FF435 /* CacheKVFileService.swift */; };
 		E482ED1C20CF6F57001FF435 /* TempKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1B20CF6F57001FF435 /* TempKVFileService.swift */; };
 		E484B44920DCA34600FE0AC9 /* ORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E484B44820DCA34600FE0AC9 /* ORMDBService.swift */; };
-		E484B45420DDF5A300FE0AC9 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */; };
-		E484B45520DE287E00FE0AC9 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */; };
-		E484B45620DE287E00FE0AC9 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E492B4B220EB188200BC48A4 /* SQLiteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492B4B120EB188200BC48A4 /* SQLiteType.swift */; };
 		E492B4DD20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492B4DC20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift */; };
 		E492B4DF20EC793500BC48A4 /* CICOAutoCodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; };
@@ -67,6 +64,15 @@
 		E4FD6C9821129DBC00ECAF4E /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
 		E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */; };
 		E4FD6CEC21129F4D00ECAF4E /* show_all_type.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */; };
+		E4FD6DB02114839B00ECAF4E /* CICOAutoCodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; };
+		E4FD6DB12114839D00ECAF4E /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; };
+		E4FD6DB321153E4600ECAF4E /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = E41F767420C9384300399E42 /* default.json */; };
+		E4FD6DB421153E4900ECAF4E /* TCodableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767520C9384300399E42 /* TCodableClass.swift */; };
+		E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767320C9384300399E42 /* TCodableStruct.swift */; };
+		E4FD6DB721153E8600ECAF4E /* JSONStringAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */; };
+		E4FD6DB821153E9000ECAF4E /* JSONStringAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */; };
+		E4FD6DB92115423C00ECAF4E /* CICOAutoCodable.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E4FD6DBA2115423E00ECAF4E /* FMDB.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,9 +102,19 @@
 				E41F766D20C9313000399E42 /* CICOPersistent.framework in Embed Frameworks */,
 				E482ED0420CE15EF001FF435 /* FMDB.framework in Embed Frameworks */,
 				E492B4E120EC7BDB00BC48A4 /* CICOAutoCodable.framework in Embed Frameworks */,
-				E484B45620DE287E00FE0AC9 /* SwiftyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4FD6DAF2114839300ECAF4E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E4FD6DB92115423C00ECAF4E /* CICOAutoCodable.framework in CopyFiles */,
+				E4FD6DBA2115423E00ECAF4E /* FMDB.framework in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -148,7 +164,6 @@
 		E482ED1920CF6F4B001FF435 /* CacheKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheKVFileService.swift; sourceTree = "<group>"; };
 		E482ED1B20CF6F57001FF435 /* TempKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempKVFileService.swift; sourceTree = "<group>"; };
 		E484B44820DCA34600FE0AC9 /* ORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBService.swift; sourceTree = "<group>"; };
-		E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		E492B4B120EB188200BC48A4 /* SQLiteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteType.swift; sourceTree = "<group>"; };
 		E492B4DC20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteTypeDecoder.swift; sourceTree = "<group>"; };
 		E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CICOAutoCodable.framework; path = Carthage/Build/iOS/CICOAutoCodable.framework; sourceTree = "<group>"; };
@@ -162,6 +177,7 @@
 		E4FD6C9721129DBC00ECAF4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileServiceTests.swift; sourceTree = "<group>"; };
 		E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = show_all_type.generated.swift; sourceTree = "<group>"; };
+		E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONStringAide.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,7 +185,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E484B45420DDF5A300FE0AC9 /* SwiftyJSON.framework in Frameworks */,
 				E482ED0220CE15E7001FF435 /* FMDB.framework in Frameworks */,
 				E492B4DF20EC793500BC48A4 /* CICOAutoCodable.framework in Frameworks */,
 			);
@@ -182,7 +197,6 @@
 				E41F766C20C9313000399E42 /* CICOPersistent.framework in Frameworks */,
 				E482ED0320CE15EF001FF435 /* FMDB.framework in Frameworks */,
 				E492B4E020EC7BDB00BC48A4 /* CICOAutoCodable.framework in Frameworks */,
-				E484B45520DE287E00FE0AC9 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +205,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4FD6C9821129DBC00ECAF4E /* CICOPersistent.framework in Frameworks */,
+				E4FD6DB02114839B00ECAF4E /* CICOAutoCodable.framework in Frameworks */,
+				E4FD6DB12114839D00ECAF4E /* FMDB.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,9 +297,6 @@
 				E49F7CF6210C1CD800CF24F0 /* CICOPersistentDemo.entitlements */,
 				E41F765C20C9302300399E42 /* AppDelegate.swift */,
 				E41F765E20C9302300399E42 /* ViewController.swift */,
-				E41F767420C9384300399E42 /* default.json */,
-				E41F767520C9384300399E42 /* TCodableClass.swift */,
-				E41F767320C9384300399E42 /* TCodableStruct.swift */,
 				E41F766020C9302300399E42 /* Main.storyboard */,
 				E41F766320C9302400399E42 /* Assets.xcassets */,
 				E41F766520C9302400399E42 /* LaunchScreen.storyboard */,
@@ -318,7 +331,6 @@
 			children = (
 				E492B4DE20EC793400BC48A4 /* CICOAutoCodable.framework */,
 				E482ED0120CE15E7001FF435 /* FMDB.framework */,
-				E484B45320DDF5A300FE0AC9 /* SwiftyJSON.framework */,
 			);
 			name = Carthage;
 			sourceTree = "<group>";
@@ -399,7 +411,7 @@
 		E4FD6C9421129DBC00ECAF4E /* CICOPersistentTests */ = {
 			isa = PBXGroup;
 			children = (
-				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
+				E4FD6DB2211483BF00ECAF4E /* internal */,
 				E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */,
 			);
 			path = CICOPersistentTests;
@@ -419,6 +431,18 @@
 				E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */,
 			);
 			path = auto_generated;
+			sourceTree = "<group>";
+		};
+		E4FD6DB2211483BF00ECAF4E /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				E41F767420C9384300399E42 /* default.json */,
+				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
+				E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */,
+				E41F767520C9384300399E42 /* TCodableClass.swift */,
+				E41F767320C9384300399E42 /* TCodableStruct.swift */,
+			);
+			path = internal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -483,6 +507,7 @@
 				E4FD6C8F21129DBC00ECAF4E /* Sources */,
 				E4FD6C9021129DBC00ECAF4E /* Frameworks */,
 				E4FD6C9121129DBC00ECAF4E /* Resources */,
+				E4FD6DAF2114839300ECAF4E /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -564,6 +589,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4FD6DB321153E4600ECAF4E /* default.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +661,7 @@
 				E41F767620C9384300399E42 /* TCodableStruct.swift in Sources */,
 				E41F765F20C9302300399E42 /* ViewController.swift in Sources */,
 				E41F767820C9384300399E42 /* TCodableClass.swift in Sources */,
+				E4FD6DB821153E9000ECAF4E /* JSONStringAide.swift in Sources */,
 				E41F765D20C9302300399E42 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -643,7 +670,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,
+				E4FD6DB421153E4900ECAF4E /* TCodableClass.swift in Sources */,
 				E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */,
+				E4FD6DB721153E8600ECAF4E /* JSONStringAide.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,7 +947,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = CICOPersistentTests/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = CICOPersistentTests/internal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -935,7 +969,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = CICOPersistentTests/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = CICOPersistentTests/internal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

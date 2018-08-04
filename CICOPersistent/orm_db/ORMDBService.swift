@@ -9,7 +9,6 @@
 import Foundation
 import FMDB
 import CICOAutoCodable
-import SwiftyJSON
 
 private let kORMTableName = "cico_orm_table_info"
 private let kTableNameColumnName = "table_name"

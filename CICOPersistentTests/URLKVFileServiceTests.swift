@@ -92,7 +92,7 @@ class URLKVFileServiceTests: XCTestCase {
         self.commonTest(value, fileURL: url)
     }
     
-    func test_Class_Update() {
+    func test_Class_updateObject() {
         let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_class_update")!
         
         let value = TCodableClass.init(jsonString: self.jsonString)
@@ -133,12 +133,13 @@ class URLKVFileServiceTests: XCTestCase {
         XCTAssert(removeResult, "[FAILED]: remove failed: value = \(value)")
     }
     
-    private func commonTest<T: Codable>(_ value: T, fileURL: URL) {
+    private func commonTest<T: Codable & Equatable>(_ value: T, fileURL: URL) {
         let writeResult = self.service.writeObject(value, toFileURL: fileURL)
         XCTAssert(writeResult, "[FAILED]: write failed: value = \(value)")
         
         let readValue = self.service.readObject(T.self, fromFileURL: fileURL)
         XCTAssertNotNil(readValue, "[FAILED]: read failed: value = \(value)")
+        XCTAssert(readValue! == value, "[FAILED]: read value is not equal to original value")
         
         let removeResult = self.service.removeObject(forFileURL: fileURL)
         XCTAssert(removeResult, "[FAILED]: remove failed: value = \(value)")

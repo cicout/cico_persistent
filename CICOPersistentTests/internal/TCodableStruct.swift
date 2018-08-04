@@ -8,8 +8,9 @@
 
 import UIKit
 import CICOAutoCodable
+import CICOPersistent
 
-struct TCodableStruct: CICOAutoCodable {
+struct TCodableStruct: CICOAutoCodable, AutoEquatable {
     private(set) var name: String?
     private(set) var stringValue: String?
     //    private(set) var stringValue: Int?
@@ -23,6 +24,8 @@ struct TCodableStruct: CICOAutoCodable {
     private(set) var dicValue: [String: String]?
     
     private var privateStringValue: String?
+    
+    private var url: URL?
 }
 
 extension TCodableStruct {
@@ -39,6 +42,17 @@ extension TCodableStruct {
 // sourcery:inline:auto:TCodableStruct.CodingKeys.CICOAutoCodable_Auto_Generated_CodingKeys
         case name
         case dicValue
+        case url
 // sourcery:end
+    }
+}
+
+extension TCodableStruct: ORMProtocol {
+    static func cicoORMPrimaryKeyColumnName() -> String {
+        return CodingKeys.name.stringValue
+    }
+    
+    static func cicoORMObjectTypeVersion() -> Int {
+        return 20
     }
 }

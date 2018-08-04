@@ -82,7 +82,7 @@ class KVDBServiceTests: XCTestCase {
         self.commonTest(value)
     }
     
-    func test_Class_Update() {
+    func test_Class_updateObject() {
         let key = "test_class_update"
         
         let value = TCodableClass.init(jsonString: self.jsonString)
@@ -123,12 +123,12 @@ class KVDBServiceTests: XCTestCase {
         XCTAssert(removeResult, "[FAILED]: remove failed: value = \(value)")
     }
     
-    func test_ClearAll() {
+    func test_clearAll() {
         let clearResult = self.service.clearAll()
         XCTAssert(clearResult, "[FAILED]: clear failed")
     }
     
-    private func commonTest<T: Codable>(_ value: T) {
+    private func commonTest<T: Codable & Equatable>(_ value: T) {
         let key = "test_\(T.self)"
         
         let writeResult = self.service.writeObject(value, forKey: key)
@@ -136,6 +136,7 @@ class KVDBServiceTests: XCTestCase {
         
         let readValue = self.service.readObject(T.self, forKey: key)
         XCTAssertNotNil(readValue, "[FAILED]: read failed: value = \(value)")
+        XCTAssert(readValue! == value, "[FAILED]: read value is not equal to original value")
         
         let removeResult = self.service.removeObject(forKey: key)
         XCTAssert(removeResult, "[FAILED]: remove failed: value = \(value)")

@@ -10,7 +10,7 @@ import UIKit
 import CICOAutoCodable
 import CICOPersistent
 
-class TCodableClass: CICOAutoCodable {
+class TCodableClass: CICOAutoCodable, AutoEquatable {
 //    private(set) var name: String?
     var name: String?
     private(set) var stringValue: String?

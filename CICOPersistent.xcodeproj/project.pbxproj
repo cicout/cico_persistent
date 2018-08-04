@@ -76,6 +76,10 @@
 		E4FD6DBC21154B5E00ECAF4E /* URLKVFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DBB21154B5D00ECAF4E /* URLKVFileServiceTests.swift */; };
 		E4FD6DBE2115505A00ECAF4E /* KVKeyChainServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */; };
 		E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DBF211550E400ECAF4E /* KVDBServiceTests.swift */; };
+		E4FD6DC22115533000ECAF4E /* ORMDBServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC12115533000ECAF4E /* ORMDBServiceTests.swift */; };
+		E4FD6DC4211555F900ECAF4E /* AutoEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */; };
+		E4FD6DC52115566C00ECAF4E /* AutoEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */; };
+		E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC62115569000ECAF4E /* AutoEquatable.generated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +188,9 @@
 		E4FD6DBB21154B5D00ECAF4E /* URLKVFileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLKVFileServiceTests.swift; sourceTree = "<group>"; };
 		E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVKeyChainServiceTests.swift; sourceTree = "<group>"; };
 		E4FD6DBF211550E400ECAF4E /* KVDBServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBServiceTests.swift; sourceTree = "<group>"; };
+		E4FD6DC12115533000ECAF4E /* ORMDBServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceTests.swift; sourceTree = "<group>"; };
+		E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.swift; sourceTree = "<group>"; };
+		E4FD6DC62115569000ECAF4E /* AutoEquatable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.generated.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,12 +229,12 @@
 		E41F763120C8D2F300399E42 = {
 			isa = PBXGroup;
 			children = (
-				E4FD6CA121129F4C00ECAF4E /* sourcery */,
 				E41F763D20C8D2F300399E42 /* CICOPersistent */,
 				E41F765B20C9302300399E42 /* CICOPersistentDemo */,
 				E4FD6C9421129DBC00ECAF4E /* CICOPersistentTests */,
 				E482ECFE20CE15B4001FF435 /* Frameworks */,
 				E41F763C20C8D2F300399E42 /* Products */,
+				E4FD6CA121129F4C00ECAF4E /* sourcery */,
 			);
 			sourceTree = "<group>";
 		};
@@ -421,6 +428,7 @@
 				E4FD6DBF211550E400ECAF4E /* KVDBServiceTests.swift */,
 				E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */,
 				E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */,
+				E4FD6DC12115533000ECAF4E /* ORMDBServiceTests.swift */,
 				E4FD6DBB21154B5D00ECAF4E /* URLKVFileServiceTests.swift */,
 			);
 			path = CICOPersistentTests;
@@ -438,6 +446,7 @@
 			isa = PBXGroup;
 			children = (
 				E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */,
+				E4FD6DC62115569000ECAF4E /* AutoEquatable.generated.swift */,
 			);
 			path = auto_generated;
 			sourceTree = "<group>";
@@ -445,6 +454,7 @@
 		E4FD6DB2211483BF00ECAF4E /* internal */ = {
 			isa = PBXGroup;
 			children = (
+				E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */,
 				E41F767420C9384300399E42 /* default.json */,
 				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
 				E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */,
@@ -616,7 +626,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\necho \"[***** Start Running CICOAutoCodable Script *****]\"\n./sourcery/source/Pods/Sourcery/bin/sourcery --sources ./Carthage/Checkouts/cico_auto_codable/CICOAutoCodable --sources ./CICOPersistentDemo --sources ./CICOPersistent --sources ./CICOPersistentTests --templates ./Carthage/Checkouts/cico_auto_codable/sourcery/templates/ --output ./sourcery/auto_generated\necho \"[***** End Running CICOAutoCodable Script *****]\"\nfi";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\necho \"[***** Start Running CICOAutoCodable Script *****]\"\n./sourcery/source/Pods/Sourcery/bin/sourcery --sources ./Carthage/Checkouts/cico_auto_codable/CICOAutoCodable --sources ./CICOPersistentDemo --sources ./CICOPersistent --sources ./CICOPersistentTests --templates ./Carthage/Checkouts/cico_auto_codable/sourcery/templates/ --templates ./sourcery/templates/ --output ./sourcery/auto_generated\necho \"[***** End Running CICOAutoCodable Script *****]\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -670,6 +680,7 @@
 				E41F767620C9384300399E42 /* TCodableStruct.swift in Sources */,
 				E41F765F20C9302300399E42 /* ViewController.swift in Sources */,
 				E41F767820C9384300399E42 /* TCodableClass.swift in Sources */,
+				E4FD6DC52115566C00ECAF4E /* AutoEquatable.swift in Sources */,
 				E4FD6DB821153E9000ECAF4E /* JSONStringAide.swift in Sources */,
 				E41F765D20C9302300399E42 /* AppDelegate.swift in Sources */,
 			);
@@ -679,11 +690,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */,
 				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,
+				E4FD6DC22115533000ECAF4E /* ORMDBServiceTests.swift in Sources */,
 				E4FD6DB421153E4900ECAF4E /* TCodableClass.swift in Sources */,
 				E4FD6DBE2115505A00ECAF4E /* KVKeyChainServiceTests.swift in Sources */,
 				E4FD6DBC21154B5E00ECAF4E /* URLKVFileServiceTests.swift in Sources */,
+				E4FD6DC4211555F900ECAF4E /* AutoEquatable.swift in Sources */,
 				E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */,
 				E4FD6DB721153E8600ECAF4E /* JSONStringAide.swift in Sources */,
 			);

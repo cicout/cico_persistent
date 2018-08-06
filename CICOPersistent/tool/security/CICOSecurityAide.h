@@ -1,6 +1,6 @@
 //
 //  CICOSecurityAide.h
-//  CICOFoundationKit
+//  CICOPersistent
 //
 //  Created by lucky.li on 16/8/26.
 //  Copyright © 2016年 cico. All rights reserved.
@@ -9,144 +9,161 @@
 #import <Foundation/Foundation.h>
 
 /**
- *  安全相关API，有以下类型：
  *  1、Common：randomData、hex;
  *  2、Hash：md5、sha1、hmac;
- *  3、对称加密：base64、url encode/decode、aes;
- *  4、非对称加密：rsa;
+ *  3、Symmetric Encryption：base64、url encode/decode、aes;
+ *  4、Asymmetric Encryption：rsa;
  */
 @interface CICOSecurityAide : NSObject
 
 #pragma mark - COMMON
 
 /**
- *  生成给定长度的随机二进制数据
+ *  Create random data;
  *
- *  @param length 给定长度，单位字节（BYTE）
+ *  @param length Length of byte;
  *
- *  @return 随机二进制数据
+ *  @return Random data;
  */
 + (NSData *)randomDataOfLength:(size_t)length;
 
 /**
- *  二进制转十六进制小写字符串
+ *  Transfer data to hex string in lower case;
  *
- *  @param data 二进制数据
+ *  @param data Data;
  *
- *  @return 十六进制小写字符串
+ *  @return Hex string;
  */
 + (NSString *)hexStringWithData:(NSData *)data;
 
 /**
- *  十六进制字符串转二进制
+ *  Transfer hex string to data;
  *
- *  @param string 十六进制字符串（不区分大小写）
+ *  @param string Hex string (lower case / upper case);
  *
- *  @return 二进制数据
+ *  @return Data;
  */
 + (NSData *)dataWithHexString:(NSString *)string;
 
 #pragma mark - MD5
 
 /**
- *  生成MD5数据
+ *  Transfer data to md5 hash data;
  *
- *  @param sourceData 源数据
+ *  @param sourceData Source data;
  *
- *  @return MD5数据
+ *  @return MD5 hash data;
  */
 + (NSData *)md5HashDataWithData:(NSData *)sourceData;
 
 /**
- *  生成MD5十六进制小写字符串
+ *  Transfer data to md5 hash hex string in lower case;
  *
- *  @param sourceData 源数据
+ *  @param sourceData Source data;
  *
- *  @return MD5十六进制小写字符串
+ *  @return MD5 hash hex string in lower case;
+ *
+ *  @see md5HashDataWithData:;
  */
 + (NSString *)md5HashStringWithData:(NSData *)sourceData;
 
 /**
- *  源字符串通过UTF8编码转成二进制数据再生成MD5数据
+ *  Transfer string to md5 hash data;
  *
- *  @param sourceString 源字符串，通过UTF8编码转成二进制数据再生成MD5
+ *  @param sourceString Source string, will be transfered to data using utf-8;
  *
- *  @return MD5数据
+ *  @return MD5 hash data;
+ *
+ *  @see md5HashDataWithData:;
  */
 + (NSData *)md5HashDataWithString:(NSString *)sourceString;
 
 /**
- *  源字符串通过UTF8编码转成二进制数据再生成MD5十六进制小写字符串
+ *  Transfer string to md5 hash hex string in lower case;
  *
- *  @param sourceString 源字符串，通过UTF8编码转成二进制数据再生成MD5
+ *  @param sourceString Source string, will be transfered to data using utf-8;
  *
- *  @return MD5十六进制小写字符串
+ *  @return MD5 hash hex string in lower case;
+ *
+ *  @see md5HashDataWithData:;
  */
 + (NSString *)md5HashStringWithString:(NSString *)sourceString;
 
 #pragma mark - FILE MD5
 
 /**
- *  根据文件路径读取所有文件数据并生成MD5数据
+ *  Read all data from file url and transfer them to md5 hash data;
  *
- *  @param fileURL 文件路径
+ *  @param fileURL File url, all data will be read;
  *
- *  @return MD5数据
+ *  @return MD5 hash data, return nil when no file existed;
  */
 + (NSData *)fileMD5HashDataWithURL:(NSURL *)fileURL;
 
 /**
- *  根据文件路径读取所有文件数据并生成MD5十六进制小写字符串
+ *  Read all data from file url and transfer them to md5 hash hex string in lower case;
  *
- *  @param fileURL 文件路径
+ *  @param fileURL File url, all data will be read;
  *
- *  @return MD5十六进制小写字符串
+ *  @return MD5 hash hex string in lower case, return nil when no file existed;
+ *
+ *  @see fileMD5HashDataWithURL:;
  */
 + (NSString *)fileMD5HashStringWithURL:(NSURL *)fileURL;
 
 /**
- *  根据文件路径读取部分文件数据并生成MD5数据
- *  文件数据读取规则：如果文件小于4M则读取所有数据；大于等于4M则分别读取前/中/后三个位置各1M数据；
+ *  Read some data from file url and transfer them to md5 hash data;
  *
- *  @param fileURL 文件路径
+ *  @param fileURL File url;
  *
- *  @return MD5数据
+ *  @return MD5 hash data, return nil when no file existed;
+ *
+ *  @see fastFileHashDataWithURL:headIgnoreLength:tailIgnoreLength:;
  */
 + (NSData *)fastFileHashDataWithURL:(NSURL *)fileURL;
 
 /**
- *  根据文件路径读取部分文件数据并生成MD5十六进制小写字符串
- *  文件数据读取规则：如果文件小于4M则读取所有数据；大于等于4M则分别读取前/中/后三个位置各1M数据；
+ *  Read some data from file url and transfer them to md5 hash hex string in lower case;
  *
- *  @param fileURL 文件路径
+ *  @param fileURL File url;
  *
- *  @return MD5十六进制小写字符串
+ *  @return MD5 hash hex string in lower case, return nil when no file existed;
+ *
+ *  @see fastFileHashDataWithURL:headIgnoreLength:tailIgnoreLength:;
  */
 + (NSString *)fastFileHashStringWithURL:(NSURL *)fileURL;
 
 /**
- *  根据文件路径读取部分文件数据并生成MD5数据
- *  文件数据读取规则：忽略头部和尾部数据后，剩余数据如果小于4M则读取剩余所有数据；大于等于4M则分别读取前/中/后三个位置各1M数据；
+ *  Read some data from file url and transfer them to md5 hash data;
  *
- *  @param fileURL 文件路径
- *  @param headIgnoreLength 忽略头部数据长度，单位字节（BYTE），如果忽略后数据长度小于1M，将取消忽略，重置headIgnoreLength为0
- *  @param tailIgnoreLength 忽略尾部数据长度，单位字节（BYTE），如果忽略后数据长度小于1M，将取消忽略，重置tailIgnoreLength为0
+ *  File data reading rule:
+ *  1.Ignore head and tail if fileSize - headIgnoreLength - tailIgnoreLength >= 1M;
+ *  2.Head and tail ignore length will be reset to 0 if fileSize - headIgnoreLength - tailIgnoreLength < 1M;
+ *  3.Read all left data if they are less than 4M;
+ *  2.Read 1M data from each of the head/middle/tail if left data is greater than or equal to 4M;
+ *  3.Join the data read with file size together;
+ *  4.Transfer them to md5 hash data;
  *
- *  @return MD5数据
+ *  @param fileURL File url;
+ *  @param headIgnoreLength Head length of byte to ignore, it will be reset to 0 if left data is less than 1M;
+ *  @param tailIgnoreLength Tail length of byte to ignore, it will be reset to 0 if left data is less than 1M;
+ *
+ *  @return MD5 hash data, return nil when no file existed;
  */
 + (NSData *)fastFileHashDataWithURL:(NSURL *)fileURL
                    headIgnoreLength:(unsigned long long)headIgnoreLength
                    tailIgnoreLength:(unsigned long long)tailIgnoreLength;
 
 /**
- *  根据文件路径读取部分文件数据并生成MD5数据
- *  文件数据读取规则：忽略头部和尾部数据后，剩余数据如果小于4M则读取剩余所有数据；大于等于4M则分别读取前/中/后三个位置各1M数据；
+ *  Read some data from file url and transfer them to md5 hash hex string in lower case;
  *
- *  @param fileURL 文件路径
- *  @param headIgnoreLength 忽略头部数据长度，单位字节（BYTE），如果忽略后数据长度小于1M，将取消忽略，重置headIgnoreLength为0
- *  @param tailIgnoreLength 忽略尾部数据长度，单位字节（BYTE），如果忽略后数据长度小于1M，将取消忽略，重置tailIgnoreLength为0
+ *  @param fileURL File url;
+ *  @param headIgnoreLength Head length of byte to ignore, it will be reset to 0 if left data is less than 1M;
+ *  @param tailIgnoreLength Tail length of byte to ignore, it will be reset to 0 if left data is less than 1M;
  *
- *  @return MD5十六进制小写字符串
+ *  @return MD5 hash hex string in lower case, return nil when no file existed;
+ *
+ *  @see fastFileHashDataWithURL:headIgnoreLength:tailIgnoreLength:;
  */
 + (NSString *)fastFileHashStringWithURL:(NSURL *)fileURL
                        headIgnoreLength:(unsigned long long)headIgnoreLength
@@ -155,57 +172,74 @@
 #pragma mark - SHA1
 
 /**
- *  生成SHA1数据
+ *  Transfer data to sha1 hash data;
  *
- *  @param sourceData 源数据
+ *  @param sourceData Source data;
  *
- *  @return SHA1数据
+ *  @return SHA1 hash data;
  */
 + (NSData *)sha1HashDataWithData:(NSData *)sourceData;
 
 /**
- *  生成SHA1十六进制小写字符串
+ *  Transfer data to sha1 hash hex string in lower case;
  *
- *  @param sourceData 源数据
+ *  @param sourceData Source data;
  *
- *  @return SHA1十六进制小写字符串
+ *  @return SHA1 hash hex string in lower case;
+ *
+ *  @see sha1HashDataWithData:;
  */
 + (NSString *)sha1HashStringWithData:(NSData *)sourceData;
 
 /**
- *  生成SHA1十六进制小写字符串
+ *  Transfer string to sha1 hash data;
  *
- *  @param sourceString 源字符串，通过UTF8编码转成二进制数据
+ *  @param sourceString Source string, will be transfered to data using utf-8;
  *
- *  @return SHA1十六进制小写字符串
+ *  @return SHA1 hash data;
+ *
+ *  @see sha1HashDataWithData:;
+ */
++ (NSData *)sha1HashDataWithString:(NSString *)sourceString;
+
+/**
+ *  Transfer string to sha1 hash hex string in lower case;
+ *
+ *  @param sourceString Source string, will be transfered to data using utf-8;
+ *
+ *  @return SHA1 hash hex string in lower case;
+ *
+ *  @see sha1HashDataWithData:;
  */
 + (NSString *)sha1HashStringWithString:(NSString *)sourceString;
 
 #pragma mark - HMAC
 
 /**
- *  生成HMAC-HASH数据
+ *  Transfer data to HMAC-HASH hash data;
  *
- *  @param algorithmType HASH算法类型，可选择如下类型：
- *  kCCHmacAlgMD5、kCCHmacAlgSHA1、kCCHmacAlgSHA224、kCCHmacAlgSHA256、kCCHmacAlgSHA384、kCCHmacAlgSHA512
- *  @param keyData       加密key数据
- *  @param sourceData    源数据
+ *  @param algorithmType Hash algorithm type, you can choose one of below:
+ *  kCCHmacAlgMD5、kCCHmacAlgSHA1、kCCHmacAlgSHA224、kCCHmacAlgSHA256、kCCHmacAlgSHA384、kCCHmacAlgSHA512;
+ *  @param keyData       Key data;
+ *  @param sourceData    Source data;
  *
- *  @return HMAC-HASH数据
+ *  @return HMAC-HASH data;
  */
 + (NSData *)hmacWithAlgorithmType:(uint32_t)algorithmType
                           keyData:(NSData *)keyData
                        sourceData:(NSData *)sourceData;
 
 /**
- *  生成HMAC-HASH数据
+ *  Transfer string to HMAC-HASH hash data;
  *
- *  @param algorithmType HASH算法类型，可选择如下类型：
- *  kCCHmacAlgMD5、kCCHmacAlgSHA1、kCCHmacAlgSHA224、kCCHmacAlgSHA256、kCCHmacAlgSHA384、kCCHmacAlgSHA512
- *  @param keyString     加密key字符串，通过UTF8编码转成二进制数据
- *  @param sourceString  源字符串，通过UTF8编码转成二进制数据
+ *  @param algorithmType Hash algorithm type, you can choose one of below:
+ *  kCCHmacAlgMD5、kCCHmacAlgSHA1、kCCHmacAlgSHA224、kCCHmacAlgSHA256、kCCHmacAlgSHA384、kCCHmacAlgSHA512;
+ *  @param keyString       Key string, will be transfered to data using utf-8;
+ *  @param sourceString    Source string, will be transfered to data using utf-8;
  *
- *  @return HMAC-HASH数据
+ *  @return HMAC-HASH data;
+ *
+ *  @see hmacWithAlgorithmType:keyData:sourceData;
  */
 + (NSData *)hmacWithAlgorithmType:(uint32_t)algorithmType
                         keyString:(NSString *)keyString
@@ -214,153 +248,155 @@
 #pragma mark - BASE64
 
 /**
- *  二进制数据转BASE64
+ *  Encrypt data to base64 string;
  *
- *  @param sourceData 源数据
+ *  @param sourceData Source data;
  *
- *  @return BASE64
+ *  @return BASE64 string;
  */
 + (NSString *)base64EncodeWithData:(NSData *)sourceData;
 
 /**
- *  字符串转BASE64
+ *  Encrypt string to base64 string;
  *
- *  @param sourceString 源字符串，通过UTF8编码转成二进制数据
+ *  @param sourceString Source string, will be transfered to data using utf-8;
  *
- *  @return BASE64
+ *  @return BASE64 string;
+ *
+ *  @see base64EncodeWithData;
  */
 + (NSString *)base64EncodeWithString:(NSString *)sourceString;
 
 /**
- *  BASE64转二进制数据
+ *  Decrypt base64 string to source data;
  *
- *  @param base64String BASE64
+ *  @param base64String BASE64 string;
  *
- *  @return 二进制源数据
+ *  @return Source data;
  */
 + (NSData *)base64DecodeWithString:(NSString *)base64String;
 
 #pragma mark - URL ENCODE/DECODE
 
 /**
- *  URL ENCODE
+ *  Encrypt string to url encoded string;
  *
- *  @param sourceString 源数据
+ *  @param sourceString Source string;
  *
- *  @return URL-ENCODE加密数据
+ *  @return URL encoded string;
  */
 + (NSString *)urlEncodeWithString:(NSString *)sourceString;
 
 /**
- *  URL DECODE
+ *  Decrypt url encoded string to source string;
  *
- *  @param encodedString URL-ENCODE加密数据
+ *  @param encodedString URL encoded string;
  *
- *  @return 源数据
+ *  @return Source string;
  */
 + (NSString *)urlDecodeWithString:(NSString *)encodedString;
 
 #pragma mark - AES
 
 /**
- *  AES加密
+ *  Encrypt data using AES;
  *
- *  @param keyData    密码数据，可选择如下长度：
+ *  @param keyData    AES encryption key data, choose type according to data length:
  *  kCCKeySizeAES128、kCCKeySizeAES192、kCCKeySizeAES256
- *  @param sourceData 源数据
+ *  @param sourceData Source data;
  *
- *  @return AES加密数据
+ *  @return AES encrypted data;
  */
 + (NSData *)aesEncryptWithKeyData:(NSData *)keyData sourceData:(NSData *)sourceData;
 
 /**
- *  AES解密
+ *  Decrypt data using AES;
  *
- *  @param keyData     密码数据，可选择如下长度：
+ *  @param keyData     AES decryption key data, choose type according to data length:
  *  kCCKeySizeAES128、kCCKeySizeAES192、kCCKeySizeAES256
- *  @param encryptedData AES加密数据
+ *  @param encryptedData AES encrypted data;
  *
- *  @return 源数据
+ *  @return Source data;
  */
 + (NSData *)aesDecryptWithKeyData:(NSData *)keyData encryptedData:(NSData *)encryptedData;
 
 /**
- *  AES加密
+ *  Encrypt data using AES;
  *
- *  @param keyString  密码，转换为MD5数据作为AES加密的KEY
- *  @param sourceData 源数据
+ *  @param keyString    AES encryption key string, will be transfered to data using md5 hash;
+ *  @param sourceData   Source data;
  *
- *  @return AES加密数据
+ *  @return AES encrypted data;
  */
 + (NSData *)aesEncryptWithKeyString:(NSString *)keyString sourceData:(NSData *)sourceData;
 
 /**
- *  AES解密
+ *  Decrypt data using AES;
  *
- *  @param keyString     密码，转换为MD5数据作为AES解密的KEY
- *  @param encryptedData AES加密数据
+ *  @param keyString     AES decryption key string, will be transfered to data using md5 hash;
+ *  @param encryptedData AES encrypted data;
  *
- *  @return 源数据
+ *  @return Source data;
  */
 + (NSData *)aesDecryptWithKeyString:(NSString *)keyString encryptedData:(NSData *)encryptedData;
 
 #pragma mark - RSA
 
 /**
- *  读取RSA公钥
+ *  Transfer data to RSA public key;
  *
- *  @param keyData RSA公钥证书二进制数据
+ *  @param keyData RSA public key data;
  *
- *  @return RSA公钥
+ *  @return RSA public key;
  */
 + (SecKeyRef)rsaPublicKeyWithCerData:(NSData *)keyData;
 
 /**
- *  读取RSA公钥
+ *  Read RSA public key;
  *
- *  @param keyPath RSA公钥证书路径
+ *  @param keyPath RSA public key file path;
  *
- *  @return RSA公钥
+ *  @return RSA public key;
  */
 + (SecKeyRef)rsaPublicKeyWithCerPath:(NSString *)keyPath;
 
 /**
- *  读取RSA私钥
+ *  Transfer data to RSA private key;
  *
- *  @param password 密码
- *  @param keyData  RSA私钥二进制数据
+ *  @param password RSA private key password;
+ *  @param keyData  RSA private key data;
  *
- *  @return RSA私钥
+ *  @return RSA private key;
  */
 + (SecKeyRef)rsaPrivateKeyWithPassword:(NSString *)password p12KeyData:(NSData *)keyData;
 
 /**
- *  读取RSA私钥
+ *  Read RSA private key;
  *
- *  @param password 密码
- *  @param keyPath  RSA私钥路径
+ *  @param password RSA private key password;
+ *  @param keyPath  RSA private key file path;
  *
- *  @return RSA私钥
+ *  @return RSA private key;
  */
 + (SecKeyRef)rsaPrivateKeyWithPassword:(NSString *)password p12KeyPath:(NSString *)keyPath;
 
 /**
- *  RSA加密
+ *  Encrypt data using RSA public key;
  *
- *  @param publicKey  RSA公钥
- *  @param sourceData 源数据
+ *  @param publicKey  RSA public key;
+ *  @param sourceData Source data;
  *
- *  @return RSA加密数据
+ *  @return RSA encrypted data;
  */
 + (NSData *)rsaEncryptWithPublicKey:(SecKeyRef)publicKey sourceData:(NSData *)sourceData;
 
 /**
- *  RSA解密
+ *  Decrypt data using RSA private key;
  *
- *  @param privateKey  RSA私钥
- *  @param encodedData RSA加密数据
+ *  @param privateKey  RSA private key;
+ *  @param encodedData RSA encrypted data;
  *
- *  @return 源数据
+ *  @return Source data;
  */
 + (NSData *)rsaDecryptWithPrivateKey:(SecKeyRef)privateKey encodedData:(NSData *)encodedData;
 

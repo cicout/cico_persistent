@@ -1,6 +1,6 @@
 //
 //  CICOSecurityAide.m
-//  CICOFoundationKit
+//  CICOPersistent
 //
 //  Created by lucky.li on 16/8/26.
 //  Copyright © 2016年 cico. All rights reserved.
@@ -276,6 +276,12 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     NSData *data = [self sha1HashDataWithData:sourceData];
     NSString *string = [self hexStringWithData:data];
     return string;
+}
+
++ (NSData *)sha1HashDataWithString:(NSString *)sourceString {
+    NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [self sha1HashDataWithData:sourceData];
+    return data;
 }
 
 + (NSString *)sha1HashStringWithString:(NSString *)sourceString {

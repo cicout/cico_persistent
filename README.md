@@ -205,15 +205,15 @@ let readObjectArray = self.service.readObjectArray(ofType: MyClass.self, whereSt
 * Write
 ```swift
 let value = MyClass.init(jsonString: myJSONString)!
-let writeResult = self.service.writeObject(object)
+let writeResult = self.service.writeObject(value)
 ```
 * Write Array
 ```
 var objectArray = [MyClass]()
 for i in 0..<20 {
-    let object = MyClass.init(jsonString: self.jsonString)!
+    let object = MyClass.init(jsonString: myJSONString)!
     object.stringValue = "string_\(i)"
-    objectArray.append(object!)
+    objectArray.append(object)
 }
 let writeResult = self.service.writeObjectArray(objectArray)
 ```
@@ -276,7 +276,7 @@ KVKeyChainService
     .defaultService
     .updateObject(MyClass.self,
                   forKey: key,
-                  updateClosure: { (readObject) -> MyClass.self? in
+                  updateClosure: { (readObject) -> MyClass? in
                     readObject?.stringValue = "updated_string"
                     return readObject
     }) { (result) in
@@ -295,7 +295,7 @@ It is all local storage API collection. It contains user defaults, key-value fil
 * Swift 4.0+
 
 ## License
-CICOAutoCodable is released under the MIT license. See [LICENSE](https://github.com/cicout/cico_persistent/blob/master/LICENSE) for details.
+CICOPersistent is released under the MIT license. See [LICENSE](https://github.com/cicout/cico_persistent/blob/master/LICENSE) for details.
 
 ## More
 Have a question? Please open an [issue](https://github.com/cicout/cico_persistent/issues/new)!

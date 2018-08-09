@@ -32,6 +32,7 @@ class ViewController: UIViewController {
 //        self.doKVDBTest()
 //        self.doORMDBTest()
 //        self.doKVKeyChainTest()
+//        self.testMyClass()
     }
     
     private func doSecurityTest() {
@@ -407,6 +408,216 @@ class ViewController: UIViewController {
         print("[REMOVE]: \(removeResult)")
         
         print("\n[***** END TESTING *****]\n")
+    }
+    
+    private func testMyClass() {
+//        let myJSONString = JSONStringAide.jsonString(name: "my")
+//        let key = "test_my_class"
+        
+        /** //KVFileService
+        // Initialization
+        //```swift
+        let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/kv_file")!
+        let service = KVFileService.init(rootDirURL: url)
+        //```
+        // Read
+        //```swift
+        let readValue = service.readObject(MyClass.self, forKey: key)
+        //```
+        // Write
+        //```swift
+        let value = MyClass.init(jsonString: myJSONString)!
+        let writeResult = service.writeObject(value, forKey: key)
+        //```
+        // Remove
+        //```swift
+        let removeResult = service.removeObject(forKey: key)
+        //```
+        // Update
+        //It is a read-update-write sequence function during one lock.
+        //```swift
+        service
+            .updateObject(MyClass.self,
+                          forKey: key,
+                          updateClosure: { (readObject) -> MyClass? in
+                            readObject?.stringValue = "updated_string"
+                            return readObject
+            }) { (result) in
+                print("result = \(result)")
+        }
+        //```
+        // ClearAll
+        //```swift
+        let clearResult = service.clearAll()
+        //```
+        **/
+        
+        /** //URLKVFileService
+        let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_class")!
+        let dirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file")!
+        let _ = CICOFileManagerAide.createDir(with: dirURL, option: false)
+        // Initialization
+        //```swift
+        let service = URLKVFileService.init()
+        //```
+        // Read
+        //```swift
+        let readValue = service.readObject(MyClass.self, fromFileURL: url)
+        //```
+        // Write
+        //```swift
+        let value = MyClass.init(jsonString: myJSONString)!
+        let writeResult = service.writeObject(value, toFileURL: url)
+        //```
+        // Remove
+        //```swift
+        let removeResult = service.removeObject(forFileURL: url)
+        //```
+        // Update
+        //It is a read-update-write sequence function during one lock.
+        //```swift
+        service
+            .updateObject(MyClass.self,
+                          fromFileURL: url,
+                          updateClosure: { (readObject) -> MyClass? in
+                            readObject?.stringValue = "updated_string"
+                            return readObject
+            }) { (result) in
+                print("result = \(result)")
+        }
+        //```
+        **/
+        
+        /** //KVDBService
+        // Initialization
+        //```swift
+        let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/kv.db")!
+        let service = KVDBService.init(fileURL: url)
+        //```
+        // Read
+        //```swift
+        let readValue = service.readObject(MyClass.self, forKey: key)
+        //```
+        // Write
+        //```swift
+        let value = MyClass.init(jsonString: myJSONString)!
+        let writeResult = service.writeObject(value, forKey: key)
+        //```
+        // Remove
+        //```swift
+        let removeResult = service.removeObject(forKey: key)
+        //```
+        // Update
+        //It is a read-update-write sequence function during one lock.
+        //```swift
+        service
+            .updateObject(MyClass.self,
+                          forKey: key,
+                          updateClosure: { (readObject) -> MyClass? in
+                            readObject?.stringValue = "updated_string"
+                            return readObject
+            }) { (result) in
+                print("result = \(result)")
+        }
+        //```
+        // ClearAll
+        //```swift
+        let clearResult = service.clearAll()
+        //```
+        **/
+        
+        /** //ORMDBService
+        let primaryKey = "string"
+        // Initialization
+        //```swift
+        let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/orm.db")!
+        let service = ORMDBService.init(fileURL: url)
+        //```
+        // Read
+        //```swift
+        let readObject = service.readObject(ofType: MyClass.self, primaryKeyValue: primaryKey)
+        //```
+        // Read Array
+        //```
+        let readObjectArray = service.readObjectArray(ofType: MyClass.self, whereString: nil, orderByName: "stringValue", descending: false, limit: 10)
+        //```
+        // Write
+        //```swift
+        let value = MyClass.init(jsonString: myJSONString)!
+        let writeResult = service.writeObject(value)
+        //```
+        // Write Array
+        //```
+        var objectArray = [MyClass]()
+        for i in 0..<20 {
+            let object = MyClass.init(jsonString: myJSONString)!
+            object.stringValue = "string_\(i)"
+            objectArray.append(object)
+        }
+        let writeResult2 = service.writeObjectArray(objectArray)
+        //```
+        // Remove
+        //```swift
+        let removeResult = service.removeObject(ofType: MyClass.self, primaryKeyValue: primaryKey)
+        //```
+        // Remove Object Table
+        //```
+        let removeResult2 = service.removeObjectTable(ofType: MyClass.self)
+        //```
+        // Update
+        //It is a read-update-write sequence function during one lock.
+        //```swift
+        service
+            .updateObject(ofType: MyClass.self,
+                          primaryKeyValue: primaryKey,
+                          customTableName: nil,
+                          updateClosure: { (readObject) -> MyClass? in
+                            readObject?.stringValue = "updated_string"
+                            return readObject
+            }) { (result) in
+                print("result = \(result)")
+        }
+        //```
+        // ClearAll
+        //```swift
+        let clearResult = service.clearAll()
+        //```
+        **/
+        
+        /** //KVKeyChainService
+        // Initialization
+        //```swift
+        let service = KVKeyChainService.init(encryptionKey: "test_encryption_key")
+        // You can also use KVKeyChainService.defaultService instead
+        //```
+        // Read
+        //```swift
+        let readValue = KVKeyChainService.defaultService.readObject(MyClass.self, forKey: key)
+        //```
+        // Write
+        //```swift
+        let value = MyClass.init(jsonString: myJSONString)!
+        let result = KVKeyChainService.defaultService.writeObject(value, forKey: key)
+        //```
+        // Remove
+        //```swift
+        let removeResult = KVKeyChainService.defaultService.removeObject(forKey: key)
+        //```
+        // Update
+        //It is a read-update-write sequence function during one lock.
+        //```swift
+        KVKeyChainService
+            .defaultService
+            .updateObject(MyClass.self,
+                          forKey: key,
+                          updateClosure: { (readObject) -> MyClass? in
+                            readObject?.stringValue = "updated_string"
+                            return readObject
+            }) { (result) in
+                print("result = \(result)")
+        }
+        //```
+        **/
     }
 }
 

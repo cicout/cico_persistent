@@ -29,6 +29,8 @@
 		E41F767D20C93D3D00399E42 /* CachePersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767A20C93D3D00399E42 /* CachePersistentService.swift */; };
 		E41F767E20C93D3D00399E42 /* PrivatePersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767B20C93D3D00399E42 /* PrivatePersistentService.swift */; };
 		E420CDB320F84EF900D1BA63 /* TypeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420CDB220F84EF900D1BA63 /* TypeProperty.swift */; };
+		E4231065211C39070057DCD4 /* my.json in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6DF5211C34DE00ECAF4E /* my.json */; };
+		E4231066211C39090057DCD4 /* MyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */; };
 		E42B665C21002DDD006EBAC2 /* SQLiteRecordEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B665B21002DDD006EBAC2 /* SQLiteRecordEncoder.swift */; };
 		E42B66A42102CECE006EBAC2 /* ORMProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66A32102CECE006EBAC2 /* ORMProtocol.swift */; };
 		E42B66A72102D996006EBAC2 /* PublicORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66A62102D996006EBAC2 /* PublicORMDBService.swift */; };
@@ -80,6 +82,8 @@
 		E4FD6DC4211555F900ECAF4E /* AutoEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */; };
 		E4FD6DC52115566C00ECAF4E /* AutoEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */; };
 		E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC62115569000ECAF4E /* AutoEquatable.generated.swift */; };
+		E4FD6DF7211C34DE00ECAF4E /* my.json in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6DF5211C34DE00ECAF4E /* my.json */; };
+		E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,6 +195,8 @@
 		E4FD6DC12115533000ECAF4E /* ORMDBServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceTests.swift; sourceTree = "<group>"; };
 		E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.swift; sourceTree = "<group>"; };
 		E4FD6DC62115569000ECAF4E /* AutoEquatable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.generated.swift; sourceTree = "<group>"; };
+		E4FD6DF5211C34DE00ECAF4E /* my.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = my.json; sourceTree = "<group>"; };
+		E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -458,6 +464,8 @@
 				E41F767420C9384300399E42 /* default.json */,
 				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
 				E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */,
+				E4FD6DF5211C34DE00ECAF4E /* my.json */,
+				E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */,
 				E41F767520C9384300399E42 /* TCodableClass.swift */,
 				E41F767320C9384300399E42 /* TCodableStruct.swift */,
 			);
@@ -598,6 +606,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E41F766720C9302400399E42 /* LaunchScreen.storyboard in Resources */,
+				E4231065211C39070057DCD4 /* my.json in Resources */,
 				E41F767720C9384300399E42 /* default.json in Resources */,
 				E41F766420C9302400399E42 /* Assets.xcassets in Resources */,
 				E41F766220C9302300399E42 /* Main.storyboard in Resources */,
@@ -609,6 +618,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4FD6DB321153E4600ECAF4E /* default.json in Resources */,
+				E4FD6DF7211C34DE00ECAF4E /* my.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,6 +693,7 @@
 				E4FD6DC52115566C00ECAF4E /* AutoEquatable.swift in Sources */,
 				E4FD6DB821153E9000ECAF4E /* JSONStringAide.swift in Sources */,
 				E41F765D20C9302300399E42 /* AppDelegate.swift in Sources */,
+				E4231066211C39090057DCD4 /* MyClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +703,7 @@
 			files = (
 				E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */,
 				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
+				E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,
 				E4FD6DC22115533000ECAF4E /* ORMDBServiceTests.swift in Sources */,
 				E4FD6DB421153E4900ECAF4E /* TCodableClass.swift in Sources */,

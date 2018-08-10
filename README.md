@@ -291,17 +291,24 @@ KVKeyChainService
 ### Persistent Service
 It is all local storage API collection. It contains user defaults, key-value file, key-value database, orm database, and key-value key chain.
 
-## About iOS File System
-* [iOS File System Guide](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)  
+## About Sandbox
+* [iOS File System Programming Guide](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)  
   
 For security purposes, iOS file system can be divided into four types as shown below.  
-| TYPE    | PATH           | DESCRIPTION |
-| ------- | -------------- | ----------- |
-| Public  | Documents      | The contents of this directory can be made available to the user through file sharing. The files may be read/written/deleted by user. It should only contain imported/exported files here. |
-| Private | Library        | Any file you don’t want exposed to the user can be saved here. |
-| Cache   | Library/Caches | All cache files should be placed here. |
-| Temp    | tmp            | Use this directory to write temporary files that do not need to persist between launches of your app. Your app should remove files from this directory when they are no longer needed. |  
-Four shared service (public/private/cache/temp) have been created, you can simply use them directly.
+
+* **Public**: "Sandbox"/Documents/  
+The contents of this directory can be made available to the user through file sharing. The files may be read/written/deleted by user. It should only contain imported/exported files here.  
+
+* **Private**: "Sandbox"/Library/  
+Any file you don’t want exposed to the user can be saved here.
+
+* **Cache**: "Sandbox"/Library/Caches/  
+All cache files should be placed here.
+
+* **Temp**: "Sandbox"/tmp/   
+Use this directory to write temporary files that do not need to persist between launches of your app. Your app should remove files from this directory when they are no longer needed.
+
+Four shared service "**Public/Private/Cache/Temp**" have been created, you can simply use them directly.
 
 ## Requirements
 * iOS 8.0+

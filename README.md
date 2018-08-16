@@ -9,7 +9,7 @@ You can simply add CICOPersistent to your `Cartfile`:
 ```
 github "cicout/cico_persistent"
 ```
-Just add CICOPersistent.framework and CICOAutoCodable.framework to your project.
+Just add `CICOPersistent.framework`, `CICOAutoCodable.framework` and `FMDB.framework` to your project.
 
 ## About CICOAutoCodable
 * [CICOAutoCodable](https://github.com/cicout/cico_auto_codable)
@@ -296,16 +296,16 @@ It is all local storage API collection. It contains user defaults, key-value fil
   
 For security purposes, iOS file system can be divided into four types as shown below.  
 
-* **Public**: "Sandbox"/Documents/  
+* **Public**: `"Sandbox"/Documents/`  
 The contents of this directory can be made available to the user through file sharing. The files may be read/written/deleted by user. It should only contain imported/exported files here.  
 
-* **Private**: "Sandbox"/Library/  
+* **Private**: `"Sandbox"/Library/`  
 Any file you don’t want exposed to the user can be saved here.
 
-* **Cache**: "Sandbox"/Library/Caches/  
+* **Cache**: `"Sandbox"/Library/Caches/`  
 All cache files should be placed here.
 
-* **Temp**: "Sandbox"/tmp/   
+* **Temp**: `"Sandbox"/tmp/`   
 Use this directory to write temporary files that do not need to persist between launches of your app. Your app should remove files from this directory when they are no longer needed.
 
 Four shared service "**Public/Private/Cache/Temp**" have been created, you can simply use them directly.

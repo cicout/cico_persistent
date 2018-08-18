@@ -10,6 +10,10 @@
 
 @implementation CICOFileManagerAide
 
++ (BOOL)createDirWithPath:(NSString *)dirPath {
+    return [self createDirWithPath:dirPath option:NO];
+}
+
 + (BOOL)createDirWithPath:(NSString *)dirPath option:(BOOL)deleteFileWithSameName {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
@@ -41,6 +45,10 @@
     }
     
     return YES;
+}
+
++ (BOOL)createDirWithURL:(NSURL *)dirURL {
+    return [self createDirWithURL:dirURL option:NO];
 }
 
 + (BOOL)createDirWithURL:(NSURL *)dirURL option:(BOOL)deleteFileWithSameName {

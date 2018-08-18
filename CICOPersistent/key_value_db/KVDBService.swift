@@ -117,7 +117,7 @@ open class KVDBService {
     
     private func initDB() {
         let dirURL = self.fileURL.deletingLastPathComponent()
-        let result = CICOFileManagerAide.createDir(with: dirURL, option: false)
+        let result = CICOFileManagerAide.createDir(with: dirURL)
         if !result {
             print("[ERROR]: create database dir failed\nurl: \(self.fileURL)")
             return

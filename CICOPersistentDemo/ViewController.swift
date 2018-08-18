@@ -455,7 +455,7 @@ class ViewController: UIViewController {
         /** //URLKVFileService
         let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_class")!
         let dirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file")!
-        let _ = CICOFileManagerAide.createDir(with: dirURL, option: false)
+        let _ = CICOFileManagerAide.createDir(with: dirURL)
         // Initialization
         //```swift
         let service = URLKVFileService.init()

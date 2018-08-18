@@ -21,7 +21,7 @@ class URLKVFileServiceTests: XCTestCase {
         self.jsonString = JSONStringAide.jsonString(name: "default")
         
         let dirURL = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file")!
-        let _ = CICOFileManagerAide.createDir(with: dirURL, option: false)
+        let _ = CICOFileManagerAide.createDir(with: dirURL)
     }
     
     override func tearDown() {

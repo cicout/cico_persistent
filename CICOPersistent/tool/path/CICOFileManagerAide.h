@@ -10,7 +10,11 @@
 
 @interface CICOFileManagerAide : NSObject
 
++ (BOOL)createDirWithPath:(NSString *)dirPath;
+
 + (BOOL)createDirWithPath:(NSString *)dirPath option:(BOOL)deleteFileWithSameName;
+
++ (BOOL)createDirWithURL:(NSURL *)dirURL;
 
 + (BOOL)createDirWithURL:(NSURL *)dirURL option:(BOOL)deleteFileWithSameName;
 

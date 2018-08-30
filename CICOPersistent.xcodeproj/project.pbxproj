@@ -39,6 +39,8 @@
 		E42B66AD2102DD90006EBAC2 /* TempORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AC2102DD90006EBAC2 /* TempORMDBService.swift */; };
 		E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */; };
 		E42B66B12106D269006EBAC2 /* ORMTableInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */; };
+		E4710E5C21364BF2003F6798 /* CICOURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E5B21364BF2003F6798 /* CICOURL.swift */; };
+		E4710E682136C278003F6798 /* CICOURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E672136C278003F6798 /* CICOURLTests.swift */; };
 		E482ED0220CE15E7001FF435 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; };
 		E482ED0320CE15EF001FF435 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; };
 		E482ED0420CE15EF001FF435 /* FMDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E482ED0120CE15E7001FF435 /* FMDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -163,6 +165,8 @@
 		E42B66AC2102DD90006EBAC2 /* TempORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempORMDBService.swift; sourceTree = "<group>"; };
 		E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLKVFileService.swift; sourceTree = "<group>"; };
 		E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMTableInfoModel.swift; sourceTree = "<group>"; };
+		E4710E5B21364BF2003F6798 /* CICOURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOURL.swift; sourceTree = "<group>"; };
+		E4710E672136C278003F6798 /* CICOURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOURLTests.swift; sourceTree = "<group>"; };
 		E482ED0120CE15E7001FF435 /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
 		E482ED0620CE167B001FF435 /* KVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBService.swift; sourceTree = "<group>"; };
 		E482ED0A20CE4E37001FF435 /* PublicKVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicKVDBService.swift; sourceTree = "<group>"; };
@@ -337,6 +341,14 @@
 			path = internal;
 			sourceTree = "<group>";
 		};
+		E4710E5A21364BD4003F6798 /* url */ = {
+			isa = PBXGroup;
+			children = (
+				E4710E5B21364BF2003F6798 /* CICOURL.swift */,
+			);
+			path = url;
+			sourceTree = "<group>";
+		};
 		E482ECFE20CE15B4001FF435 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,6 +435,7 @@
 			children = (
 				E41F765120C92CAD00399E42 /* path */,
 				E41F764820C9221C00399E42 /* security */,
+				E4710E5A21364BD4003F6798 /* url */,
 			);
 			path = tool;
 			sourceTree = "<group>";
@@ -430,6 +443,7 @@
 		E4FD6C9421129DBC00ECAF4E /* CICOPersistentTests */ = {
 			isa = PBXGroup;
 			children = (
+				E4710E672136C278003F6798 /* CICOURLTests.swift */,
 				E4FD6DB2211483BF00ECAF4E /* internal */,
 				E4FD6DBF211550E400ECAF4E /* KVDBServiceTests.swift */,
 				E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */,
@@ -670,6 +684,7 @@
 				E41F767C20C93D3D00399E42 /* TempPersistentService.swift in Sources */,
 				E4FD6CEC21129F4D00ECAF4E /* show_all_type.generated.swift in Sources */,
 				E492B4DD20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift in Sources */,
+				E4710E5C21364BF2003F6798 /* CICOURL.swift in Sources */,
 				E482ED1A20CF6F4B001FF435 /* CacheKVFileService.swift in Sources */,
 				E482ED1420CF6950001FF435 /* KVFileService.swift in Sources */,
 				E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */,
@@ -702,6 +717,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */,
+				E4710E682136C278003F6798 /* CICOURLTests.swift in Sources */,
 				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
 				E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,

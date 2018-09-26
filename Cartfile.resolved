@@ -1,2 +1,2 @@
-github "ccgus/fmdb" "2.7.4"
-github "cicout/cico_auto_codable" "0.8.9"
+github "ccgus/fmdb" "2.7.5"
+github "cicout/cico_auto_codable" "0.11.15"

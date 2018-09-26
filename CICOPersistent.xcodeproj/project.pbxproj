@@ -572,10 +572,11 @@
 				TargetAttributes = {
 					E41F763A20C8D2F300399E42 = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1000;
 					};
 					E41F765920C9302300399E42 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -650,7 +651,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\necho \"[***** Start Running CICOAutoCodable Script *****]\"\n./sourcery/source/Pods/Sourcery/bin/sourcery --sources ./Carthage/Checkouts/cico_auto_codable/CICOAutoCodable --sources ./CICOPersistentDemo --sources ./CICOPersistent --sources ./CICOPersistentTests --templates ./Carthage/Checkouts/cico_auto_codable/sourcery/templates/ --templates ./sourcery/templates/ --output ./sourcery/auto_generated\necho \"[***** End Running CICOAutoCodable Script *****]\"\nfi";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\necho \"[***** Start Running CICOAutoCodable Script *****]\"\n./sourcery/source/Pods/Sourcery/bin/sourcery --sources ./Carthage/Checkouts/cico_auto_codable/CICOAutoCodable --sources ./CICOPersistentDemo --sources ./CICOPersistent --sources ./CICOPersistentTests --templates ./Carthage/Checkouts/cico_auto_codable/sourcery/templates/ --templates ./sourcery/templates/ --output ./sourcery/auto_generated\necho \"[***** End Running CICOAutoCodable Script *****]\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -824,7 +825,6 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				VALID_ARCHS = arm64;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -882,7 +882,6 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = arm64;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -914,9 +913,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = arm64;
 			};
 			name = Debug;
 		};
@@ -945,7 +943,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistent;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = arm64;
 			};
@@ -971,9 +969,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = arm64;
 			};
 			name = Debug;
 		};
@@ -997,7 +994,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = arm64;
 			};

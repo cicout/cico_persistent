@@ -130,7 +130,7 @@ class URLKVFileServiceTests: XCTestCase {
         }
         
         let removeResult = self.service.removeObject(forFileURL: url)
-        XCTAssert(removeResult, "[FAILED]: remove failed: value = \(value)")
+        XCTAssert(removeResult, "[FAILED]: remove failed: value = \(value!)")
     }
     
     private func commonTest<T: Codable & Equatable>(_ value: T, fileURL: URL) {

@@ -708,7 +708,7 @@ open class ORMDBService {
         var argumentArray = [Any]()
         
         if let whereString = whereString {
-            querySQL.append(" \(whereString)")
+            querySQL.append(" where \(whereString)")
         }
         
         if let orderByName = orderByName {

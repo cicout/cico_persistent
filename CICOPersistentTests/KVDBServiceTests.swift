@@ -120,7 +120,7 @@ class KVDBServiceTests: XCTestCase {
         }
         
         let removeResult = self.service.removeObject(forKey: key)
-        XCTAssert(removeResult, "[FAILED]: remove failed: value = \(value)")
+        XCTAssert(removeResult, "[FAILED]: remove failed: value = \(value!)")
     }
     
     func test_clearAll() {

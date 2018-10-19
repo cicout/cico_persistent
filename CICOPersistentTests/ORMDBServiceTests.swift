@@ -132,6 +132,27 @@ class ORMDBServiceTests: XCTestCase {
         XCTAssert(removeResult2, "[FAILED]: remove failed")
     }
     
+    func test_where() {
+        var objectArray = [TCodableClass]()
+        for i in 0..<10 {
+            let object = TCodableClass.init(jsonString: self.jsonString)
+            XCTAssertNotNil(object, "[FAILED]: invalid object")
+            object!.name = "name_\(i)"
+            objectArray.append(object!)
+        }
+        let writeResult = self.service.writeObjectArray(objectArray)
+        XCTAssert(writeResult, "[FAILED]: write failed")
+        
+        let readObjectArray =
+            self.service
+                .readObjectArray(ofType: TCodableClass.self,
+                                 whereString: "name = 'name_5'",
+                                 orderByName: "name",
+                                 descending: false,
+                                 limit: 10)
+        XCTAssertNotNil(readObjectArray, "[FAILED]: read failed")
+    }
+    
     func test_Class_removeObjectTable() {
         let removeResult = self.service.removeObjectTable(ofType: TCodableClass.self)
         XCTAssert(removeResult, "[FAILED]: remove failed")

@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E4FD6C9221129DBC00ECAF4E"
+               BuildableName = "CICOPersistentTests.xctest"
+               BlueprintName = "CICOPersistentTests"
+               ReferencedContainer = "container:CICOPersistent.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E41F763A20C8D2F300399E42"
+            BuildableName = "CICOPersistent.framework"
+            BlueprintName = "CICOPersistent"
+            ReferencedContainer = "container:CICOPersistent.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

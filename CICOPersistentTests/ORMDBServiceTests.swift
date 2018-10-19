@@ -18,6 +18,7 @@ class ORMDBServiceTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
         let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/orm_db")!
+        print("\(url)")
         self.service = ORMDBService.init(fileURL: url)
         self.jsonString = JSONStringAide.jsonString(name: "default")
     }
@@ -79,8 +80,15 @@ class ORMDBServiceTests: XCTestCase {
         let writeResult = self.service.writeObjectArray(objectArray)
         XCTAssert(writeResult, "[FAILED]: write failed")
         
-        let readObjectArray = self.service.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10)
+        let readObjectArray = self.service.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: true, limit: 10)
         XCTAssertNotNil(readObjectArray, "[FAILED]: read failed")
+        XCTAssert(readObjectArray!.count > 1, "[FAILED]: read failed")
+        
+        let object0 = readObjectArray![0]
+        let object1 = readObjectArray![1]
+        XCTAssertNotNil(object0.name, "[FAILED]: read failed")
+        XCTAssertNotNil(object1.name, "[FAILED]: read failed")
+        XCTAssert(object0.name! > object1.name!, "[FAILED]: read failed")
     }
     
     func test_Class_updateObject() {

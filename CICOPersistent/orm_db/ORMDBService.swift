@@ -712,7 +712,7 @@ open class ORMDBService {
         }
         
         if let orderByName = orderByName {
-            querySQL.append(" ORDER BY '\(orderByName)'")
+            querySQL.append(" ORDER BY \(orderByName)")
             if descending {
                 querySQL.append(" DESC")
             } else {

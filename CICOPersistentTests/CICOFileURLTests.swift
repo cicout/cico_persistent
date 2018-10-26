@@ -10,7 +10,7 @@ import XCTest
 import CICOPersistent
 import CICOAutoCodable
 
-class CICOURLTests: XCTestCase {
+class CICOFileURLTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -34,14 +34,14 @@ class CICOURLTests: XCTestCase {
     }
     
     private func commonTest(url: URL) {
-        let curl = CICOURL.init(url: url)
+        let curl = CICOFileURL.init(fileURL: url)
         XCTAssertNotNil(curl, "[FAILED]: Invalid CICOURL.")
         
         let jsonString = curl.toJSONString()
         XCTAssertNotNil(jsonString, "[FAILED]: CICOURL transfer to json string failed.")
         
-        let curlx = CICOURL.init(jsonString: jsonString!)
+        let curlx = CICOFileURL.init(jsonString: jsonString!)
         XCTAssertNotNil(curlx, "[FAILED]: JSON string transfer back to CICOURL failed.")
-        XCTAssert(curlx!.url! == curl.url!, "[FAILED]: curlx != curl.")
+        XCTAssert(curlx!.fileURL! == curl.fileURL!, "[FAILED]: curlx != curl.")
     }
 }

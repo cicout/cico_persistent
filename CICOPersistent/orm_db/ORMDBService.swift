@@ -291,20 +291,18 @@ open class ORMDBService {
                 return
             }
             
-            if !tableExist {
-                // create table if not exist and upgrade table if needed
-                let isTableReady =
-                    self.fixTableIfNeeded(db: db,
-                                          objectType: objectType,
-                                          tableName: tableName,
-                                          primaryKeyColumnName: primaryKeyColumnName,
-                                          indexColumnNameArray: indexColumnNameArray,
-                                          objectTypeVersion: objectTypeVersion)
-                
-                if !isTableReady {
-                    rollback.pointee = true
-                    return
-                }
+            // create table if not exist and upgrade table if needed
+            let isTableReady =
+                self.fixTableIfNeeded(db: db,
+                                      objectType: objectType,
+                                      tableName: tableName,
+                                      primaryKeyColumnName: primaryKeyColumnName,
+                                      indexColumnNameArray: indexColumnNameArray,
+                                      objectTypeVersion: objectTypeVersion)
+            
+            if !isTableReady {
+                rollback.pointee = true
+                return
             }
             
             result = self.replaceRecord(db: db, tableName: tableName, object: newObject)

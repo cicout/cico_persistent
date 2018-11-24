@@ -9,6 +9,8 @@
 import Foundation
 import FMDB
 
+public let kCICOKVDBDefaultPassword = "cico_kv_db_default_password"
+
 private let kJSONTableName = "json_table"
 private let kJSONKeyColumnName = "json_key"
 private let kJSONDataColumnName = "json_data"
@@ -17,6 +19,7 @@ private let kUpdateTimeColumnName = "update_time"
 open class KVDBService {
     public let fileURL: URL
     
+    private let dbPasswordKey: String?
     private var dbQueue: FMDatabaseQueue?
     
     deinit {
@@ -24,8 +27,13 @@ open class KVDBService {
         self.dbQueue?.close()
     }
     
-    public init(fileURL: URL) {
+    public init(fileURL: URL, password: String? = kCICOKVDBDefaultPassword) {
         self.fileURL = fileURL
+        if let password = password {
+            self.dbPasswordKey = CICOSecurityAide.md5HashString(with: password)
+        } else {
+            self.dbPasswordKey = nil
+        }
         self.initDB()
     }
     

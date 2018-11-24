@@ -10,6 +10,8 @@ import Foundation
 import FMDB
 import CICOAutoCodable
 
+public let kCICOORMDBDefaultPassword = "cico_orm_db_default_password"
+
 private let kORMTableName = "cico_orm_table_info"
 private let kTableNameColumnName = "table_name"
 private let kObjectTypeNameColumnName = "object_type_name"
@@ -18,15 +20,22 @@ private let kObjectTypeVersionColumnName = "object_type_version"
 open class ORMDBService {
     public let fileURL: URL
     
+    private let dbPasswordKey: String?
     private var dbQueue: FMDatabaseQueue?
+    
     
     deinit {
         print("\(self) deinit")
         self.dbQueue?.close()
     }
     
-    public init(fileURL: URL) {
+    public init(fileURL: URL, password: String? = kCICOORMDBDefaultPassword) {
         self.fileURL = fileURL
+        if let password = password {
+            self.dbPasswordKey = CICOSecurityAide.md5HashString(with: password)
+        } else {
+            self.dbPasswordKey = nil
+        }
         self.initDB()
     }
     
@@ -383,6 +392,10 @@ open class ORMDBService {
         }
         
         dbQueue.inDatabase { (db) in
+            if let key = self.dbPasswordKey {
+                db.setKey(key)
+            }
+            
             let result = self.createORMTableInfoTableIfNotExists(db: db)
             if result {
                 self.dbQueue = dbQueue

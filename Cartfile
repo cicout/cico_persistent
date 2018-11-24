@@ -1,3 +1,2 @@
-github "ccgus/fmdb"
 github "cicout/cico_auto_codable"
-
+github "cicout/cocoapod_to_carthage" "fmdb_with_sqlcipher"

@@ -12,6 +12,8 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import <Security/Security.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark -
 
 static const NSUInteger kBufferLength = 1024 * 1024;
@@ -587,3 +589,5 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     
     return securityError;
 }
+
+NS_ASSUME_NONNULL_END

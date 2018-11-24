@@ -23,11 +23,11 @@ public struct CICOFileURL: Codable {
         case .unknown:
             return nil
         case .documents:
-            return CICOPathAide.docFileURL(withSubPath: relativePath)!
+            return CICOPathAide.docFileURL(withSubPath: relativePath)
         case .library:
-            return CICOPathAide.libFileURL(withSubPath: relativePath)!
+            return CICOPathAide.libFileURL(withSubPath: relativePath)
         case .tmp:
-            return CICOPathAide.tempFileURL(withSubPath: relativePath)!
+            return CICOPathAide.tempFileURL(withSubPath: relativePath)
         }
     }
     
@@ -40,9 +40,9 @@ public struct CICOFileURL: Codable {
         }
         
         let path = url.path
-        let docPath = CICOPathAide.docPath(withSubPath: nil)!
-        let libPath = CICOPathAide.libPath(withSubPath: nil)!
-        let tmpPath = CICOPathAide.tempPath(withSubPath: nil)!
+        let docPath = CICOPathAide.docPath(withSubPath: nil)
+        let libPath = CICOPathAide.libPath(withSubPath: nil)
+        let tmpPath = CICOPathAide.tempPath(withSubPath: nil)
         
         if path.hasPrefix(docPath) {
             type = .documents

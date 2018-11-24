@@ -12,7 +12,7 @@ private let kDBSubPath = "cico_kv_db/db.sqlite"
 
 public class CacheKVDBService: KVDBService {
     public static let shared: CacheKVDBService = {
-        let dbURL = CICOPathAide.defaultCacheFileURL(withSubPath: kDBSubPath)!
+        let dbURL = CICOPathAide.defaultCacheFileURL(withSubPath: kDBSubPath)
         return CacheKVDBService.init(fileURL: dbURL)
     }()
 }

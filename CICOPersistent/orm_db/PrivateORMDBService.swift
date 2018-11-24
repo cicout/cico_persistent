@@ -12,7 +12,7 @@ private let kDBSubPath = "cico_orm_db/db.sqlite"
 
 public class PrivateORMDBService: ORMDBService {
     public static let shared: PrivateORMDBService = {
-        let dbURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kDBSubPath)!
+        let dbURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kDBSubPath)
         return PrivateORMDBService.init(fileURL: dbURL)
     }()
     

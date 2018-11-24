@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        print("\(CICOPathAide.docPath(withSubPath: nil)!)")
+        print("\(CICOPathAide.docPath(withSubPath: nil))")
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,9 +36,8 @@ class ViewController: UIViewController {
     }
     
     private func doSecurityTest() {
-        if let hash = CICOSecurityAide.md5HashString(with: "") {
-            print("hash = \(hash)")
-        }
+        let hash = CICOSecurityAide.md5HashString(with: "")
+        print("hash = \(hash)")
     }
     
     private func doPersistentTest() {

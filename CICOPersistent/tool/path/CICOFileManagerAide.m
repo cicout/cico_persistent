@@ -8,6 +8,8 @@
 
 #import "CICOFileManagerAide.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation CICOFileManagerAide
 
 + (BOOL)createDirWithPath:(NSString *)dirPath {
@@ -97,3 +99,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

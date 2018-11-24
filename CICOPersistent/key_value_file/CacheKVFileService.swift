@@ -12,7 +12,7 @@ private let kRootDirName = "cico_kv_file"
 
 public class CacheKVFileService: KVFileService {
     public static let shared: CacheKVFileService = {
-        let rootDirURL = CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)!
+        let rootDirURL = CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)
         return CacheKVFileService.init(rootDirURL: rootDirURL)
     }()
 }

@@ -12,7 +12,7 @@ private let kRootDirName = "cico_persistent"
 
 public class PublicPersistentService: PersistentService {
     public static let shared: PublicPersistentService = {
-        let rootDirURL = CICOPathAide.defaultPublicFileURL(withSubPath: kRootDirName)!
+        let rootDirURL = CICOPathAide.defaultPublicFileURL(withSubPath: kRootDirName)
         return PublicPersistentService.init(rootDirURL: rootDirURL)
     }()
     

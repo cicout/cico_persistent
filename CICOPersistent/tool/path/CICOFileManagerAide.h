@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface CICOFileManagerAide : NSObject
 
 + (BOOL)createDirWithPath:(NSString *)dirPath;
@@ -27,3 +29,5 @@
 + (BOOL)removeFileWithURL:(NSURL *)fileURL;
 
 @end
+
+NS_ASSUME_NONNULL_END

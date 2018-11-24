@@ -12,7 +12,7 @@ private let kRootDirName = "cico_kv_file"
 
 public class PrivateKVFileService: KVFileService {
     public static let shared: PrivateKVFileService = {
-        let rootDirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kRootDirName)!
+        let rootDirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kRootDirName)
         return PrivateKVFileService.init(rootDirURL: rootDirURL)
     }()
     

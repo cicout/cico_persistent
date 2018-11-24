@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  1、Common：randomData、hex;
  *  2、Hash：md5、sha1、hmac;
@@ -401,3 +403,5 @@
 + (NSData *)rsaDecryptWithPrivateKey:(SecKeyRef)privateKey encodedData:(NSData *)encodedData;
 
 @end
+
+NS_ASSUME_NONNULL_END

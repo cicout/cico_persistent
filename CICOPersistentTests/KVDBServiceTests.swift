@@ -21,7 +21,7 @@ class KVDBServiceTests: XCTestCase {
 //        print("\(url)")
 //        self.service = KVDBService.init(fileURL: url)
         
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/custom_password_kv_db")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/custom_password_kv_db")
 //        print("\(url)")
         self.service = KVDBService.init(fileURL: url, password: "cico_test")
         

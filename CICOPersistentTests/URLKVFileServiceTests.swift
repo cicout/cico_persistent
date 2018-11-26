@@ -20,7 +20,7 @@ class URLKVFileServiceTests: XCTestCase {
         self.service = URLKVFileService.init()
         self.jsonString = JSONStringAide.jsonString(name: "default")
         
-        let dirURL = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file")!
+        let dirURL = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file")
         let _ = CICOFileManagerAide.createDir(with: dirURL)
     }
     
@@ -44,7 +44,7 @@ class URLKVFileServiceTests: XCTestCase {
         let value = TCodableClass.init(jsonString: self.jsonString)
         XCTAssertNotNil(value, "[FAILED]: invalid value")
         
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value!))")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value!))")
         self.commonTest(value, fileURL: url)
     }
     
@@ -52,48 +52,48 @@ class URLKVFileServiceTests: XCTestCase {
         let value = TCodableStruct.init(jsonString: self.jsonString)
         XCTAssertNotNil(value, "[FAILED]: invalid value")
         
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value!))")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value!))")
         self.commonTest(value, fileURL: url)
     }
     
     func test_Int() {
         let value: Int = 8
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")
         self.commonTest(value, fileURL: url)
     }
     
     func test_Double() {
         let value: Double = 8.5
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")
         self.commonTest(value, fileURL: url)
     }
     
     func test_Bool() {
         let value: Bool = false
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")
         self.commonTest(value, fileURL: url)
     }
     
     func test_String() {
         let value: String = "test_string"
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")
         self.commonTest(value, fileURL: url)
     }
     
     func test_Date() {
         let value: Date = Date.init()
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")
         self.commonTest(value, fileURL: url)
     }
     
     func test_URL() {
         let value: URL = URL.init(string: "https://www.google.com")!
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/\(type(of: value))")
         self.commonTest(value, fileURL: url)
     }
     
     func test_Class_updateObject() {
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_class_update")!
+        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_class_update")
         
         let value = TCodableClass.init(jsonString: self.jsonString)
         XCTAssertNotNil(value, "[FAILED]: invalid value")

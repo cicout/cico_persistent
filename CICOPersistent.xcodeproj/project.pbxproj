@@ -455,8 +455,8 @@
 		E4FD6C9421129DBC00ECAF4E /* CICOPersistentTests */ = {
 			isa = PBXGroup;
 			children = (
-				E4710E672136C278003F6798 /* CICOFileURLTests.swift */,
 				E4FD6DB2211483BF00ECAF4E /* internal */,
+				E4710E672136C278003F6798 /* CICOFileURLTests.swift */,
 				E4FD6DBF211550E400ECAF4E /* KVDBServiceTests.swift */,
 				E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */,
 				E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */,

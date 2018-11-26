@@ -222,6 +222,54 @@ typedef NS_ENUM(NSInteger, CICOSHAType) {
  */
 + (NSString *)sha1HashStringWithString:(NSString *)sourceString;
 
+#pragma mark - SHA FAMILY
+
+/**
+ *  Transfer data to sha hash data;
+ *
+ *  @param sourceData Source data;
+ *  @param shaType SHA hash type: sha1/sha256/sha512;
+ *
+ *  @return SHA hash data;
+ */
++ (NSData *)shaHashDataWithData:(NSData *)sourceData shaType:(CICOSHAType)shaType;
+
+/**
+ *  Transfer data to sha hash hex string in lower case;
+ *
+ *  @param sourceData Source data;
+ *  @param shaType SHA hash type: sha1/sha256/sha512;
+ *
+ *  @return SHA hash hex string in lower case;
+ *
+ *  @see shaHashDataWithData:shaType;
+ */
++ (NSString *)shaHashStringWithData:(NSData *)sourceData shaType:(CICOSHAType)shaType;
+
+/**
+ *  Transfer string to sha hash data;
+ *
+ *  @param sourceString Source string, will be transfered to data using utf-8;
+ *  @param shaType SHA hash type: sha1/sha256/sha512;
+ *
+ *  @return SHA hash data;
+ *
+ *  @see shaHashDataWithData:shaType;
+ */
++ (NSData *)shaHashDataWithString:(NSString *)sourceString shaType:(CICOSHAType)shaType;
+
+/**
+ *  Transfer string to sha hash hex string in lower case;
+ *
+ *  @param sourceString Source string, will be transfered to data using utf-8;
+ *  @param shaType SHA hash type: sha1/sha256/sha512;
+ *
+ *  @return SHA hash hex string in lower case;
+ *
+ *  @see shaHashDataWithData:shaType;
+ */
++ (NSString *)shaHashStringWithString:(NSString *)sourceString shaType:(CICOSHAType)shaType;
+
 #pragma mark - HMAC
 
 /**
@@ -332,7 +380,7 @@ typedef NS_ENUM(NSInteger, CICOSHAType) {
 /**
  *  Encrypt data using AES;
  *
- *  @param keyString    AES encryption key string, will be transfered to data using md5 hash;
+ *  @param keyString    AES encryption key string, will be transfered to data using SHA256 hash;
  *  @param sourceData   Source data;
  *
  *  @return AES encrypted data;
@@ -342,7 +390,7 @@ typedef NS_ENUM(NSInteger, CICOSHAType) {
 /**
  *  Decrypt data using AES;
  *
- *  @param keyString     AES decryption key string, will be transfered to data using md5 hash;
+ *  @param keyString     AES decryption key string, will be transfered to data using SHA256 hash;
  *  @param encryptedData AES encrypted data;
  *
  *  @return Source data;

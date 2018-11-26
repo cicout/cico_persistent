@@ -9,20 +9,20 @@
 import Foundation
 import CICOAutoCodable
 
-private let kDefaultEncryptionkey = "cico_kv_key_chain_default_encryption_key"
+private let kDefaultPassword = "cico_kv_key_chain_default_password"
 private let kGenericKey = "cico_kv_generic_key"
 private let kAccountKey = "cico_kv_account_key"
 
 public class KVKeyChainService {
     public static let defaultService: KVKeyChainService = {
-        if let key = Bundle.main.bundleIdentifier {
-            return KVKeyChainService.init(encryptionKey: key)
+        if let password = Bundle.main.bundleIdentifier {
+            return KVKeyChainService.init(password: password)
         } else {
-            return KVKeyChainService.init(encryptionKey: kDefaultEncryptionkey)
+            return KVKeyChainService.init(password: kDefaultPassword)
         }
     } ()
     
-    private let encryptionKeyData: Data
+    private let passwordData: Data
     private let keyChainService: KeyChainService
     private let lock = NSLock()
     
@@ -30,8 +30,8 @@ public class KVKeyChainService {
         print("\(self) deinit")
     }
     
-    public init(encryptionKey: String, accessGroup: String? = nil) {
-        self.encryptionKeyData = CICOSecurityAide.md5HashData(with: encryptionKey)
+    public init(password: String, accessGroup: String? = nil) {
+        self.passwordData = CICOSecurityAide.shaHashData(with: password, shaType: .SHA256)
         self.keyChainService = KeyChainService.init(accessGroup: accessGroup)
     }
     
@@ -142,10 +142,10 @@ public class KVKeyChainService {
     }
     
     private func encryptData(sourceData: Data) -> Data {
-        return CICOSecurityAide.aesEncrypt(withKeyData: self.encryptionKeyData, sourceData: sourceData)
+        return CICOSecurityAide.aesEncrypt(withKeyData: self.passwordData, sourceData: sourceData)!
     }
     
     private func decryptData(encryptedData: Data) -> Data {
-        return CICOSecurityAide.aesDecrypt(withKeyData: self.encryptionKeyData, encryptedData: encryptedData)
+        return CICOSecurityAide.aesDecrypt(withKeyData: self.passwordData, encryptedData: encryptedData)!
     }
 }

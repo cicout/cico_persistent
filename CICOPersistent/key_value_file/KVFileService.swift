@@ -17,9 +17,9 @@ open class KVFileService {
         print("\(self) deinit")
     }
     
-    public init(rootDirURL: URL) {
+    public init(rootDirURL: URL, password: String? = kCICOURLKVFileDefaultPassword) {
         self.rootDirURL = rootDirURL
-        self.urlFileService = URLKVFileService.init()
+        self.urlFileService = URLKVFileService.init(password: password)
         
         let result = CICOFileManagerAide.createDir(with: self.rootDirURL)
         if !result {

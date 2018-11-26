@@ -30,8 +30,8 @@ class ViewController: UIViewController {
 //        self.doPersistentTest()
 //        self.doKVFileTest()
 //        self.doKVDBTest()
-        self.doORMDBTest()
-//        self.doKVKeyChainTest()
+//        self.doORMDBTest()
+        self.doKVKeyChainTest()
 //        self.testMyClass()
     }
     

@@ -292,6 +292,49 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     return string;
 }
 
+#pragma mark - SHA FAMILY
+
++ (NSData *)shaHashDataWithData:(NSData *)sourceData shaType:(CICOSHAType)shaType {
+    switch (shaType) {
+        case CICOSHATypeSHA256: {
+            unsigned char digest[CC_SHA256_DIGEST_LENGTH];
+            CC_SHA256(sourceData.bytes, (CC_LONG)sourceData.length, digest);
+            NSData *data = [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+            return data;
+        }
+        case CICOSHATypeSHA512: {
+            unsigned char digest[CC_SHA512_DIGEST_LENGTH];
+            CC_SHA512(sourceData.bytes, (CC_LONG)sourceData.length, digest);
+            NSData *data = [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
+            return data;
+        }
+        default: {
+            unsigned char digest[CC_SHA1_DIGEST_LENGTH];
+            CC_SHA1(sourceData.bytes, (CC_LONG)sourceData.length, digest);
+            NSData *data = [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
+            return data;
+        }
+    }
+}
+
++ (NSString *)shaHashStringWithData:(NSData *)sourceData shaType:(CICOSHAType)shaType {
+    NSData *data = [self shaHashDataWithData:sourceData shaType:shaType];
+    NSString *string = [self hexStringWithData:data];
+    return string;
+}
+
++ (NSData *)shaHashDataWithString:(NSString *)sourceString shaType:(CICOSHAType)shaType {
+    NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [self shaHashDataWithData:sourceData shaType:shaType];
+    return data;
+}
+
++ (NSString *)shaHashStringWithString:(NSString *)sourceString shaType:(CICOSHAType)shaType {
+    NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *string = [self shaHashStringWithData:sourceData shaType:shaType];
+    return string;
+}
+
 #pragma mark - HMAC
 
 + (NSData *)hmacWithAlgorithmType:(uint32_t)algorithmType
@@ -451,12 +494,12 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
 }
 
 + (NSData *)aesEncryptWithKeyString:(NSString *)keyString sourceData:(NSData *)sourceData {
-    NSData *keyData = [self md5HashDataWithString:keyString];
+    NSData *keyData = [self shaHashDataWithString:keyString shaType:CICOSHATypeSHA256];
     return [self aesEncryptWithKeyData:keyData sourceData:sourceData];
 }
 
 + (NSData *)aesDecryptWithKeyString:(NSString *)keyString encryptedData:(NSData *)encryptedData {
-    NSData *keyData = [self md5HashDataWithString:keyString];
+    NSData *keyData = [self shaHashDataWithString:keyString shaType:CICOSHATypeSHA256];
     return [self aesDecryptWithKeyData:keyData encryptedData:encryptedData];
 }
 

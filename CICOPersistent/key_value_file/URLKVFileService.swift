@@ -8,14 +8,23 @@
 
 import Foundation
 
+public let kCICOURLKVFileDefaultPassword = "cico_url_kv_file_default_password"
+
 open class URLKVFileService {
+    private let passwordData: Data?
     private let fileLock = NSLock()
     
     deinit {
         print("\(self) deinit")
     }
     
-    public init() {}
+    public init(password: String? = kCICOURLKVFileDefaultPassword) {
+        if let password = password {
+            self.passwordData = CICOSecurityAide.md5HashData(with: password)
+        } else {
+            self.passwordData = nil
+        }
+    }
     
     open func readObject<T: Codable>(_ objectType: T.Type, fromFileURL fileURL: URL) -> T? {
         self.fileLock.lock()
@@ -95,7 +104,8 @@ open class URLKVFileService {
         }
         
         do {
-            let jsonData = try Data.init(contentsOf: fileURL)
+            let encryptedData = try Data.init(contentsOf: fileURL)
+            let jsonData = self.decryptDataIfNeeded(encryptedData: encryptedData)
             return jsonData
         } catch let error {
             print("[READ_JSON_FILE_ERROR]: \(error)")
@@ -105,11 +115,28 @@ open class URLKVFileService {
     
     private func writeJSONData(_ jsonData: Data, toFileURL fileURL: URL) -> Bool {
         do {
-            try jsonData.write(to: fileURL, options: .atomic)
+            let encryptedData = self.encryptDataIfNeeded(sourceData: jsonData)
+            try encryptedData.write(to: fileURL, options: .atomic)
             return true
         } catch let error {
             print("[WRITE_JSON_FILE_ERROR]: \(error)")
             return false
+        }
+    }
+    
+    private func encryptDataIfNeeded(sourceData: Data) -> Data {
+        if let passwordData = self.passwordData {
+            return CICOSecurityAide.aesEncrypt(withKeyData: passwordData, sourceData: sourceData)!
+        } else {
+            return sourceData
+        }
+    }
+    
+    private func decryptDataIfNeeded(encryptedData: Data) -> Data {
+        if let passwordData = self.passwordData {
+            return CICOSecurityAide.aesDecrypt(withKeyData: passwordData, encryptedData: encryptedData)!
+        } else {
+            return encryptedData
         }
     }
 }

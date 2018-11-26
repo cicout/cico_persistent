@@ -10,6 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// SHA Type
+typedef NS_ENUM(NSInteger, CICOSHAType) {
+    CICOSHATypeSHA1,
+    CICOSHATypeSHA256,
+    CICOSHATypeSHA512,
+};
+
 /**
  *  1、Common：randomData、hex;
  *  2、Hash：md5、sha1、hmac;
@@ -309,7 +316,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return AES encrypted data;
  */
-+ (NSData *)aesEncryptWithKeyData:(NSData *)keyData sourceData:(NSData *)sourceData;
++ (nullable NSData *)aesEncryptWithKeyData:(NSData *)keyData sourceData:(NSData *)sourceData;
 
 /**
  *  Decrypt data using AES;
@@ -320,7 +327,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return Source data;
  */
-+ (NSData *)aesDecryptWithKeyData:(NSData *)keyData encryptedData:(NSData *)encryptedData;
++ (nullable NSData *)aesDecryptWithKeyData:(NSData *)keyData encryptedData:(NSData *)encryptedData;
 
 /**
  *  Encrypt data using AES;

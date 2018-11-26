@@ -386,7 +386,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
 
 #pragma mark - AES
 
-+ (NSData *)aesEncryptWithKeyData:(NSData *)keyData sourceData:(NSData *)sourceData {
++ (nullable NSData *)aesEncryptWithKeyData:(NSData *)keyData sourceData:(NSData *)sourceData {
     if (keyData.length != kCCKeySizeAES128 &&
         keyData.length != kCCKeySizeAES192 &&
         keyData.length != kCCKeySizeAES256) {
@@ -418,7 +418,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     return data;
 }
 
-+ (NSData *)aesDecryptWithKeyData:(NSData *)keyData encryptedData:(NSData *)encryptedData {
++ (nullable NSData *)aesDecryptWithKeyData:(NSData *)keyData encryptedData:(NSData *)encryptedData {
     if (keyData.length != kCCKeySizeAES128 &&
         keyData.length != kCCKeySizeAES192 &&
         keyData.length != kCCKeySizeAES256) {

@@ -23,7 +23,6 @@ open class ORMDBService {
     private let dbPasswordKey: String?
     private var dbQueue: FMDatabaseQueue?
     
-    
     deinit {
         print("\(self) deinit")
         self.dbQueue?.close()

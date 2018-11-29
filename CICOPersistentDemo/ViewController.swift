@@ -9,6 +9,7 @@
 import UIKit
 import CICOPersistent
 import CICOAutoCodable
+import FMDB
 
 class ViewController: UIViewController {
     private var ormDBService: ORMDBService?
@@ -31,8 +32,10 @@ class ViewController: UIViewController {
 //        self.doKVFileTest()
 //        self.doKVDBTest()
 //        self.doORMDBTest()
-        self.doKVKeyChainTest()
+//        self.doKVKeyChainTest()
 //        self.testMyClass()
+//        self.doSQLCipherTest()
+        self.doDBSecurityTest()
     }
     
     private func doSecurityTest() {
@@ -188,6 +191,207 @@ class ViewController: UIViewController {
         if let object2 = TCodableStruct.init(jsonData: jsonData) {
             self.testKVKeyChain(object2)
         }
+    }
+    
+    private func doSQLCipherTest() {
+        let url1 = CICOPathAide.docFileURL(withSubPath: "orm_sql_cipher_original.db")
+        let url2 = CICOPathAide.docFileURL(withSubPath: "orm_sql_cipher_export_nop2p.db")
+        let originalPassword2 = "cico_test_2"
+        let password2 = CICOSecurityAide.md5HashString(with: originalPassword2)
+        let url3 = CICOPathAide.docFileURL(withSubPath: "orm_sql_cipher_export_p2nop.db")
+        let url4 = CICOPathAide.docFileURL(withSubPath: "orm_sql_cipher_export_p2p.db")
+        let originalPassword4 = "cico_test_4"
+        let password4 = CICOSecurityAide.md5HashString(with: originalPassword4)
+        let url5 = CICOPathAide.docFileURL(withSubPath: "orm_sql_cipher_encrypt.db")
+        let originalPassword5 = "cico_test_5"
+        let password5 = CICOSecurityAide.md5HashString(with: originalPassword5)
+        let url6 = CICOPathAide.docFileURL(withSubPath: "orm_sql_cipher_decrypt.db")
+        let originalPassword6 = "cico_test_6"
+        let password6 = CICOSecurityAide.md5HashString(with: originalPassword6)
+        
+        var ormDBService1: ORMDBService? = ORMDBService.init(fileURL: url1, password: nil)
+        
+        // read json
+        let jsonString = JSONStringAide.jsonString(name: "default")
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            print("[ERROR]")
+            return
+        }
+        
+        // write array
+        var objectArray = [TCodableClass]()
+        for i in 0..<10 {
+            guard let object = TCodableClass.init(jsonData: jsonData) else {
+                print("[ERROR]")
+                return
+            }
+            object.name = "name_\(i)"
+            objectArray.append(object)
+        }
+        let _ = ormDBService1?.writeObjectArray(objectArray)
+        
+        ormDBService1 = nil
+        
+        // export no password to password
+        var result = CICOSQLCipherAide.exportDatabase(url1.path,
+                                                      fromDBPassword: nil,
+                                                      toDBPath: url2.path,
+                                                      toDBPassword: password2)
+        print("result = \(result)")
+        
+        let ormDBService2 = ORMDBService.init(fileURL: url2, password: originalPassword2)
+        
+        // read array
+        if let arrayX = ormDBService2.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+            print("[READ]: \(arrayX)")
+        }
+        
+        // export password to no password
+        result = CICOSQLCipherAide.exportDatabase(url2.path,
+                                                  fromDBPassword: password2,
+                                                  toDBPath: url3.path,
+                                                  toDBPassword: nil)
+        print("result = \(result)")
+        
+        let ormDBService3 = ORMDBService.init(fileURL: url3, password: nil)
+        
+        // read array
+        if let arrayX = ormDBService3.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+            print("[READ]: \(arrayX)")
+        }
+        
+        // export password to password
+        result = CICOSQLCipherAide.exportDatabase(url2.path,
+                                                  fromDBPassword: password2,
+                                                  toDBPath: url4.path,
+                                                  toDBPassword: password4)
+        print("result = \(result)")
+        
+        let ormDBService4 = ORMDBService.init(fileURL: url4, password: originalPassword4)
+        
+        // read array
+        if let arrayX = ormDBService4.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+            print("[READ]: \(arrayX)")
+        }
+        
+        // encrypt db
+        result = CICOSQLCipherAide.exportDatabase(url1.path,
+                                                  fromDBPassword: nil,
+                                                  toDBPath: url5.path,
+                                                  toDBPassword: nil)
+        print("result = \(result)")
+        
+        result = CICOSQLCipherAide.encryptDatabase(url5.path, password: password5)
+        print("result = \(result)")
+        
+        let ormDBService5 = ORMDBService.init(fileURL: url5, password: originalPassword5)
+        
+        // read array
+        if let arrayX = ormDBService5.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+            print("[READ]: \(arrayX)")
+        }
+        
+        // decrypt db
+        result = CICOSQLCipherAide.exportDatabase(url1.path,
+                                                  fromDBPassword: nil,
+                                                  toDBPath: url6.path,
+                                                  toDBPassword: password6)
+        print("result = \(result)")
+        
+        result = CICOSQLCipherAide.decryptDatabase(url6.path, password: password6)
+        print("result = \(result)")
+        
+        let ormDBService6 = ORMDBService.init(fileURL: url6, password: nil)
+        
+        // read array
+        if let arrayX = ormDBService6.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+            print("[READ]: \(arrayX)")
+        }
+    }
+    
+    private func doDBSecurityTest() {
+        let url1 = CICOPathAide.docFileURL(withSubPath: "orm_db_security_decrypt.db")
+        let url2 = CICOPathAide.docFileURL(withSubPath: "orm_db_security_encrypt.db")
+        let password2 = "cico_test_2"
+        let url3 = CICOPathAide.docFileURL(withSubPath: "orm_db_security_change_password.db")
+        let password3 = "cico_test_3"
+        let password3x = "cico_test_3x"
+        
+        var ormDBService1: ORMDBService? = ORMDBService.init(fileURL: url1)
+        
+        // read json
+        let jsonString = JSONStringAide.jsonString(name: "default")
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            print("[ERROR]")
+            return
+        }
+        
+        // write array
+        var objectArray = [TCodableClass]()
+        for i in 0..<10 {
+            guard let object = TCodableClass.init(jsonData: jsonData) else {
+                print("[ERROR]")
+                return
+            }
+            object.name = "name_\(i)"
+            objectArray.append(object)
+        }
+        let _ = ormDBService1?.writeObjectArray(objectArray)
+        
+        ormDBService1 = nil
+        
+        // decrypt
+        var result = DBSecurityAide.decryptDatabase(dbPath: url1.path, password: kCICOORMDBDefaultPassword)
+        print("result = \(result)")
+        
+        var ormDBService1x: ORMDBService? = ORMDBService.init(fileURL: url1, password: nil)
+        
+        // read array
+        if let arrayX = ormDBService1x?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+            print("[READ]: \(arrayX)")
+        }
+        
+        ormDBService1x = nil
+        
+        // encrypt
+        result = DBSecurityAide.exportDatabase(fromDBPath: url1.path,
+                                               fromDBPassword: nil,
+                                               toDBPath: url2.path,
+                                               toDBPassword: nil)
+        print("result = \(result)")
+        
+        result = DBSecurityAide.encryptDatabase(dbPath: url2.path, password: password2)
+        print("result = \(result)")
+        
+        var ormDBService2: ORMDBService? = ORMDBService.init(fileURL: url2, password: password2)
+        
+        // read array
+        if let arrayX = ormDBService2?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+            print("[READ]: \(arrayX)")
+        }
+        
+        ormDBService2 = nil
+        
+        // change password
+        result = DBSecurityAide.exportDatabase(fromDBPath: url2.path,
+                                               fromDBPassword: password2,
+                                               toDBPath: url3.path,
+                                               toDBPassword: password3)
+        print("result = \(result)")
+        
+        result = DBSecurityAide.changeDatabasePassword(dbPath: url3.path,
+                                                       originalPassword: password3,
+                                                       newPassword: password3x)
+        print("result = \(result)")
+        
+        var ormDBService3: ORMDBService? = ORMDBService.init(fileURL: url3, password: password3x)
+        
+        // read array
+        if let arrayX = ormDBService3?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+            print("[READ]: \(arrayX)")
+        }
+        
+        ormDBService3 = nil
     }
     
     private func testPersistent<T: Codable>(_ value: T) {

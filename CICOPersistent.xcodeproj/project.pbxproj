@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E418B63F21C1301B00D042F0 /* KVDBServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */; };
+		E418B64121C1315E00D042F0 /* KVFileServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B64021C1315E00D042F0 /* KVFileServiceAide.swift */; };
+		E418B64321C131D000D042F0 /* ORMDBServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B64221C131D000D042F0 /* ORMDBServiceAide.swift */; };
+		E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B64421C1329D00D042F0 /* PersistentServiceAide.swift */; };
 		E41958BB20F8971D007EA4B4 /* SQLiteRecordDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41958BA20F8971D007EA4B4 /* SQLiteRecordDecoder.swift */; };
 		E41F764020C8D2F300399E42 /* CICOPersistent.h in Headers */ = {isa = PBXBuildFile; fileRef = E41F763E20C8D2F300399E42 /* CICOPersistent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E41F764720C8D32A00399E42 /* PersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F764620C8D32A00399E42 /* PersistentService.swift */; };
@@ -21,22 +25,14 @@
 		E41F766720C9302400399E42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E41F766520C9302400399E42 /* LaunchScreen.storyboard */; };
 		E41F766C20C9313000399E42 /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
 		E41F766D20C9313000399E42 /* CICOPersistent.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E41F767220C9327E00399E42 /* PublicPersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767120C9327E00399E42 /* PublicPersistentService.swift */; };
 		E41F767620C9384300399E42 /* TCodableStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767320C9384300399E42 /* TCodableStruct.swift */; };
 		E41F767720C9384300399E42 /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = E41F767420C9384300399E42 /* default.json */; };
 		E41F767820C9384300399E42 /* TCodableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767520C9384300399E42 /* TCodableClass.swift */; };
-		E41F767C20C93D3D00399E42 /* TempPersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767920C93D3D00399E42 /* TempPersistentService.swift */; };
-		E41F767D20C93D3D00399E42 /* CachePersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767A20C93D3D00399E42 /* CachePersistentService.swift */; };
-		E41F767E20C93D3D00399E42 /* PrivatePersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767B20C93D3D00399E42 /* PrivatePersistentService.swift */; };
 		E420CDB320F84EF900D1BA63 /* TypeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420CDB220F84EF900D1BA63 /* TypeProperty.swift */; };
 		E4231065211C39070057DCD4 /* my.json in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6DF5211C34DE00ECAF4E /* my.json */; };
 		E4231066211C39090057DCD4 /* MyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */; };
 		E42B665C21002DDD006EBAC2 /* SQLiteRecordEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B665B21002DDD006EBAC2 /* SQLiteRecordEncoder.swift */; };
 		E42B66A42102CECE006EBAC2 /* ORMProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66A32102CECE006EBAC2 /* ORMProtocol.swift */; };
-		E42B66A72102D996006EBAC2 /* PublicORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66A62102D996006EBAC2 /* PublicORMDBService.swift */; };
-		E42B66A92102DD71006EBAC2 /* PrivateORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66A82102DD71006EBAC2 /* PrivateORMDBService.swift */; };
-		E42B66AB2102DD82006EBAC2 /* CacheORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AA2102DD82006EBAC2 /* CacheORMDBService.swift */; };
-		E42B66AD2102DD90006EBAC2 /* TempORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AC2102DD90006EBAC2 /* TempORMDBService.swift */; };
 		E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */; };
 		E42B66B12106D269006EBAC2 /* ORMTableInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */; };
 		E43374BA21AD64FE00296237 /* CICOSQLCipherAide.h in Headers */ = {isa = PBXBuildFile; fileRef = E43374B821AD64FE00296237 /* CICOSQLCipherAide.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -44,15 +40,7 @@
 		E4710E5C21364BF2003F6798 /* CICOFileURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E5B21364BF2003F6798 /* CICOFileURL.swift */; };
 		E4710E682136C278003F6798 /* CICOFileURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E672136C278003F6798 /* CICOFileURLTests.swift */; };
 		E482ED0720CE167B001FF435 /* KVDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED0620CE167B001FF435 /* KVDBService.swift */; };
-		E482ED0B20CE4E37001FF435 /* PublicKVDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED0A20CE4E37001FF435 /* PublicKVDBService.swift */; };
-		E482ED0D20CF5F64001FF435 /* PrivateKVDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED0C20CF5F64001FF435 /* PrivateKVDBService.swift */; };
-		E482ED0F20CF5FC6001FF435 /* CacheKVDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED0E20CF5FC6001FF435 /* CacheKVDBService.swift */; };
-		E482ED1120CF6014001FF435 /* TempKVDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1020CF6014001FF435 /* TempKVDBService.swift */; };
 		E482ED1420CF6950001FF435 /* KVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1320CF6950001FF435 /* KVFileService.swift */; };
-		E482ED1620CF6F2F001FF435 /* PublicKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1520CF6F2F001FF435 /* PublicKVFileService.swift */; };
-		E482ED1820CF6F3D001FF435 /* PrivateKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1720CF6F3D001FF435 /* PrivateKVFileService.swift */; };
-		E482ED1A20CF6F4B001FF435 /* CacheKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1920CF6F4B001FF435 /* CacheKVFileService.swift */; };
-		E482ED1C20CF6F57001FF435 /* TempKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1B20CF6F57001FF435 /* TempKVFileService.swift */; };
 		E484B44920DCA34600FE0AC9 /* ORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E484B44820DCA34600FE0AC9 /* ORMDBService.swift */; };
 		E492B4B220EB188200BC48A4 /* SQLiteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492B4B120EB188200BC48A4 /* SQLiteType.swift */; };
 		E492B4DD20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492B4DC20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift */; };
@@ -143,6 +131,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBServiceAide.swift; sourceTree = "<group>"; };
+		E418B64021C1315E00D042F0 /* KVFileServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileServiceAide.swift; sourceTree = "<group>"; };
+		E418B64221C131D000D042F0 /* ORMDBServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceAide.swift; sourceTree = "<group>"; };
+		E418B64421C1329D00D042F0 /* PersistentServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentServiceAide.swift; sourceTree = "<group>"; };
 		E41958BA20F8971D007EA4B4 /* SQLiteRecordDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteRecordDecoder.swift; sourceTree = "<group>"; };
 		E41F763B20C8D2F300399E42 /* CICOPersistent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CICOPersistent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E41F763E20C8D2F300399E42 /* CICOPersistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOPersistent.h; sourceTree = "<group>"; };
@@ -159,20 +151,12 @@
 		E41F766320C9302400399E42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E41F766620C9302400399E42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E41F766820C9302400399E42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E41F767120C9327E00399E42 /* PublicPersistentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPersistentService.swift; sourceTree = "<group>"; };
 		E41F767320C9384300399E42 /* TCodableStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCodableStruct.swift; sourceTree = "<group>"; };
 		E41F767420C9384300399E42 /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = default.json; sourceTree = "<group>"; };
 		E41F767520C9384300399E42 /* TCodableClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCodableClass.swift; sourceTree = "<group>"; };
-		E41F767920C93D3D00399E42 /* TempPersistentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempPersistentService.swift; sourceTree = "<group>"; };
-		E41F767A20C93D3D00399E42 /* CachePersistentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachePersistentService.swift; sourceTree = "<group>"; };
-		E41F767B20C93D3D00399E42 /* PrivatePersistentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivatePersistentService.swift; sourceTree = "<group>"; };
 		E420CDB220F84EF900D1BA63 /* TypeProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeProperty.swift; sourceTree = "<group>"; };
 		E42B665B21002DDD006EBAC2 /* SQLiteRecordEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteRecordEncoder.swift; sourceTree = "<group>"; };
 		E42B66A32102CECE006EBAC2 /* ORMProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMProtocol.swift; sourceTree = "<group>"; };
-		E42B66A62102D996006EBAC2 /* PublicORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicORMDBService.swift; sourceTree = "<group>"; };
-		E42B66A82102DD71006EBAC2 /* PrivateORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateORMDBService.swift; sourceTree = "<group>"; };
-		E42B66AA2102DD82006EBAC2 /* CacheORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheORMDBService.swift; sourceTree = "<group>"; };
-		E42B66AC2102DD90006EBAC2 /* TempORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempORMDBService.swift; sourceTree = "<group>"; };
 		E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLKVFileService.swift; sourceTree = "<group>"; };
 		E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMTableInfoModel.swift; sourceTree = "<group>"; };
 		E43374B821AD64FE00296237 /* CICOSQLCipherAide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOSQLCipherAide.h; sourceTree = "<group>"; };
@@ -180,15 +164,7 @@
 		E4710E5B21364BF2003F6798 /* CICOFileURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOFileURL.swift; sourceTree = "<group>"; };
 		E4710E672136C278003F6798 /* CICOFileURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOFileURLTests.swift; sourceTree = "<group>"; };
 		E482ED0620CE167B001FF435 /* KVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBService.swift; sourceTree = "<group>"; };
-		E482ED0A20CE4E37001FF435 /* PublicKVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicKVDBService.swift; sourceTree = "<group>"; };
-		E482ED0C20CF5F64001FF435 /* PrivateKVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKVDBService.swift; sourceTree = "<group>"; };
-		E482ED0E20CF5FC6001FF435 /* CacheKVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheKVDBService.swift; sourceTree = "<group>"; };
-		E482ED1020CF6014001FF435 /* TempKVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempKVDBService.swift; sourceTree = "<group>"; };
 		E482ED1320CF6950001FF435 /* KVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileService.swift; sourceTree = "<group>"; };
-		E482ED1520CF6F2F001FF435 /* PublicKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicKVFileService.swift; sourceTree = "<group>"; };
-		E482ED1720CF6F3D001FF435 /* PrivateKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKVFileService.swift; sourceTree = "<group>"; };
-		E482ED1920CF6F4B001FF435 /* CacheKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheKVFileService.swift; sourceTree = "<group>"; };
-		E482ED1B20CF6F57001FF435 /* TempKVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempKVFileService.swift; sourceTree = "<group>"; };
 		E484B44820DCA34600FE0AC9 /* ORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBService.swift; sourceTree = "<group>"; };
 		E492B4B120EB188200BC48A4 /* SQLiteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteType.swift; sourceTree = "<group>"; };
 		E492B4DC20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteTypeDecoder.swift; sourceTree = "<group>"; };
@@ -313,10 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				E41F764620C8D32A00399E42 /* PersistentService.swift */,
-				E41F767120C9327E00399E42 /* PublicPersistentService.swift */,
-				E41F767B20C93D3D00399E42 /* PrivatePersistentService.swift */,
-				E41F767A20C93D3D00399E42 /* CachePersistentService.swift */,
-				E41F767920C93D3D00399E42 /* TempPersistentService.swift */,
+				E418B64421C1329D00D042F0 /* PersistentServiceAide.swift */,
 			);
 			path = persistent;
 			sourceTree = "<group>";
@@ -398,10 +371,7 @@
 			isa = PBXGroup;
 			children = (
 				E482ED0620CE167B001FF435 /* KVDBService.swift */,
-				E482ED0A20CE4E37001FF435 /* PublicKVDBService.swift */,
-				E482ED0C20CF5F64001FF435 /* PrivateKVDBService.swift */,
-				E482ED0E20CF5FC6001FF435 /* CacheKVDBService.swift */,
-				E482ED1020CF6014001FF435 /* TempKVDBService.swift */,
+				E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */,
 			);
 			path = key_value_db;
 			sourceTree = "<group>";
@@ -411,10 +381,7 @@
 			children = (
 				E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */,
 				E482ED1320CF6950001FF435 /* KVFileService.swift */,
-				E482ED1520CF6F2F001FF435 /* PublicKVFileService.swift */,
-				E482ED1720CF6F3D001FF435 /* PrivateKVFileService.swift */,
-				E482ED1920CF6F4B001FF435 /* CacheKVFileService.swift */,
-				E482ED1B20CF6F57001FF435 /* TempKVFileService.swift */,
+				E418B64021C1315E00D042F0 /* KVFileServiceAide.swift */,
 			);
 			path = key_value_file;
 			sourceTree = "<group>";
@@ -424,10 +391,7 @@
 			children = (
 				E42B66A52102D547006EBAC2 /* internal */,
 				E484B44820DCA34600FE0AC9 /* ORMDBService.swift */,
-				E42B66A62102D996006EBAC2 /* PublicORMDBService.swift */,
-				E42B66A82102DD71006EBAC2 /* PrivateORMDBService.swift */,
-				E42B66AA2102DD82006EBAC2 /* CacheORMDBService.swift */,
-				E42B66AC2102DD90006EBAC2 /* TempORMDBService.swift */,
+				E418B64221C131D000D042F0 /* ORMDBServiceAide.swift */,
 				E42B66A32102CECE006EBAC2 /* ORMProtocol.swift */,
 			);
 			path = orm_db;
@@ -699,44 +663,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E41F767E20C93D3D00399E42 /* PrivatePersistentService.swift in Sources */,
 				E42B66B12106D269006EBAC2 /* ORMTableInfoModel.swift in Sources */,
-				E482ED1820CF6F3D001FF435 /* PrivateKVFileService.swift in Sources */,
-				E482ED0F20CF5FC6001FF435 /* CacheKVDBService.swift in Sources */,
+				E418B64321C131D000D042F0 /* ORMDBServiceAide.swift in Sources */,
+				E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */,
 				E49F7CFF210C640600CF24F0 /* CICOFileManagerAide.m in Sources */,
 				E492B4B220EB188200BC48A4 /* SQLiteType.swift in Sources */,
-				E42B66AB2102DD82006EBAC2 /* CacheORMDBService.swift in Sources */,
-				E42B66A92102DD71006EBAC2 /* PrivateORMDBService.swift in Sources */,
-				E42B66AD2102DD90006EBAC2 /* TempORMDBService.swift in Sources */,
 				E49F7CD6210AC18200CF24F0 /* KeyChainService.swift in Sources */,
 				E482ED0720CE167B001FF435 /* KVDBService.swift in Sources */,
-				E41F767D20C93D3D00399E42 /* CachePersistentService.swift in Sources */,
 				E42B66A42102CECE006EBAC2 /* ORMProtocol.swift in Sources */,
 				E41F764720C8D32A00399E42 /* PersistentService.swift in Sources */,
-				E42B66A72102D996006EBAC2 /* PublicORMDBService.swift in Sources */,
 				E49F7CF9210C447400CF24F0 /* KVJSONAide.swift in Sources */,
-				E482ED1620CF6F2F001FF435 /* PublicKVFileService.swift in Sources */,
-				E41F767220C9327E00399E42 /* PublicPersistentService.swift in Sources */,
 				E41F765420C92CAD00399E42 /* CICOPathAide.m in Sources */,
-				E482ED1C20CF6F57001FF435 /* TempKVFileService.swift in Sources */,
 				E49F7CD8210ACE8700CF24F0 /* KVKeyChainService.swift in Sources */,
-				E482ED1120CF6014001FF435 /* TempKVDBService.swift in Sources */,
-				E41F767C20C93D3D00399E42 /* TempPersistentService.swift in Sources */,
+				E418B63F21C1301B00D042F0 /* KVDBServiceAide.swift in Sources */,
 				E4FD6CEC21129F4D00ECAF4E /* show_all_type.generated.swift in Sources */,
 				E492B4DD20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift in Sources */,
 				E4710E5C21364BF2003F6798 /* CICOFileURL.swift in Sources */,
-				E482ED1A20CF6F4B001FF435 /* CacheKVFileService.swift in Sources */,
 				E482ED1420CF6950001FF435 /* KVFileService.swift in Sources */,
 				E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */,
 				E484B44920DCA34600FE0AC9 /* ORMDBService.swift in Sources */,
+				E418B64121C1315E00D042F0 /* KVFileServiceAide.swift in Sources */,
 				E41F764C20C9221C00399E42 /* CICOSecurityAide.m in Sources */,
 				E43374BB21AD64FE00296237 /* CICOSQLCipherAide.m in Sources */,
 				E42B665C21002DDD006EBAC2 /* SQLiteRecordEncoder.swift in Sources */,
-				E482ED0B20CE4E37001FF435 /* PublicKVDBService.swift in Sources */,
 				E420CDB320F84EF900D1BA63 /* TypeProperty.swift in Sources */,
 				E41958BB20F8971D007EA4B4 /* SQLiteRecordDecoder.swift in Sources */,
 				E4AD824F21B00ACF00525B12 /* DBSecurityAide.swift in Sources */,
-				E482ED0D20CF5F64001FF435 /* PrivateKVDBService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

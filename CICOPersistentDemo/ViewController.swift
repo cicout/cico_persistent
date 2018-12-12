@@ -28,14 +28,14 @@ class ViewController: UIViewController {
 
     @IBAction func testBtnAction(_ sender: Any) {
 //        self.doSecurityTest()
-//        self.doPersistentTest()
+        self.doPersistentTest()
 //        self.doKVFileTest()
 //        self.doKVDBTest()
 //        self.doORMDBTest()
 //        self.doKVKeyChainTest()
 //        self.testMyClass()
 //        self.doSQLCipherTest()
-        self.doDBSecurityTest()
+//        self.doDBSecurityTest()
     }
     
     private func doSecurityTest() {
@@ -403,79 +403,79 @@ class ViewController: UIViewController {
         
         print("[***** PUBLIC KVFILE *****]")
         
-        let result = PublicPersistentService.shared.writeKVFileObject(value, forKey: key)
+        let result = PersistentServiceAide.publicService.writeKVFileObject(value, forKey: key)
         print("[WRITE]: \(result)")
         
-        if let readValue = PublicPersistentService.shared.readKVFileObject(T.self, forKey: key) {
+        if let readValue = PersistentServiceAide.publicService.readKVFileObject(T.self, forKey: key) {
             print("[READ]: \(readValue)")
         }
         
-//        let removeResult = PublicPersistentService.shared.removeKVFileObject(forKey: key)
+//        let removeResult = PersistentServiceAide.publicService.removeKVFileObject(forKey: key)
 //        print("[REMOVE]: \(removeResult)")
         
         print("[***** PRIVATE KVFILE *****]")
         
-        let result2 = PrivatePersistentService.shared.writeKVFileObject(value, forKey: key)
+        let result2 = PersistentServiceAide.privateService.writeKVFileObject(value, forKey: key)
         print("[WRITE]: \(result2)")
         
-        if let readValue2 = PrivatePersistentService.shared.readKVFileObject(T.self, forKey: key) {
+        if let readValue2 = PersistentServiceAide.privateService.readKVFileObject(T.self, forKey: key) {
             print("[READ]: \(readValue2)")
         }
         
         print("[***** CACHE KVFILE *****]")
         
-        let result3 = CachePersistentService.shared.writeKVFileObject(value, forKey: key)
+        let result3 = PersistentServiceAide.cacheService.writeKVFileObject(value, forKey: key)
         print("[WRITE]: \(result3)")
         
-        if let readValue3 = CachePersistentService.shared.readKVFileObject(T.self, forKey: key) {
+        if let readValue3 = PersistentServiceAide.cacheService.readKVFileObject(T.self, forKey: key) {
             print("[READ]: \(readValue3)")
         }
         
         print("[***** TEMP KVFILE *****]")
         
-        let result4 = TempPersistentService.shared.writeKVFileObject(value, forKey: key)
+        let result4 = PersistentServiceAide.tempService.writeKVFileObject(value, forKey: key)
         print("[WRITE]: \(result4)")
         
-        if let readValue4 = TempPersistentService.shared.readKVFileObject(T.self, forKey: key) {
+        if let readValue4 = PersistentServiceAide.tempService.readKVFileObject(T.self, forKey: key) {
             print("[READ]: \(readValue4)")
         }
         
         print("[***** PUBLIC KVDB *****]")
         
-        let resultx = PublicPersistentService.shared.writeKVDBObject(value, forKey: key)
+        let resultx = PersistentServiceAide.publicService.writeKVDBObject(value, forKey: key)
         print("[WRITE]: \(resultx)")
         
-        if let readValuex = PublicPersistentService.shared.readKVDBObject(T.self, forKey: key) {
+        if let readValuex = PersistentServiceAide.publicService.readKVDBObject(T.self, forKey: key) {
             print("[READ]: \(readValuex)")
         }
         
-//        let removeResultx = PublicPersistentService.shared.removeKVDBObject(forKey: key)
+//        let removeResultx = PersistentServiceAide.publicService.removeKVDBObject(forKey: key)
 //        print("[REMOVE]: \(removeResultx)")
         
         print("[***** PRIVATE KVDB *****]")
         
-        let result2x = PrivatePersistentService.shared.writeKVDBObject(value, forKey: key)
+        let result2x = PersistentServiceAide.privateService.writeKVDBObject(value, forKey: key)
         print("[WRITE]: \(result2x)")
         
-        if let readValue2x = PrivatePersistentService.shared.readKVDBObject(T.self, forKey: key) {
+        if let readValue2x = PersistentServiceAide.privateService.readKVDBObject(T.self, forKey: key) {
             print("[READ]: \(readValue2x)")
         }
         
         print("[***** CACHE KVDB *****]")
         
-        let result3x = CachePersistentService.shared.writeKVDBObject(value, forKey: key)
+        let result3x = PersistentServiceAide.cacheService.writeKVDBObject(value, forKey: key)
         print("[WRITE]: \(result3x)")
         
-        if let readValue3x = CachePersistentService.shared.readKVDBObject(T.self, forKey: key) {
+        if let readValue3x = PersistentServiceAide.cacheService.readKVDBObject(T.self, forKey: key) {
             print("[READ]: \(readValue3x)")
         }
         
         print("[***** TEMP KVDB *****]")
         
-        let result4x = TempPersistentService.shared.writeKVDBObject(value, forKey: key)
+        let result4x = PersistentServiceAide.tempService.writeKVDBObject(value, forKey: key)
         print("[WRITE]: \(result4x)")
         
-        if let readValue4x = TempPersistentService.shared.readKVDBObject(T.self, forKey: key) {
+        if let readValue4x = PersistentServiceAide.tempService.readKVDBObject(T.self, forKey: key) {
             print("[READ]: \(readValue4x)")
         }
         
@@ -491,40 +491,40 @@ class ViewController: UIViewController {
         
         print("[***** PUBLIC *****]")
         
-        let result = PublicKVFileService.shared.writeObject(value, forKey: key)
+        let result = KVFileServiceAide.publicService.writeObject(value, forKey: key)
         print("[WRITE]: \(result)")
         
-        if let readValue = PublicKVFileService.shared.readObject(T.self, forKey: key) {
+        if let readValue = KVFileServiceAide.publicService.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue)")
         }
         
-//        let removeResult = PublicKVFileService.shared.removeObject(forKey: key)
+//        let removeResult = KVFileServiceAide.publicService.removeObject(forKey: key)
 //        print("[REMOVE]: \(removeResult)")
         
         print("[***** PRIVATE *****]")
         
-        let result2 = PrivateKVFileService.shared.writeObject(value, forKey: key)
+        let result2 = KVFileServiceAide.privateService.writeObject(value, forKey: key)
         print("[WRITE]: \(result2)")
         
-        if let readValue2 = PrivateKVFileService.shared.readObject(T.self, forKey: key) {
+        if let readValue2 = KVFileServiceAide.privateService.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue2)")
         }
         
         print("[***** CACHE *****]")
         
-        let result3 = CacheKVFileService.shared.writeObject(value, forKey: key)
+        let result3 = KVFileServiceAide.cacheService.writeObject(value, forKey: key)
         print("[WRITE]: \(result3)")
         
-        if let readValue3 = CacheKVFileService.shared.readObject(T.self, forKey: key) {
+        if let readValue3 = KVFileServiceAide.cacheService.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue3)")
         }
         
         print("[***** TEMP *****]")
         
-        let result4 = TempKVFileService.shared.writeObject(value, forKey: key)
+        let result4 = KVFileServiceAide.tempService.writeObject(value, forKey: key)
         print("[WRITE]: \(result4)")
         
-        if let readValue4 = TempKVFileService.shared.readObject(T.self, forKey: key) {
+        if let readValue4 = KVFileServiceAide.tempService.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue4)")
         }
         
@@ -540,40 +540,40 @@ class ViewController: UIViewController {
         
         print("[***** PUBLIC *****]")
         
-        let result = PublicKVDBService.shared.writeObject(value, forKey: key)
+        let result = KVDBServiceAide.publicService.writeObject(value, forKey: key)
         print("[WRITE]: \(result)")
         
-        if let readValue = PublicKVDBService.shared.readObject(T.self, forKey: key) {
+        if let readValue = KVDBServiceAide.publicService.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue)")
         }
         
-//        let removeResult = PublicKVDBService.shared.removeObject(forKey: key)
+//        let removeResult = KVDBService.publicService.removeObject(forKey: key)
 //        print("[REMOVE]: \(removeResult)")
         
         print("[***** PRIVATE *****]")
         
-        let result2 = PrivateKVDBService.shared.writeObject(value, forKey: key)
+        let result2 = KVDBServiceAide.privateService.writeObject(value, forKey: key)
         print("[WRITE]: \(result2)")
         
-        if let readValue2 = PrivateKVDBService.shared.readObject(T.self, forKey: key) {
+        if let readValue2 = KVDBServiceAide.privateService.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue2)")
         }
         
         print("[***** CACHE *****]")
         
-        let result3 = CacheKVDBService.shared.writeObject(value, forKey: key)
+        let result3 = KVDBServiceAide.cacheService.writeObject(value, forKey: key)
         print("[WRITE]: \(result3)")
         
-        if let readValue3 = CacheKVDBService.shared.readObject(T.self, forKey: key) {
+        if let readValue3 = KVDBServiceAide.cacheService.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue3)")
         }
         
         print("[***** TEMP *****]")
         
-        let result4 = TempKVDBService.shared.writeObject(value, forKey: key)
+        let result4 = KVDBServiceAide.tempService.writeObject(value, forKey: key)
         print("[WRITE]: \(result4)")
         
-        if let readValue4 = TempKVDBService.shared.readObject(T.self, forKey: key) {
+        if let readValue4 = KVDBServiceAide.tempService.readObject(T.self, forKey: key) {
             print("[READ]: \(readValue4)")
         }
         

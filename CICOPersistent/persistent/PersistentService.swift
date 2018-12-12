@@ -46,7 +46,7 @@ open class PersistentService {
     
     /*
      * Clear KVFile/KVDB/ORMDB Persistent;
-     * UserDefault/KVKeyChain will not cleared;
+     * UserDefault/KVKeyChain will not be cleared;
      */
     open func clearAllPersistent() -> Bool {
         let result0 = self.clearAllKVFile()
@@ -145,7 +145,7 @@ open class PersistentService {
      * Codable ORM Database Persistent
      **********************************/
     
-    open func readObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func readORMDBObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                     primaryKeyValue: Codable,
                                                     customTableName: String? = nil) -> T? {
         return self.ormDBService.readObject(ofType: objectType,
@@ -153,7 +153,7 @@ open class PersistentService {
                                             customTableName: customTableName)
     }
     
-    open func readObjectArray<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func readORMDBObjectArray<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                          whereString: String? = nil,
                                                          orderByName: String? = nil,
                                                          descending: Bool = true,
@@ -167,15 +167,15 @@ open class PersistentService {
                                                  customTableName: customTableName)
     }
     
-    open func writeObject<T: CICOORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
+    open func writeORMDBObject<T: CICOORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
         return self.ormDBService.writeObject(object, customTableName: customTableName)
     }
     
-    open func writeObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
+    open func writeORMDBObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
         return self.ormDBService.writeObjectArray(objectArray, customTableName: customTableName)
     }
     
-    open func updateObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func updateORMDBObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil,
                                                       updateClosure: (T?) -> T?,
@@ -187,7 +187,7 @@ open class PersistentService {
                                               completionClosure: completionClosure)
     }
     
-    open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func removeORMDBObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObject(ofType: objectType,
@@ -195,7 +195,7 @@ open class PersistentService {
                                               customTableName: customTableName)
     }
     
-    open func removeObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type, customTableName: String? = nil) -> Bool {
+    open func removeORMDBObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type, customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObjectTable(ofType: objectType, customTableName: customTableName)
     }
     
@@ -207,15 +207,15 @@ open class PersistentService {
      * Keychain Persistent
      **********************/
     
-    public func readObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
+    public func readKVKeyChainObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
         return KVKeyChainService.defaultService.readObject(objectType, forKey: userKey)
     }
     
-    public func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
+    public func writeKVKeyChainObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         return KVKeyChainService.defaultService.writeObject(object, forKey: userKey)
     }
     
-    public func updateObject<T: Codable>(_ objectType: T.Type,
+    public func updateKVKeyChainObject<T: Codable>(_ objectType: T.Type,
                                          forKey userKey: String,
                                          updateClosure: (T?) -> T?,
                                          completionClosure: ((Bool) -> Void)? = nil) {
@@ -225,7 +225,7 @@ open class PersistentService {
                                                           completionClosure: completionClosure)
     }
     
-    public func removeObject(forKey userKey: String) -> Bool {
+    public func removeKVKeyChainObject(forKey userKey: String) -> Bool {
         return KVKeyChainService.defaultService.removeObject(forKey: userKey)
     }
 }

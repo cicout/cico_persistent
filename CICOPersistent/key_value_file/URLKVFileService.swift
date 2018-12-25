@@ -10,6 +10,13 @@ import Foundation
 
 public let kCICOURLKVFileDefaultPassword = "cico_url_kv_file_default_password"
 
+///
+/// URL Key-Value file service;
+///
+/// You can save any object that conform to codable protocol using file URL key;
+/// Each object is stored as a separate file according to the file URL;
+/// It is useful for custom file and directory structure;
+///
 open class URLKVFileService {
     private let passwordData: Data?
     private let fileLock = NSLock()
@@ -18,6 +25,12 @@ open class URLKVFileService {
         print("\(self) deinit")
     }
     
+    /// Init with file encryption password;
+    ///
+    /// - parameter password: File encryption password; It will use default password if not passing this parameter;
+    ///             File won't be encrypted when password is nil;
+    ///
+    /// - returns: Init object;
     public init(password: String? = kCICOURLKVFileDefaultPassword) {
         if let password = password {
             self.passwordData = CICOSecurityAide.md5HashData(with: password)
@@ -26,6 +39,12 @@ open class URLKVFileService {
         }
     }
     
+    /// Read object using file URL;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol;
+    /// - parameter fromFileURL: File URL where the object is saved;
+    ///
+    /// - returns: Read object, nil when no object for this key;
     open func readObject<T: Codable>(_ objectType: T.Type, fromFileURL fileURL: URL) -> T? {
         self.fileLock.lock()
         defer {
@@ -39,6 +58,12 @@ open class URLKVFileService {
         return KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
     
+    /// Write object using file URL;
+    ///
+    /// - parameter object: The object will be saved in file, it must conform to codable protocol;
+    /// - parameter toFileURL: File URL where the object is saved;
+    ///
+    /// - returns: Write result;
     open func writeObject<T: Codable>(_ object: T, toFileURL fileURL: URL) -> Bool {
         guard let jsonData = KVJSONAide.transferObjectToJSONData(object) else {
             return false
@@ -52,6 +77,14 @@ open class URLKVFileService {
         return self.writeJSONData(jsonData, toFileURL: fileURL)
     }
     
+    /// Update object using file URL;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol;
+    /// - parameter fromFileURL: File URL where the object is saved;
+    /// - parameter updateClosure: It will be called after reading object from file,
+    ///             the read object will be passed as parameter, you can return a new value to update in file;
+    ///             It won't be updated to file when you return nil by this closure;
+    /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
     open func updateObject<T: Codable>(_ objectType: T.Type,
                                        fromFileURL fileURL: URL,
                                        updateClosure: (T?) -> T?,
@@ -87,6 +120,11 @@ open class URLKVFileService {
         result = self.writeJSONData(newJSONData, toFileURL: fileURL)
     }
     
+    /// Remove object using file URL;
+    ///
+    /// - parameter forFileURL: File URL where the object is saved;;
+    ///
+    /// - returns: Remove result;
     open func removeObject(forFileURL fileURL: URL) -> Bool {
         self.fileLock.lock()
         defer {

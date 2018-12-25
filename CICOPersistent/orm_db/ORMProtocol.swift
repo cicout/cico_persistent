@@ -9,8 +9,16 @@
 import Foundation
 
 public protocol ORMProtocol {
+    /// You must choose one primary key name from the codable properties in your class or struct;
     static func cicoORMPrimaryKeyColumnName() -> String
+    
+    /// You must define some index column from the codable properties in your class or struct;
     static func cicoORMIndexColumnNameArray() -> [String]?
+    
+    /// You can use version number to upgrade database automaticaly
+    /// when you add/delete/update any codable property in your class or struct;
+    /// What you need to do is just increase this version number.
+    /// The default version number is 1;
     static func cicoORMObjectTypeVersion() -> Int
 }
 

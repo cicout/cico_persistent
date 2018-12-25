@@ -17,6 +17,11 @@ private let kTableNameColumnName = "table_name"
 private let kObjectTypeNameColumnName = "object_type_name"
 private let kObjectTypeVersionColumnName = "object_type_version"
 
+///
+/// ORM database service;
+///
+/// You can save any object that conform to codable protocol and ORMProtocol;
+///
 open class ORMDBService {
     public let fileURL: URL
     
@@ -28,6 +33,13 @@ open class ORMDBService {
         self.dbQueue?.close()
     }
     
+    /// Init with database file URL and database encryption password;
+    ///
+    /// - parameter fileURL: Database file URL;
+    /// - parameter password: Database encryption password; It will use default password if not passing this parameter;
+    ///             Database won't be encrypted when password is nil;
+    ///
+    /// - returns: Init object;
     public init(fileURL: URL, password: String? = kCICOORMDBDefaultPassword) {
         self.fileURL = fileURL
         if let password = password {
@@ -42,6 +54,15 @@ open class ORMDBService {
      * PUBLIC FUNCTIONS
      *******************/
     
+    /// Read object from database using primary key;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol and ORMProtocol;
+    /// - parameter primaryKeyValue: Primary key value of the object in database, it must conform to codable protocol;
+    /// - parameter customTableName: One class or struct can be saved in different tables,
+    ///             you can define your custom table name here;
+    ///             It will use default table name according to the class or struct name when passing nil;
+    ///
+    /// - returns: Read object, nil when no object for this primary key;
     open func readObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                     primaryKeyValue: Codable,
                                                     customTableName: String? = nil) -> T? {
@@ -54,6 +75,18 @@ open class ORMDBService {
                                 primaryKeyValue: primaryKeyValue)
     }
     
+    /// Read object array from database using SQL;
+    ///
+    /// SQL: SELECT * FROM "TableName" WHERE "whereString" ORDER BY "orderByName" DESC/ASC LIMIT "limit";
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol and ORMProtocol;
+    /// - parameter whereString: Where string for SQL;
+    /// - parameter orderByName: Order by name for SQL;
+    /// - parameter customTableName: One class or struct can be saved in different tables,
+    ///             you can define your custom table name here;
+    ///             It will use default table name according to the class or struct name when passing nil;
+    ///
+    /// - returns: Read object, nil when no object for this primary key;
     open func readObjectArray<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                          whereString: String? = nil,
                                                          orderByName: String? = nil,
@@ -70,6 +103,14 @@ open class ORMDBService {
                                      limit: limit)
     }
     
+    /// Write object into database using primary key;
+    ///
+    /// - parameter object: The object will be saved in database, it must conform to codable protocol and ORMProtocol;
+    /// - parameter customTableName: One class or struct can be saved in different tables,
+    ///             you can define your custom table name here;
+    ///             It will use default table name according to the class or struct name when passing nil;
+    ///
+    /// - returns: Write result;
     open func writeObject<T: CICOORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
         let tableName = self.tableName(objectType: T.self, customTableName: customTableName)
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
@@ -83,6 +124,15 @@ open class ORMDBService {
                                  objectTypeVersion: objectTypeVersion)
     }
     
+    /// Write object array into database using primary key in one transaction;
+    ///
+    /// - parameter objectArray: The object array will be saved in database,
+    ///             it must conform to codable protocol and ORMProtocol;
+    /// - parameter customTableName: One class or struct can be saved in different tables,
+    ///             you can define your custom table name here;
+    ///             It will use default table name according to the class or struct name when passing nil;
+    ///
+    /// - returns: Write result;
     open func writeObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
         let tableName = self.tableName(objectType: T.self, customTableName: customTableName)
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
@@ -96,6 +146,17 @@ open class ORMDBService {
                                       objectTypeVersion: objectTypeVersion)
     }
     
+    /// Update object in database using primary key;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol;
+    /// - parameter primaryKeyValue: Primary key value of the object in database, it must conform to codable protocol;
+    /// - parameter customTableName: One class or struct can be saved in different tables,
+    ///             you can define your custom table name here;
+    ///             It will use default table name according to the class or struct name when passing nil;
+    /// - parameter updateClosure: It will be called after reading object from database,
+    ///             the read object will be passed as parameter, you can return a new value to update in database;
+    ///             It won't be updated to database when you return nil by this closure;
+    /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
     open func updateObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil,
@@ -116,6 +177,15 @@ open class ORMDBService {
                            completionClosure: completionClosure)
     }
     
+    /// Remove object from database using primary key;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol;
+    /// - parameter primaryKeyValue: Primary key value of the object in database, it must conform to codable protocol;
+    /// - parameter customTableName: One class or struct can be saved in different tables,
+    ///             you can define your custom table name here;
+    ///             It will use default table name according to the class or struct name when passing nil;
+    ///
+    /// - returns: Remove result;
     open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil) -> Bool {
@@ -128,12 +198,23 @@ open class ORMDBService {
                                   primaryKeyValue: primaryKeyValue)
     }
     
+    /// Remove the whole table from database by table name;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol;
+    /// - parameter customTableName: One class or struct can be saved in different tables,
+    ///             you can define your custom table name here;
+    ///             It will use default table name according to the class or struct name when passing nil;
+    ///
+    /// - returns: Remove result;
     open func removeObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type, customTableName: String? = nil) -> Bool {
         let tableName = self.tableName(objectType: objectType, customTableName: customTableName)
         
         return self.pRemoveObjectTable(ofType: objectType, tableName: tableName)
     }
     
+    /// Remove all tables from database;
+    ///
+    /// - returns: Remove result;
     open func clearAll() -> Bool {
         self.dbQueue = nil
         let result = CICOFileManagerAide.removeFile(with: self.fileURL)
@@ -145,6 +226,7 @@ open class ORMDBService {
      * PRIVATE FUNCTIONS
      ********************/
     
+    ///
     private func pReadObject<T: Codable>(ofType objectType: T.Type,
                                          tableName: String,
                                          primaryKeyColumnName: String,
@@ -458,7 +540,7 @@ open class ORMDBService {
     private func writeORMTableInfo(db: FMDatabase, tableInfo: ORMTableInfoModel) -> Bool {
         var result = false
         
-        let replaceSQL = "REPLACE INTO \(kORMTableName) (\(kTableNameColumnName), \(kObjectTypeNameColumnName), \(kObjectTypeVersionColumnName)) values (?, ?, ?);"
+        let replaceSQL = "REPLACE INTO \(kORMTableName) (\(kTableNameColumnName), \(kObjectTypeNameColumnName), \(kObjectTypeVersionColumnName)) VALUES (?, ?, ?);"
         let argumentArray: [Any] = [tableInfo.tableName, tableInfo.objectTypeName, tableInfo.objectTypeVersion]
         
         //        print("[SQL]: \(replaceSQL)")
@@ -718,7 +800,7 @@ open class ORMDBService {
         var argumentArray = [Any]()
         
         if let whereString = whereString {
-            querySQL.append(" where \(whereString)")
+            querySQL.append(" WHERE \(whereString)")
         }
         
         if let orderByName = orderByName {

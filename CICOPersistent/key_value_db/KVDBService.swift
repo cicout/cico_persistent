@@ -16,6 +16,11 @@ private let kJSONKeyColumnName = "json_key"
 private let kJSONDataColumnName = "json_data"
 private let kUpdateTimeColumnName = "update_time"
 
+///
+/// Key-Value database service;
+///
+/// You can save any object that conform to codable protocol using string key;
+///
 open class KVDBService {
     public let fileURL: URL
     
@@ -27,6 +32,13 @@ open class KVDBService {
         self.dbQueue?.close()
     }
     
+    /// Init with database file URL and database encryption password;
+    ///
+    /// - parameter fileURL: Database file URL;
+    /// - parameter password: Database encryption password; It will use default password if not passing this parameter;
+    ///             Database won't be encrypted when password is nil;
+    ///
+    /// - returns: Init object;
     public init(fileURL: URL, password: String? = kCICOKVDBDefaultPassword) {
         self.fileURL = fileURL
         if let password = password {
@@ -37,6 +49,12 @@ open class KVDBService {
         self.initDB()
     }
     
+    /// Read object from database using key;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol;
+    /// - parameter forKey: Key of the object in database;
+    ///
+    /// - returns: Read object, nil when no object for this key;
     open func readObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return nil
@@ -49,6 +67,12 @@ open class KVDBService {
         return KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
     
+    /// Write object into database using key;
+    ///
+    /// - parameter object: The object will be saved in database, it must conform to codable protocol;
+    /// - parameter forKey: Key of the object in database;
+    ///
+    /// - returns: Write result;
     open func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false
@@ -61,6 +85,14 @@ open class KVDBService {
         return self.writeJSONData(jsonData, forJSONKey: jsonKey)
     }
     
+    /// Update object in database using key;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol;
+    /// - parameter forKey: Key of the object in database;
+    /// - parameter updateClosure: It will be called after reading object from database,
+    ///             the read object will be passed as parameter, you can return a new value to update in database;
+    ///             It won't be updated to database when you return nil by this closure;
+    /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
     open func updateObject<T: Codable>(_ objectType: T.Type,
                                        forKey userKey: String,
                                        updateClosure: (T?) -> T?,
@@ -108,6 +140,11 @@ open class KVDBService {
         }
     }
     
+    /// Remove object from database using key;
+    ///
+    /// - parameter forKey: Key of the object in database;
+    ///
+    /// - returns: Remove result;
     open func removeObject(forKey userKey: String) -> Bool {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false
@@ -116,6 +153,9 @@ open class KVDBService {
         return self.removeJSONData(jsonKey:jsonKey)
     }
     
+    /// Remove all objects from database;
+    ///
+    /// - returns: Remove result;
     open func clearAll() -> Bool {
         self.dbQueue = nil
         let result = CICOFileManagerAide.removeFile(with: self.fileURL)

@@ -12,52 +12,268 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CICOPathAide : NSObject
 
-/// <SandBox>/Document/subPath
+/**
+ * Document file path in sand box;
+ *
+ * It will locate in file path "<SandBox>/Document/subPath";
+ *
+ * The contents of this directory can be made available to the user through file sharing;
+ * The files may be read/wrote/deleted by user;
+ *
+ * It should only contain imported/exported files here, or debugging use only;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory path when nil;
+ *
+ * @return Full file path;
+ */
 + (NSString *)docPathWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/Document/subPath
+/**
+ * Document file URL in sand box;
+ *
+ * It will locate in file path "<SandBox>/Document/subPath";
+ *
+ * The contents of this directory can be made available to the user through file sharing;
+ * The files may be read/wrote/deleted by user;
+ *
+ * It should only contain imported/exported files here, or debugging use only;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory URL when nil;
+ *
+ * @return Full file URL;
+ */
 + (NSURL *)docFileURLWithSubPath:(nullable NSString *)subPath;
     
-/// <SandBox>/Library/subPath
+/**
+ * Library file path in sand box;
+ *
+ * It will locate in file path "<SandBox>/Library/subPath";
+ *
+ * Any file you don’t want exposed to the user can be saved here;
+ *
+ * It is recommended as default file path;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory path when nil;
+ *
+ * @return Full file path;
+ */
 + (NSString *)libPathWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/Library/subPath
+/**
+ * Library file URL in sand box;
+ *
+ * It will locate in file path "<SandBox>/Library/subPath";
+ *
+ * Any file you don’t want exposed to the user can be saved here;
+ *
+ * It is recommended as default file URL;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory URL when nil;
+ *
+ * @return Full file URL;
+ */
 + (NSURL *)libFileURLWithSubPath:(nullable NSString *)subPath;
     
-/// <SandBox>/Library/Caches/subPath
+/**
+ * Cache file path in sand box;
+ *
+ * It will locate in file path "<SandBox>/Library/Caches/subPath";
+ *
+ * All cache files should be placed here;
+ *
+ * It is recommended for caching;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory path when nil;
+ *
+ * @return Full file path;
+ */
 + (NSString *)cachePathWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/Library/Caches/subPath
+/**
+ * Cache file URL in sand box;
+ *
+ * It will locate in file path "<SandBox>/Library/Caches/subPath";
+ *
+ * All cache files should be placed here;
+ *
+ * It is recommended for caching;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory URL when nil;
+ *
+ * @return Full file URL;
+ */
 + (NSURL *)cacheFileURLWithSubPath:(nullable NSString *)subPath;
     
-/// <SandBox>/tmp/subPath
+/**
+ * Temp file path in sand box;
+ *
+ * It will locate in file path "<SandBox>/tmp/subPath";
+ *
+ * Use this directory to write temporary files that do not need to persist between launches of your app;
+ * Your app should remove files from this directory when they are no longer needed;
+ *
+ * It is recommended for temporary files;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory path when nil;
+ *
+ * @return Full file path;
+ */
 + (NSString *)tempPathWithSubPath:(nullable NSString *)subPath;
     
-/// <SandBox>/tmp/subPath
+/**
+ * Temp file URL in sand box;
+ *
+ * It will locate in file path "<SandBox>/tmp/subPath";
+ *
+ * Use this directory to write temporary files that do not need to persist between launches of your app;
+ * Your app should remove files from this directory when they are no longer needed;
+ *
+ * It is recommended for temporary files;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory URL when nil;
+ *
+ * @return Full file URL;
+ */
 + (NSURL *)tempFileURLWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/Document/public/subPath
+/**
+ * Default public file path in sand box;
+ *
+ * It will locate in file path "<SandBox>/Document/public/subPath";
+ *
+ * The contents of this directory can be made available to the user through file sharing;
+ * The files may be read/wrote/deleted by user;
+ *
+ * It should only contain imported/exported files here, or debugging use only;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory path when nil;
+ *
+ * @return Full file path;
+ */
 + (NSString *)defaultPublicPathWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/Document/public/subPath
+/**
+ * Default public file URL in sand box;
+ *
+ * It will locate in file path "<SandBox>/Document/public/subPath";
+ *
+ * The contents of this directory can be made available to the user through file sharing;
+ * The files may be read/wrote/deleted by user;
+ *
+ * It should only contain imported/exported files here, or debugging use only;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory URL when nil;
+ *
+ * @return Full file URL;
+ */
 + (NSURL *)defaultPublicFileURLWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/Library/private/subPath
+/**
+ * Default private file path in sand box;
+ *
+ * It will locate in file path "<SandBox>/Library/private/subPath";
+ *
+ * Any file you don’t want exposed to the user can be saved here;
+ *
+ * It is recommended as default file path;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory URL when nil;
+ *
+ * @return Full file path;
+ */
 + (NSString *)defaultPrivatePathWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/Library]private/subPath
+/**
+ * Default private file URL in sand box;
+ *
+ * It will locate in file path "<SandBox>/Library/private/subPath";
+ *
+ * Any file you don’t want exposed to the user can be saved here;
+ *
+ * It is recommended as default file URL;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory URL when nil;
+ *
+ * @return Full file URL;
+ */
 + (NSURL *)defaultPrivateFileURLWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/Library/Caches/cache/subPath
+/**
+ * Default cache file path in sand box;
+ *
+ * It will locate in file path "<SandBox>/Library/Caches/cache/subPath";
+ *
+ * All cache files should be placed here;
+ *
+ * It is recommended for caching;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory path when nil;
+ *
+ * @return Full file path;
+ */
 + (NSString *)defaultCachePathWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/Library/Caches/cache/subPath
+/**
+ * Default cache file URL in sand box;
+ *
+ * It will locate in file path "<SandBox>/Library/Caches/cache/subPath";
+ *
+ * All cache files should be placed here;
+ *
+ * It is recommended for caching;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory URL when nil;
+ *
+ * @return Full file URL;
+ */
 + (NSURL *)defaultCacheFileURLWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/tmp/temp/subPath
+/**
+ * Default temp file path in sand box;
+ *
+ * It will locate in file path "<SandBox>/tmp/temp/subPath";
+ *
+ * Use this directory to write temporary files that do not need to persist between launches of your app;
+ * Your app should remove files from this directory when they are no longer needed;
+ *
+ * It is recommended for temporary files;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory path when nil;
+ *
+ * @return Full file path;
+ */
 + (NSString *)defaultTempPathWithSubPath:(nullable NSString *)subPath;
 
-/// <SandBox>/tmp/temp/subPath
+/**
+ * Default temp file URL in sand box;
+ *
+ * It will locate in file path "<SandBox>/tmp/temp/subPath";
+ *
+ * Use this directory to write temporary files that do not need to persist between launches of your app;
+ * Your app should remove files from this directory when they are no longer needed;
+ *
+ * It is recommended for temporary files;
+ *
+ * @param subPath Path relative to the root directory path;
+ *                It will return the root directory URL when nil;
+ *
+ * @return Full file URL;
+ */
 + (NSURL *)defaultTempFileURLWithSubPath:(nullable NSString *)subPath;
     
 @end

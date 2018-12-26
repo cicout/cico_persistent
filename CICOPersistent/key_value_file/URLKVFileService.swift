@@ -60,6 +60,8 @@ open class URLKVFileService {
     
     /// Write object using file URL;
     ///
+    /// Add when it does not exist, update when it exists;
+    ///
     /// - parameter object: The object will be saved in file, it must conform to codable protocol;
     /// - parameter toFileURL: File URL where the object is saved;
     ///
@@ -78,6 +80,9 @@ open class URLKVFileService {
     }
     
     /// Update object using file URL;
+    ///
+    /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
+    /// It won't update when "updateClosure" returns nil;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
     /// - parameter fromFileURL: File URL where the object is saved;

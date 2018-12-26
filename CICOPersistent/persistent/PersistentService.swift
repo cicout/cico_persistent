@@ -164,6 +164,9 @@ open class PersistentService {
     
     /// Update object in KVFileService using key;
     ///
+    /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
+    /// It won't update when "updateClosure" returns nil;
+    ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
     /// - parameter forKey: Key of the object;
     /// - parameter updateClosure: It will be called after reading object from file,
@@ -221,6 +224,8 @@ open class PersistentService {
     
     /// Write object into database of KVDBService using key;
     ///
+    /// Add when it does not exist, update when it exists;
+    ///
     /// - parameter object: The object will be saved in database, it must conform to codable protocol;
     /// - parameter forKey: Key of the object in database;
     ///
@@ -232,6 +237,9 @@ open class PersistentService {
     }
     
     /// Update object in database of KVDBService using key;
+    ///
+    /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
+    /// It won't update when "updateClosure" returns nil;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
     /// - parameter forKey: Key of the object in database;
@@ -325,6 +333,8 @@ open class PersistentService {
     
     /// Write object into database of ORMDBService using primary key;
     ///
+    /// Add when it does not exist, update when it exists;
+    ///
     /// - parameter object: The object will be saved in database, it must conform to codable protocol and ORMProtocol;
     /// - parameter customTableName: One class or struct can be saved in different tables,
     ///             you can define your custom table name here;
@@ -338,6 +348,8 @@ open class PersistentService {
     }
     
     /// Write object array into database of ORMDBService using primary key in one transaction;
+    ///
+    /// Add when it does not exist, update when it exists;
     ///
     /// - parameter objectArray: The object array will be saved in database,
     ///             it must conform to codable protocol and ORMProtocol;
@@ -353,6 +365,9 @@ open class PersistentService {
     }
     
     /// Update object in database of ORMDBService using primary key;
+    ///
+    /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
+    /// It won't update when "updateClosure" returns nil;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
     /// - parameter primaryKeyValue: Primary key value of the object in database, it must conform to codable protocol;
@@ -438,6 +453,8 @@ open class PersistentService {
     
     /// Write object into KVKeyChainService using key;
     ///
+    /// Add when it does not exist, update when it exists;
+    ///
     /// - parameter object: The object will be saved in file, it must conform to codable protocol;
     /// - parameter forKey: Key of the object;
     ///
@@ -449,6 +466,9 @@ open class PersistentService {
     }
     
     /// Update object in KVKeyChainService using key;
+    ///
+    /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
+    /// It won't update when "updateClosure" returns nil;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
     /// - parameter forKey: Key of the object;

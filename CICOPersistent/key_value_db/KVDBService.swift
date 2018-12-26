@@ -69,6 +69,8 @@ open class KVDBService {
     
     /// Write object into database using key;
     ///
+    /// Add when it does not exist, update when it exists;
+    ///
     /// - parameter object: The object will be saved in database, it must conform to codable protocol;
     /// - parameter forKey: Key of the object in database;
     ///
@@ -86,6 +88,9 @@ open class KVDBService {
     }
     
     /// Update object in database using key;
+    ///
+    /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
+    /// It won't update when "updateClosure" returns nil;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
     /// - parameter forKey: Key of the object in database;

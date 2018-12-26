@@ -105,6 +105,8 @@ open class ORMDBService {
     
     /// Write object into database using primary key;
     ///
+    /// Add when it does not exist, update when it exists;
+    ///
     /// - parameter object: The object will be saved in database, it must conform to codable protocol and ORMProtocol;
     /// - parameter customTableName: One class or struct can be saved in different tables,
     ///             you can define your custom table name here;
@@ -125,6 +127,8 @@ open class ORMDBService {
     }
     
     /// Write object array into database using primary key in one transaction;
+    ///
+    /// Add when it does not exist, update when it exists;
     ///
     /// - parameter objectArray: The object array will be saved in database,
     ///             it must conform to codable protocol and ORMProtocol;
@@ -147,6 +151,9 @@ open class ORMDBService {
     }
     
     /// Update object in database using primary key;
+    ///
+    /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
+    /// It won't update when "updateClosure" returns nil;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
     /// - parameter primaryKeyValue: Primary key value of the object in database, it must conform to codable protocol;

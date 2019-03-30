@@ -1,2 +1,2 @@
-github "cicout/cico_auto_codable" "0.11.15"
+github "cicout/cico_auto_codable" "0.15.19"
 github "cicout/cocoapod_to_carthage" "663fb1cbd52fefb6f40f0344d223141255039f90"

@@ -213,7 +213,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
                 loop = NO;
                 long long needReadLength = finalOffset + kBufferLength - currentOffset;
                 if (needReadLength > 0) {
-                    readLength = needReadLength;
+                    readLength = (NSUInteger)needReadLength;
                 } else {
                     continue;
                 }

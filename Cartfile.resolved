@@ -1,2 +1,2 @@
 github "cicout/cico_auto_codable" "0.17.21"
-github "cicout/cocoapod_to_carthage" "663fb1cbd52fefb6f40f0344d223141255039f90"
+github "cicout/fmdb_with_sqlcipher_p2c" "2.7.5_4.1.0"

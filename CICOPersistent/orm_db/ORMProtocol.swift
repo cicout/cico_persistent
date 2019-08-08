@@ -12,7 +12,7 @@ public protocol ORMProtocol {
     /// You must choose one primary key name from the codable properties in your class or struct;
     static func cicoORMPrimaryKeyColumnName() -> String
     
-    /// You must define some index column from the codable properties in your class or struct;
+    /// You can define some index column from the codable properties in your class or struct;
     static func cicoORMIndexColumnNameArray() -> [String]?
     
     /// You can use version number to upgrade database automaticaly

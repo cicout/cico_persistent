@@ -23,11 +23,11 @@ class TCodableClass: CICOAutoCodable, AutoEquatable {
     private(set) var next: TCodableClass?
     private(set) var arrayValue: [String]?
     private(set) var dicValue: [String: String]?
-    
+
     private var privateStringValue: String?
-    
+
     private var newStringValue: String?
-    
+
     private var url: URL?
 }
 
@@ -55,11 +55,11 @@ extension TCodableClass: ORMProtocol {
     static func cicoORMPrimaryKeyColumnName() -> String {
         return CodingKeys.name.stringValue
     }
-    
+
 //    static func cicoORMIndexColumnNameArray() -> [String]? {
 //        return [CodingKeys.dateValue.stringValue, CodingKeys.intValue.stringValue]
 //    }
-    
+
     static func cicoORMObjectTypeVersion() -> Int {
         return 11
     }

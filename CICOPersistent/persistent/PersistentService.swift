@@ -24,15 +24,15 @@ private let kORMDBFileSubPath = "orm_db/db.sqlite"
 ///
 open class PersistentService {
     public let rootDirURL: URL
-    
+
     private let kvFileService: KVFileService
     private let kvDBService: KVDBService
     private let ormDBService: ORMDBService
-    
+
     deinit {
         print("\(self) deinit")
     }
-    
+
     /// Init with root directory URL;
     ///
     /// It will use default password for KVFileService/KVDBService/ORMDBService/KVKeyChainService;
@@ -42,17 +42,17 @@ open class PersistentService {
     /// - returns: Init object;
     public init(rootDirURL: URL) {
         self.rootDirURL = rootDirURL
-        
+
         let kvFileDirURL = rootDirURL.appendingPathComponent(kKVFileDirName)
         self.kvFileService = KVFileService.init(rootDirURL: kvFileDirURL)
-        
+
         let kvDBFileURL = rootDirURL.appendingPathComponent(kKVDBFileSubPath)
         self.kvDBService = KVDBService.init(fileURL: kvDBFileURL)
-        
+
         let ormDBFileURL = rootDirURL.appendingPathComponent(kORMDBFileSubPath)
         self.ormDBService = ORMDBService.init(fileURL: ormDBFileURL)
     }
-    
+
     /// File URL in root directory;
     ///
     /// - parameter subPath: Path relative to the root directory path;
@@ -61,11 +61,11 @@ open class PersistentService {
     open func fileURL(subPath: String) -> URL {
         return self.rootDirURL.appendingPathComponent(subPath)
     }
-    
+
     /*****************
      * All Persistent
      *****************/
-    
+
     ///
     /// Clear KVFile/KVDB/ORMDB Persistent; UserDefault and KVKeyChain will not be cleared;
     ///
@@ -76,11 +76,11 @@ open class PersistentService {
         let result2 = self.clearAllORMDB()
         return (result0 && result1 && result2)
     }
-    
+
     /*************************
      * UserDefault Persistent
      *************************/
-    
+
     ///
     /// Read object from UserDefault using key;
     ///
@@ -88,9 +88,9 @@ open class PersistentService {
     ///
     /// - returns: Read object, nil when no object for this key;
     open func readObjectFromUserDefault(forKey key: String) -> Any? {
-        return UserDefaults.standard.object(forKey:key)
+        return UserDefaults.standard.object(forKey: key)
     }
-    
+
     /// Read object from UserDefault using key;
     ///
     /// - parameter objectType: Type of the object;
@@ -106,7 +106,7 @@ open class PersistentService {
             return nil
         }
     }
-    
+
     /// Write value into UserDefault using key;
     ///
     /// - parameter value: The value will be saved in UserDefault;
@@ -116,7 +116,7 @@ open class PersistentService {
     open func writeUserDefaultValue(_ value: Any?, forKey key: String) {
         UserDefaults.standard.set(value, forKey: key)
     }
-    
+
     /// Remove object from UserDefault using key;
     ///
     /// - parameter forKey: Key of the object;
@@ -125,18 +125,18 @@ open class PersistentService {
     open func removeUserDefaultValue(forKey key: String) {
         UserDefaults.standard.removeObject(forKey: key)
     }
-    
+
     /// Synchronize for UserDefaults;
     ///
     /// - see: UserDefaults.standard.synchronize();
     open func synchronizeUserDefault() -> Bool {
         return UserDefaults.standard.synchronize()
     }
-    
+
     /***********************************************
      * Codable Key:Value Independent File Persistent
      ***********************************************/
-    
+
     ///
     /// Read object from KVFileService using key;
     ///
@@ -149,7 +149,7 @@ open class PersistentService {
     open func readKVFileObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
         return self.kvFileService.readObject(objectType, forKey: userKey)
     }
-    
+
     /// Write object into KVFileService using key;
     ///
     /// - parameter object: The object will be saved in file, it must conform to codable protocol;
@@ -161,7 +161,7 @@ open class PersistentService {
     open func writeKVFileObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         return self.kvFileService.writeObject(object, forKey: userKey)
     }
-    
+
     /// Update object in KVFileService using key;
     ///
     /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
@@ -184,7 +184,7 @@ open class PersistentService {
                                                updateClosure: updateClosure,
                                                completionClosure: completionClosure)
     }
-    
+
     /// Remove object from KVFileService using key;
     ///
     /// - parameter forKey: Key of the object;
@@ -195,7 +195,7 @@ open class PersistentService {
     open func removeKVFileObject(forKey userKey: String) -> Bool {
         return self.kvFileService.removeObject(forKey: userKey)
     }
-    
+
     /// Remove all objects in KVFileService;
     ///
     /// - returns: Remove result;
@@ -204,11 +204,11 @@ open class PersistentService {
     open func clearAllKVFile() -> Bool {
         return self.kvFileService.clearAll()
     }
-    
+
     /****************************************
      * Codable Key:Value Database Persistent
      ****************************************/
-    
+
     ///
     /// Read object from database of KVDBService using key;
     ///
@@ -221,7 +221,7 @@ open class PersistentService {
     open func readKVDBObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
         return self.kvDBService.readObject(objectType, forKey: userKey)
     }
-    
+
     /// Write object into database of KVDBService using key;
     ///
     /// Add when it does not exist, update when it exists;
@@ -235,7 +235,7 @@ open class PersistentService {
     open func writeKVDBObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         return self.kvDBService.writeObject(object, forKey: userKey)
     }
-    
+
     /// Update object in database of KVDBService using key;
     ///
     /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
@@ -258,7 +258,7 @@ open class PersistentService {
                                              updateClosure: updateClosure,
                                              completionClosure: completionClosure)
     }
-    
+
     /// Remove object from database of KVDBService using key;
     ///
     /// - parameter forKey: Key of the object in database;
@@ -269,7 +269,7 @@ open class PersistentService {
     open func removeKVDBObject(forKey userKey: String) -> Bool {
         return self.kvDBService.removeObject(forKey: userKey)
     }
-    
+
     /// Remove all objects from database of KVDBService;
     ///
     /// - returns: Remove result;
@@ -278,11 +278,11 @@ open class PersistentService {
     open func clearAllKVDB() -> Bool {
         return self.kvDBService.clearAll()
     }
-    
+
     /**********************************
      * Codable ORM Database Persistent
      **********************************/
-    
+
     ///
     /// Read object from database of ORMDBService using primary key;
     ///
@@ -302,7 +302,7 @@ open class PersistentService {
                                             primaryKeyValue: primaryKeyValue,
                                             customTableName: customTableName)
     }
-    
+
     /// Read object array from database of ORMDBService using SQL;
     ///
     /// SQL: SELECT * FROM "TableName" WHERE "whereString" ORDER BY "orderByName" DESC/ASC LIMIT "limit";
@@ -330,7 +330,7 @@ open class PersistentService {
                                                  limit: limit,
                                                  customTableName: customTableName)
     }
-    
+
     /// Write object into database of ORMDBService using primary key;
     ///
     /// Add when it does not exist, update when it exists;
@@ -346,7 +346,7 @@ open class PersistentService {
     open func writeORMDBObject<T: CICOORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
         return self.ormDBService.writeObject(object, customTableName: customTableName)
     }
-    
+
     /// Write object array into database of ORMDBService using primary key in one transaction;
     ///
     /// Add when it does not exist, update when it exists;
@@ -363,7 +363,7 @@ open class PersistentService {
     open func writeORMDBObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
         return self.ormDBService.writeObjectArray(objectArray, customTableName: customTableName)
     }
-    
+
     /// Update object in database of ORMDBService using primary key;
     ///
     /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
@@ -391,7 +391,7 @@ open class PersistentService {
                                               updateClosure: updateClosure,
                                               completionClosure: completionClosure)
     }
-    
+
     /// Remove object from database of ORMDBService using primary key;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
@@ -410,7 +410,7 @@ open class PersistentService {
                                               primaryKeyValue: primaryKeyValue,
                                               customTableName: customTableName)
     }
-    
+
     /// Remove the whole table from database of ORMDBService by table name;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
@@ -424,7 +424,7 @@ open class PersistentService {
     open func removeORMDBObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type, customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObjectTable(ofType: objectType, customTableName: customTableName)
     }
-    
+
     /// Remove all tables from database of ORMDBService;
     ///
     /// - returns: Remove result;
@@ -433,11 +433,11 @@ open class PersistentService {
     open func clearAllORMDB() -> Bool {
         return self.ormDBService.clearAll()
     }
-    
+
     /**********************
      * Keychain Persistent
      **********************/
-    
+
     ///
     /// Read object from KVKeyChainService using key;
     ///
@@ -450,7 +450,7 @@ open class PersistentService {
     public func readKVKeyChainObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
         return KVKeyChainService.defaultService.readObject(objectType, forKey: userKey)
     }
-    
+
     /// Write object into KVKeyChainService using key;
     ///
     /// Add when it does not exist, update when it exists;
@@ -464,7 +464,7 @@ open class PersistentService {
     public func writeKVKeyChainObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         return KVKeyChainService.defaultService.writeObject(object, forKey: userKey)
     }
-    
+
     /// Update object in KVKeyChainService using key;
     ///
     /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
@@ -487,7 +487,7 @@ open class PersistentService {
                                                           updateClosure: updateClosure,
                                                           completionClosure: completionClosure)
     }
-    
+
     /// Remove object from KVKeyChainService using key;
     ///
     /// - parameter forKey: Key of the object;

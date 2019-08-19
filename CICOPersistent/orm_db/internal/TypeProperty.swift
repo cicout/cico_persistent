@@ -13,11 +13,11 @@ class TypeProperty {
     let swiftType: Any.Type
     let sqliteType: SQLiteType
     let value: Any
-    
+
     var description: String {
         return "name: \(self.name)\nswiftType: \(self.swiftType)\nsqliteType: \(self.sqliteType)\nvalue: \(self.value)"
     }
-    
+
     init(name: String, swiftType: Any.Type, sqliteType: SQLiteType, value: Any) {
         self.name = name
         self.swiftType = swiftType

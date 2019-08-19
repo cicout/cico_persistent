@@ -17,7 +17,7 @@ public enum CICOFileURLType: String, Codable {
 
 public struct CICOFileURL: Codable {
     public var fileURL: URL?
-    
+
     public static func transferPropertyToFileURL(type: CICOFileURLType, relativePath: String) -> URL? {
         switch type {
         case .unknown:
@@ -30,20 +30,20 @@ public struct CICOFileURL: Codable {
             return CICOPathAide.tempFileURL(withSubPath: relativePath)
         }
     }
-    
+
     public static func transferURLToProperty(fileURL: URL?) -> (CICOFileURLType, String) {
         var type = CICOFileURLType.unknown
         var relativePath = ""
-        
+
         guard let url = fileURL, url.isFileURL else {
             return (type, relativePath)
         }
-        
+
         let path = url.path
         let docPath = CICOPathAide.docPath(withSubPath: nil)
         let libPath = CICOPathAide.libPath(withSubPath: nil)
         let tmpPath = CICOPathAide.tempPath(withSubPath: nil)
-        
+
         if path.hasPrefix(docPath) {
             type = .documents
             relativePath = String(path.dropFirst(docPath.count))
@@ -54,14 +54,14 @@ public struct CICOFileURL: Codable {
             type = .tmp
             relativePath = String(path.dropFirst(tmpPath.count))
         }
-        
+
         return (type, relativePath)
     }
-    
+
     public init(type: CICOFileURLType, relativePath: String) {
         self.fileURL = CICOFileURL.transferPropertyToFileURL(type: type, relativePath: relativePath)
     }
-    
+
     public init(fileURL: URL?) {
         self.fileURL = fileURL
     }
@@ -72,18 +72,18 @@ extension CICOFileURL {
         case type
         case relativePath
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try container.decode(CICOFileURLType.self, forKey: .type)
         let relativePath = try container.decode(String.self, forKey: .relativePath)
-        
+
         self.fileURL = CICOFileURL.transferPropertyToFileURL(type: type, relativePath: relativePath)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         let (type, relativePath) = CICOFileURL.transferURLToProperty(fileURL: self.fileURL)
-        
+
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
         try container.encode(relativePath, forKey: .relativePath)

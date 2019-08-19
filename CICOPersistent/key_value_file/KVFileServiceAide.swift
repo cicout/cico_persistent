@@ -23,7 +23,7 @@ public class KVFileServiceAide {
         let rootDirURL = CICOPathAide.defaultPublicFileURL(withSubPath: kRootDirName)
         return KVFileService.init(rootDirURL: rootDirURL)
     }()
-    
+
     /// Private shared Key-Value file service;
     ///
     /// It is recommended as default;
@@ -33,7 +33,7 @@ public class KVFileServiceAide {
         let rootDirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kRootDirName)
         return KVFileService.init(rootDirURL: rootDirURL)
     }()
-    
+
     /// Cache shared Key-Value file service;
     ///
     /// It is recommended for caching;
@@ -43,7 +43,7 @@ public class KVFileServiceAide {
         let rootDirURL = CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)
         return KVFileService.init(rootDirURL: rootDirURL)
     }()
-    
+
     /// Temp shared Key-Value file service;
     ///
     /// It is recommended for temporary objects;

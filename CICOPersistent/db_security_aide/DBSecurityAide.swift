@@ -23,24 +23,24 @@ public class DBSecurityAide {
                                       fromDBPassword: String?,
                                       toDBPath: String,
                                       toDBPassword: String?) -> Bool {
-        var realFromPassword: String? = nil
+        var realFromPassword: String?
         if let fromDBPassword = fromDBPassword {
             realFromPassword = CICOSecurityAide.md5HashString(with: fromDBPassword)
         }
-        
-        var realToPassword: String? = nil
+
+        var realToPassword: String?
         if let toDBPassword = toDBPassword {
             realToPassword = CICOSecurityAide.md5HashString(with: toDBPassword)
         }
-        
+
         let result = CICOSQLCipherAide.exportDatabase(fromDBPath,
                                                       fromDBPassword: realFromPassword,
                                                       toDBPath: toDBPath,
                                                       toDBPassword: realToPassword)
-        
+
         return result
     }
-    
+
     /// Encrypt passwordless database;
     ///
     /// - parameter dbPath: Passwordless database path;
@@ -66,7 +66,7 @@ public class DBSecurityAide {
         let result = CICOSQLCipherAide.decryptDatabase(dbPath, password: realPassword)
         return result
     }
-    
+
     /// Change encrypted database password;
     ///
     /// - parameter dbPath: Encrypted database path;

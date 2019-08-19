@@ -28,15 +28,15 @@ public class KVKeyChainService {
             return KVKeyChainService.init(password: kDefaultPassword)
         }
     } ()
-    
+
     private let passwordData: Data
     private let keyChainService: KeyChainService
     private let lock = NSLock()
-    
+
     deinit {
         print("\(self) deinit")
     }
-    
+
     /// Init with password and accessGroup;
     ///
     /// - parameter password: Data encryption password; It is used for AES256 encryption;
@@ -53,7 +53,7 @@ public class KVKeyChainService {
         self.passwordData = CICOSecurityAide.shaHashData(with: password, shaType: .SHA256)
         self.keyChainService = KeyChainService.init(accessGroup: accessGroup)
     }
-    
+
     /// Read object using key;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
@@ -64,21 +64,21 @@ public class KVKeyChainService {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return nil
         }
-        
+
         self.lock.lock()
         defer {
             self.lock.unlock()
         }
-        
+
         guard let encryptedData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) else {
             return nil
         }
-        
+
         let jsonData = self.decryptData(encryptedData: encryptedData)
 
         return KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
-    
+
     /// Write object using key;
     ///
     /// Add when it does not exist, update when it exists;
@@ -91,25 +91,25 @@ public class KVKeyChainService {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false
         }
-        
+
         guard let jsonData = KVJSONAide.transferObjectToJSONData(object) else {
             return false
         }
-        
+
         let encryptedData = self.encryptData(sourceData: jsonData)
-        
+
         self.lock.lock()
         defer {
             self.lock.unlock()
         }
-        
+
         if let _ = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
             return self.keyChainService.update(data: encryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         } else {
             return self.keyChainService.add(data: encryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         }
     }
-    
+
     /// Update object using key;
     ///
     /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
@@ -129,38 +129,38 @@ public class KVKeyChainService {
         defer {
             completionClosure?(result)
         }
-        
+
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return
         }
-        
+
         self.lock.lock()
         defer {
             self.lock.unlock()
         }
-        
-        var object: T? = nil
+
+        var object: T?
         var exist = false
-        
+
         // read
         if let encryptedData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
             exist = true
             let jsonData = self.decryptData(encryptedData: encryptedData)
             object = KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
         }
-        
+
         // update
         guard let newObject = updateClosure(object) else {
             result = true
             return
         }
-        
+
         guard let newJSONData = KVJSONAide.transferObjectToJSONData(newObject) else {
             return
         }
-        
+
         let newEncryptedData = self.encryptData(sourceData: newJSONData)
-        
+
         // write
         if exist {
             result = self.keyChainService.update(data: newEncryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
@@ -168,7 +168,7 @@ public class KVKeyChainService {
             result = self.keyChainService.add(data: newEncryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
         }
     }
-    
+
     /// Remove object using key;
     ///
     /// - parameter forKey: Key of the object;
@@ -186,14 +186,14 @@ public class KVKeyChainService {
         guard userKey.count > 0 else {
             return nil
         }
-        
+
         return CICOSecurityAide.md5HashString(with: userKey)
     }
-    
+
     private func encryptData(sourceData: Data) -> Data {
         return CICOSecurityAide.aesEncrypt(withKeyData: self.passwordData, sourceData: sourceData)!
     }
-    
+
     private func decryptData(encryptedData: Data) -> Data {
         return CICOSecurityAide.aesDecrypt(withKeyData: self.passwordData, encryptedData: encryptedData)!
     }

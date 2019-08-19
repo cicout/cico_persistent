@@ -11,15 +11,15 @@ import Foundation
 class JSONStringAide {
     static func jsonString(name: String) -> String {
         let bundle = Bundle.init(for: JSONStringAide.self)
-        
+
         guard let path = bundle.path(forResource: name, ofType: "json") else {
             return ""
         }
-        
+
         guard let jsonString = try? String(contentsOfFile: path, encoding: String.Encoding.utf8) else {
             return ""
         }
-        
+
         return jsonString
     }
 }

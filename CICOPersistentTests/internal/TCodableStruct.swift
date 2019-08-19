@@ -22,9 +22,9 @@ struct TCodableStruct: CICOAutoCodable, AutoEquatable {
     private(set) var next: TCodableClass?
     private(set) var arrayValue: [String]?
     private(set) var dicValue: [String: String]?
-    
+
     private var privateStringValue: String?
-    
+
     private var url: URL?
 }
 
@@ -51,7 +51,7 @@ extension TCodableStruct: ORMProtocol {
     static func cicoORMPrimaryKeyColumnName() -> String {
         return CodingKeys.name.stringValue
     }
-    
+
     static func cicoORMObjectTypeVersion() -> Int {
         return 20
     }

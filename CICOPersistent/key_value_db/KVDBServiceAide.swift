@@ -23,7 +23,7 @@ public class KVDBServiceAide {
         let dbURL = CICOPathAide.defaultPublicFileURL(withSubPath: kDBSubPath)
         return KVDBService.init(fileURL: dbURL)
     }()
-    
+
     /// Private shared Key-Value database service;
     ///
     /// It is recommended as default;
@@ -33,7 +33,7 @@ public class KVDBServiceAide {
         let dbURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kDBSubPath)
         return KVDBService.init(fileURL: dbURL)
     }()
-    
+
     /// Cache shared Key-Value database service;
     ///
     /// It is recommended for caching;
@@ -43,7 +43,7 @@ public class KVDBServiceAide {
         let dbURL = CICOPathAide.defaultCacheFileURL(withSubPath: kDBSubPath)
         return KVDBService.init(fileURL: dbURL)
     }()
-    
+
     /// Temp shared Key-Value database service;
     ///
     /// It is recommended for temporary objects;

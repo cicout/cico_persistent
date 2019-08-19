@@ -23,7 +23,7 @@ public class ORMDBServiceAide {
         let dbURL = CICOPathAide.defaultPublicFileURL(withSubPath: kDBSubPath)
         return ORMDBService.init(fileURL: dbURL)
     }()
-    
+
     /// Private shared ORM database service;
     ///
     /// It is recommended as default;
@@ -33,7 +33,7 @@ public class ORMDBServiceAide {
         let dbURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kDBSubPath)
         return ORMDBService.init(fileURL: dbURL)
     }()
-    
+
     /// Cache shared ORM database service;
     ///
     /// It is recommended for caching;
@@ -43,7 +43,7 @@ public class ORMDBServiceAide {
         let dbURL = CICOPathAide.defaultCacheFileURL(withSubPath: kDBSubPath)
         return ORMDBService.init(fileURL: dbURL)
     }()
-    
+
     /// Temp shared ORM database service;
     ///
     /// It is recommended for temporary objects;

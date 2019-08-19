@@ -23,7 +23,7 @@ public class PersistentServiceAide {
         let rootDirURL = CICOPathAide.defaultPublicFileURL(withSubPath: kRootDirName)
         return PersistentService.init(rootDirURL: rootDirURL)
     }()
-    
+
     /// Private shared persistent service;
     ///
     /// It is recommended as default;
@@ -33,7 +33,7 @@ public class PersistentServiceAide {
         let rootDirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kRootDirName)
         return PersistentService.init(rootDirURL: rootDirURL)
     }()
-    
+
     /// Cache shared persistent service;
     ///
     /// It is recommended for caching;
@@ -43,7 +43,7 @@ public class PersistentServiceAide {
         let rootDirURL = CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)
         return PersistentService.init(rootDirURL: rootDirURL)
     }()
-    
+
     /// Temp shared persistent service;
     ///
     /// It is recommended for temporary objects;

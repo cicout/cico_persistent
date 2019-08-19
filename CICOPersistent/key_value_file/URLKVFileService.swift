@@ -20,11 +20,11 @@ public let kCICOURLKVFileDefaultPassword = "cico_url_kv_file_default_password"
 open class URLKVFileService {
     private let passwordData: Data?
     private let fileLock = NSLock()
-    
+
     deinit {
         print("\(self) deinit")
     }
-    
+
     /// Init with file encryption password;
     ///
     /// - parameter password: File encryption password; It will use default password if not passing this parameter;
@@ -38,7 +38,7 @@ open class URLKVFileService {
             self.passwordData = nil
         }
     }
-    
+
     /// Read object using file URL;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
@@ -50,14 +50,14 @@ open class URLKVFileService {
         defer {
             self.fileLock.unlock()
         }
-        
+
         guard let jsonData = self.readJSONData(fromFileURL: fileURL) else {
             return nil
         }
-        
+
         return KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
-    
+
     /// Write object using file URL;
     ///
     /// Add when it does not exist, update when it exists;
@@ -70,15 +70,15 @@ open class URLKVFileService {
         guard let jsonData = KVJSONAide.transferObjectToJSONData(object) else {
             return false
         }
-        
+
         self.fileLock.lock()
         defer {
             self.fileLock.unlock()
         }
-        
+
         return self.writeJSONData(jsonData, toFileURL: fileURL)
     }
-    
+
     /// Update object using file URL;
     ///
     /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
@@ -98,33 +98,33 @@ open class URLKVFileService {
         defer {
             completionClosure?(result)
         }
-        
+
         self.fileLock.lock()
         defer {
             self.fileLock.unlock()
         }
-        
-        var object: T? = nil
-        
+
+        var object: T?
+
         // read
         if let jsonData = self.readJSONData(fromFileURL: fileURL) {
             object = KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
         }
-        
+
         // update
         guard let newObject = updateClosure(object) else {
             result = true
             return
         }
-        
+
         guard let newJSONData = KVJSONAide.transferObjectToJSONData(newObject) else {
             return
         }
-        
+
         // write
         result = self.writeJSONData(newJSONData, toFileURL: fileURL)
     }
-    
+
     /// Remove object using file URL;
     ///
     /// - parameter forFileURL: File URL where the object is saved;;
@@ -135,17 +135,17 @@ open class URLKVFileService {
         defer {
             self.fileLock.unlock()
         }
-        
+
         return CICOFileManagerAide.removeFile(with: fileURL)
     }
 
     private func readJSONData(fromFileURL fileURL: URL) -> Data? {
         let exist = FileManager.default.fileExists(atPath: fileURL.path)
-        
+
         guard exist else {
             return nil
         }
-        
+
         do {
             let encryptedData = try Data.init(contentsOf: fileURL)
             let jsonData = self.decryptDataIfNeeded(encryptedData: encryptedData)
@@ -155,7 +155,7 @@ open class URLKVFileService {
             return nil
         }
     }
-    
+
     private func writeJSONData(_ jsonData: Data, toFileURL fileURL: URL) -> Bool {
         do {
             let encryptedData = self.encryptDataIfNeeded(sourceData: jsonData)
@@ -166,7 +166,7 @@ open class URLKVFileService {
             return false
         }
     }
-    
+
     private func encryptDataIfNeeded(sourceData: Data) -> Data {
         if let passwordData = self.passwordData {
             return CICOSecurityAide.aesEncrypt(withKeyData: passwordData, sourceData: sourceData)!
@@ -174,7 +174,7 @@ open class URLKVFileService {
             return sourceData
         }
     }
-    
+
     private func decryptDataIfNeeded(encryptedData: Data) -> Data {
         if let passwordData = self.passwordData {
             return CICOSecurityAide.aesDecrypt(withKeyData: passwordData, encryptedData: encryptedData)!

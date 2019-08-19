@@ -14,7 +14,7 @@ class KVJSONAide {
         let objectArray = [T].init(jsonData: jsonData)
         return objectArray?.first
     }
-    
+
     static func transferObjectToJSONData<T: Encodable>(_ object: T) -> Data? {
         return [object].toJSONData()
     }

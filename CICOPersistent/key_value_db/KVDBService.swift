@@ -23,15 +23,15 @@ private let kUpdateTimeColumnName = "update_time"
 ///
 open class KVDBService {
     public let fileURL: URL
-    
+
     private let dbPasswordKey: String?
     private var dbQueue: FMDatabaseQueue?
-    
+
     deinit {
         print("\(self) deinit")
         self.dbQueue?.close()
     }
-    
+
     /// Init with database file URL and database encryption password;
     ///
     /// - parameter fileURL: Database file URL;
@@ -48,7 +48,7 @@ open class KVDBService {
         }
         self.initDB()
     }
-    
+
     /// Read object from database using key;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
@@ -59,14 +59,14 @@ open class KVDBService {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return nil
         }
-        
+
         guard let jsonData = self.readJSONData(jsonKey: jsonKey) else {
             return nil
         }
-        
+
         return KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
-    
+
     /// Write object into database using key;
     ///
     /// Add when it does not exist, update when it exists;
@@ -79,14 +79,14 @@ open class KVDBService {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false
         }
-        
+
         guard let jsonData = KVJSONAide.transferObjectToJSONData(object) else {
             return false
         }
-        
+
         return self.writeJSONData(jsonData, forJSONKey: jsonKey)
     }
-    
+
     /// Update object in database using key;
     ///
     /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
@@ -106,15 +106,15 @@ open class KVDBService {
         defer {
             completionClosure?(result)
         }
-        
+
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return
         }
-        
+
         self.dbQueue?.inDatabase { (db) in
-            
-            var object: T? = nil
-            
+
+            var object: T?
+
             // read
             let querySQL = "SELECT * FROM \(kJSONTableName) WHERE \(kJSONKeyColumnName) = ? LIMIT 1;"
             if let resultSet = db.executeQuery(querySQL, withArgumentsIn: [jsonKey]) {
@@ -130,11 +130,11 @@ open class KVDBService {
                 result = true
                 return
             }
-            
+
             guard let newJSONData = KVJSONAide.transferObjectToJSONData(newObject) else {
                 return
             }
-            
+
             // write
             let updateTime = Date().timeIntervalSinceReferenceDate
             let updateSQL = "REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName), \(kJSONDataColumnName), \(kUpdateTimeColumnName)) VALUES (?, ?, ?);"
@@ -144,7 +144,7 @@ open class KVDBService {
             }
         }
     }
-    
+
     /// Remove object from database using key;
     ///
     /// - parameter forKey: Key of the object in database;
@@ -154,10 +154,10 @@ open class KVDBService {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false
         }
-        
-        return self.removeJSONData(jsonKey:jsonKey)
+
+        return self.removeJSONData(jsonKey: jsonKey)
     }
-    
+
     /// Remove all objects from database;
     ///
     /// - returns: Remove result;
@@ -167,7 +167,7 @@ open class KVDBService {
         self.dbQueue = FMDatabaseQueue.init(url: self.fileURL)
         return result
     }
-    
+
     private func initDB() {
         let dirURL = self.fileURL.deletingLastPathComponent()
         let result = CICOFileManagerAide.createDir(with: dirURL)
@@ -175,12 +175,12 @@ open class KVDBService {
             print("[ERROR]: create database dir failed\nurl: \(self.fileURL)")
             return
         }
-        
+
         guard let dbQueue = FMDatabaseQueue.init(url: self.fileURL) else {
             print("[ERROR]: create database failed\nurl: \(self.fileURL)")
             return
         }
-        
+
         dbQueue.inDatabase { (db) in
             let createTableSQL = "CREATE TABLE IF NOT EXISTS \(kJSONTableName) (\(kJSONKeyColumnName) TEXT NOT NULL, \(kJSONDataColumnName) BLOB NOT NULL, \(kUpdateTimeColumnName) REAL NOT NULL, PRIMARY KEY(\(kJSONKeyColumnName)));"
             let result = db.executeUpdate(createTableSQL, withArgumentsIn: [])
@@ -191,40 +191,40 @@ open class KVDBService {
             }
         }
     }
-    
+
     private func jsonKey(forUserKey userKey: String) -> String? {
         guard userKey.count > 0 else {
             return nil
         }
-        
+
         return CICOSecurityAide.md5HashString(with: userKey)
     }
-    
+
     private func readJSONData(jsonKey: String) -> Data? {
-        var jsonData: Data? = nil
-        
+        var jsonData: Data?
+
         self.dbQueue?.inDatabase { (db) in
             let querySQL = "SELECT * FROM \(kJSONTableName) WHERE \(kJSONKeyColumnName) = ? LIMIT 1;"
-            
+
             guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: [jsonKey]) else {
                 return
             }
-            
+
             if resultSet.next() {
                 jsonData = resultSet.data(forColumn: kJSONDataColumnName)
 //                let updateTime = resultSet.double(forColumn: kUpdateTimeColumnName)
 //                print("read time \(updateTime)")
             }
-            
+
             resultSet.close()
         }
-        
+
         return jsonData
     }
-    
+
     private func writeJSONData(_ jsonData: Data, forJSONKey jsonKey: String) -> Bool {
         var result = false
-        
+
         self.dbQueue?.inDatabase { (db) in
             let updateTime = Date().timeIntervalSinceReferenceDate
 //            print("write time \(updateTime)")
@@ -234,13 +234,13 @@ open class KVDBService {
                 print("[ERROR]: SQL = \(updateSQL)")
             }
         }
-        
+
         return result
     }
-    
+
     private func removeJSONData(jsonKey: String) -> Bool {
         var result = false
-        
+
         self.dbQueue?.inDatabase { (db) in
             let deleteSQL = "DELETE FROM \(kJSONTableName) WHERE \(kJSONKeyColumnName) = ?;"
             result = db.executeUpdate(deleteSQL, withArgumentsIn: [jsonKey])
@@ -248,7 +248,7 @@ open class KVDBService {
                 print("[ERROR]: SQL = \(deleteSQL)")
             }
         }
-        
+
         return result
     }
 }

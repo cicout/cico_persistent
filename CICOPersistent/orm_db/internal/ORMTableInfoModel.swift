@@ -12,9 +12,9 @@ class ORMTableInfoModel {
     let tableName: String
     let objectTypeName: String
     let objectTypeVersion: Int
-    
+
     deinit {}
-    
+
     init(tableName: String, objectTypeName: String, objectTypeVersion: Int) {
         self.tableName = tableName
         self.objectTypeName = objectTypeName

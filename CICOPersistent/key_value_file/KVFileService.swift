@@ -18,11 +18,11 @@ open class KVFileService {
     public let rootDirURL: URL
 
     private let urlFileService: URLKVFileService
-    
+
     deinit {
         print("\(self) deinit")
     }
-    
+
     /// Init with root directory URL and file encryption password;
     ///
     /// - parameter rootDirURL: The root directory URL for file saving;
@@ -33,14 +33,14 @@ open class KVFileService {
     public init(rootDirURL: URL, password: String? = kCICOURLKVFileDefaultPassword) {
         self.rootDirURL = rootDirURL
         self.urlFileService = URLKVFileService.init(password: password)
-        
+
         let result = CICOFileManagerAide.createDir(with: self.rootDirURL)
         if !result {
             print("[ERROR]: create kv file dir failed\nurl: \(self.rootDirURL)")
             return
         }
     }
-    
+
     /// Read object using key;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;
@@ -51,12 +51,12 @@ open class KVFileService {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return nil
         }
-        
+
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
-        
+
         return self.urlFileService.readObject(objectType, fromFileURL: fileURL)
     }
-    
+
     /// Write object using key;
     ///
     /// Add when it does not exist, update when it exists;
@@ -69,12 +69,12 @@ open class KVFileService {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false
         }
-        
+
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
-        
+
         return self.urlFileService.writeObject(object, toFileURL: fileURL)
     }
-    
+
     /// Update object using key;
     ///
     /// Read the existing object, then call the "updateClosure", and write the object returned by "updateClosure";
@@ -94,9 +94,9 @@ open class KVFileService {
             completionClosure?(false)
             return
         }
-        
+
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
-        
+
         self.urlFileService
             .updateObject(objectType,
                           fromFileURL: fileURL,
@@ -106,7 +106,7 @@ open class KVFileService {
                 completionClosure?(result)
         }
     }
-    
+
     /// Remove object using key;
     ///
     /// - parameter forKey: Key of the object;
@@ -116,12 +116,12 @@ open class KVFileService {
         guard let jsonKey = self.jsonKey(forUserKey: userKey) else {
             return false
         }
-        
+
         let fileURL = self.jsonDataFileURL(forJSONKey: jsonKey)
-        
+
         return self.urlFileService.removeObject(forFileURL: fileURL)
     }
-    
+
     /// Remove all objects;
     ///
     /// - returns: Remove result;
@@ -130,15 +130,15 @@ open class KVFileService {
         let createResult = CICOFileManagerAide.createDir(with: self.rootDirURL)
         return (removeResult && createResult)
     }
-    
+
     private func jsonKey(forUserKey userKey: String) -> String? {
         guard userKey.count > 0 else {
             return nil
         }
-        
+
         return CICOSecurityAide.md5HashString(with: userKey)
     }
-    
+
     private func jsonDataFileURL(forJSONKey jsonKey: String) -> URL {
         var fileURL = self.rootDirURL
         fileURL.appendPathComponent(jsonKey)

@@ -5,8 +5,26 @@
 //  Created by lucky.li on 2018/7/19.
 //  Copyright © 2018 cico. All rights reserved.
 //
+// TODO: refactor for swift lint;
+// swiftlint:disable force_cast
 
 import Foundation
+
+private struct SizedPointer {
+    private let pointer: UnsafeMutableRawPointer
+    private let size: Int
+    init<T>(of type: T.Type = T.self) {
+        size = MemoryLayout<T>.size
+        pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: 1)
+        memset(pointer, 0, size)
+    }
+    func deallocate() {
+        pointer.deallocate()
+    }
+    func getPointee<T>(of type: T.Type = T.self) -> T {
+        return pointer.assumingMemoryBound(to: type).pointee
+    }
+}
 
 class SQLiteTypeDecoder: Decoder {
     private var typeDic: [String: TypeProperty] = [:]
@@ -38,22 +56,6 @@ class SQLiteTypeDecoder: Decoder {
     }
 
     private class CICOTypeKeyedDecodingContainer<KEY: CodingKey>: KeyedDecodingContainerProtocol {
-        private struct SizedPointer {
-            private let pointer: UnsafeMutableRawPointer
-            private let size: Int
-            init<T>(of type: T.Type = T.self) {
-                size = MemoryLayout<T>.size
-                pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: 1)
-                memset(pointer, 0, size)
-            }
-            func deallocate() {
-                pointer.deallocate()
-            }
-            func getPointee<T>(of type: T.Type = T.self) -> T {
-                return pointer.assumingMemoryBound(to: type).pointee
-            }
-        }
-
         private let decoder: SQLiteTypeDecoder
 
         private var sizedPointers: ContiguousArray<SizedPointer>
@@ -168,49 +170,81 @@ class SQLiteTypeDecoder: Decoder {
 
         func decode(_ type: UInt16.Type, forKey key: KEY) throws -> UInt16 {
             decoder.typeDic[key.stringValue] =
-                TypeProperty.init(name: key.stringValue, swiftType: UInt16.self, sqliteType: UInt16.sqliteType, value: 0)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: UInt16.self,
+                          sqliteType: UInt16.sqliteType,
+                          value: 0)
             return 0
         }
 
         func decode(_ type: UInt32.Type, forKey key: KEY) throws -> UInt32 {
             decoder.typeDic[key.stringValue] =
-                TypeProperty.init(name: key.stringValue, swiftType: UInt32.self, sqliteType: UInt32.sqliteType, value: 0)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: UInt32.self,
+                          sqliteType: UInt32.sqliteType,
+                          value: 0)
             return 0
         }
 
         func decode(_ type: UInt64.Type, forKey key: KEY) throws -> UInt64 {
             decoder.typeDic[key.stringValue] =
-                TypeProperty.init(name: key.stringValue, swiftType: UInt64.self, sqliteType: UInt64.sqliteType, value: 0)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: UInt64.self,
+                          sqliteType: UInt64.sqliteType,
+                          value: 0)
             return 0
         }
 
         func decode(_ type: Float.Type, forKey key: KEY) throws -> Float {
             decoder.typeDic[key.stringValue] =
-                TypeProperty.init(name: key.stringValue, swiftType: Float.self, sqliteType: Float.sqliteType, value: 0)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Float.self,
+                          sqliteType: Float.sqliteType,
+                          value: 0)
             return 0
         }
 
         func decode(_ type: Double.Type, forKey key: KEY) throws -> Double {
             decoder.typeDic[key.stringValue] =
-                TypeProperty.init(name: key.stringValue, swiftType: Double.self, sqliteType: Double.sqliteType, value: 0)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Double.self,
+                          sqliteType: Double.sqliteType,
+                          value: 0)
             return 0
         }
 
         func decode(_ type: String.Type, forKey key: KEY) throws -> String {
             decoder.typeDic[key.stringValue] =
-                TypeProperty.init(name: key.stringValue, swiftType: String.self, sqliteType: String.sqliteType, value: 0)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: String.self,
+                          sqliteType: String.sqliteType,
+                          value: 0)
             return ""
         }
 
         func decode(_ type: Date.Type, forKey key: KEY) throws -> Date {
             decoder.typeDic[key.stringValue] =
-                TypeProperty.init(name: key.stringValue, swiftType: Date.self, sqliteType: Date.sqliteType, value: 0)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Date.self,
+                          sqliteType: Date.sqliteType,
+                          value: 0)
             return Date.init()
         }
 
         func decode(_ type: URL.Type, forKey key: KEY) throws -> URL {
             decoder.typeDic[key.stringValue] =
-                TypeProperty.init(name: key.stringValue, swiftType: URL.self, sqliteType: URL.sqliteType, value: 0)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: URL.self,
+                          sqliteType: URL.sqliteType,
+                          value: 0)
             return URL.init(string: "https://www.google.com")!
         }
     }

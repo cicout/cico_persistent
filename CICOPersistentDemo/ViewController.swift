@@ -5,6 +5,12 @@
 //  Created by lucky.li on 2018/6/7.
 //  Copyright © 2018 cico. All rights reserved.
 //
+// TODO: refactor for swift lint;
+// swiftlint:disable type_body_length
+// swiftlint:disable file_length
+// swiftlint:disable function_body_length
+// swiftlint:disable line_length
+// swiftlint:disable multiple_closures_with_trailing_closure
 
 import UIKit
 import CICOPersistent
@@ -148,12 +154,12 @@ class ViewController: UIViewController {
 
         // write array
         var objectArray = [TCodableClass]()
-        for i in 0..<50 {
+        for index in 0..<50 {
             guard let object = TCodableClass.init(jsonData: jsonData) else {
                 print("[ERROR]")
                 return
             }
-            object.name = "name_\(i)"
+            object.name = "name_\(index)"
             objectArray.append(object)
         }
         _ = self.ormDBService?.writeObjectArray(objectArray)
@@ -220,12 +226,12 @@ class ViewController: UIViewController {
 
         // write array
         var objectArray = [TCodableClass]()
-        for i in 0..<10 {
+        for index in 0..<10 {
             guard let object = TCodableClass.init(jsonData: jsonData) else {
                 print("[ERROR]")
                 return
             }
-            object.name = "name_\(i)"
+            object.name = "name_\(index)"
             objectArray.append(object)
         }
         _ = ormDBService1?.writeObjectArray(objectArray)
@@ -328,12 +334,12 @@ class ViewController: UIViewController {
 
         // write array
         var objectArray = [TCodableClass]()
-        for i in 0..<10 {
+        for index in 0..<10 {
             guard let object = TCodableClass.init(jsonData: jsonData) else {
                 print("[ERROR]")
                 return
             }
-            object.name = "name_\(i)"
+            object.name = "name_\(index)"
             objectArray.append(object)
         }
         _ = ormDBService1?.writeObjectArray(objectArray)

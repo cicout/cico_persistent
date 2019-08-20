@@ -5,6 +5,8 @@
 //  Created by lucky.li on 2018/8/2.
 //  Copyright © 2018 cico. All rights reserved.
 //
+// TODO: refactor for swift lint
+// swiftlint:disable multiple_closures_with_trailing_closure
 
 import XCTest
 import CICOPersistent

@@ -70,7 +70,10 @@ public class KVKeyChainService {
             self.lock.unlock()
         }
 
-        guard let encryptedData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) else {
+        guard let encryptedData =
+            self.keyChainService.query(genericKey: kGenericKey,
+                                       accountKey: kAccountKey,
+                                       serviceKey: jsonKey) else {
             return nil
         }
 
@@ -103,10 +106,18 @@ public class KVKeyChainService {
             self.lock.unlock()
         }
 
-        if let _ = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
-            return self.keyChainService.update(data: encryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
+        if self.keyChainService.query(genericKey: kGenericKey,
+                                      accountKey: kAccountKey,
+                                      serviceKey: jsonKey) != nil {
+            return self.keyChainService.update(data: encryptedData,
+                                               genericKey: kGenericKey,
+                                               accountKey: kAccountKey,
+                                               serviceKey: jsonKey)
         } else {
-            return self.keyChainService.add(data: encryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
+            return self.keyChainService.add(data: encryptedData,
+                                            genericKey: kGenericKey,
+                                            accountKey: kAccountKey,
+                                            serviceKey: jsonKey)
         }
     }
 
@@ -122,9 +133,9 @@ public class KVKeyChainService {
     ///             It won't be updated to file when you return nil by this closure;
     /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
     public func updateObject<T: Codable>(_ objectType: T.Type,
-                                           forKey userKey: String,
-                                           updateClosure: (T?) -> T?,
-                                           completionClosure: ((Bool) -> Void)? = nil) {
+                                         forKey userKey: String,
+                                         updateClosure: (T?) -> T?,
+                                         completionClosure: ((Bool) -> Void)? = nil) {
         var result = false
         defer {
             completionClosure?(result)
@@ -143,7 +154,9 @@ public class KVKeyChainService {
         var exist = false
 
         // read
-        if let encryptedData = self.keyChainService.query(genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey) {
+        if let encryptedData = self.keyChainService.query(genericKey: kGenericKey,
+                                                          accountKey: kAccountKey,
+                                                          serviceKey: jsonKey) {
             exist = true
             let jsonData = self.decryptData(encryptedData: encryptedData)
             object = KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
@@ -163,9 +176,15 @@ public class KVKeyChainService {
 
         // write
         if exist {
-            result = self.keyChainService.update(data: newEncryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
+            result = self.keyChainService.update(data: newEncryptedData,
+                                                 genericKey: kGenericKey,
+                                                 accountKey: kAccountKey,
+                                                 serviceKey: jsonKey)
         } else {
-            result = self.keyChainService.add(data: newEncryptedData, genericKey: kGenericKey, accountKey: kAccountKey, serviceKey: jsonKey)
+            result = self.keyChainService.add(data: newEncryptedData,
+                                              genericKey: kGenericKey,
+                                              accountKey: kAccountKey,
+                                              serviceKey: jsonKey)
         }
     }
 

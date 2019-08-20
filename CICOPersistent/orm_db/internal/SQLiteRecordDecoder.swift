@@ -5,6 +5,8 @@
 //  Created by lucky.li on 2018/7/24.
 //  Copyright © 2018 cico. All rights reserved.
 //
+// TODO: refactor for swift lint;
+// swiftlint:disable force_cast
 
 import Foundation
 import FMDB

@@ -5,6 +5,8 @@
 //  Created by lucky.li on 2018/8/4.
 //  Copyright © 2018 cico. All rights reserved.
 //
+// TODO: refactor for swift lint;
+// swiftlint:disable multiple_closures_with_trailing_closure
 
 import XCTest
 import CICOPersistent
@@ -76,16 +78,22 @@ class ORMDBServiceTests: XCTestCase {
 
     func test_Class_Array() {
         var objectArray = [TCodableClass]()
-        for i in 0..<50 {
+        for index in 0..<50 {
             let object = TCodableClass.init(jsonString: self.jsonString)
             XCTAssertNotNil(object, "[FAILED]: invalid object")
-            object!.name = "name_\(i)"
+            object!.name = "name_\(index)"
             objectArray.append(object!)
         }
         let writeResult = self.service.writeObjectArray(objectArray)
         XCTAssert(writeResult, "[FAILED]: write failed")
 
-        let readObjectArray = self.service.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: true, limit: 10)
+        let readObjectArray =
+            self.service
+                .readObjectArray(ofType: TCodableClass.self,
+                                 whereString: nil,
+                                 orderByName: "name",
+                                 descending: true,
+                                 limit: 10)
         XCTAssertNotNil(readObjectArray, "[FAILED]: read failed")
         XCTAssert(readObjectArray!.count > 1, "[FAILED]: read failed")
 
@@ -147,10 +155,10 @@ class ORMDBServiceTests: XCTestCase {
 
     func test_where() {
         var objectArray = [TCodableClass]()
-        for i in 0..<10 {
+        for index in 0..<10 {
             let object = TCodableClass.init(jsonString: self.jsonString)
             XCTAssertNotNil(object, "[FAILED]: invalid object")
-            object!.name = "name_\(i)"
+            object!.name = "name_\(index)"
             objectArray.append(object!)
         }
         let writeResult = self.service.writeObjectArray(objectArray)

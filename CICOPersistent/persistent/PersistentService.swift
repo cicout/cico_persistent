@@ -5,6 +5,8 @@
 //  Created by lucky.li on 2018/6/7.
 //  Copyright © 2018 cico. All rights reserved.
 //
+// TODO: refactor for swift lint;
+// swiftlint:disable file_length
 
 import Foundation
 
@@ -296,8 +298,8 @@ open class PersistentService {
     ///
     /// - see: ORMDBService.readObject(ofType:primaryKeyValue:customTableName:)
     open func readORMDBObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
-                                                    primaryKeyValue: Codable,
-                                                    customTableName: String? = nil) -> T? {
+                                                         primaryKeyValue: Codable,
+                                                         customTableName: String? = nil) -> T? {
         return self.ormDBService.readObject(ofType: objectType,
                                             primaryKeyValue: primaryKeyValue,
                                             customTableName: customTableName)
@@ -318,11 +320,11 @@ open class PersistentService {
     ///
     /// - see: ORMDBService.readObjectArray(ofType:whereString:orderByName:descending:limit:customTableName:)
     open func readORMDBObjectArray<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
-                                                         whereString: String? = nil,
-                                                         orderByName: String? = nil,
-                                                         descending: Bool = true,
-                                                         limit: Int? = nil,
-                                                         customTableName: String? = nil) -> [T]? {
+                                                              whereString: String? = nil,
+                                                              orderByName: String? = nil,
+                                                              descending: Bool = true,
+                                                              limit: Int? = nil,
+                                                              customTableName: String? = nil) -> [T]? {
         return self.ormDBService.readObjectArray(ofType: objectType,
                                                  whereString: whereString,
                                                  orderByName: orderByName,
@@ -360,7 +362,8 @@ open class PersistentService {
     /// - returns: Write result;
     ///
     /// - see: ORMDBService.writeObjectArray(_:customTableName:)
-    open func writeORMDBObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
+    open func writeORMDBObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T],
+                                                               customTableName: String? = nil) -> Bool {
         return self.ormDBService.writeObjectArray(objectArray, customTableName: customTableName)
     }
 
@@ -381,10 +384,10 @@ open class PersistentService {
     ///
     /// - see: ORMDBService.updateObject(ofType:primaryKeyValue:customTableName:updateClosure:completionClosure:)
     open func updateORMDBObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
-                                                      primaryKeyValue: Codable,
-                                                      customTableName: String? = nil,
-                                                      updateClosure: (T?) -> T?,
-                                                      completionClosure: ((Bool) -> Void)? = nil) {
+                                                           primaryKeyValue: Codable,
+                                                           customTableName: String? = nil,
+                                                           updateClosure: (T?) -> T?,
+                                                           completionClosure: ((Bool) -> Void)? = nil) {
         return self.ormDBService.updateObject(ofType: objectType,
                                               primaryKeyValue: primaryKeyValue,
                                               customTableName: customTableName,
@@ -404,8 +407,8 @@ open class PersistentService {
     ///
     /// - see: ORMDBService.removeObject(ofType:primaryKeyValue:customTableName: customTableName)
     open func removeORMDBObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
-                                                      primaryKeyValue: Codable,
-                                                      customTableName: String? = nil) -> Bool {
+                                                           primaryKeyValue: Codable,
+                                                           customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObject(ofType: objectType,
                                               primaryKeyValue: primaryKeyValue,
                                               customTableName: customTableName)
@@ -421,7 +424,8 @@ open class PersistentService {
     /// - returns: Remove result;
     ///
     /// - see: ORMDBService.removeObjectTable(ofType:customTableName:)
-    open func removeORMDBObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type, customTableName: String? = nil) -> Bool {
+    open func removeORMDBObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+                                                                customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObjectTable(ofType: objectType, customTableName: customTableName)
     }
 
@@ -479,13 +483,13 @@ open class PersistentService {
     ///
     /// - see: KVKeyChainService.defaultService.updateObject(_:forKey:updateClosure:completionClosure:)
     public func updateKVKeyChainObject<T: Codable>(_ objectType: T.Type,
-                                         forKey userKey: String,
-                                         updateClosure: (T?) -> T?,
-                                         completionClosure: ((Bool) -> Void)? = nil) {
+                                                   forKey userKey: String,
+                                                   updateClosure: (T?) -> T?,
+                                                   completionClosure: ((Bool) -> Void)? = nil) {
         KVKeyChainService.defaultService.updateObject(objectType,
-                                                          forKey: userKey,
-                                                          updateClosure: updateClosure,
-                                                          completionClosure: completionClosure)
+                                                      forKey: userKey,
+                                                      updateClosure: updateClosure,
+                                                      completionClosure: completionClosure)
     }
 
     /// Remove object from KVKeyChainService using key;

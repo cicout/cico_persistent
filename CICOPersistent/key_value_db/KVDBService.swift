@@ -111,13 +111,13 @@ open class KVDBService {
             return
         }
 
-        self.dbQueue?.inDatabase { (db) in
+        self.dbQueue?.inDatabase { (database) in
 
             var object: T?
 
             // read
             let querySQL = "SELECT * FROM \(kJSONTableName) WHERE \(kJSONKeyColumnName) = ? LIMIT 1;"
-            if let resultSet = db.executeQuery(querySQL, withArgumentsIn: [jsonKey]) {
+            if let resultSet = database.executeQuery(querySQL, withArgumentsIn: [jsonKey]) {
                 if resultSet.next(),
                     let jsonData = resultSet.data(forColumn: kJSONDataColumnName) {
                     object = KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
@@ -137,8 +137,12 @@ open class KVDBService {
 
             // write
             let updateTime = Date().timeIntervalSinceReferenceDate
-            let updateSQL = "REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName), \(kJSONDataColumnName), \(kUpdateTimeColumnName)) VALUES (?, ?, ?);"
-            result = db.executeUpdate(updateSQL, withArgumentsIn: [jsonKey, newJSONData, updateTime])
+            let updateSQL = """
+            REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName),
+            \(kJSONDataColumnName),
+            \(kUpdateTimeColumnName)) VALUES (?, ?, ?);
+            """
+            result = database.executeUpdate(updateSQL, withArgumentsIn: [jsonKey, newJSONData, updateTime])
             if !result {
                 print("[ERROR]: SQL = \(updateSQL)")
             }
@@ -181,9 +185,14 @@ open class KVDBService {
             return
         }
 
-        dbQueue.inDatabase { (db) in
-            let createTableSQL = "CREATE TABLE IF NOT EXISTS \(kJSONTableName) (\(kJSONKeyColumnName) TEXT NOT NULL, \(kJSONDataColumnName) BLOB NOT NULL, \(kUpdateTimeColumnName) REAL NOT NULL, PRIMARY KEY(\(kJSONKeyColumnName)));"
-            let result = db.executeUpdate(createTableSQL, withArgumentsIn: [])
+        dbQueue.inDatabase { (database) in
+            let createTableSQL = """
+            CREATE TABLE IF NOT EXISTS \(kJSONTableName) (\(kJSONKeyColumnName) TEXT NOT NULL,
+            \(kJSONDataColumnName) BLOB NOT NULL,
+            \(kUpdateTimeColumnName) REAL NOT NULL,
+            PRIMARY KEY(\(kJSONKeyColumnName)));
+            """
+            let result = database.executeUpdate(createTableSQL, withArgumentsIn: [])
             if result {
                 self.dbQueue = dbQueue
             } else {
@@ -203,10 +212,10 @@ open class KVDBService {
     private func readJSONData(jsonKey: String) -> Data? {
         var jsonData: Data?
 
-        self.dbQueue?.inDatabase { (db) in
+        self.dbQueue?.inDatabase { (database) in
             let querySQL = "SELECT * FROM \(kJSONTableName) WHERE \(kJSONKeyColumnName) = ? LIMIT 1;"
 
-            guard let resultSet = db.executeQuery(querySQL, withArgumentsIn: [jsonKey]) else {
+            guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: [jsonKey]) else {
                 return
             }
 
@@ -225,11 +234,15 @@ open class KVDBService {
     private func writeJSONData(_ jsonData: Data, forJSONKey jsonKey: String) -> Bool {
         var result = false
 
-        self.dbQueue?.inDatabase { (db) in
+        self.dbQueue?.inDatabase { (database) in
             let updateTime = Date().timeIntervalSinceReferenceDate
 //            print("write time \(updateTime)")
-            let updateSQL = "REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName), \(kJSONDataColumnName), \(kUpdateTimeColumnName)) VALUES (?, ?, ?);"
-            result = db.executeUpdate(updateSQL, withArgumentsIn: [jsonKey, jsonData, updateTime])
+            let updateSQL = """
+            REPLACE INTO \(kJSONTableName) (\(kJSONKeyColumnName),
+            \(kJSONDataColumnName),
+            \(kUpdateTimeColumnName)) VALUES (?, ?, ?);
+            """
+            result = database.executeUpdate(updateSQL, withArgumentsIn: [jsonKey, jsonData, updateTime])
             if !result {
                 print("[ERROR]: SQL = \(updateSQL)")
             }
@@ -241,9 +254,9 @@ open class KVDBService {
     private func removeJSONData(jsonKey: String) -> Bool {
         var result = false
 
-        self.dbQueue?.inDatabase { (db) in
+        self.dbQueue?.inDatabase { (database) in
             let deleteSQL = "DELETE FROM \(kJSONTableName) WHERE \(kJSONKeyColumnName) = ?;"
-            result = db.executeUpdate(deleteSQL, withArgumentsIn: [jsonKey])
+            result = database.executeUpdate(deleteSQL, withArgumentsIn: [jsonKey])
             if !result {
                 print("[ERROR]: SQL = \(deleteSQL)")
             }

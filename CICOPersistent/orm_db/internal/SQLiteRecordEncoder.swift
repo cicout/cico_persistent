@@ -37,8 +37,8 @@ class SQLiteRecordEncoder: Encoder {
             argumentArray.append(property.value)
         })
         replaceSQL.append(") VALUES (")
-        for i in 0..<typePropertyArray.count {
-            if 0 == i {
+        for index in 0..<typePropertyArray.count {
+            if 0 == index {
                 replaceSQL.append("?")
             } else {
                 replaceSQL.append(", ?")
@@ -125,99 +125,163 @@ class SQLiteRecordEncoder: Encoder {
 
         func encode(_ value: Bool, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: Bool.self, sqliteType: Bool.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Bool.self,
+                          sqliteType: Bool.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: Int, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: Int.self, sqliteType: Int.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Int.self,
+                          sqliteType: Int.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: Int8, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: Int8.self, sqliteType: Int8.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Int8.self,
+                          sqliteType: Int8.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: Int16, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: Int16.self, sqliteType: Int16.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Int16.self,
+                          sqliteType: Int16.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: Int32, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: Int32.self, sqliteType: Int32.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Int32.self,
+                          sqliteType: Int32.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: Int64, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: Int64.self, sqliteType: Int64.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Int64.self,
+                          sqliteType: Int64.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: UInt, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: UInt.self, sqliteType: UInt.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: UInt.self,
+                          sqliteType: UInt.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: UInt8, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: UInt8.self, sqliteType: UInt8.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: UInt8.self,
+                          sqliteType: UInt8.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: UInt16, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: UInt16.self, sqliteType: UInt16.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: UInt16.self,
+                          sqliteType: UInt16.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: UInt32, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: UInt32.self, sqliteType: UInt32.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: UInt32.self,
+                          sqliteType: UInt32.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: UInt64, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: UInt64.self, sqliteType: UInt64.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: UInt64.self,
+                          sqliteType: UInt64.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: Float, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: Float.self, sqliteType: Float.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Float.self,
+                          sqliteType: Float.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: Double, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: Double.self, sqliteType: Double.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Double.self,
+                          sqliteType: Double.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: String, forKey key: KEY) throws {
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: String.self, sqliteType: String.sqliteType, value: value)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: String.self,
+                          sqliteType: String.sqliteType,
+                          value: value)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: Date, forKey key: KEY) throws {
             let time = value.timeIntervalSinceReferenceDate
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: Date.self, sqliteType: Date.sqliteType, value: time)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: Date.self,
+                          sqliteType: Date.sqliteType,
+                          value: time)
             self.encoder.typePropertyArray.append(property)
         }
 
         func encode(_ value: URL, forKey key: KEY) throws {
             let urlString = value.absoluteString
             let property =
-                TypeProperty.init(name: key.stringValue, swiftType: URL.self, sqliteType: URL.sqliteType, value: urlString)
+                TypeProperty
+                    .init(name: key.stringValue,
+                          swiftType: URL.self,
+                          sqliteType: URL.sqliteType,
+                          value: urlString)
             self.encoder.typePropertyArray.append(property)
         }
     }

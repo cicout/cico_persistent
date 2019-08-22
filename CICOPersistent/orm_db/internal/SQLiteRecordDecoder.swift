@@ -5,12 +5,14 @@
 //  Created by lucky.li on 2018/7/24.
 //  Copyright © 2018 cico. All rights reserved.
 //
-// TODO: refactor for swift lint;
-// swiftlint:disable force_cast
 
 import Foundation
 import FMDB
 import CICOAutoCodable
+
+enum SQLiteRecordDecoderError: Error {
+    case invalidData
+}
 
 class SQLiteRecordDecoder: Decoder {
     private let resultSet: FMResultSet
@@ -100,13 +102,26 @@ class SQLiteRecordDecoder: Decoder {
 
         func decode<T>(_ objectType: T.Type, forKey key: KEY) throws -> T where T: Decodable {
             if objectType == Date.self || objectType == NSDate.self {
-                return try self.decode(Date.self, forKey: key) as! T
+                guard let value = try self.decode(Date.self, forKey: key) as? T else {
+                    throw SQLiteRecordDecoderError.invalidData
+                }
+                return value
             } else if objectType == URL.self || objectType == NSURL.self {
-                return try self.decode(URL.self, forKey: key) as! T
+                guard let value = try self.decode(URL.self, forKey: key) as? T else {
+                    throw SQLiteRecordDecoderError.invalidData
+                }
+                return value
             }
 
-            let data = decoder.resultSet.data(forColumn: key.stringValue)!
-            return KVJSONAide.transferJSONDataToObject(data, objectType: objectType)!
+            guard let data = decoder.resultSet.data(forColumn: key.stringValue) else {
+                throw SQLiteRecordDecoderError.invalidData
+            }
+
+            guard let value = KVJSONAide.transferJSONDataToObject(data, objectType: objectType) else {
+                throw SQLiteRecordDecoderError.invalidData
+            }
+
+            return value
         }
 
         func decode(_ type: Bool.Type, forKey key: KEY) throws -> Bool {
@@ -162,7 +177,11 @@ class SQLiteRecordDecoder: Decoder {
         }
 
         func decode(_ type: String.Type, forKey key: KEY) throws -> String {
-            return decoder.resultSet.string(forColumn: key.stringValue)!
+            guard let text = decoder.resultSet.string(forColumn: key.stringValue) else {
+                throw SQLiteRecordDecoderError.invalidData
+            }
+
+            return text
         }
 
         func decode(_ type: Date.Type, forKey key: KEY) throws -> Date {
@@ -171,8 +190,15 @@ class SQLiteRecordDecoder: Decoder {
         }
 
         func decode(_ type: URL.Type, forKey key: KEY) throws -> URL {
-            let urlString = decoder.resultSet.string(forColumn: key.stringValue)!
-            return URL.init(string: urlString)!
+            guard let urlString = decoder.resultSet.string(forColumn: key.stringValue) else {
+                throw SQLiteRecordDecoderError.invalidData
+            }
+
+            guard let url = URL.init(string: urlString) else {
+                throw SQLiteRecordDecoderError.invalidData
+            }
+
+            return url
         }
     }
 }

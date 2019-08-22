@@ -5,8 +5,6 @@
 //  Created by lucky.li on 2018/6/12.
 //  Copyright © 2018 cico. All rights reserved.
 //
-// TODO: refactor for swift lint
-// swiftlint:disable multiple_closures_with_trailing_closure
 
 import Foundation
 
@@ -104,9 +102,8 @@ open class KVFileService {
                           fromFileURL: fileURL,
                           updateClosure: { (object) -> T? in
                             return updateClosure(object)
-            }) { (result) in
-                completionClosure?(result)
-        }
+            },
+                          completionClosure: completionClosure)
     }
 
     /// Remove object using key;

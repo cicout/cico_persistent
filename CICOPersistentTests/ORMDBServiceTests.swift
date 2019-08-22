@@ -5,8 +5,6 @@
 //  Created by lucky.li on 2018/8/4.
 //  Copyright © 2018 cico. All rights reserved.
 //
-// TODO: refactor for swift lint;
-// swiftlint:disable multiple_closures_with_trailing_closure
 
 import XCTest
 import CICOPersistent
@@ -119,9 +117,10 @@ class ORMDBServiceTests: XCTestCase {
                           updateClosure: { (readObject) -> TCodableClass? in
                             XCTAssertNil(readObject, "[FAILED]: read not exist object failed")
                             return object
-            }) { (result) in
+            },
+                          completionClosure: { (result) in
                 XCTAssert(result, "[FAILED]: update failed")
-        }
+        })
 
         self.service
             .updateObject(ofType: TCodableClass.self,
@@ -131,9 +130,10 @@ class ORMDBServiceTests: XCTestCase {
                             XCTAssertNotNil(readObject, "[FAILED]: read exist object failed")
                             readObject!.name = updatedKey
                             return readObject
-            }) { (result) in
+            },
+                          completionClosure: { (result) in
                 XCTAssert(result, "[FAILED]: update failed")
-        }
+        })
 
         self.service
             .updateObject(ofType: TCodableClass.self,
@@ -142,9 +142,10 @@ class ORMDBServiceTests: XCTestCase {
                           updateClosure: { (readObject) -> TCodableClass? in
                             XCTAssertNotNil(readObject, "[FAILED]: read exist object failed")
                             return nil
-            }) { (result) in
+            },
+                          completionClosure: { (result) in
                 XCTAssert(result, "[FAILED]: update failed")
-        }
+        })
 
         let removeResult = self.service.removeObject(ofType: TCodableClass.self, primaryKeyValue: key)
         XCTAssert(removeResult, "[FAILED]: remove failed")

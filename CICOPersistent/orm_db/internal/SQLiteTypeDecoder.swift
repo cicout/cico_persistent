@@ -5,8 +5,6 @@
 //  Created by lucky.li on 2018/7/19.
 //  Copyright © 2018 cico. All rights reserved.
 //
-// TODO: refactor for swift lint;
-// swiftlint:disable force_cast
 
 import Foundation
 
@@ -24,6 +22,10 @@ private struct SizedPointer {
     func getPointee<T>(of type: T.Type = T.self) -> T {
         return pointer.assumingMemoryBound(to: type).pointee
     }
+}
+
+enum SQLiteTypeDecoderError: Error {
+    case invalidData
 }
 
 class SQLiteTypeDecoder: Decoder {
@@ -107,9 +109,15 @@ class SQLiteTypeDecoder: Decoder {
 
         func decode<T>(_ type: T.Type, forKey key: KEY) throws -> T where T: Decodable {
             if type == Date.self || type == NSDate.self {
-                return try self.decode(Date.self, forKey: key) as! T
+                guard let value = try self.decode(Date.self, forKey: key) as? T else {
+                    throw SQLiteTypeDecoderError.invalidData
+                }
+                return value
             } else if type == URL.self || type == NSURL.self {
-                return try self.decode(URL.self, forKey: key) as! T
+                guard let value = try self.decode(URL.self, forKey: key) as? T else {
+                    throw SQLiteTypeDecoderError.invalidData
+                }
+                return value
             }
 
             decoder.typeDic[key.stringValue] =
@@ -245,7 +253,7 @@ class SQLiteTypeDecoder: Decoder {
                           swiftType: URL.self,
                           sqliteType: URL.sqliteType,
                           value: 0)
-            return URL.init(string: "https://www.google.com")!
+            return URL.init(fileURLWithPath: "/")
         }
     }
 }

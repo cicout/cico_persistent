@@ -6,7 +6,6 @@
 //  Copyright © 2018 cico. All rights reserved.
 //
 // TODO: refactor for swift lint;
-// swiftlint:disable type_body_length
 // swiftlint:disable file_length
 // swiftlint:disable function_parameter_count
 
@@ -238,7 +237,34 @@ open class ORMDBService {
      * PRIVATE FUNCTIONS
      ********************/
 
-    ///
+    private func initDB() {
+        let dirURL = self.fileURL.deletingLastPathComponent()
+        let result = CICOFileManagerAide.createDir(with: dirURL)
+        if !result {
+            print("[ERROR]: create database dir failed")
+            return
+        }
+
+        guard let dbQueue = FMDatabaseQueue.init(url: self.fileURL) else {
+            print("[ERROR]: create database failed")
+            return
+        }
+
+        dbQueue.inDatabase { (database) in
+            if let key = self.dbPasswordKey {
+                database.setKey(key)
+            }
+
+            let result = self.createORMTableInfoTableIfNotExists(database: database)
+            if result {
+                self.dbQueue = dbQueue
+            }
+        }
+    }
+}
+
+/// Private implementation;
+extension ORMDBService {
     private func pReadObject<T: Codable>(ofType objectType: T.Type,
                                          tableName: String,
                                          primaryKeyColumnName: String,
@@ -471,31 +497,140 @@ open class ORMDBService {
         return result
     }
 
-    private func initDB() {
-        let dirURL = self.fileURL.deletingLastPathComponent()
-        let result = CICOFileManagerAide.createDir(with: dirURL)
-        if !result {
-            print("[ERROR]: create database dir failed")
-            return
+    private func readObject<T: Codable>(database: FMDatabase,
+                                        objectType: T.Type,
+                                        tableName: String,
+                                        primaryKeyColumnName: String,
+                                        primaryKeyValue: Codable) -> T? {
+        var object: T?
+
+        let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeyColumnName) = ? LIMIT 1;"
+
+        //            print("[SQL]: \(querySQL)")
+        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: [primaryKeyValue]) else {
+            print("[ERROR]: SQL = \(querySQL)")
+            return object
         }
 
-        guard let dbQueue = FMDatabaseQueue.init(url: self.fileURL) else {
-            print("[ERROR]: create database failed")
-            return
+        if resultSet.next() {
+            object = SQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, objectType: objectType)
         }
 
-        dbQueue.inDatabase { (database) in
-            if let key = self.dbPasswordKey {
-                database.setKey(key)
-            }
+        resultSet.close()
 
-            let result = self.createORMTableInfoTableIfNotExists(database: database)
-            if result {
-                self.dbQueue = dbQueue
-            }
-        }
+        return object
     }
 
+    private func readObjectArray<T: Codable>(database: FMDatabase,
+                                             objectType: T.Type,
+                                             tableName: String,
+                                             whereString: String? = nil,
+                                             orderByName: String? = nil,
+                                             descending: Bool = true,
+                                             limit: Int? = nil) -> [T]? {
+        var array: [T]?
+
+        let objectTypeName = "\(objectType)"
+
+        var querySQL = "SELECT * FROM \(tableName)"
+        var argumentArray = [Any]()
+
+        if let whereString = whereString {
+            querySQL.append(" WHERE \(whereString)")
+        }
+
+        if let orderByName = orderByName {
+            querySQL.append(" ORDER BY \(orderByName)")
+            if descending {
+                querySQL.append(" DESC")
+            } else {
+                querySQL.append(" ASC")
+            }
+        }
+
+        if let limit = limit {
+            querySQL.append(" LIMIT ?")
+            argumentArray.append(limit)
+        }
+
+        querySQL.append(";")
+
+        //            print("[SQL]: \(querySQL)")
+        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: argumentArray) else {
+            print("[ERROR]: SQL = \(querySQL)")
+            return array
+        }
+
+        defer {
+            resultSet.close()
+        }
+
+        var tempArray = [T]()
+        while resultSet.next() {
+            guard let object = SQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet,
+                                                                      objectType: objectType) else {
+                return array
+            }
+            tempArray.append(object)
+        }
+        array = tempArray
+
+        return array
+    }
+
+    private func replaceRecord<T: Codable>(database: FMDatabase, tableName: String, object: T) -> Bool {
+        var result = false
+
+        let (sql, arguments) =
+            SQLiteRecordEncoder.encodeObjectToSQL(object: object, tableName: tableName)
+
+        guard let replaceSQL = sql, let argumentArray = arguments else {
+            return result
+        }
+
+        //        print("[SQL]: \(replaceSQL)")
+        result = database.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
+        if !result {
+            print("[ERROR]: SQL = \(replaceSQL)")
+        }
+
+        return result
+    }
+
+    private func deleteRecord(database: FMDatabase,
+                              tableName: String,
+                              primaryKeyColumnName: String,
+                              primaryKeyValue: Codable) -> Bool {
+        var result = false
+
+        let deleteSQL = "DELETE FROM \(tableName) WHERE \(primaryKeyColumnName) = ?;"
+
+        //        print("[SQL]: \(deleteSQL)")
+        result = database.executeUpdate(deleteSQL, withArgumentsIn: [primaryKeyValue])
+        if !result {
+            print("[ERROR]: SQL = \(deleteSQL)")
+        }
+
+        return result
+    }
+
+    private func dropTable(database: FMDatabase, tableName: String) -> Bool {
+        var result = false
+
+        let dropSQL = "DROP TABLE \(tableName);"
+
+        //        print("[SQL]: \(dropSQL)")
+        result = database.executeUpdate(dropSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: SQL = \(dropSQL)")
+        }
+
+        return result
+    }
+}
+
+/// Database common function;
+extension ORMDBService {
     private func tableName<T>(objectType: T.Type, customTableName: String? = nil) -> String {
         let tableName: String
         if let customTableName = customTableName {
@@ -508,6 +643,63 @@ open class ORMDBService {
 
     private func indexName(indexColumnName: String, tableName: String) -> String {
         return "index_\(indexColumnName)_of_\(tableName)"
+    }
+
+    private func queryTableColumns(database: FMDatabase, tableName: String) -> Set<String> {
+        var columnSet = Set<String>.init()
+
+        let querySQL = "PRAGMA TABLE_INFO(\(tableName));"
+
+        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: []) else {
+            return columnSet
+        }
+
+        while resultSet.next() {
+            if let name = resultSet.string(forColumn: "name") {
+                columnSet.insert(name)
+            }
+        }
+
+        resultSet.close()
+
+        //        print("\(columnSet)")
+
+        return columnSet
+    }
+
+    private func queryTableIndexs(database: FMDatabase, tableName: String) -> Set<String> {
+        var indexSet = Set<String>.init()
+
+        let querySQL = """
+        SELECT name FROM SQLITE_MASTER WHERE type = 'index' AND tbl_name = '\(tableName)' AND sql IS NOT NULL;
+        """
+
+        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: []) else {
+            return indexSet
+        }
+
+        while resultSet.next() {
+            if let name = resultSet.string(forColumn: "name") {
+                indexSet.insert(name)
+            }
+        }
+
+        resultSet.close()
+
+        //        print("\(indexSet)")
+
+        return indexSet
+    }
+}
+
+/// ORMTableInfo;
+extension ORMDBService {
+    private func isTableExist(database: FMDatabase, objectTypeName: String, tableName: String) -> Bool {
+        if self.readORMTableInfo(database: database, objectTypeName: objectTypeName, tableName: tableName) != nil {
+            return true
+        } else {
+            return false
+        }
     }
 
     private func createORMTableInfoTableIfNotExists(database: FMDatabase) -> Bool {
@@ -580,7 +772,10 @@ open class ORMDBService {
                                  primaryKeyColumnName: kTableNameColumnName,
                                  primaryKeyValue: tableName)
     }
+}
 
+/// Auto upgrade table;
+extension ORMDBService {
     private func fixTableIfNeeded<T: Codable>(database: FMDatabase,
                                               objectType: T.Type,
                                               tableName: String,
@@ -616,14 +811,6 @@ open class ORMDBService {
         result = true
 
         return result
-    }
-
-    private func isTableExist(database: FMDatabase, objectTypeName: String, tableName: String) -> Bool {
-        if self.readORMTableInfo(database: database, objectTypeName: objectTypeName, tableName: tableName) != nil {
-            return true
-        } else {
-            return false
-        }
     }
 
     private func createTableAndIndexs<T: Codable>(database: FMDatabase,
@@ -797,183 +984,6 @@ open class ORMDBService {
         }
 
         result = true
-
-        return result
-    }
-
-    private func queryTableColumns(database: FMDatabase, tableName: String) -> Set<String> {
-        var columnSet = Set<String>.init()
-
-        let querySQL = "PRAGMA TABLE_INFO(\(tableName));"
-
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: []) else {
-            return columnSet
-        }
-
-        while resultSet.next() {
-            if let name = resultSet.string(forColumn: "name") {
-                columnSet.insert(name)
-            }
-        }
-
-        resultSet.close()
-
-        //        print("\(columnSet)")
-
-        return columnSet
-    }
-
-    private func queryTableIndexs(database: FMDatabase, tableName: String) -> Set<String> {
-        var indexSet = Set<String>.init()
-
-        let querySQL = """
-        SELECT name FROM SQLITE_MASTER WHERE type = 'index' AND tbl_name = '\(tableName)' AND sql IS NOT NULL;
-        """
-
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: []) else {
-            return indexSet
-        }
-
-        while resultSet.next() {
-            if let name = resultSet.string(forColumn: "name") {
-                indexSet.insert(name)
-            }
-        }
-
-        resultSet.close()
-
-        //        print("\(indexSet)")
-
-        return indexSet
-    }
-
-    private func readObject<T: Codable>(database: FMDatabase,
-                                        objectType: T.Type,
-                                        tableName: String,
-                                        primaryKeyColumnName: String,
-                                        primaryKeyValue: Codable) -> T? {
-        var object: T?
-
-        let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeyColumnName) = ? LIMIT 1;"
-
-        //            print("[SQL]: \(querySQL)")
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: [primaryKeyValue]) else {
-            print("[ERROR]: SQL = \(querySQL)")
-            return object
-        }
-
-        if resultSet.next() {
-            object = SQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, objectType: objectType)
-        }
-
-        resultSet.close()
-
-        return object
-    }
-
-    private func readObjectArray<T: Codable>(database: FMDatabase,
-                                             objectType: T.Type,
-                                             tableName: String,
-                                             whereString: String? = nil,
-                                             orderByName: String? = nil,
-                                             descending: Bool = true,
-                                             limit: Int? = nil) -> [T]? {
-        var array: [T]?
-
-        let objectTypeName = "\(objectType)"
-
-        var querySQL = "SELECT * FROM \(tableName)"
-        var argumentArray = [Any]()
-
-        if let whereString = whereString {
-            querySQL.append(" WHERE \(whereString)")
-        }
-
-        if let orderByName = orderByName {
-            querySQL.append(" ORDER BY \(orderByName)")
-            if descending {
-                querySQL.append(" DESC")
-            } else {
-                querySQL.append(" ASC")
-            }
-        }
-
-        if let limit = limit {
-            querySQL.append(" LIMIT ?")
-            argumentArray.append(limit)
-        }
-
-        querySQL.append(";")
-
-        //            print("[SQL]: \(querySQL)")
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: argumentArray) else {
-            print("[ERROR]: SQL = \(querySQL)")
-            return array
-        }
-
-        defer {
-            resultSet.close()
-        }
-
-        var tempArray = [T]()
-        while resultSet.next() {
-            guard let object = SQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet,
-                                                                      objectType: objectType) else {
-                return array
-            }
-            tempArray.append(object)
-        }
-        array = tempArray
-
-        return array
-    }
-
-    private func replaceRecord<T: Codable>(database: FMDatabase, tableName: String, object: T) -> Bool {
-        var result = false
-
-        let (sql, arguments) =
-            SQLiteRecordEncoder.encodeObjectToSQL(object: object, tableName: tableName)
-
-        guard let replaceSQL = sql, let argumentArray = arguments else {
-            return result
-        }
-
-        //        print("[SQL]: \(replaceSQL)")
-        result = database.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
-        if !result {
-            print("[ERROR]: SQL = \(replaceSQL)")
-        }
-
-        return result
-    }
-
-    private func deleteRecord(database: FMDatabase,
-                              tableName: String,
-                              primaryKeyColumnName: String,
-                              primaryKeyValue: Codable) -> Bool {
-        var result = false
-
-        let deleteSQL = "DELETE FROM \(tableName) WHERE \(primaryKeyColumnName) = ?;"
-
-        //        print("[SQL]: \(deleteSQL)")
-        result = database.executeUpdate(deleteSQL, withArgumentsIn: [primaryKeyValue])
-        if !result {
-            print("[ERROR]: SQL = \(deleteSQL)")
-        }
-
-        return result
-    }
-
-    private func dropTable(database: FMDatabase, tableName: String) -> Bool {
-        var result = false
-
-        let dropSQL = "DROP TABLE \(tableName);"
-
-        //        print("[SQL]: \(dropSQL)")
-        result = database.executeUpdate(dropSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(dropSQL)")
-        }
 
         return result
     }

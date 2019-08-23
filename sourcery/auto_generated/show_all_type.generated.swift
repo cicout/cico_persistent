@@ -5,6 +5,6 @@
 //  AppDelegate   Bool   CICOFileURL   CICOFileURL.CodingKeys   CICOFileURLTests   CICOFileURLType   CStructWrapper   CStructWrapper.CodingKeys   DBSecurityAide   Date   Decodable   Double   Encodable   Float   Int   Int16   Int32   Int64   Int8   JSONDecoder   JSONEncoder   JSONStringAide   KVDBService   KVDBServiceAide   KVDBServiceTests   KVFileService   KVFileServiceAide   KVFileServiceTests   KVJSONAide   KVKeyChainService   KVKeyChainServiceTests   KeyChainService   MyClass   MyEnum   OCCodingObjectArrayWrapper   OCCodingObjectArrayWrapper.CodingKeys   OCCodingObjectWrapper   OCCodingObjectWrapper.CodingKeys   OCEnumWrapper   OCEnumWrapper.CodingKeys   ORMDBService   ORMDBServiceAide   ORMDBServiceTests   ORMTableInfoModel   PersistentService   PersistentServiceAide   SQLiteRecordDecoder   SQLiteRecordDecoder.CICOSQLiteRecordKeyedDecodingContainer   SQLiteRecordDecoderError   SQLiteRecordEncoder   SQLiteRecordEncoder.CICOSQLiteRecordKeyedEncodingContainer   SQLiteType   SQLiteTypeDecoder   SQLiteTypeDecoder.CICOTypeKeyedDecodingContainer   SQLiteTypeDecoderError   SizedPointer   String   TCodableClass   TCodableClass.CodingKeys   TCodableStruct   TCodableStruct.CodingKeys   TypeProperty   UInt   UInt16   UInt32   UInt64   UInt8   URL   URLKVFileService   URLKVFileServiceTests   ViewController  
 
 /**
- * Found 4 CICOAutoCodable Types
- * MyClass   MyEnum   TCodableClass   TCodableStruct  
+ * Found 5 CICOAutoCodable Types
+ * MyClass   MyEnum   ORMTableInfoModel   TCodableClass   TCodableStruct  
  */

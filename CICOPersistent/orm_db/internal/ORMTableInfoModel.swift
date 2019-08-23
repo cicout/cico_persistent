@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import CICOAutoCodable
 
-class ORMTableInfoModel {
+class ORMTableInfoModel: CICOAutoCodable {
     let tableName: String
     let objectTypeName: String
     let objectTypeVersion: Int

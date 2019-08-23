@@ -644,6 +644,83 @@ extension ORMDBService {
         return "index_\(indexColumnName)_of_\(tableName)"
     }
 
+    private func createTableAndIndexs<T: Codable>(database: FMDatabase,
+                                                  objectType: T.Type,
+                                                  tableName: String,
+                                                  primaryKeyColumnName: String,
+                                                  indexColumnNameArray: [String]?,
+                                                  objectTypeVersion: Int) -> Bool {
+        var result = false
+
+        // create table
+        result = self.createTable(database: database,
+                                  objectType: objectType,
+                                  tableName: tableName,
+                                  primaryKeyColumnName: primaryKeyColumnName)
+        if !result {
+            return result
+        }
+
+        // create indexs
+        if let indexColumnNameArray = indexColumnNameArray {
+            for indexColumnName in indexColumnNameArray {
+                let indexName = self.indexName(indexColumnName: indexColumnName, tableName: tableName)
+                result = self.createIndex(database: database,
+                                          indexName: indexName,
+                                          tableName: tableName,
+                                          indexColumnName: indexColumnName)
+                if !result {
+                    return result
+                }
+            }
+        }
+
+        // save table info
+        let objectTypeName = "\(objectType)"
+        let tableInfo = ORMTableInfoModel.init(tableName: tableName,
+                                               objectTypeName: objectTypeName,
+                                               objectTypeVersion: objectTypeVersion)
+        result = self.writeORMTableInfo(database: database, tableInfo: tableInfo)
+
+        return result
+    }
+
+    private func createTable<T: Codable>(database: FMDatabase,
+                                         objectType: T.Type,
+                                         tableName: String,
+                                         primaryKeyColumnName: String) -> Bool {
+        var result = false
+
+        let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
+
+        var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
+        var isFirst = true
+        sqliteTypeDic.forEach({ (name, sqliteType) in
+            if isFirst {
+                isFirst = false
+                createTableSQL.append("\(name)")
+            } else {
+                createTableSQL.append(", \(name)")
+            }
+
+            createTableSQL.append(" \(sqliteType.sqliteType.rawValue)")
+
+            if name == primaryKeyColumnName {
+                createTableSQL.append(" NOT NULL")
+            }
+        })
+        createTableSQL.append(", PRIMARY KEY(\(primaryKeyColumnName))")
+        createTableSQL.append(");")
+
+        result = database.executeUpdate(createTableSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: SQL = \(createTableSQL)")
+            return result
+        }
+
+        return result
+    }
+
     private func queryTableColumns(database: FMDatabase, tableName: String) -> Set<String> {
         var columnSet = Set<String>.init()
 
@@ -847,70 +924,6 @@ extension ORMDBService {
         }
 
         result = true
-
-        return result
-    }
-
-    private func createTableAndIndexs<T: Codable>(database: FMDatabase,
-                                                  objectType: T.Type,
-                                                  tableName: String,
-                                                  primaryKeyColumnName: String,
-                                                  indexColumnNameArray: [String]?,
-                                                  objectTypeVersion: Int) -> Bool {
-        var result = false
-
-        let objectTypeName = "\(objectType)"
-
-        // create table
-
-        let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
-        //            print("\nsqliteTypes: \(sqliteTypes)")
-
-        var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
-        var isFirst = true
-        sqliteTypeDic.forEach({ (name, sqliteType) in
-            if isFirst {
-                isFirst = false
-                createTableSQL.append("\(name)")
-            } else {
-                createTableSQL.append(", \(name)")
-            }
-
-            createTableSQL.append(" \(sqliteType.sqliteType.rawValue)")
-
-            if name == primaryKeyColumnName {
-                createTableSQL.append(" NOT NULL")
-            }
-        })
-        createTableSQL.append(", PRIMARY KEY(\(primaryKeyColumnName))")
-        createTableSQL.append(");")
-
-        //            print("[SQL]: \(createTableSQL)")
-        result = database.executeUpdate(createTableSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(createTableSQL)")
-            return result
-        }
-
-        // create index
-        if let indexColumnNameArray = indexColumnNameArray {
-            for indexColumnName in indexColumnNameArray {
-                let indexName = self.indexName(indexColumnName: indexColumnName, tableName: tableName)
-                result = self.createIndex(database: database,
-                                          indexName: indexName,
-                                          tableName: tableName,
-                                          indexColumnName: indexColumnName)
-                if !result {
-                    return result
-                }
-            }
-        }
-
-        // save table info
-        let tableInfo = ORMTableInfoModel.init(tableName: tableName,
-                                               objectTypeName: objectTypeName,
-                                               objectTypeVersion: objectTypeVersion)
-        result = self.writeORMTableInfo(database: database, tableInfo: tableInfo)
 
         return result
     }

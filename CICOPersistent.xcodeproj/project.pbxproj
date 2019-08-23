@@ -39,6 +39,8 @@
 		E43374BB21AD64FE00296237 /* CICOSQLCipherAide.m in Sources */ = {isa = PBXBuildFile; fileRef = E43374B921AD64FE00296237 /* CICOSQLCipherAide.m */; };
 		E4710E5C21364BF2003F6798 /* CICOFileURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E5B21364BF2003F6798 /* CICOFileURL.swift */; };
 		E4710E682136C278003F6798 /* CICOFileURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E672136C278003F6798 /* CICOFileURLTests.swift */; };
+		E481121D230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */; };
+		E481121F230FD7BD001DA5B9 /* ParamConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481121E230FD7BD001DA5B9 /* ParamConfigModel.swift */; };
 		E482ED0720CE167B001FF435 /* KVDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED0620CE167B001FF435 /* KVDBService.swift */; };
 		E482ED1420CF6950001FF435 /* KVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1320CF6950001FF435 /* KVFileService.swift */; };
 		E484B44920DCA34600FE0AC9 /* ORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E484B44820DCA34600FE0AC9 /* ORMDBService.swift */; };
@@ -163,6 +165,8 @@
 		E43374B921AD64FE00296237 /* CICOSQLCipherAide.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CICOSQLCipherAide.m; sourceTree = "<group>"; };
 		E4710E5B21364BF2003F6798 /* CICOFileURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOFileURL.swift; sourceTree = "<group>"; };
 		E4710E672136C278003F6798 /* CICOFileURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOFileURLTests.swift; sourceTree = "<group>"; };
+		E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceInnerAide.swift; sourceTree = "<group>"; };
+		E481121E230FD7BD001DA5B9 /* ParamConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParamConfigModel.swift; sourceTree = "<group>"; };
 		E482ED0620CE167B001FF435 /* KVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBService.swift; sourceTree = "<group>"; };
 		E482ED1320CF6950001FF435 /* KVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileService.swift; sourceTree = "<group>"; };
 		E484B44820DCA34600FE0AC9 /* ORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBService.swift; sourceTree = "<group>"; };
@@ -322,7 +326,9 @@
 		E42B66A52102D547006EBAC2 /* internal */ = {
 			isa = PBXGroup;
 			children = (
+				E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */,
 				E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */,
+				E481121E230FD7BD001DA5B9 /* ParamConfigModel.swift */,
 				E41958BA20F8971D007EA4B4 /* SQLiteRecordDecoder.swift */,
 				E42B665B21002DDD006EBAC2 /* SQLiteRecordEncoder.swift */,
 				E492B4B120EB188200BC48A4 /* SQLiteType.swift */,
@@ -688,7 +694,9 @@
 				E492B4B220EB188200BC48A4 /* SQLiteType.swift in Sources */,
 				E49F7CD6210AC18200CF24F0 /* KeyChainService.swift in Sources */,
 				E482ED0720CE167B001FF435 /* KVDBService.swift in Sources */,
+				E481121D230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift in Sources */,
 				E42B66A42102CECE006EBAC2 /* ORMProtocol.swift in Sources */,
+				E481121F230FD7BD001DA5B9 /* ParamConfigModel.swift in Sources */,
 				E41F764720C8D32A00399E42 /* PersistentService.swift in Sources */,
 				E49F7CF9210C447400CF24F0 /* KVJSONAide.swift in Sources */,
 				E41F765420C92CAD00399E42 /* CICOPathAide.m in Sources */,

@@ -5,8 +5,6 @@
 //  Created by lucky.li on 2018/6/22.
 //  Copyright © 2018 cico. All rights reserved.
 //
-// TODO: refactor for swift lint;
-// swiftlint:disable file_length
 
 import Foundation
 import FMDB
@@ -18,13 +16,6 @@ private let kORMTableName = "cico_orm_table_info"
 private let kTableNameColumnName = "table_name"
 private let kObjectTypeNameColumnName = "object_type_name"
 private let kObjectTypeVersionColumnName = "object_type_version"
-
-private struct ParamConfigModel {
-    let tableName: String
-    let primaryKeyColumnName: String
-    let indexColumnNameArray: [String]?
-    let objectTypeVersion: Int
-}
 
 ///
 /// ORM database service;
@@ -75,7 +66,7 @@ open class ORMDBService {
     open func readObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                     primaryKeyValue: Codable,
                                                     customTableName: String? = nil) -> T? {
-        let tableName = self.tableName(objectType: objectType, customTableName: customTableName)
+        let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
 
         return self.pReadObject(ofType: objectType,
@@ -102,7 +93,7 @@ open class ORMDBService {
                                                          descending: Bool = true,
                                                          limit: Int? = nil,
                                                          customTableName: String? = nil) -> [T]? {
-        let tableName = self.tableName(objectType: objectType, customTableName: customTableName)
+        let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
 
         return self.pReadObjectArray(ofType: objectType,
                                      tableName: tableName,
@@ -123,7 +114,7 @@ open class ORMDBService {
     ///
     /// - returns: Write result;
     open func writeObject<T: CICOORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
-        let tableName = self.tableName(objectType: T.self, customTableName: customTableName)
+        let tableName = ORMDBServiceInnerAide.tableName(objectType: T.self, customTableName: customTableName)
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
         let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
         let objectTypeVersion = T.cicoORMObjectTypeVersion()
@@ -147,7 +138,7 @@ open class ORMDBService {
     ///
     /// - returns: Write result;
     open func writeObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
-        let tableName = self.tableName(objectType: T.self, customTableName: customTableName)
+        let tableName = ORMDBServiceInnerAide.tableName(objectType: T.self, customTableName: customTableName)
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
         let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
         let objectTypeVersion = T.cicoORMObjectTypeVersion()
@@ -178,7 +169,7 @@ open class ORMDBService {
                                                       customTableName: String? = nil,
                                                       updateClosure: (T?) -> T?,
                                                       completionClosure: ((Bool) -> Void)? = nil) {
-        let tableName = self.tableName(objectType: objectType, customTableName: customTableName)
+        let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
         let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
         let objectTypeVersion = T.cicoORMObjectTypeVersion()
@@ -206,7 +197,7 @@ open class ORMDBService {
     open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil) -> Bool {
-        let tableName = self.tableName(objectType: objectType, customTableName: customTableName)
+        let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
 
         return self.pRemoveObject(ofType: objectType,
@@ -225,7 +216,7 @@ open class ORMDBService {
     /// - returns: Remove result;
     open func removeObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
                                                            customTableName: String? = nil) -> Bool {
-        let tableName = self.tableName(objectType: objectType, customTableName: customTableName)
+        let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
 
         return self.pRemoveObjectTable(ofType: objectType, tableName: tableName)
     }
@@ -285,7 +276,7 @@ extension ORMDBService {
                 return
             }
 
-            object = self.readObject(database: database,
+            object = ORMDBServiceInnerAide.readObject(database: database,
                                      objectType: objectType,
                                      tableName: tableName,
                                      primaryKeyColumnName: primaryKeyColumnName,
@@ -310,7 +301,7 @@ extension ORMDBService {
                 return
             }
 
-            array = self.readObjectArray(database: database,
+            array = ORMDBServiceInnerAide.readObjectArray(database: database,
                                          objectType: objectType,
                                          tableName: tableName,
                                          whereString: whereString,
@@ -348,7 +339,7 @@ extension ORMDBService {
             }
 
             // replace table record;
-            result = self.replaceRecord(database: database, tableName: tableName, object: object)
+            result = ORMDBServiceInnerAide.replaceRecord(database: database, tableName: tableName, object: object)
             if !result {
                 rollback.pointee = true
                 return
@@ -385,7 +376,7 @@ extension ORMDBService {
 
             for object in objectArray {
                 // replace table record;
-                result = self.replaceRecord(database: database, tableName: tableName, object: object)
+                result = ORMDBServiceInnerAide.replaceRecord(database: database, tableName: tableName, object: object)
                 if !result {
                     rollback.pointee = true
                     return
@@ -415,7 +406,7 @@ extension ORMDBService {
                                                objectTypeName: objectTypeName,
                                                tableName: paramConfig.tableName)
             if tableExist {
-                object = self.readObject(database: database,
+                object = ORMDBServiceInnerAide.readObject(database: database,
                                          objectType: objectType,
                                          tableName: paramConfig.tableName,
                                          primaryKeyColumnName: paramConfig.primaryKeyColumnName,
@@ -442,7 +433,9 @@ extension ORMDBService {
                 return
             }
 
-            result = self.replaceRecord(database: database, tableName: paramConfig.tableName, object: newObject)
+            result = ORMDBServiceInnerAide.replaceRecord(database: database,
+                                                         tableName: paramConfig.tableName,
+                                                         object: newObject)
             if !result {
                 rollback.pointee = true
             }
@@ -463,7 +456,7 @@ extension ORMDBService {
                 return
             }
 
-            result = self.deleteRecord(database: database,
+            result = ORMDBServiceInnerAide.deleteRecord(database: database,
                                        tableName: tableName,
                                        primaryKeyColumnName: primaryKeyColumnName,
                                        primaryKeyValue: primaryKeyValue)
@@ -487,13 +480,13 @@ extension ORMDBService {
                 return
             }
 
-            result = self.dropTable(database: database, tableName: tableName)
+            result = ORMDBServiceInnerAide.dropTable(database: database, tableName: tableName)
             if !result {
                 rollback.pointee = true
                 return
             }
 
-            result = self.deleteRecord(database: database,
+            result = ORMDBServiceInnerAide.deleteRecord(database: database,
                                        tableName: kORMTableName,
                                        primaryKeyColumnName: kTableNameColumnName,
                                        primaryKeyValue: tableName)
@@ -505,160 +498,20 @@ extension ORMDBService {
 
         return result
     }
-
-    private func readObject<T: Codable>(database: FMDatabase,
-                                        objectType: T.Type,
-                                        tableName: String,
-                                        primaryKeyColumnName: String,
-                                        primaryKeyValue: Codable) -> T? {
-        var object: T?
-
-        let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeyColumnName) = ? LIMIT 1;"
-
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: [primaryKeyValue]) else {
-            print("[ERROR]: SQL = \(querySQL)")
-            return object
-        }
-
-        if resultSet.next() {
-            object = SQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet, objectType: objectType)
-        }
-
-        resultSet.close()
-
-        return object
-    }
-
-    private func readObjectArray<T: Codable>(database: FMDatabase,
-                                             objectType: T.Type,
-                                             tableName: String,
-                                             whereString: String? = nil,
-                                             orderByName: String? = nil,
-                                             descending: Bool = true,
-                                             limit: Int? = nil) -> [T]? {
-        var array: [T]?
-
-        let objectTypeName = "\(objectType)"
-
-        var querySQL = "SELECT * FROM \(tableName)"
-        var argumentArray = [Any]()
-
-        if let whereString = whereString {
-            querySQL.append(" WHERE \(whereString)")
-        }
-
-        if let orderByName = orderByName {
-            querySQL.append(" ORDER BY \(orderByName)")
-            if descending {
-                querySQL.append(" DESC")
-            } else {
-                querySQL.append(" ASC")
-            }
-        }
-
-        if let limit = limit {
-            querySQL.append(" LIMIT ?")
-            argumentArray.append(limit)
-        }
-
-        querySQL.append(";")
-
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: argumentArray) else {
-            print("[ERROR]: SQL = \(querySQL)")
-            return array
-        }
-
-        defer {
-            resultSet.close()
-        }
-
-        var tempArray = [T]()
-        while resultSet.next() {
-            guard let object = SQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet,
-                                                                      objectType: objectType) else {
-                return array
-            }
-            tempArray.append(object)
-        }
-        array = tempArray
-
-        return array
-    }
-
-    private func replaceRecord<T: Codable>(database: FMDatabase, tableName: String, object: T) -> Bool {
-        var result = false
-
-        let (sql, arguments) =
-            SQLiteRecordEncoder.encodeObjectToSQL(object: object, tableName: tableName)
-
-        guard let replaceSQL = sql, let argumentArray = arguments else {
-            return result
-        }
-
-        result = database.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
-        if !result {
-            print("[ERROR]: SQL = \(replaceSQL)")
-        }
-
-        return result
-    }
-
-    private func deleteRecord(database: FMDatabase,
-                              tableName: String,
-                              primaryKeyColumnName: String,
-                              primaryKeyValue: Codable) -> Bool {
-        var result = false
-
-        let deleteSQL = "DELETE FROM \(tableName) WHERE \(primaryKeyColumnName) = ?;"
-
-        result = database.executeUpdate(deleteSQL, withArgumentsIn: [primaryKeyValue])
-        if !result {
-            print("[ERROR]: SQL = \(deleteSQL)")
-        }
-
-        return result
-    }
-
-    private func dropTable(database: FMDatabase, tableName: String) -> Bool {
-        var result = false
-
-        let dropSQL = "DROP TABLE \(tableName);"
-
-        result = database.executeUpdate(dropSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(dropSQL)")
-        }
-
-        return result
-    }
 }
 
 /// Database common function;
 extension ORMDBService {
-    private func tableName<T>(objectType: T.Type, customTableName: String? = nil) -> String {
-        let tableName: String
-        if let customTableName = customTableName {
-            tableName = customTableName
-        } else {
-            tableName = "table_\(objectType)"
-        }
-        return tableName
-    }
-
-    private func indexName(indexColumnName: String, tableName: String) -> String {
-        return "index_\(indexColumnName)_of_\(tableName)"
-    }
-
     private func createTableAndIndexs<T: Codable>(database: FMDatabase,
                                                   objectType: T.Type,
                                                   paramConfig: ParamConfigModel) -> Bool {
         var result = false
 
         // create table;
-        result = self.createTable(database: database,
-                                  objectType: objectType,
-                                  tableName: paramConfig.tableName,
-                                  primaryKeyColumnName: paramConfig.primaryKeyColumnName)
+        result = ORMDBServiceInnerAide.createTableIfNotExists(database: database,
+                                                   objectType: objectType,
+                                                   tableName: paramConfig.tableName,
+                                                   primaryKeyColumnName: paramConfig.primaryKeyColumnName)
         if !result {
             return result
         }
@@ -666,11 +519,12 @@ extension ORMDBService {
         // create indexs;
         if let indexColumnNameArray = paramConfig.indexColumnNameArray {
             for indexColumnName in indexColumnNameArray {
-                let indexName = self.indexName(indexColumnName: indexColumnName, tableName: paramConfig.tableName)
-                result = self.createIndex(database: database,
-                                          indexName: indexName,
-                                          tableName: paramConfig.tableName,
-                                          indexColumnName: indexColumnName)
+                let indexName = ORMDBServiceInnerAide.indexName(indexColumnName: indexColumnName,
+                                                                tableName: paramConfig.tableName)
+                result = ORMDBServiceInnerAide.createIndex(database: database,
+                                                           indexName: indexName,
+                                                           tableName: paramConfig.tableName,
+                                                           indexColumnName: indexColumnName)
                 if !result {
                     return result
                 }
@@ -683,120 +537,6 @@ extension ORMDBService {
                                                objectTypeName: objectTypeName,
                                                objectTypeVersion: paramConfig.objectTypeVersion)
         result = self.writeORMTableInfo(database: database, tableInfo: tableInfo)
-
-        return result
-    }
-
-    private func createTable<T: Codable>(database: FMDatabase,
-                                         objectType: T.Type,
-                                         tableName: String,
-                                         primaryKeyColumnName: String) -> Bool {
-        var result = false
-
-        let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
-
-        var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
-        var isFirst = true
-        sqliteTypeDic.forEach({ (name, sqliteType) in
-            if isFirst {
-                isFirst = false
-                createTableSQL.append("\(name)")
-            } else {
-                createTableSQL.append(", \(name)")
-            }
-
-            createTableSQL.append(" \(sqliteType.sqliteType.rawValue)")
-
-            if name == primaryKeyColumnName {
-                createTableSQL.append(" NOT NULL")
-            }
-        })
-        createTableSQL.append(", PRIMARY KEY(\(primaryKeyColumnName))")
-        createTableSQL.append(");")
-
-        result = database.executeUpdate(createTableSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(createTableSQL)")
-            return result
-        }
-
-        return result
-    }
-
-    private func queryTableColumns(database: FMDatabase, tableName: String) -> Set<String> {
-        var columnSet = Set<String>.init()
-
-        let querySQL = "PRAGMA TABLE_INFO(\(tableName));"
-
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: []) else {
-            return columnSet
-        }
-
-        while resultSet.next() {
-            if let name = resultSet.string(forColumn: "name") {
-                columnSet.insert(name)
-            }
-        }
-
-        resultSet.close()
-
-        return columnSet
-    }
-
-    private func addColumn(database: FMDatabase, tableName: String, columnName: String, columnType: String) -> Bool {
-        let alterSQL = "ALTER TABLE \(tableName) ADD COLUMN \(columnName) \(columnType);"
-
-        let result = database.executeUpdate(alterSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(alterSQL)")
-        }
-
-        return result
-    }
-
-    private func queryTableIndexs(database: FMDatabase, tableName: String) -> Set<String> {
-        var indexSet = Set<String>.init()
-
-        let querySQL = """
-        SELECT name FROM SQLITE_MASTER WHERE type = 'index' AND tbl_name = '\(tableName)' AND sql IS NOT NULL;
-        """
-
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: []) else {
-            return indexSet
-        }
-
-        while resultSet.next() {
-            if let name = resultSet.string(forColumn: "name") {
-                indexSet.insert(name)
-            }
-        }
-
-        resultSet.close()
-
-        return indexSet
-    }
-
-    private func createIndex(database: FMDatabase,
-                             indexName: String,
-                             tableName: String,
-                             indexColumnName: String) -> Bool {
-        let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(indexColumnName));"
-
-        let result = database.executeUpdate(createIndexSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(createIndexSQL)")
-        }
-
-        return result
-    }
-
-    private func dropIndex(database: FMDatabase, indexName: String) -> Bool {
-        let dropIndexSQL = "DROP INDEX \(indexName);"
-
-        let result = database.executeUpdate(dropIndexSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(dropIndexSQL)")
-        }
 
         return result
     }
@@ -813,71 +553,45 @@ extension ORMDBService {
     }
 
     private func createORMTableInfoTableIfNotExists(database: FMDatabase) -> Bool {
-        let createTableSQL = """
-        CREATE TABLE IF NOT EXISTS \(kORMTableName) (\(kTableNameColumnName) TEXT NOT NULL,
-        \(kObjectTypeNameColumnName) TEXT NOT NULL,
-        \(kObjectTypeVersionColumnName) INTEGER NOT NULL,
-        PRIMARY KEY(\(kTableNameColumnName)));
-        """
+        let primaryKeyColumnName = ORMTableInfoModel.cicoORMPrimaryKeyColumnName()
 
-        let result = database.executeUpdate(createTableSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(createTableSQL)")
-        }
-
-        return result
+        return ORMDBServiceInnerAide.createTableIfNotExists(database: database,
+                                                            objectType: ORMTableInfoModel.self,
+                                                            tableName: kORMTableName,
+                                                            primaryKeyColumnName: primaryKeyColumnName)
     }
 
     private func readORMTableInfo(database: FMDatabase,
                                   objectTypeName: String,
                                   tableName: String) -> ORMTableInfoModel? {
-        var tableInfo: ORMTableInfoModel?
+        let primaryKeyColumnName = ORMTableInfoModel.cicoORMPrimaryKeyColumnName()
 
-        let querySQL = "SELECT * FROM \(kORMTableName) WHERE \(kTableNameColumnName) = ? LIMIT 1;"
-
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: [tableName]) else {
-            return tableInfo
+        guard let tableInfo = ORMDBServiceInnerAide.readObject(database: database,
+                                                         objectType: ORMTableInfoModel.self,
+                                                         tableName: kORMTableName,
+                                                         primaryKeyColumnName: primaryKeyColumnName,
+                                                         primaryKeyValue: tableName) else {
+                                                            return nil
         }
 
-        if resultSet.next() {
-            if let objectTypeNameValue = resultSet.string(forColumn: kObjectTypeNameColumnName),
-                objectTypeNameValue == objectTypeName {
-                let objectTypeVersion: Int = resultSet.long(forColumn: kObjectTypeVersionColumnName)
-                let temp = ORMTableInfoModel.init(tableName: tableName,
-                                                  objectTypeName: objectTypeNameValue,
-                                                  objectTypeVersion: objectTypeVersion)
-                tableInfo = temp
-            }
+        guard tableInfo.objectTypeName == objectTypeName else {
+            return nil
         }
-
-        resultSet.close()
 
         return tableInfo
     }
 
     private func writeORMTableInfo(database: FMDatabase, tableInfo: ORMTableInfoModel) -> Bool {
-        var result = false
-
-        let replaceSQL = """
-        REPLACE INTO \(kORMTableName) (\(kTableNameColumnName),
-        \(kObjectTypeNameColumnName),
-        \(kObjectTypeVersionColumnName)) VALUES (?, ?, ?);
-        """
-        let argumentArray: [Any] = [tableInfo.tableName, tableInfo.objectTypeName, tableInfo.objectTypeVersion]
-
-        result = database.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
-        if !result {
-            print("[ERROR]: SQL = \(replaceSQL)")
-        }
-
-        return result
+        return ORMDBServiceInnerAide.replaceRecord(database: database,
+                                                   tableName: kORMTableName,
+                                                   object: tableInfo)
     }
 
     private func removeORMTableInfo(database: FMDatabase, tableName: String) -> Bool {
-        return self.deleteRecord(database: database,
-                                 tableName: kORMTableName,
-                                 primaryKeyColumnName: kTableNameColumnName,
-                                 primaryKeyValue: tableName)
+        return ORMDBServiceInnerAide.deleteRecord(database: database,
+                                                  tableName: kORMTableName,
+                                                  primaryKeyColumnName: kTableNameColumnName,
+                                                  primaryKeyValue: tableName)
     }
 }
 
@@ -894,10 +608,10 @@ extension ORMDBService {
         guard let tableInfo = self.readORMTableInfo(database: database,
                                                     objectTypeName: objectTypeName,
                                                     tableName: paramConfig.tableName) else {
-            result = self.createTableAndIndexs(database: database,
-                                               objectType: objectType,
-                                               paramConfig: paramConfig)
-            return result
+                                                        result = self.createTableAndIndexs(database: database,
+                                                                                           objectType: objectType,
+                                                                                           paramConfig: paramConfig)
+                                                        return result
         }
 
         guard tableInfo.objectTypeVersion >= paramConfig.objectTypeVersion else {
@@ -922,19 +636,19 @@ extension ORMDBService {
                                                    objectTypeVersion: Int) -> Bool {
         var result = false
 
-        // upgrade column;
-        result = self.upgradeTableColumn(database: database,
-                                         objectType: objectType,
-                                         tableName: tableName)
+        // upgrade columns;
+        result = ORMDBServiceInnerAide.upgradeTableColumn(database: database,
+                                                          objectType: objectType,
+                                                          tableName: tableName)
         if !result {
             return result
         }
 
         // upgrade indexs;
-        result = self.upgradeTableIndex(database: database,
-                                        objectType: objectType,
-                                        tableName: tableName,
-                                        indexColumnNameArray: indexColumnNameArray)
+        result = ORMDBServiceInnerAide.upgradeTableIndex(database: database,
+                                                         objectType: objectType,
+                                                         tableName: tableName,
+                                                         indexColumnNameArray: indexColumnNameArray)
         if !result {
             return result
         }
@@ -945,81 +659,6 @@ extension ORMDBService {
                                                   objectTypeName: objectTypeName,
                                                   objectTypeVersion: objectTypeVersion)
         result = self.writeORMTableInfo(database: database, tableInfo: newTableInfo)
-
-        return result
-    }
-
-    private func upgradeTableColumn<T: Codable>(database: FMDatabase,
-                                                objectType: T.Type,
-                                                tableName: String) -> Bool {
-        var result = false
-
-        let columnSet = self.queryTableColumns(database: database, tableName: tableName)
-        let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
-        let newColumnSet = Set<String>.init(sqliteTypeDic.keys)
-        let needAddColumnSet = newColumnSet.subtracting(columnSet)
-
-        for columnName in needAddColumnSet {
-            let sqliteType = sqliteTypeDic[columnName]!
-            result = self.addColumn(database: database,
-                                    tableName: tableName,
-                                    columnName: columnName,
-                                    columnType: sqliteType.sqliteType.rawValue)
-            if !result {
-                return result
-            }
-        }
-
-        result = true
-
-        return result
-    }
-
-    private func upgradeTableIndex<T: Codable>(database: FMDatabase,
-                                               objectType: T.Type,
-                                               tableName: String,
-                                               indexColumnNameArray: [String]?) -> Bool {
-        var result = false
-
-        let indexSet = self.queryTableIndexs(database: database, tableName: tableName)
-        let newIndexSet: Set<String>
-        let newIndexDic: [String: String]
-        if let indexColumnNameArray = indexColumnNameArray {
-            var tempSet = Set<String>.init()
-            var tempIndexDic = [String: String]()
-            indexColumnNameArray.forEach { (indexColumnName) in
-                let indexName = self.indexName(indexColumnName: indexColumnName, tableName: tableName)
-                tempSet.insert(indexName)
-                tempIndexDic[indexName] = indexColumnName
-            }
-            newIndexSet = tempSet
-            newIndexDic = tempIndexDic
-        } else {
-            newIndexSet = Set<String>.init()
-            newIndexDic = [String: String]()
-        }
-
-        let needAddIndexSet = newIndexSet.subtracting(indexSet)
-        for indexName in needAddIndexSet {
-            let indexColumnName = newIndexDic[indexName]!
-            result = self.createIndex(database: database,
-                                      indexName: indexName,
-                                      tableName: tableName,
-                                      indexColumnName: indexColumnName)
-            if !result {
-                return result
-            }
-        }
-
-        let needDeleteIndexSet = indexSet.subtracting(newIndexSet)
-        for indexName in needDeleteIndexSet {
-            result = self.dropIndex(database: database, indexName: indexName)
-            if !result {
-                return result
-            }
-        }
-
-        result = true
 
         return result
     }

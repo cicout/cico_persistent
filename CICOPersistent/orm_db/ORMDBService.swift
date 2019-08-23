@@ -19,6 +19,13 @@ private let kTableNameColumnName = "table_name"
 private let kObjectTypeNameColumnName = "object_type_name"
 private let kObjectTypeVersionColumnName = "object_type_version"
 
+private struct ParamConfigModel {
+    let tableName: String
+    let primaryKeyColumnName: String
+    let indexColumnNameArray: [String]?
+    let objectTypeVersion: Int
+}
+
 ///
 /// ORM database service;
 ///
@@ -176,12 +183,13 @@ open class ORMDBService {
         let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
         let objectTypeVersion = T.cicoORMObjectTypeVersion()
 
+        let paramConfig = ParamConfigModel.init(tableName: tableName,
+                                                primaryKeyColumnName: primaryKeyColumnName,
+                                                indexColumnNameArray: indexColumnNameArray,
+                                                objectTypeVersion: objectTypeVersion)
         self.pUpdateObject(ofType: objectType,
-                           tableName: tableName,
-                           primaryKeyColumnName: primaryKeyColumnName,
+                           paramConfig: paramConfig,
                            primaryKeyValue: primaryKeyValue,
-                           indexColumnNameArray: indexColumnNameArray,
-                           objectTypeVersion: objectTypeVersion,
                            updateClosure: updateClosure,
                            completionClosure: completionClosure)
     }
@@ -324,21 +332,22 @@ extension ORMDBService {
         let objectType = T.self
 
         self.dbQueue?.inTransaction({ (database, rollback) in
-            // create table if not exist and upgrade table if needed
+            // create table if not exist and upgrade table if needed;
+            let paramConfig = ParamConfigModel.init(tableName: tableName,
+                                                    primaryKeyColumnName: primaryKeyColumnName,
+                                                    indexColumnNameArray: indexColumnNameArray,
+                                                    objectTypeVersion: objectTypeVersion)
             let isTableReady =
-                self.fixTableIfNeeded(database: database,
-                                      objectType: objectType,
-                                      tableName: tableName,
-                                      primaryKeyColumnName: primaryKeyColumnName,
-                                      indexColumnNameArray: indexColumnNameArray,
-                                      objectTypeVersion: objectTypeVersion)
+                self.createAndUpgradeTableIfNeeded(database: database,
+                                                   objectType: objectType,
+                                                   paramConfig: paramConfig)
 
             if !isTableReady {
                 rollback.pointee = true
                 return
             }
 
-            // replace table record
+            // replace table record;
             result = self.replaceRecord(database: database, tableName: tableName, object: object)
             if !result {
                 rollback.pointee = true
@@ -359,14 +368,15 @@ extension ORMDBService {
         let objectType = T.self
 
         self.dbQueue?.inTransaction({ (database, rollback) in
-            // create table if not exist and upgrade table if needed
+            // create table if not exist and upgrade table if needed;
+            let paramConfig = ParamConfigModel.init(tableName: tableName,
+                                                    primaryKeyColumnName: primaryKeyColumnName,
+                                                    indexColumnNameArray: indexColumnNameArray,
+                                                    objectTypeVersion: objectTypeVersion)
             let isTableReady =
-                self.fixTableIfNeeded(database: database,
-                                      objectType: objectType,
-                                      tableName: tableName,
-                                      primaryKeyColumnName: primaryKeyColumnName,
-                                      indexColumnNameArray: indexColumnNameArray,
-                                      objectTypeVersion: objectTypeVersion)
+                self.createAndUpgradeTableIfNeeded(database: database,
+                                                   objectType: objectType,
+                                                   paramConfig: paramConfig)
 
             if !isTableReady {
                 rollback.pointee = true
@@ -374,7 +384,7 @@ extension ORMDBService {
             }
 
             for object in objectArray {
-                // replace table record
+                // replace table record;
                 result = self.replaceRecord(database: database, tableName: tableName, object: object)
                 if !result {
                     rollback.pointee = true
@@ -387,11 +397,8 @@ extension ORMDBService {
     }
 
     private func pUpdateObject<T: Codable>(ofType objectType: T.Type,
-                                           tableName: String,
-                                           primaryKeyColumnName: String,
+                                           paramConfig: ParamConfigModel,
                                            primaryKeyValue: Codable,
-                                           indexColumnNameArray: [String]?,
-                                           objectTypeVersion: Int,
                                            updateClosure: (T?) -> T?,
                                            completionClosure: ((Bool) -> Void)?) {
         var result = false
@@ -404,12 +411,14 @@ extension ORMDBService {
         self.dbQueue?.inTransaction({ (database, rollback) in
             var object: T?
 
-            let tableExist = self.isTableExist(database: database, objectTypeName: objectTypeName, tableName: tableName)
+            let tableExist = self.isTableExist(database: database,
+                                               objectTypeName: objectTypeName,
+                                               tableName: paramConfig.tableName)
             if tableExist {
                 object = self.readObject(database: database,
                                          objectType: objectType,
-                                         tableName: tableName,
-                                         primaryKeyColumnName: primaryKeyColumnName,
+                                         tableName: paramConfig.tableName,
+                                         primaryKeyColumnName: paramConfig.primaryKeyColumnName,
                                          primaryKeyValue: primaryKeyValue)
             }
 
@@ -418,21 +427,22 @@ extension ORMDBService {
                 return
             }
 
-            // create table if not exist and upgrade table if needed
+            // create table if not exist and upgrade table if needed;
+            let paramConfig = ParamConfigModel.init(tableName: paramConfig.tableName,
+                                                    primaryKeyColumnName: paramConfig.primaryKeyColumnName,
+                                                    indexColumnNameArray: paramConfig.indexColumnNameArray,
+                                                    objectTypeVersion: paramConfig.objectTypeVersion)
             let isTableReady =
-                self.fixTableIfNeeded(database: database,
-                                      objectType: objectType,
-                                      tableName: tableName,
-                                      primaryKeyColumnName: primaryKeyColumnName,
-                                      indexColumnNameArray: indexColumnNameArray,
-                                      objectTypeVersion: objectTypeVersion)
+                self.createAndUpgradeTableIfNeeded(database: database,
+                                                   objectType: objectType,
+                                                   paramConfig: paramConfig)
 
             if !isTableReady {
                 rollback.pointee = true
                 return
             }
 
-            result = self.replaceRecord(database: database, tableName: tableName, object: newObject)
+            result = self.replaceRecord(database: database, tableName: paramConfig.tableName, object: newObject)
             if !result {
                 rollback.pointee = true
             }
@@ -505,7 +515,6 @@ extension ORMDBService {
 
         let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeyColumnName) = ? LIMIT 1;"
 
-        //            print("[SQL]: \(querySQL)")
         guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: [primaryKeyValue]) else {
             print("[ERROR]: SQL = \(querySQL)")
             return object
@@ -554,7 +563,6 @@ extension ORMDBService {
 
         querySQL.append(";")
 
-        //            print("[SQL]: \(querySQL)")
         guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: argumentArray) else {
             print("[ERROR]: SQL = \(querySQL)")
             return array
@@ -587,7 +595,6 @@ extension ORMDBService {
             return result
         }
 
-        //        print("[SQL]: \(replaceSQL)")
         result = database.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
         if !result {
             print("[ERROR]: SQL = \(replaceSQL)")
@@ -604,7 +611,6 @@ extension ORMDBService {
 
         let deleteSQL = "DELETE FROM \(tableName) WHERE \(primaryKeyColumnName) = ?;"
 
-        //        print("[SQL]: \(deleteSQL)")
         result = database.executeUpdate(deleteSQL, withArgumentsIn: [primaryKeyValue])
         if !result {
             print("[ERROR]: SQL = \(deleteSQL)")
@@ -618,7 +624,6 @@ extension ORMDBService {
 
         let dropSQL = "DROP TABLE \(tableName);"
 
-        //        print("[SQL]: \(dropSQL)")
         result = database.executeUpdate(dropSQL, withArgumentsIn: [])
         if !result {
             print("[ERROR]: SQL = \(dropSQL)")
@@ -646,28 +651,25 @@ extension ORMDBService {
 
     private func createTableAndIndexs<T: Codable>(database: FMDatabase,
                                                   objectType: T.Type,
-                                                  tableName: String,
-                                                  primaryKeyColumnName: String,
-                                                  indexColumnNameArray: [String]?,
-                                                  objectTypeVersion: Int) -> Bool {
+                                                  paramConfig: ParamConfigModel) -> Bool {
         var result = false
 
-        // create table
+        // create table;
         result = self.createTable(database: database,
                                   objectType: objectType,
-                                  tableName: tableName,
-                                  primaryKeyColumnName: primaryKeyColumnName)
+                                  tableName: paramConfig.tableName,
+                                  primaryKeyColumnName: paramConfig.primaryKeyColumnName)
         if !result {
             return result
         }
 
-        // create indexs
-        if let indexColumnNameArray = indexColumnNameArray {
+        // create indexs;
+        if let indexColumnNameArray = paramConfig.indexColumnNameArray {
             for indexColumnName in indexColumnNameArray {
-                let indexName = self.indexName(indexColumnName: indexColumnName, tableName: tableName)
+                let indexName = self.indexName(indexColumnName: indexColumnName, tableName: paramConfig.tableName)
                 result = self.createIndex(database: database,
                                           indexName: indexName,
-                                          tableName: tableName,
+                                          tableName: paramConfig.tableName,
                                           indexColumnName: indexColumnName)
                 if !result {
                     return result
@@ -675,11 +677,11 @@ extension ORMDBService {
             }
         }
 
-        // save table info
+        // save orm table info;
         let objectTypeName = "\(objectType)"
-        let tableInfo = ORMTableInfoModel.init(tableName: tableName,
+        let tableInfo = ORMTableInfoModel.init(tableName: paramConfig.tableName,
                                                objectTypeName: objectTypeName,
-                                               objectTypeVersion: objectTypeVersion)
+                                               objectTypeVersion: paramConfig.objectTypeVersion)
         result = self.writeORMTableInfo(database: database, tableInfo: tableInfo)
 
         return result
@@ -738,15 +740,12 @@ extension ORMDBService {
 
         resultSet.close()
 
-        //        print("\(columnSet)")
-
         return columnSet
     }
 
     private func addColumn(database: FMDatabase, tableName: String, columnName: String, columnType: String) -> Bool {
         let alterSQL = "ALTER TABLE \(tableName) ADD COLUMN \(columnName) \(columnType);"
 
-        //print("[SQL]: \(alterSQL)")
         let result = database.executeUpdate(alterSQL, withArgumentsIn: [])
         if !result {
             print("[ERROR]: SQL = \(alterSQL)")
@@ -774,8 +773,6 @@ extension ORMDBService {
 
         resultSet.close()
 
-        //        print("\(indexSet)")
-
         return indexSet
     }
 
@@ -785,7 +782,6 @@ extension ORMDBService {
                              indexColumnName: String) -> Bool {
         let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(indexColumnName));"
 
-        //print("[SQL]: \(createIndexSQL)")
         let result = database.executeUpdate(createIndexSQL, withArgumentsIn: [])
         if !result {
             print("[ERROR]: SQL = \(createIndexSQL)")
@@ -797,7 +793,6 @@ extension ORMDBService {
     private func dropIndex(database: FMDatabase, indexName: String) -> Bool {
         let dropIndexSQL = "DROP INDEX \(indexName);"
 
-        //print("[SQL]: \(dropIndexSQL)")
         let result = database.executeUpdate(dropIndexSQL, withArgumentsIn: [])
         if !result {
             print("[ERROR]: SQL = \(dropIndexSQL)")
@@ -825,7 +820,6 @@ extension ORMDBService {
         PRIMARY KEY(\(kTableNameColumnName)));
         """
 
-        //        print("[SQL]: \(createTableSQL)")
         let result = database.executeUpdate(createTableSQL, withArgumentsIn: [])
         if !result {
             print("[ERROR]: SQL = \(createTableSQL)")
@@ -841,7 +835,6 @@ extension ORMDBService {
 
         let querySQL = "SELECT * FROM \(kORMTableName) WHERE \(kTableNameColumnName) = ? LIMIT 1;"
 
-        //        print("[SQL]: \(querySQL)")
         guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: [tableName]) else {
             return tableInfo
         }
@@ -872,7 +865,6 @@ extension ORMDBService {
         """
         let argumentArray: [Any] = [tableInfo.tableName, tableInfo.objectTypeName, tableInfo.objectTypeVersion]
 
-        //        print("[SQL]: \(replaceSQL)")
         result = database.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
         if !result {
             print("[ERROR]: SQL = \(replaceSQL)")
@@ -891,34 +883,29 @@ extension ORMDBService {
 
 /// Auto upgrade table;
 extension ORMDBService {
-    private func fixTableIfNeeded<T: Codable>(database: FMDatabase,
-                                              objectType: T.Type,
-                                              tableName: String,
-                                              primaryKeyColumnName: String,
-                                              indexColumnNameArray: [String]?,
-                                              objectTypeVersion: Int) -> Bool {
+    /// create table if not exist and upgrade table if needed;
+    private func createAndUpgradeTableIfNeeded<T: Codable>(database: FMDatabase,
+                                                           objectType: T.Type,
+                                                           paramConfig: ParamConfigModel) -> Bool {
         var result = false
 
         let objectTypeName = "\(objectType)"
 
         guard let tableInfo = self.readORMTableInfo(database: database,
                                                     objectTypeName: objectTypeName,
-                                                    tableName: tableName) else {
+                                                    tableName: paramConfig.tableName) else {
             result = self.createTableAndIndexs(database: database,
                                                objectType: objectType,
-                                               tableName: tableName,
-                                               primaryKeyColumnName: primaryKeyColumnName,
-                                               indexColumnNameArray: indexColumnNameArray,
-                                               objectTypeVersion: objectTypeVersion)
+                                               paramConfig: paramConfig)
             return result
         }
 
-        guard tableInfo.objectTypeVersion >= objectTypeVersion else {
+        guard tableInfo.objectTypeVersion >= paramConfig.objectTypeVersion else {
             result = self.upgradeTableAndIndexs(database: database,
                                                 objectType: objectType,
-                                                tableName: tableName,
-                                                indexColumnNameArray: indexColumnNameArray,
-                                                objectTypeVersion: objectTypeVersion)
+                                                tableName: paramConfig.tableName,
+                                                indexColumnNameArray: paramConfig.indexColumnNameArray,
+                                                objectTypeVersion: paramConfig.objectTypeVersion)
 
             return result
         }
@@ -935,7 +922,7 @@ extension ORMDBService {
                                                    objectTypeVersion: Int) -> Bool {
         var result = false
 
-        // upgrade column
+        // upgrade column;
         result = self.upgradeTableColumn(database: database,
                                          objectType: objectType,
                                          tableName: tableName)
@@ -943,7 +930,7 @@ extension ORMDBService {
             return result
         }
 
-        // upgrade indexs
+        // upgrade indexs;
         result = self.upgradeTableIndex(database: database,
                                         objectType: objectType,
                                         tableName: tableName,
@@ -952,7 +939,7 @@ extension ORMDBService {
             return result
         }
 
-        // update objectTypeVersion
+        // update objectTypeVersion;
         let objectTypeName = "\(objectType)"
         let newTableInfo = ORMTableInfoModel.init(tableName: tableName,
                                                   objectTypeName: objectTypeName,
@@ -967,7 +954,6 @@ extension ORMDBService {
                                                 tableName: String) -> Bool {
         var result = false
 
-        // upgrade column
         let columnSet = self.queryTableColumns(database: database, tableName: tableName)
         let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
         let newColumnSet = Set<String>.init(sqliteTypeDic.keys)
@@ -995,7 +981,6 @@ extension ORMDBService {
                                                indexColumnNameArray: [String]?) -> Bool {
         var result = false
 
-        // upgrade indexs
         let indexSet = self.queryTableIndexs(database: database, tableName: tableName)
         let newIndexSet: Set<String>
         let newIndexDic: [String: String]

@@ -7,7 +7,6 @@
 //
 // TODO: refactor for swift lint;
 // swiftlint:disable file_length
-// swiftlint:disable function_parameter_count
 
 import Foundation
 import FMDB
@@ -667,6 +666,18 @@ extension ORMDBService {
         return columnSet
     }
 
+    private func addColumn(database: FMDatabase, tableName: String, columnName: String, columnType: String) -> Bool {
+        let alterSQL = "ALTER TABLE \(tableName) ADD COLUMN \(columnName) \(columnType);"
+
+        //print("[SQL]: \(alterSQL)")
+        let result = database.executeUpdate(alterSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: SQL = \(alterSQL)")
+        }
+
+        return result
+    }
+
     private func queryTableIndexs(database: FMDatabase, tableName: String) -> Set<String> {
         var indexSet = Set<String>.init()
 
@@ -689,6 +700,33 @@ extension ORMDBService {
         //        print("\(indexSet)")
 
         return indexSet
+    }
+
+    private func createIndex(database: FMDatabase,
+                             indexName: String,
+                             tableName: String,
+                             indexColumnName: String) -> Bool {
+        let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(indexColumnName));"
+
+        //print("[SQL]: \(createIndexSQL)")
+        let result = database.executeUpdate(createIndexSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: SQL = \(createIndexSQL)")
+        }
+
+        return result
+    }
+
+    private func dropIndex(database: FMDatabase, indexName: String) -> Bool {
+        let dropIndexSQL = "DROP INDEX \(indexName);"
+
+        //print("[SQL]: \(dropIndexSQL)")
+        let result = database.executeUpdate(dropIndexSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: SQL = \(dropIndexSQL)")
+        }
+
+        return result
     }
 }
 
@@ -799,11 +837,11 @@ extension ORMDBService {
         }
 
         guard tableInfo.objectTypeVersion >= objectTypeVersion else {
-            result = self.upgradeTable(database: database,
-                                       objectType: objectType,
-                                       tableName: tableName,
-                                       indexColumnNameArray: indexColumnNameArray,
-                                       objectTypeVersion: objectTypeVersion)
+            result = self.upgradeTableAndIndexs(database: database,
+                                                objectType: objectType,
+                                                tableName: tableName,
+                                                indexColumnNameArray: indexColumnNameArray,
+                                                objectTypeVersion: objectTypeVersion)
 
             return result
         }
@@ -877,11 +915,11 @@ extension ORMDBService {
         return result
     }
 
-    private func upgradeTable<T: Codable>(database: FMDatabase,
-                                          objectType: T.Type,
-                                          tableName: String,
-                                          indexColumnNameArray: [String]?,
-                                          objectTypeVersion: Int) -> Bool {
+    private func upgradeTableAndIndexs<T: Codable>(database: FMDatabase,
+                                                   objectType: T.Type,
+                                                   tableName: String,
+                                                   indexColumnNameArray: [String]?,
+                                                   objectTypeVersion: Int) -> Bool {
         var result = false
 
         // upgrade column
@@ -984,45 +1022,6 @@ extension ORMDBService {
         }
 
         result = true
-
-        return result
-    }
-
-    private func addColumn(database: FMDatabase, tableName: String, columnName: String, columnType: String) -> Bool {
-        let alterSQL = "ALTER TABLE \(tableName) ADD COLUMN \(columnName) \(columnType);"
-
-        //print("[SQL]: \(alterSQL)")
-        let result = database.executeUpdate(alterSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(alterSQL)")
-        }
-
-        return result
-    }
-
-    private func createIndex(database: FMDatabase,
-                             indexName: String,
-                             tableName: String,
-                             indexColumnName: String) -> Bool {
-        let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(indexColumnName));"
-
-        //print("[SQL]: \(createIndexSQL)")
-        let result = database.executeUpdate(createIndexSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(createIndexSQL)")
-        }
-
-        return result
-    }
-
-    private func dropIndex(database: FMDatabase, indexName: String) -> Bool {
-        let dropIndexSQL = "DROP INDEX \(indexName);"
-
-        //print("[SQL]: \(dropIndexSQL)")
-        let result = database.executeUpdate(dropIndexSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(dropIndexSQL)")
-        }
 
         return result
     }

@@ -8,7 +8,6 @@
 // TODO: refactor for swift lint;
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
-// swiftlint:disable function_body_length
 // swiftlint:disable function_parameter_count
 
 import Foundation
@@ -519,7 +518,7 @@ open class ORMDBService {
         PRIMARY KEY(\(kTableNameColumnName)));
         """
 
-         //        print("[SQL]: \(createTableSQL)")
+        //        print("[SQL]: \(createTableSQL)")
         let result = database.executeUpdate(createTableSQL, withArgumentsIn: [])
         if !result {
             print("[ERROR]: SQL = \(createTableSQL)")
@@ -545,8 +544,8 @@ open class ORMDBService {
                 objectTypeNameValue == objectTypeName {
                 let objectTypeVersion: Int = resultSet.long(forColumn: kObjectTypeVersionColumnName)
                 let temp = ORMTableInfoModel.init(tableName: tableName,
-                                                      objectTypeName: objectTypeNameValue,
-                                                      objectTypeVersion: objectTypeVersion)
+                                                  objectTypeName: objectTypeNameValue,
+                                                  objectTypeVersion: objectTypeVersion)
                 tableInfo = temp
             }
         }
@@ -605,67 +604,11 @@ open class ORMDBService {
         }
 
         guard tableInfo.objectTypeVersion >= objectTypeVersion else {
-            // upgrade column
-            let columnSet = self.queryTableColumns(database: database, tableName: tableName)
-            let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
-            let newColumnSet = Set<String>.init(sqliteTypeDic.keys)
-            let needAddColumnSet = newColumnSet.subtracting(columnSet)
-
-            for columnName in needAddColumnSet {
-                let sqliteType = sqliteTypeDic[columnName]!
-                result = self.addColumn(database: database,
-                                        tableName: tableName,
-                                        columnName: columnName,
-                                        columnType: sqliteType.sqliteType.rawValue)
-                if !result {
-                    return result
-                }
-            }
-
-            // upgrade indexs
-            let indexSet = self.queryTableIndexs(database: database, tableName: tableName)
-            let newIndexSet: Set<String>
-            let newIndexDic: [String: String]
-            if let indexColumnNameArray = indexColumnNameArray {
-                var tempSet = Set<String>.init()
-                var tempIndexDic = [String: String]()
-                indexColumnNameArray.forEach { (indexColumnName) in
-                    let indexName = self.indexName(indexColumnName: indexColumnName, tableName: tableName)
-                    tempSet.insert(indexName)
-                    tempIndexDic[indexName] = indexColumnName
-                }
-                newIndexSet = tempSet
-                newIndexDic = tempIndexDic
-            } else {
-                newIndexSet = Set<String>.init()
-                newIndexDic = [String: String]()
-            }
-
-            let needAddIndexSet = newIndexSet.subtracting(indexSet)
-            for indexName in needAddIndexSet {
-                let indexColumnName = newIndexDic[indexName]!
-                result = self.createIndex(database: database,
-                                          indexName: indexName,
-                                          tableName: tableName,
-                                          indexColumnName: indexColumnName)
-                if !result {
-                    return result
-                }
-            }
-
-            let needDeleteIndexSet = indexSet.subtracting(newIndexSet)
-            for indexName in needDeleteIndexSet {
-                result = self.dropIndex(database: database, indexName: indexName)
-                if !result {
-                    return result
-                }
-            }
-
-            // update objectTypeVersion
-            let newTableInfo = ORMTableInfoModel.init(tableName: tableName,
-                                                          objectTypeName: objectTypeName,
-                                                          objectTypeVersion: objectTypeVersion)
-            result = self.writeORMTableInfo(database: database, tableInfo: newTableInfo)
+            result = self.upgradeTable(database: database,
+                                       objectType: objectType,
+                                       tableName: tableName,
+                                       indexColumnNameArray: indexColumnNameArray,
+                                       objectTypeVersion: objectTypeVersion)
 
             return result
         }
@@ -743,6 +686,117 @@ open class ORMDBService {
                                                objectTypeName: objectTypeName,
                                                objectTypeVersion: objectTypeVersion)
         result = self.writeORMTableInfo(database: database, tableInfo: tableInfo)
+
+        return result
+    }
+
+    private func upgradeTable<T: Codable>(database: FMDatabase,
+                                          objectType: T.Type,
+                                          tableName: String,
+                                          indexColumnNameArray: [String]?,
+                                          objectTypeVersion: Int) -> Bool {
+        var result = false
+
+        // upgrade column
+        result = self.upgradeTableColumn(database: database,
+                                         objectType: objectType,
+                                         tableName: tableName)
+        if !result {
+            return result
+        }
+
+        // upgrade indexs
+        result = self.upgradeTableIndex(database: database,
+                                        objectType: objectType,
+                                        tableName: tableName,
+                                        indexColumnNameArray: indexColumnNameArray)
+        if !result {
+            return result
+        }
+
+        // update objectTypeVersion
+        let objectTypeName = "\(objectType)"
+        let newTableInfo = ORMTableInfoModel.init(tableName: tableName,
+                                                  objectTypeName: objectTypeName,
+                                                  objectTypeVersion: objectTypeVersion)
+        result = self.writeORMTableInfo(database: database, tableInfo: newTableInfo)
+
+        return result
+    }
+
+    private func upgradeTableColumn<T: Codable>(database: FMDatabase,
+                                                objectType: T.Type,
+                                                tableName: String) -> Bool {
+        var result = false
+
+        // upgrade column
+        let columnSet = self.queryTableColumns(database: database, tableName: tableName)
+        let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
+        let newColumnSet = Set<String>.init(sqliteTypeDic.keys)
+        let needAddColumnSet = newColumnSet.subtracting(columnSet)
+
+        for columnName in needAddColumnSet {
+            let sqliteType = sqliteTypeDic[columnName]!
+            result = self.addColumn(database: database,
+                                    tableName: tableName,
+                                    columnName: columnName,
+                                    columnType: sqliteType.sqliteType.rawValue)
+            if !result {
+                return result
+            }
+        }
+
+        result = true
+
+        return result
+    }
+
+    private func upgradeTableIndex<T: Codable>(database: FMDatabase,
+                                               objectType: T.Type,
+                                               tableName: String,
+                                               indexColumnNameArray: [String]?) -> Bool {
+        var result = false
+
+        // upgrade indexs
+        let indexSet = self.queryTableIndexs(database: database, tableName: tableName)
+        let newIndexSet: Set<String>
+        let newIndexDic: [String: String]
+        if let indexColumnNameArray = indexColumnNameArray {
+            var tempSet = Set<String>.init()
+            var tempIndexDic = [String: String]()
+            indexColumnNameArray.forEach { (indexColumnName) in
+                let indexName = self.indexName(indexColumnName: indexColumnName, tableName: tableName)
+                tempSet.insert(indexName)
+                tempIndexDic[indexName] = indexColumnName
+            }
+            newIndexSet = tempSet
+            newIndexDic = tempIndexDic
+        } else {
+            newIndexSet = Set<String>.init()
+            newIndexDic = [String: String]()
+        }
+
+        let needAddIndexSet = newIndexSet.subtracting(indexSet)
+        for indexName in needAddIndexSet {
+            let indexColumnName = newIndexDic[indexName]!
+            result = self.createIndex(database: database,
+                                      indexName: indexName,
+                                      tableName: tableName,
+                                      indexColumnName: indexColumnName)
+            if !result {
+                return result
+            }
+        }
+
+        let needDeleteIndexSet = indexSet.subtracting(newIndexSet)
+        for indexName in needDeleteIndexSet {
+            result = self.dropIndex(database: database, indexName: indexName)
+            if !result {
+                return result
+            }
+        }
+
+        result = true
 
         return result
     }

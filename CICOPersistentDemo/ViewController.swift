@@ -5,12 +5,9 @@
 //  Created by lucky.li on 2018/6/7.
 //  Copyright © 2018 cico. All rights reserved.
 //
-// TODO: refactor for swift lint;
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
 // swiftlint:disable function_body_length
-// swiftlint:disable line_length
-// swiftlint:disable multiple_closures_with_trailing_closure
 
 import UIKit
 import CICOPersistent
@@ -39,7 +36,6 @@ class ViewController: UIViewController {
 //        self.doKVDBTest()
 //        self.doORMDBTest()
 //        self.doKVKeyChainTest()
-//        self.testMyClass()
 //        self.doSQLCipherTest()
 //        self.doDBSecurityTest()
     }
@@ -165,7 +161,11 @@ class ViewController: UIViewController {
         _ = self.ormDBService?.writeObjectArray(objectArray)
 
         // read array
-        if let arrayX = self.ormDBService?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+        if let arrayX = self.ormDBService?.readObjectArray(ofType: TCodableClass.self,
+                                                           whereString: nil,
+                                                           orderByName: "name",
+                                                           descending: false,
+                                                           limit: 10) {
             print("[READ]: \(arrayX)")
         }
 
@@ -248,7 +248,11 @@ class ViewController: UIViewController {
         let ormDBService2 = ORMDBService.init(fileURL: url2, password: originalPassword2)
 
         // read array
-        if let arrayX = ormDBService2.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+        if let arrayX = ormDBService2.readObjectArray(ofType: TCodableClass.self,
+                                                      whereString: nil,
+                                                      orderByName: "name",
+                                                      descending: false,
+                                                      limit: 10) {
             print("[READ]: \(arrayX)")
         }
 
@@ -262,7 +266,11 @@ class ViewController: UIViewController {
         let ormDBService3 = ORMDBService.init(fileURL: url3, password: nil)
 
         // read array
-        if let arrayX = ormDBService3.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+        if let arrayX = ormDBService3.readObjectArray(ofType: TCodableClass.self,
+                                                      whereString: nil,
+                                                      orderByName: "name",
+                                                      descending: false,
+                                                      limit: 10) {
             print("[READ]: \(arrayX)")
         }
 
@@ -276,7 +284,11 @@ class ViewController: UIViewController {
         let ormDBService4 = ORMDBService.init(fileURL: url4, password: originalPassword4)
 
         // read array
-        if let arrayX = ormDBService4.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+        if let arrayX = ormDBService4.readObjectArray(ofType: TCodableClass.self,
+                                                      whereString: nil,
+                                                      orderByName: "name",
+                                                      descending: false,
+                                                      limit: 10) {
             print("[READ]: \(arrayX)")
         }
 
@@ -293,7 +305,11 @@ class ViewController: UIViewController {
         let ormDBService5 = ORMDBService.init(fileURL: url5, password: originalPassword5)
 
         // read array
-        if let arrayX = ormDBService5.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+        if let arrayX = ormDBService5.readObjectArray(ofType: TCodableClass.self,
+                                                      whereString: nil,
+                                                      orderByName: "name",
+                                                      descending: false,
+                                                      limit: 10) {
             print("[READ]: \(arrayX)")
         }
 
@@ -310,7 +326,11 @@ class ViewController: UIViewController {
         let ormDBService6 = ORMDBService.init(fileURL: url6, password: nil)
 
         // read array
-        if let arrayX = ormDBService6.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+        if let arrayX = ormDBService6.readObjectArray(ofType: TCodableClass.self,
+                                                      whereString: nil,
+                                                      orderByName: "name",
+                                                      descending: false,
+                                                      limit: 10) {
             print("[READ]: \(arrayX)")
         }
     }
@@ -353,7 +373,11 @@ class ViewController: UIViewController {
         var ormDBService1x: ORMDBService? = ORMDBService.init(fileURL: url1, password: nil)
 
         // read array
-        if let arrayX = ormDBService1x?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+        if let arrayX = ormDBService1x?.readObjectArray(ofType: TCodableClass.self,
+                                                        whereString: nil,
+                                                        orderByName: "name",
+                                                        descending: false,
+                                                        limit: 10) {
             print("[READ]: \(arrayX)")
         }
 
@@ -372,7 +396,11 @@ class ViewController: UIViewController {
         var ormDBService2: ORMDBService? = ORMDBService.init(fileURL: url2, password: password2)
 
         // read array
-        if let arrayX = ormDBService2?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+        if let arrayX = ormDBService2?.readObjectArray(ofType: TCodableClass.self,
+                                                       whereString: nil,
+                                                       orderByName: "name",
+                                                       descending: false,
+                                                       limit: 10) {
             print("[READ]: \(arrayX)")
         }
 
@@ -393,7 +421,11 @@ class ViewController: UIViewController {
         var ormDBService3: ORMDBService? = ORMDBService.init(fileURL: url3, password: password3x)
 
         // read array
-        if let arrayX = ormDBService3?.readObjectArray(ofType: TCodableClass.self, whereString: nil, orderByName: "name", descending: false, limit: 10) {
+        if let arrayX = ormDBService3?.readObjectArray(ofType: TCodableClass.self,
+                                                       whereString: nil,
+                                                       orderByName: "name",
+                                                       descending: false,
+                                                       limit: 10) {
             print("[READ]: \(arrayX)")
         }
 
@@ -609,223 +641,14 @@ class ViewController: UIViewController {
                                 print("[UPDATE CLOSURE]: object = \(object)")
                             }
                             return nil
-            }) { (result) in
-                print("[UPDATE]: \(result)")
-        }
+            },
+                          completionClosure: { (result) in
+                            print("[UPDATE]: \(result)")
+            })
 
         let removeResult = KVKeyChainService.defaultService.removeObject(forKey: key)
         print("[REMOVE]: \(removeResult)")
 
         print("\n[***** END TESTING *****]\n")
-    }
-
-    private func testMyClass() {
-//        let myJSONString = JSONStringAide.jsonString(name: "my")
-//        let key = "test_my_class"
-
-        /** //KVFileService
-        // Initialization
-        //```swift
-        let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/kv_file")!
-        let service = KVFileService.init(rootDirURL: url)
-        //```
-        // Read
-        //```swift
-        let readValue = service.readObject(MyClass.self, forKey: key)
-        //```
-        // Write
-        //```swift
-        let value = MyClass.init(jsonString: myJSONString)!
-        let writeResult = service.writeObject(value, forKey: key)
-        //```
-        // Remove
-        //```swift
-        let removeResult = service.removeObject(forKey: key)
-        //```
-        // Update
-        //It is a read-update-write sequence function during one lock.
-        //```swift
-        service
-            .updateObject(MyClass.self,
-                          forKey: key,
-                          updateClosure: { (readObject) -> MyClass? in
-                            readObject?.stringValue = "updated_string"
-                            return readObject
-            }) { (result) in
-                print("result = \(result)")
-        }
-        //```
-        // ClearAll
-        //```swift
-        let clearResult = service.clearAll()
-        //```
-        **/
-
-        /** //URLKVFileService
-        let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_class")!
-        let dirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file")!
-        let _ = CICOFileManagerAide.createDir(with: dirURL)
-        // Initialization
-        //```swift
-        let service = URLKVFileService.init()
-        //```
-        // Read
-        //```swift
-        let readValue = service.readObject(MyClass.self, fromFileURL: url)
-        //```
-        // Write
-        //```swift
-        let value = MyClass.init(jsonString: myJSONString)!
-        let writeResult = service.writeObject(value, toFileURL: url)
-        //```
-        // Remove
-        //```swift
-        let removeResult = service.removeObject(forFileURL: url)
-        //```
-        // Update
-        //It is a read-update-write sequence function during one lock.
-        //```swift
-        service
-            .updateObject(MyClass.self,
-                          fromFileURL: url,
-                          updateClosure: { (readObject) -> MyClass? in
-                            readObject?.stringValue = "updated_string"
-                            return readObject
-            }) { (result) in
-                print("result = \(result)")
-        }
-        //```
-        **/
-
-        /** //KVDBService
-        // Initialization
-        //```swift
-        let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/kv.db")!
-        let service = KVDBService.init(fileURL: url)
-        //```
-        // Read
-        //```swift
-        let readValue = service.readObject(MyClass.self, forKey: key)
-        //```
-        // Write
-        //```swift
-        let value = MyClass.init(jsonString: myJSONString)!
-        let writeResult = service.writeObject(value, forKey: key)
-        //```
-        // Remove
-        //```swift
-        let removeResult = service.removeObject(forKey: key)
-        //```
-        // Update
-        //It is a read-update-write sequence function during one lock.
-        //```swift
-        service
-            .updateObject(MyClass.self,
-                          forKey: key,
-                          updateClosure: { (readObject) -> MyClass? in
-                            readObject?.stringValue = "updated_string"
-                            return readObject
-            }) { (result) in
-                print("result = \(result)")
-        }
-        //```
-        // ClearAll
-        //```swift
-        let clearResult = service.clearAll()
-        //```
-        **/
-
-        /** //ORMDBService
-        let primaryKey = "string"
-        // Initialization
-        //```swift
-        let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/orm.db")!
-        let service = ORMDBService.init(fileURL: url)
-        //```
-        // Read
-        //```swift
-        let readObject = service.readObject(ofType: MyClass.self, primaryKeyValue: primaryKey)
-        //```
-        // Read Array
-        //```
-        let readObjectArray = service.readObjectArray(ofType: MyClass.self, whereString: nil, orderByName: "stringValue", descending: false, limit: 10)
-        //```
-        // Write
-        //```swift
-        let value = MyClass.init(jsonString: myJSONString)!
-        let writeResult = service.writeObject(value)
-        //```
-        // Write Array
-        //```
-        var objectArray = [MyClass]()
-        for i in 0..<20 {
-            let object = MyClass.init(jsonString: myJSONString)!
-            object.stringValue = "string_\(i)"
-            objectArray.append(object)
-        }
-        let writeResult2 = service.writeObjectArray(objectArray)
-        //```
-        // Remove
-        //```swift
-        let removeResult = service.removeObject(ofType: MyClass.self, primaryKeyValue: primaryKey)
-        //```
-        // Remove Object Table
-        //```
-        let removeResult2 = service.removeObjectTable(ofType: MyClass.self)
-        //```
-        // Update
-        //It is a read-update-write sequence function during one lock.
-        //```swift
-        service
-            .updateObject(ofType: MyClass.self,
-                          primaryKeyValue: primaryKey,
-                          customTableName: nil,
-                          updateClosure: { (readObject) -> MyClass? in
-                            readObject?.stringValue = "updated_string"
-                            return readObject
-            }) { (result) in
-                print("result = \(result)")
-        }
-        //```
-        // ClearAll
-        //```swift
-        let clearResult = service.clearAll()
-        //```
-        **/
-
-        /** //KVKeyChainService
-        // Initialization
-        //```swift
-        let service = KVKeyChainService.init(encryptionKey: "test_encryption_key")
-        // You can also use KVKeyChainService.defaultService instead
-        //```
-        // Read
-        //```swift
-        let readValue = KVKeyChainService.defaultService.readObject(MyClass.self, forKey: key)
-        //```
-        // Write
-        //```swift
-        let value = MyClass.init(jsonString: myJSONString)!
-        let result = KVKeyChainService.defaultService.writeObject(value, forKey: key)
-        //```
-        // Remove
-        //```swift
-        let removeResult = KVKeyChainService.defaultService.removeObject(forKey: key)
-        //```
-        // Update
-        //It is a read-update-write sequence function during one lock.
-        //```swift
-        KVKeyChainService
-            .defaultService
-            .updateObject(MyClass.self,
-                          forKey: key,
-                          updateClosure: { (readObject) -> MyClass? in
-                            readObject?.stringValue = "updated_string"
-                            return readObject
-            }) { (result) in
-                print("result = \(result)")
-        }
-        //```
-        **/
     }
 }

@@ -45,6 +45,11 @@
 		E48112252313D7A3001DA5B9 /* ORMDBService+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48112242313D7A3001DA5B9 /* ORMDBService+Write.swift */; };
 		E48112272313D8F8001DA5B9 /* ORMDBService+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48112262313D8F8001DA5B9 /* ORMDBService+Read.swift */; };
 		E48112292313D907001DA5B9 /* ORMDBService+Remove.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48112282313D907001DA5B9 /* ORMDBService+Remove.swift */; };
+		E481122B2313DAAF001DA5B9 /* PersistentService+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481122A2313DAAF001DA5B9 /* PersistentService+UserDefaults.swift */; };
+		E481122D2313DB33001DA5B9 /* PersistentService+KVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481122C2313DB33001DA5B9 /* PersistentService+KVFile.swift */; };
+		E481122F2313DB4D001DA5B9 /* PersistentService+KVDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481122E2313DB4D001DA5B9 /* PersistentService+KVDB.swift */; };
+		E48112312313DB5B001DA5B9 /* PersistentService+ORMDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48112302313DB5B001DA5B9 /* PersistentService+ORMDB.swift */; };
+		E48112332313DB69001DA5B9 /* PersistentService+KVKeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48112322313DB69001DA5B9 /* PersistentService+KVKeyChain.swift */; };
 		E482ED0720CE167B001FF435 /* KVDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED0620CE167B001FF435 /* KVDBService.swift */; };
 		E482ED1420CF6950001FF435 /* KVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E482ED1320CF6950001FF435 /* KVFileService.swift */; };
 		E484B44920DCA34600FE0AC9 /* ORMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E484B44820DCA34600FE0AC9 /* ORMDBService.swift */; };
@@ -175,6 +180,11 @@
 		E48112242313D7A3001DA5B9 /* ORMDBService+Write.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORMDBService+Write.swift"; sourceTree = "<group>"; };
 		E48112262313D8F8001DA5B9 /* ORMDBService+Read.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORMDBService+Read.swift"; sourceTree = "<group>"; };
 		E48112282313D907001DA5B9 /* ORMDBService+Remove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORMDBService+Remove.swift"; sourceTree = "<group>"; };
+		E481122A2313DAAF001DA5B9 /* PersistentService+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistentService+UserDefaults.swift"; sourceTree = "<group>"; };
+		E481122C2313DB33001DA5B9 /* PersistentService+KVFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistentService+KVFile.swift"; sourceTree = "<group>"; };
+		E481122E2313DB4D001DA5B9 /* PersistentService+KVDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistentService+KVDB.swift"; sourceTree = "<group>"; };
+		E48112302313DB5B001DA5B9 /* PersistentService+ORMDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistentService+ORMDB.swift"; sourceTree = "<group>"; };
+		E48112322313DB69001DA5B9 /* PersistentService+KVKeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistentService+KVKeyChain.swift"; sourceTree = "<group>"; };
 		E482ED0620CE167B001FF435 /* KVDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBService.swift; sourceTree = "<group>"; };
 		E482ED1320CF6950001FF435 /* KVFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileService.swift; sourceTree = "<group>"; };
 		E484B44820DCA34600FE0AC9 /* ORMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBService.swift; sourceTree = "<group>"; };
@@ -301,6 +311,11 @@
 			isa = PBXGroup;
 			children = (
 				E41F764620C8D32A00399E42 /* PersistentService.swift */,
+				E481122E2313DB4D001DA5B9 /* PersistentService+KVDB.swift */,
+				E481122C2313DB33001DA5B9 /* PersistentService+KVFile.swift */,
+				E48112322313DB69001DA5B9 /* PersistentService+KVKeyChain.swift */,
+				E48112302313DB5B001DA5B9 /* PersistentService+ORMDB.swift */,
+				E481122A2313DAAF001DA5B9 /* PersistentService+UserDefaults.swift */,
 				E418B64421C1329D00D042F0 /* PersistentServiceAide.swift */,
 			);
 			path = persistent;
@@ -702,10 +717,12 @@
 				E42B66B12106D269006EBAC2 /* ORMTableInfoModel.swift in Sources */,
 				E418B64321C131D000D042F0 /* ORMDBServiceAide.swift in Sources */,
 				E48112212313D21C001DA5B9 /* ORMTableInfoAide.swift in Sources */,
+				E48112332313DB69001DA5B9 /* PersistentService+KVKeyChain.swift in Sources */,
 				E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */,
 				E49F7CFF210C640600CF24F0 /* CICOFileManagerAide.m in Sources */,
 				E492B4B220EB188200BC48A4 /* SQLiteType.swift in Sources */,
 				E49F7CD6210AC18200CF24F0 /* KeyChainService.swift in Sources */,
+				E481122D2313DB33001DA5B9 /* PersistentService+KVFile.swift in Sources */,
 				E482ED0720CE167B001FF435 /* KVDBService.swift in Sources */,
 				E481121D230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift in Sources */,
 				E42B66A42102CECE006EBAC2 /* ORMProtocol.swift in Sources */,
@@ -718,11 +735,14 @@
 				E4FD6CEC21129F4D00ECAF4E /* show_all_type.generated.swift in Sources */,
 				E492B4DD20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift in Sources */,
 				E48112292313D907001DA5B9 /* ORMDBService+Remove.swift in Sources */,
+				E481122F2313DB4D001DA5B9 /* PersistentService+KVDB.swift in Sources */,
+				E48112312313DB5B001DA5B9 /* PersistentService+ORMDB.swift in Sources */,
 				E48112252313D7A3001DA5B9 /* ORMDBService+Write.swift in Sources */,
 				E4710E5C21364BF2003F6798 /* CICOFileURL.swift in Sources */,
 				E48112272313D8F8001DA5B9 /* ORMDBService+Read.swift in Sources */,
 				E482ED1420CF6950001FF435 /* KVFileService.swift in Sources */,
 				E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */,
+				E481122B2313DAAF001DA5B9 /* PersistentService+UserDefaults.swift in Sources */,
 				E484B44920DCA34600FE0AC9 /* ORMDBService.swift in Sources */,
 				E418B64121C1315E00D042F0 /* KVFileServiceAide.swift in Sources */,
 				E41F764C20C9221C00399E42 /* CICOSecurityAide.m in Sources */,

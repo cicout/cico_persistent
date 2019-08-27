@@ -565,7 +565,7 @@
 				E41F765720C9302300399E42 /* Frameworks */,
 				E41F765820C9302300399E42 /* Resources */,
 				E41F767020C9313000399E42 /* Embed Frameworks */,
-				E4FD6CA021129F2000ECAF4E /* AutoCodable */,
+				E4FD6CA021129F2000ECAF4E /* CICOAutoCodable */,
 			);
 			buildRules = (
 			);
@@ -695,19 +695,19 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    fi\nfi\n";
 		};
-		E4FD6CA021129F2000ECAF4E /* AutoCodable */ = {
+		E4FD6CA021129F2000ECAF4E /* CICOAutoCodable */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = AutoCodable;
+			name = CICOAutoCodable;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\necho \"[***** Start Running CICOAutoCodable Script *****]\"\n./sourcery/source/Pods/Sourcery/bin/sourcery --sources ./Carthage/Checkouts/cico_auto_codable/CICOAutoCodable --sources ./CICOPersistentDemo --sources ./CICOPersistent --sources ./CICOPersistentTests --templates ./Carthage/Checkouts/cico_auto_codable/sourcery/templates/ --templates ./sourcery/templates/ --output ./sourcery/auto_generated\necho \"[***** End Running CICOAutoCodable Script *****]\"\nfi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    if which sourcery >/dev/null; then\n        echo \"[* Start Running CICOAutoCodable Script *]\"\n        sourcery --sources ./Carthage/Checkouts/cico_auto_codable/CICOAutoCodable --sources ./CICOPersistentDemo --sources ./CICOPersistent --sources ./CICOPersistentTests --templates ./Carthage/Checkouts/cico_auto_codable/sourcery/templates/ --templates ./sourcery/templates/ --output ./sourcery/auto_generated\n        echo \"[* Finish Running CICOAutoCodable Script *]\"\n    else\n        echo \"[WARNING]: Sourcery is not installed, install using \\\"brew install sourcery\\\".\"\n    fi\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

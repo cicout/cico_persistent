@@ -1,0 +1,10 @@
+sources:
+    - Carthage/Checkouts/cico_auto_codable/CICOAutoCodable
+    - CICOPersistent
+    - CICOPersistentDemo
+    - CICOPersistentTests
+templates:
+    - Carthage/Checkouts/cico_auto_codable/sourcery/templates
+    - sourcery/templates
+output:
+    sourcery/auto_generated

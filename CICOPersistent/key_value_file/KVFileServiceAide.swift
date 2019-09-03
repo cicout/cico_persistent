@@ -18,9 +18,9 @@ public class KVFileServiceAide {
     ///
     /// It is convenient for debuging, not recommended for release products;
     ///
-    /// - see: CICOPathAide.defaultPublicFileURL(withSubPath:)
+    /// - see: PathAide.defaultPublicFileURL(withSubPath:)
     public static let publicService: KVFileService = {
-        let rootDirURL = CICOPathAide.defaultPublicFileURL(withSubPath: kRootDirName)
+        let rootDirURL = PathAide.defaultPublicFileURL(withSubPath: kRootDirName)
         return KVFileService.init(rootDirURL: rootDirURL)
     }()
 
@@ -28,9 +28,9 @@ public class KVFileServiceAide {
     ///
     /// It is recommended as default;
     ///
-    /// - see: CICOPathAide.defaultPrivateFileURL(withSubPath:)
+    /// - see: PathAide.defaultPrivateFileURL(withSubPath:)
     public static let privateService: KVFileService = {
-        let rootDirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kRootDirName)
+        let rootDirURL = PathAide.defaultPrivateFileURL(withSubPath: kRootDirName)
         return KVFileService.init(rootDirURL: rootDirURL)
     }()
 
@@ -38,9 +38,9 @@ public class KVFileServiceAide {
     ///
     /// It is recommended for caching;
     ///
-    /// - see: CICOPathAide.defaultCacheFileURL(withSubPath:)
+    /// - see: PathAide.defaultCacheFileURL(withSubPath:)
     public static let cacheService: KVFileService = {
-        let rootDirURL = CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)
+        let rootDirURL = PathAide.defaultCacheFileURL(withSubPath: kRootDirName)
         return KVFileService.init(rootDirURL: rootDirURL)
     }()
 
@@ -48,9 +48,9 @@ public class KVFileServiceAide {
     ///
     /// It is recommended for temporary objects;
     ///
-    /// - see: CICOPathAide.defaultTempFileURL(withSubPath:)
+    /// - see: PathAide.defaultTempFileURL(withSubPath:)
     public static let tempService: KVFileService = {
-        let rootDirURL = CICOPathAide.defaultTempFileURL(withSubPath: kRootDirName)
+        let rootDirURL = PathAide.defaultTempFileURL(withSubPath: kRootDirName)
         return KVFileService.init(rootDirURL: rootDirURL)
     }()
 }

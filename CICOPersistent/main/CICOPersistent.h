@@ -17,6 +17,5 @@ FOUNDATION_EXPORT const unsigned char CICOPersistentVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <CICOPersistent/PublicHeader.h>
 
 #import <CICOPersistent/CICOSecurityAide.h>
-#import <CICOPersistent/CICOPathAide.h>
 #import <CICOPersistent/CICOFileManagerAide.h>
 #import <CICOPersistent/CICOSQLCipherAide.h>

@@ -17,7 +17,7 @@ class KVFileServiceTests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
-        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/kv_file")
+        let url = PathAide.docFileURL(withSubPath: "cico_persistent_tests/kv_file")
         self.service = KVFileService.init(rootDirURL: url)
         self.jsonString = JSONStringAide.jsonString(name: "default")
     }

@@ -16,8 +16,6 @@
 		E41F764720C8D32A00399E42 /* PersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F764620C8D32A00399E42 /* PersistentService.swift */; };
 		E41F764B20C9221C00399E42 /* CICOSecurityAide.h in Headers */ = {isa = PBXBuildFile; fileRef = E41F764920C9221C00399E42 /* CICOSecurityAide.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E41F764C20C9221C00399E42 /* CICOSecurityAide.m in Sources */ = {isa = PBXBuildFile; fileRef = E41F764A20C9221C00399E42 /* CICOSecurityAide.m */; };
-		E41F765420C92CAD00399E42 /* CICOPathAide.m in Sources */ = {isa = PBXBuildFile; fileRef = E41F765220C92CAD00399E42 /* CICOPathAide.m */; };
-		E41F765520C92CAD00399E42 /* CICOPathAide.h in Headers */ = {isa = PBXBuildFile; fileRef = E41F765320C92CAD00399E42 /* CICOPathAide.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E41F765D20C9302300399E42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F765C20C9302300399E42 /* AppDelegate.swift */; };
 		E41F765F20C9302300399E42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F765E20C9302300399E42 /* ViewController.swift */; };
 		E41F766220C9302300399E42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E41F766020C9302300399E42 /* Main.storyboard */; };
@@ -35,10 +33,11 @@
 		E42B66A42102CECE006EBAC2 /* ORMProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66A32102CECE006EBAC2 /* ORMProtocol.swift */; };
 		E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */; };
 		E42B66B12106D269006EBAC2 /* ORMTableInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */; };
+		E432C6522318D695006181C2 /* PathAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432C6512318D695006181C2 /* PathAide.swift */; };
 		E43374BA21AD64FE00296237 /* CICOSQLCipherAide.h in Headers */ = {isa = PBXBuildFile; fileRef = E43374B821AD64FE00296237 /* CICOSQLCipherAide.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E43374BB21AD64FE00296237 /* CICOSQLCipherAide.m in Sources */ = {isa = PBXBuildFile; fileRef = E43374B921AD64FE00296237 /* CICOSQLCipherAide.m */; };
-		E4710E5C21364BF2003F6798 /* CICOFileURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E5B21364BF2003F6798 /* CICOFileURL.swift */; };
-		E4710E682136C278003F6798 /* CICOFileURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E672136C278003F6798 /* CICOFileURLTests.swift */; };
+		E4710E5C21364BF2003F6798 /* FileURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E5B21364BF2003F6798 /* FileURL.swift */; };
+		E4710E682136C278003F6798 /* FileURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E672136C278003F6798 /* FileURLTests.swift */; };
 		E481121D230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */; };
 		E481121F230FD7BD001DA5B9 /* ParamConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481121E230FD7BD001DA5B9 /* ParamConfigModel.swift */; };
 		E48112212313D21C001DA5B9 /* ORMTableInfoAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48112202313D21C001DA5B9 /* ORMTableInfoAide.swift */; };
@@ -152,8 +151,6 @@
 		E41F764620C8D32A00399E42 /* PersistentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentService.swift; sourceTree = "<group>"; };
 		E41F764920C9221C00399E42 /* CICOSecurityAide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CICOSecurityAide.h; sourceTree = "<group>"; };
 		E41F764A20C9221C00399E42 /* CICOSecurityAide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CICOSecurityAide.m; sourceTree = "<group>"; };
-		E41F765220C92CAD00399E42 /* CICOPathAide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CICOPathAide.m; sourceTree = "<group>"; };
-		E41F765320C92CAD00399E42 /* CICOPathAide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CICOPathAide.h; sourceTree = "<group>"; };
 		E41F765A20C9302300399E42 /* CICOPersistentDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CICOPersistentDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E41F765C20C9302300399E42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E41F765E20C9302300399E42 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -169,10 +166,11 @@
 		E42B66A32102CECE006EBAC2 /* ORMProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMProtocol.swift; sourceTree = "<group>"; };
 		E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLKVFileService.swift; sourceTree = "<group>"; };
 		E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMTableInfoModel.swift; sourceTree = "<group>"; };
+		E432C6512318D695006181C2 /* PathAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAide.swift; sourceTree = "<group>"; };
 		E43374B821AD64FE00296237 /* CICOSQLCipherAide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOSQLCipherAide.h; sourceTree = "<group>"; };
 		E43374B921AD64FE00296237 /* CICOSQLCipherAide.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CICOSQLCipherAide.m; sourceTree = "<group>"; };
-		E4710E5B21364BF2003F6798 /* CICOFileURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOFileURL.swift; sourceTree = "<group>"; };
-		E4710E672136C278003F6798 /* CICOFileURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICOFileURLTests.swift; sourceTree = "<group>"; };
+		E4710E5B21364BF2003F6798 /* FileURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURL.swift; sourceTree = "<group>"; };
+		E4710E672136C278003F6798 /* FileURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURLTests.swift; sourceTree = "<group>"; };
 		E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceInnerAide.swift; sourceTree = "<group>"; };
 		E481121E230FD7BD001DA5B9 /* ParamConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParamConfigModel.swift; sourceTree = "<group>"; };
 		E48112202313D21C001DA5B9 /* ORMTableInfoAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMTableInfoAide.swift; sourceTree = "<group>"; };
@@ -325,8 +323,7 @@
 			children = (
 				E49F7CFC210C640600CF24F0 /* CICOFileManagerAide.h */,
 				E49F7CFD210C640600CF24F0 /* CICOFileManagerAide.m */,
-				E41F765320C92CAD00399E42 /* CICOPathAide.h */,
-				E41F765220C92CAD00399E42 /* CICOPathAide.m */,
+				E432C6512318D695006181C2 /* PathAide.swift */,
 			);
 			path = path;
 			sourceTree = "<group>";
@@ -373,7 +370,7 @@
 		E4710E5A21364BD4003F6798 /* url */ = {
 			isa = PBXGroup;
 			children = (
-				E4710E5B21364BF2003F6798 /* CICOFileURL.swift */,
+				E4710E5B21364BF2003F6798 /* FileURL.swift */,
 			);
 			path = url;
 			sourceTree = "<group>";
@@ -477,7 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				E4FD6DB2211483BF00ECAF4E /* internal */,
-				E4710E672136C278003F6798 /* CICOFileURLTests.swift */,
+				E4710E672136C278003F6798 /* FileURLTests.swift */,
 				E4FD6DBF211550E400ECAF4E /* KVDBServiceTests.swift */,
 				E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */,
 				E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */,
@@ -527,7 +524,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E41F764B20C9221C00399E42 /* CICOSecurityAide.h in Headers */,
-				E41F765520C92CAD00399E42 /* CICOPathAide.h in Headers */,
 				E49F7CFE210C640600CF24F0 /* CICOFileManagerAide.h in Headers */,
 				E43374BA21AD64FE00296237 /* CICOSQLCipherAide.h in Headers */,
 				E41F764020C8D2F300399E42 /* CICOPersistent.h in Headers */,
@@ -718,6 +714,7 @@
 				E42B66B12106D269006EBAC2 /* ORMTableInfoModel.swift in Sources */,
 				E418B64321C131D000D042F0 /* ORMDBServiceAide.swift in Sources */,
 				E48112212313D21C001DA5B9 /* ORMTableInfoAide.swift in Sources */,
+				E432C6522318D695006181C2 /* PathAide.swift in Sources */,
 				E48112332313DB69001DA5B9 /* PersistentService+KVKeyChain.swift in Sources */,
 				E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */,
 				E49F7CFF210C640600CF24F0 /* CICOFileManagerAide.m in Sources */,
@@ -730,7 +727,6 @@
 				E481121F230FD7BD001DA5B9 /* ParamConfigModel.swift in Sources */,
 				E41F764720C8D32A00399E42 /* PersistentService.swift in Sources */,
 				E49F7CF9210C447400CF24F0 /* KVJSONAide.swift in Sources */,
-				E41F765420C92CAD00399E42 /* CICOPathAide.m in Sources */,
 				E49F7CD8210ACE8700CF24F0 /* KVKeyChainService.swift in Sources */,
 				E418B63F21C1301B00D042F0 /* KVDBServiceAide.swift in Sources */,
 				E492B4DD20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift in Sources */,
@@ -738,7 +734,7 @@
 				E481122F2313DB4D001DA5B9 /* PersistentService+KVDB.swift in Sources */,
 				E48112312313DB5B001DA5B9 /* PersistentService+ORMDB.swift in Sources */,
 				E48112252313D7A3001DA5B9 /* ORMDBService+Write.swift in Sources */,
-				E4710E5C21364BF2003F6798 /* CICOFileURL.swift in Sources */,
+				E4710E5C21364BF2003F6798 /* FileURL.swift in Sources */,
 				E48112272313D8F8001DA5B9 /* ORMDBService+Read.swift in Sources */,
 				E482ED1420CF6950001FF435 /* KVFileService.swift in Sources */,
 				E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */,
@@ -773,7 +769,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */,
-				E4710E682136C278003F6798 /* CICOFileURLTests.swift in Sources */,
+				E4710E682136C278003F6798 /* FileURLTests.swift in Sources */,
 				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
 				E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,

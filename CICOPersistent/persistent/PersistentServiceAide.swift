@@ -18,9 +18,9 @@ public class PersistentServiceAide {
     ///
     /// It is convenient for debuging, not recommended for release products;
     ///
-    /// - see: CICOPathAide.defaultPublicFileURL(withSubPath:)
+    /// - see: PathAide.defaultPublicFileURL(withSubPath:)
     public static let publicService: PersistentService = {
-        let rootDirURL = CICOPathAide.defaultPublicFileURL(withSubPath: kRootDirName)
+        let rootDirURL = PathAide.defaultPublicFileURL(withSubPath: kRootDirName)
         return PersistentService.init(rootDirURL: rootDirURL)
     }()
 
@@ -28,9 +28,9 @@ public class PersistentServiceAide {
     ///
     /// It is recommended as default;
     ///
-    /// - see: CICOPathAide.defaultPrivateFileURL(withSubPath:)
+    /// - see: PathAide.defaultPrivateFileURL(withSubPath:)
     public static let privateService: PersistentService = {
-        let rootDirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kRootDirName)
+        let rootDirURL = PathAide.defaultPrivateFileURL(withSubPath: kRootDirName)
         return PersistentService.init(rootDirURL: rootDirURL)
     }()
 
@@ -38,9 +38,9 @@ public class PersistentServiceAide {
     ///
     /// It is recommended for caching;
     ///
-    /// - see: CICOPathAide.defaultCacheFileURL(withSubPath:)
+    /// - see: PathAide.defaultCacheFileURL(withSubPath:)
     public static let cacheService: PersistentService = {
-        let rootDirURL = CICOPathAide.defaultCacheFileURL(withSubPath: kRootDirName)
+        let rootDirURL = PathAide.defaultCacheFileURL(withSubPath: kRootDirName)
         return PersistentService.init(rootDirURL: rootDirURL)
     }()
 
@@ -48,9 +48,9 @@ public class PersistentServiceAide {
     ///
     /// It is recommended for temporary objects;
     ///
-    /// - see: CICOPathAide.defaultTempFileURL(withSubPath:)
+    /// - see: PathAide.defaultTempFileURL(withSubPath:)
     public static let tempService: PersistentService = {
-        let rootDirURL = CICOPathAide.defaultTempFileURL(withSubPath: kRootDirName)
+        let rootDirURL = PathAide.defaultTempFileURL(withSubPath: kRootDirName)
         return PersistentService.init(rootDirURL: rootDirURL)
     }()
 }

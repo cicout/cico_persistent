@@ -10,7 +10,7 @@ import XCTest
 import CICOPersistent
 import CICOAutoCodable
 
-class CICOFileURLTests: XCTestCase {
+class FileURLTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
@@ -23,24 +23,24 @@ class CICOFileURLTests: XCTestCase {
     }
 
     func test_CICOURL() {
-        self.commonTest(url: CICOPathAide.docFileURL(withSubPath: nil))
-        self.commonTest(url: CICOPathAide.docFileURL(withSubPath: "test"))
-        self.commonTest(url: CICOPathAide.libFileURL(withSubPath: nil))
-        self.commonTest(url: CICOPathAide.libFileURL(withSubPath: "test"))
-        self.commonTest(url: CICOPathAide.cacheFileURL(withSubPath: nil))
-        self.commonTest(url: CICOPathAide.cacheFileURL(withSubPath: "test"))
-        self.commonTest(url: CICOPathAide.tempFileURL(withSubPath: nil))
-        self.commonTest(url: CICOPathAide.tempFileURL(withSubPath: "test"))
+        self.commonTest(url: PathAide.docFileURL(withSubPath: nil))
+        self.commonTest(url: PathAide.docFileURL(withSubPath: "test"))
+        self.commonTest(url: PathAide.libFileURL(withSubPath: nil))
+        self.commonTest(url: PathAide.libFileURL(withSubPath: "test"))
+        self.commonTest(url: PathAide.cacheFileURL(withSubPath: nil))
+        self.commonTest(url: PathAide.cacheFileURL(withSubPath: "test"))
+        self.commonTest(url: PathAide.tempFileURL(withSubPath: nil))
+        self.commonTest(url: PathAide.tempFileURL(withSubPath: "test"))
     }
 
     private func commonTest(url: URL) {
-        let curl = CICOFileURL.init(fileURL: url)
+        let curl = FileURL.init(fileURL: url)
         XCTAssertNotNil(curl, "[FAILED]: Invalid CICOURL.")
 
         let jsonString = curl.toJSONString()
         XCTAssertNotNil(jsonString, "[FAILED]: CICOURL transfer to json string failed.")
 
-        let curlx = CICOFileURL.init(jsonString: jsonString!)
+        let curlx = FileURL.init(jsonString: jsonString!)
         XCTAssertNotNil(curlx, "[FAILED]: JSON string transfer back to CICOURL failed.")
         XCTAssert(curlx!.fileURL! == curl.fileURL!, "[FAILED]: curlx != curl.")
     }

@@ -18,9 +18,9 @@ public class ORMDBServiceAide {
     ///
     /// It is convenient for debuging, not recommended for release products;
     ///
-    /// - see: CICOPathAide.defaultPublicFileURL(withSubPath:)
+    /// - see: PathAide.defaultPublicFileURL(withSubPath:)
     public static let publicService: ORMDBService = {
-        let dbURL = CICOPathAide.defaultPublicFileURL(withSubPath: kDBSubPath)
+        let dbURL = PathAide.defaultPublicFileURL(withSubPath: kDBSubPath)
         return ORMDBService.init(fileURL: dbURL)
     }()
 
@@ -28,9 +28,9 @@ public class ORMDBServiceAide {
     ///
     /// It is recommended as default;
     ///
-    /// - see: CICOPathAide.defaultPrivateFileURL(withSubPath:)
+    /// - see: PathAide.defaultPrivateFileURL(withSubPath:)
     public static let privateService: ORMDBService = {
-        let dbURL = CICOPathAide.defaultPrivateFileURL(withSubPath: kDBSubPath)
+        let dbURL = PathAide.defaultPrivateFileURL(withSubPath: kDBSubPath)
         return ORMDBService.init(fileURL: dbURL)
     }()
 
@@ -38,9 +38,9 @@ public class ORMDBServiceAide {
     ///
     /// It is recommended for caching;
     ///
-    /// - see: CICOPathAide.defaultCacheFileURL(withSubPath:)
+    /// - see: PathAide.defaultCacheFileURL(withSubPath:)
     public static let cacheService: ORMDBService = {
-        let dbURL = CICOPathAide.defaultCacheFileURL(withSubPath: kDBSubPath)
+        let dbURL = PathAide.defaultCacheFileURL(withSubPath: kDBSubPath)
         return ORMDBService.init(fileURL: dbURL)
     }()
 
@@ -48,9 +48,9 @@ public class ORMDBServiceAide {
     ///
     /// It is recommended for temporary objects;
     ///
-    /// - see: CICOPathAide.defaultTempFileURL(withSubPath:)
+    /// - see: PathAide.defaultTempFileURL(withSubPath:)
     public static let tempService: ORMDBService = {
-        let dbURL = CICOPathAide.defaultTempFileURL(withSubPath: kDBSubPath)
+        let dbURL = PathAide.defaultTempFileURL(withSubPath: kDBSubPath)
         return ORMDBService.init(fileURL: dbURL)
     }()
 }

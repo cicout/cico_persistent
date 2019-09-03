@@ -17,11 +17,11 @@ class ORMDBServiceTests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
-//        let url = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/orm_db")
+//        let url = PathAide.docFileURL(withSubPath: "cico_persistent_tests/orm_db")
 //        print("\(url)")
 //        self.service = ORMDBService.init(fileURL: url)
 
-        let customURL = CICOPathAide.docFileURL(withSubPath: "cico_persistent_tests/custom_password_orm_db")
+        let customURL = PathAide.docFileURL(withSubPath: "cico_persistent_tests/custom_password_orm_db")
 //        print("\(customURL)")
         self.service = ORMDBService.init(fileURL: customURL, password: "cico_test")
 

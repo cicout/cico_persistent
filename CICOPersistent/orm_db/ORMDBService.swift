@@ -47,7 +47,7 @@ open class ORMDBService {
 
     private func initDB() {
         let dirURL = self.fileURL.deletingLastPathComponent()
-        let result = CICOFileManagerAide.createDir(with: dirURL)
+        let result = FileManagerAide.createDirIfNeeded(dirURL)
         if !result {
             print("[ERROR]: create database dir failed")
             return
@@ -77,7 +77,7 @@ extension ORMDBService {
     /// - returns: Remove result;
     open func clearAll() -> Bool {
         self.dbQueue = nil
-        let result = CICOFileManagerAide.removeFile(with: self.fileURL)
+        let result = FileManagerAide.removeItem(self.fileURL)
         self.dbQueue = FMDatabaseQueue.init(url: self.fileURL)
         return result
     }

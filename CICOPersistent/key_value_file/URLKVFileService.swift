@@ -136,11 +136,11 @@ open class URLKVFileService {
             self.fileLock.unlock()
         }
 
-        return CICOFileManagerAide.removeFile(with: fileURL)
+        return FileManagerAide.removeItem(fileURL)
     }
 
     private func readJSONData(fromFileURL fileURL: URL) -> Data? {
-        let exist = FileManager.default.fileExists(atPath: fileURL.path)
+        let exist = FileManagerAide.fileExists(fileURL)
 
         guard exist else {
             return nil

@@ -14,7 +14,7 @@ class KVKeyChainServiceTests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
-        print("[WARNING]: key chain access is forbidden from unit tests, use CICOPersistentDemo please")
+        print("[WARNING]: Key chain access is forbidden from unit tests, use CICOPersistentDemo instead.")
     }
 
     override func tearDown() {

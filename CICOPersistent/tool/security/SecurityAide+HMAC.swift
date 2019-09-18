@@ -11,12 +11,12 @@ import CommonCrypto
 
 extension SecurityAide {
     public enum HMACType: Int, Codable {
-        case md5 = 128
-        case sha1 = 160
-        case sha224 = 224
-        case sha256 = 256
-        case sha384 = 384
-        case sha512 = 512
+        case MD5 = 128
+        case SHA1 = 160
+        case SHA224 = 224
+        case SHA256 = 256
+        case SHA384 = 384
+        case SHA512 = 512
 
         func digetLength() -> Int {
             return self.rawValue
@@ -24,17 +24,17 @@ extension SecurityAide {
 
         func hmacAlgorithm() -> CCHmacAlgorithm {
             switch self {
-            case .md5:
+            case .MD5:
                 return CCHmacAlgorithm(kCCHmacAlgMD5)
-            case .sha1:
+            case .SHA1:
                 return CCHmacAlgorithm(kCCHmacAlgSHA1)
-            case .sha224:
+            case .SHA224:
                 return CCHmacAlgorithm(kCCHmacAlgSHA224)
-            case .sha256:
+            case .SHA256:
                 return CCHmacAlgorithm(kCCHmacAlgSHA256)
-            case .sha384:
+            case .SHA384:
                 return CCHmacAlgorithm(kCCHmacAlgSHA384)
-            case .sha512:
+            case .SHA512:
                 return CCHmacAlgorithm(kCCHmacAlgSHA512)
             }
         }

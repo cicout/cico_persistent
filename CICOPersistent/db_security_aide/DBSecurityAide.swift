@@ -25,12 +25,12 @@ public class DBSecurityAide {
                                       toDBPassword: String?) -> Bool {
         var realFromPassword: String?
         if let fromDBPassword = fromDBPassword {
-            realFromPassword = CICOSecurityAide.md5HashString(with: fromDBPassword)
+            realFromPassword = SecurityAide.md5HashString(fromDBPassword)
         }
 
         var realToPassword: String?
         if let toDBPassword = toDBPassword {
-            realToPassword = CICOSecurityAide.md5HashString(with: toDBPassword)
+            realToPassword = SecurityAide.md5HashString(toDBPassword)
         }
 
         let result = CICOSQLCipherAide.exportDatabase(fromDBPath,
@@ -49,7 +49,7 @@ public class DBSecurityAide {
     ///
     /// - returns: Encrypt result;
     public static func encryptDatabase(dbPath: String, password: String) -> Bool {
-        let realPassword = CICOSecurityAide.md5HashString(with: password)
+        let realPassword = SecurityAide.md5HashString(password)
         let result = CICOSQLCipherAide.encryptDatabase(dbPath, password: realPassword)
         return result
     }
@@ -62,7 +62,7 @@ public class DBSecurityAide {
     ///
     /// - returns: Decrypt result;
     public static func decryptDatabase(dbPath: String, password: String) -> Bool {
-        let realPassword = CICOSecurityAide.md5HashString(with: password)
+        let realPassword = SecurityAide.md5HashString(password)
         let result = CICOSQLCipherAide.decryptDatabase(dbPath, password: realPassword)
         return result
     }
@@ -77,8 +77,8 @@ public class DBSecurityAide {
     ///
     /// - returns: Change password result;
     public static func changeDatabasePassword(dbPath: String, originalPassword: String, newPassword: String) -> Bool {
-        let realOriginalPassword = CICOSecurityAide.md5HashString(with: originalPassword)
-        let realNewPassword = CICOSecurityAide.md5HashString(with: newPassword)
+        let realOriginalPassword = SecurityAide.md5HashString(originalPassword)
+        let realNewPassword = SecurityAide.md5HashString(newPassword)
         let result = CICOSQLCipherAide.changeDatabasePassword(dbPath,
                                                               originalPassword: realOriginalPassword,
                                                               newPassword: realNewPassword)

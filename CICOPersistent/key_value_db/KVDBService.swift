@@ -42,7 +42,7 @@ open class KVDBService {
     public init(fileURL: URL, password: String? = kCICOKVDBDefaultPassword) {
         self.fileURL = fileURL
         if let password = password {
-            self.dbPasswordKey = CICOSecurityAide.md5HashString(with: password)
+            self.dbPasswordKey = SecurityAide.md5HashString(password)
         } else {
             self.dbPasswordKey = nil
         }
@@ -206,7 +206,7 @@ open class KVDBService {
             return nil
         }
 
-        return CICOSecurityAide.md5HashString(with: userKey)
+        return SecurityAide.md5HashString(userKey)
     }
 
     private func readJSONData(jsonKey: String) -> Data? {

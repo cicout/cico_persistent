@@ -33,7 +33,7 @@ open class URLKVFileService {
     /// - returns: Init object;
     public init(password: String? = kCICOURLKVFileDefaultPassword) {
         if let password = password {
-            self.passwordData = CICOSecurityAide.md5HashData(with: password)
+            self.passwordData = SecurityAide.md5HashData(password)
         } else {
             self.passwordData = nil
         }
@@ -148,7 +148,10 @@ open class URLKVFileService {
 
         do {
             let encryptedData = try Data.init(contentsOf: fileURL)
-            let jsonData = self.decryptDataIfNeeded(encryptedData: encryptedData)
+            guard let jsonData = self.decryptDataIfNeeded(encryptedData: encryptedData) else {
+                print("[ERROR]: Decrypt data failed.")
+                return nil
+            }
             return jsonData
         } catch let error {
             print("[READ_JSON_FILE_ERROR]: \(error)")
@@ -158,7 +161,10 @@ open class URLKVFileService {
 
     private func writeJSONData(_ jsonData: Data, toFileURL fileURL: URL) -> Bool {
         do {
-            let encryptedData = self.encryptDataIfNeeded(sourceData: jsonData)
+            guard let encryptedData = self.encryptDataIfNeeded(sourceData: jsonData) else {
+                print("[ERROR]: Encrypt data failed.")
+                return false
+            }
             try encryptedData.write(to: fileURL, options: .atomic)
             return true
         } catch let error {
@@ -167,17 +173,17 @@ open class URLKVFileService {
         }
     }
 
-    private func encryptDataIfNeeded(sourceData: Data) -> Data {
+    private func encryptDataIfNeeded(sourceData: Data) -> Data? {
         if let passwordData = self.passwordData {
-            return CICOSecurityAide.aesEncrypt(withKeyData: passwordData, sourceData: sourceData)!
+            return SecurityAide.aesEncrypt(sourceData, type: .AES128, keyData: passwordData)
         } else {
             return sourceData
         }
     }
 
-    private func decryptDataIfNeeded(encryptedData: Data) -> Data {
+    private func decryptDataIfNeeded(encryptedData: Data) -> Data? {
         if let passwordData = self.passwordData {
-            return CICOSecurityAide.aesDecrypt(withKeyData: passwordData, encryptedData: encryptedData)!
+            return SecurityAide.aesDecrypt(encryptedData, type: .AES128, keyData: passwordData)
         } else {
             return encryptedData
         }

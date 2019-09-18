@@ -59,4 +59,32 @@ public class SecurityAide {
 
         return data
     }
+
+    // MARK: - BASE64
+
+    public static func base64EncodedString(_ sourceData: Data) -> String {
+        return sourceData.base64EncodedString()
+    }
+
+    public static func base64EncodedString(_ sourceString: String) -> String {
+        guard let sourceData = sourceString.data(using: .utf8) else {
+            print("[ERROR]: Invalid source string.\nstring: \(sourceString)")
+            return ""
+        }
+        return self.base64EncodedString(sourceData)
+    }
+
+    public static func base64DecodedData(_ base64String: String) -> Data? {
+        return Data.init(base64Encoded: base64String)
+    }
+
+    // MARK: - URL ENCODE/DECODE
+
+    public static func urlEncodedString(_ sourceString: String) -> String? {
+        return sourceString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    }
+
+    public static func urlDecodedString(_ encodedString: String) -> String? {
+        return encodedString.removingPercentEncoding
+    }
 }

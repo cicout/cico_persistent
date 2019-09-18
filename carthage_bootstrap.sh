@@ -1,3 +1,3 @@
 cd `dirname $0`
-carthage bootstrap --platform iOS --cache-builds
+carthage bootstrap --platform iOS --cache-builds --no-use-binaries
 

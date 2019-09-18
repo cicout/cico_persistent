@@ -9,7 +9,7 @@
 import Foundation
 
 public enum BaseAddressError: Int, Error {
-    case empty
+    case empty = -999
 }
 
 extension Data {
@@ -66,5 +66,25 @@ extension Data {
     @inlinable public mutating func withUnsafeUInt8MutablePointerBaseAddress
         (_ body: (UnsafeMutablePointer<UInt8>) throws -> Void) throws {
         try self.withUnsafeMutablePointerBaseAddress(type: UInt8.self, body)
+    }
+}
+
+@inlinable public func withUnsafeBytesBaseAddress<T>
+    (of value: inout T, _ body: (UnsafeRawPointer) throws -> Void) throws {
+    try withUnsafeBytes(of: &value) { (ptr) -> Void in
+        guard let basePtr = ptr.baseAddress else {
+            throw BaseAddressError.empty
+        }
+        try body(basePtr)
+    }
+}
+
+@inlinable public func withUnsafeMutableBytesBaseAddress<T>
+    (of value: inout T, _ body: (UnsafeMutableRawPointer) throws -> Void) throws {
+    try withUnsafeMutableBytes(of: &value) { (ptr) -> Void in
+        guard let basePtr = ptr.baseAddress else {
+            throw BaseAddressError.empty
+        }
+        try body(basePtr)
     }
 }

@@ -16,8 +16,6 @@
 		E41958BB20F8971D007EA4B4 /* SQLiteRecordDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41958BA20F8971D007EA4B4 /* SQLiteRecordDecoder.swift */; };
 		E41F764020C8D2F300399E42 /* CICOPersistent.h in Headers */ = {isa = PBXBuildFile; fileRef = E41F763E20C8D2F300399E42 /* CICOPersistent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E41F764720C8D32A00399E42 /* PersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F764620C8D32A00399E42 /* PersistentService.swift */; };
-		E41F764B20C9221C00399E42 /* CICOSecurityAide.h in Headers */ = {isa = PBXBuildFile; fileRef = E41F764920C9221C00399E42 /* CICOSecurityAide.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E41F764C20C9221C00399E42 /* CICOSecurityAide.m in Sources */ = {isa = PBXBuildFile; fileRef = E41F764A20C9221C00399E42 /* CICOSecurityAide.m */; };
 		E41F765D20C9302300399E42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F765C20C9302300399E42 /* AppDelegate.swift */; };
 		E41F765F20C9302300399E42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F765E20C9302300399E42 /* ViewController.swift */; };
 		E41F766220C9302300399E42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E41F766020C9302300399E42 /* Main.storyboard */; };
@@ -96,6 +94,7 @@
 		E4FEA0432323528100E8637D /* SecurityAide+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FEA0422323528100E8637D /* SecurityAide+MD5.swift */; };
 		E4FEA0452323546800E8637D /* SecurityAide+SHA.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FEA0442323546800E8637D /* SecurityAide+SHA.swift */; };
 		E4FEA04723235EA300E8637D /* SecurityAide+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FEA04623235EA300E8637D /* SecurityAide+HMAC.swift */; };
+		E4FEA09B2323B23500E8637D /* SecurityAide+AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FEA09A2323B23500E8637D /* SecurityAide+AES.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,8 +155,6 @@
 		E41F763E20C8D2F300399E42 /* CICOPersistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOPersistent.h; sourceTree = "<group>"; };
 		E41F763F20C8D2F300399E42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E41F764620C8D32A00399E42 /* PersistentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentService.swift; sourceTree = "<group>"; };
-		E41F764920C9221C00399E42 /* CICOSecurityAide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CICOSecurityAide.h; sourceTree = "<group>"; };
-		E41F764A20C9221C00399E42 /* CICOSecurityAide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CICOSecurityAide.m; sourceTree = "<group>"; };
 		E41F765A20C9302300399E42 /* CICOPersistentDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CICOPersistentDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E41F765C20C9302300399E42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E41F765E20C9302300399E42 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +217,7 @@
 		E4FEA0422323528100E8637D /* SecurityAide+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecurityAide+MD5.swift"; sourceTree = "<group>"; };
 		E4FEA0442323546800E8637D /* SecurityAide+SHA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecurityAide+SHA.swift"; sourceTree = "<group>"; };
 		E4FEA04623235EA300E8637D /* SecurityAide+HMAC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecurityAide+HMAC.swift"; sourceTree = "<group>"; };
+		E4FEA09A2323B23500E8637D /* SecurityAide+AES.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecurityAide+AES.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,10 +297,9 @@
 		E41F764820C9221C00399E42 /* security */ = {
 			isa = PBXGroup;
 			children = (
-				E41F764920C9221C00399E42 /* CICOSecurityAide.h */,
-				E41F764A20C9221C00399E42 /* CICOSecurityAide.m */,
 				E4FEA04023234C3500E8637D /* Data+Bytes.swift */,
 				E409D21D2320A43D00AB42BF /* SecurityAide.swift */,
+				E4FEA09A2323B23500E8637D /* SecurityAide+AES.swift */,
 				E4FEA04623235EA300E8637D /* SecurityAide+HMAC.swift */,
 				E4FEA0422323528100E8637D /* SecurityAide+MD5.swift */,
 				E4FEA0442323546800E8637D /* SecurityAide+SHA.swift */,
@@ -538,7 +535,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E41F764B20C9221C00399E42 /* CICOSecurityAide.h in Headers */,
 				E43374BA21AD64FE00296237 /* CICOSQLCipherAide.h in Headers */,
 				E41F764020C8D2F300399E42 /* CICOPersistent.h in Headers */,
 			);
@@ -760,7 +756,7 @@
 				E4FEA04723235EA300E8637D /* SecurityAide+HMAC.swift in Sources */,
 				E418B64121C1315E00D042F0 /* KVFileServiceAide.swift in Sources */,
 				E4FEA04123234C3500E8637D /* Data+Bytes.swift in Sources */,
-				E41F764C20C9221C00399E42 /* CICOSecurityAide.m in Sources */,
+				E4FEA09B2323B23500E8637D /* SecurityAide+AES.swift in Sources */,
 				E43374BB21AD64FE00296237 /* CICOSQLCipherAide.m in Sources */,
 				E42B665C21002DDD006EBAC2 /* SQLiteRecordEncoder.swift in Sources */,
 				E420CDB320F84EF900D1BA63 /* TypeProperty.swift in Sources */,

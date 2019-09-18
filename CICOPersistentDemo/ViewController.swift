@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     }
 
     private func doSecurityTest() {
-        let hash = CICOSecurityAide.md5HashString(with: "")
+        let hash = SecurityAide.md5HashString("")
         print("hash = \(hash)")
     }
 
@@ -64,17 +64,17 @@ class ViewController: UIViewController {
         let url1 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_original.db")
         let url2 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_export_nop2p.db")
         let originalPassword2 = "cico_test_2"
-        let password2 = CICOSecurityAide.md5HashString(with: originalPassword2)
+        let password2 = SecurityAide.md5HashString(originalPassword2)
         let url3 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_export_p2nop.db")
         let url4 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_export_p2p.db")
         let originalPassword4 = "cico_test_4"
-        let password4 = CICOSecurityAide.md5HashString(with: originalPassword4)
+        let password4 = SecurityAide.md5HashString(originalPassword4)
         let url5 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_encrypt.db")
         let originalPassword5 = "cico_test_5"
-        let password5 = CICOSecurityAide.md5HashString(with: originalPassword5)
+        let password5 = SecurityAide.md5HashString(originalPassword5)
         let url6 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_decrypt.db")
         let originalPassword6 = "cico_test_6"
-        let password6 = CICOSecurityAide.md5HashString(with: originalPassword6)
+        let password6 = SecurityAide.md5HashString(originalPassword6)
 
         var ormDBService1: ORMDBService? = ORMDBService.init(fileURL: url1, password: nil)
 

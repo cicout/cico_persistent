@@ -18,6 +18,8 @@ private struct FastFileMD5HashParam {
     let minOffset: UInt64
     let middleOffset: UInt64
     let maxOffset: UInt64
+    let usingFileSize: Bool
+    let fileSize: UInt64
 }
 
 extension SecurityAide {
@@ -120,25 +122,16 @@ extension SecurityAide {
 
     public static func fastFileMD5HashData(_ url: URL,
                                            ignoreHeadLength: UInt64 = 0,
-                                           ignoreTailLength: UInt64 = 0) -> Data? {
+                                           ignoreTailLength: UInt64 = 0,
+                                           usingFileSize: Bool = true) -> Data? {
         var isDir = false
         let exist = FileManagerAide.fileExists(url, isDir: &isDir)
-
         guard exist && !isDir else {
             print("[ERROR]: File does not exist.\nurl: \(url)")
             return nil
         }
 
-        let fileSize: UInt64
-
-        do {
-            let attributes = try FileManager.default.attributesOfItem(atPath: url.path) as NSDictionary
-            fileSize = attributes.fileSize()
-        } catch {
-            print("[ERROR]: Read file attributes failed.\nerror: \(error)")
-            return nil
-        }
-
+        let fileSize = self.fileSize(url)
         guard fileSize > 0 else {
             print("[ERROR]: Empty file.\nurl: \(url)")
             return nil
@@ -157,26 +150,36 @@ extension SecurityAide {
         let readableFileSize = fileSize - fixedIgnoreHeadLength - fixedIgnoreTailLength
         let readAll: Bool = (readableFileSize < 4 * kBufferLength) ? true : false
         let minOffset: UInt64 = fixedIgnoreHeadLength
-        let middleOffset: UInt64 = fixedIgnoreHeadLength + (readableFileSize - UInt64(kBufferLength)) / 2
-        let offset: Int64 = Int64(fileSize - fixedIgnoreHeadLength - UInt64(kBufferLength))
-        let maxOffset: UInt64 = (offset > 0) ? UInt64(offset) : 0
+        let middleOffset: UInt64
+        let maxOffset: UInt64
+        if readAll {
+            middleOffset = 0
+            maxOffset = 0
+        } else {
+            middleOffset = fixedIgnoreHeadLength + (readableFileSize - UInt64(kBufferLength)) / 2
+            maxOffset = fileSize - fixedIgnoreHeadLength - UInt64(kBufferLength)
+        }
 
         let param = FastFileMD5HashParam.init(url: url,
                                               bufferLength: kBufferLength,
                                               readAll: readAll,
                                               minOffset: minOffset,
                                               middleOffset: middleOffset,
-                                              maxOffset: maxOffset)
+                                              maxOffset: maxOffset,
+                                              usingFileSize: usingFileSize,
+                                              fileSize: fileSize)
 
         return self.fastFileMD5HashData(param: param)
     }
 
     public static func fastFileMD5HashString(_ url: URL,
                                              ignoreHeadLength: UInt64 = 0,
-                                             ignoreTailLength: UInt64 = 0) -> String? {
+                                             ignoreTailLength: UInt64 = 0,
+                                             usingFileSize: Bool = true) -> String? {
         guard let hashData = self.fastFileMD5HashData(url,
                                                       ignoreHeadLength: ignoreHeadLength,
-                                                      ignoreTailLength: ignoreTailLength) else {
+                                                      ignoreTailLength: ignoreTailLength,
+                                                      usingFileSize: usingFileSize) else {
                                                         return nil
         }
         return self.hexString(hashData)
@@ -197,40 +200,35 @@ extension SecurityAide {
 
             var readTimes = 0
             var loop = true
-            var readLength = param.bufferLength
             while loop {
                 try autoreleasepool {
-                    let currentOffset = fileHandle.offsetInFile
-                    if currentOffset >= param.maxOffset {
-                        loop = false
-                        readLength = Int(param.maxOffset + UInt64(param.bufferLength) - currentOffset)
-                    } else {
-                        readLength = param.bufferLength
-                    }
-
-                    let data = fileHandle.readData(ofLength: readLength)
-                    if data.count <= 0 {
-                        loop = false
-                    } else {
+                    let data = self.readFileData(fileHandle: fileHandle, param: param)
+                    if data.count > 0 {
                         try data.withUnsafeBytesBaseAddress({ (basePtr) in
                             withUnsafeMutablePointer(to: &context, { (contextPtr) -> Void in
                                 CC_MD5_Update(contextPtr, basePtr, CC_LONG(data.count))
                             })
                         })
+                    }
 
-                        if !param.readAll {
-                            readTimes += 1
-                            if readTimes == 1 {
-                                fileHandle.seek(toFileOffset: param.middleOffset)
-                            } else if readTimes == 2 {
-                                fileHandle.seek(toFileOffset: param.maxOffset)
-                            }
+                    if data.count < param.bufferLength {
+                        loop = false
+                    } else if !param.readAll {
+                        readTimes += 1
+                        if readTimes == 1 {
+                            fileHandle.seek(toFileOffset: param.middleOffset)
+                        } else if readTimes == 2 {
+                            fileHandle.seek(toFileOffset: param.maxOffset)
+                        } else {
+                            loop = false
                         }
                     }
                 }
             }
 
             fileHandle.closeFile()
+
+            try self.addFileSizeIfNeeded(context: &context, param: param)
 
             var hashData = Data.init(count: Int(CC_MD5_DIGEST_LENGTH))
             try hashData.withUnsafeUInt8MutablePointerBaseAddress { (basePtr) in
@@ -242,6 +240,43 @@ extension SecurityAide {
         } catch {
             print("[ERROR]: Read file failed.\nurl: \(param.url)\nerror: \(error)")
             return nil
+        }
+    }
+
+    private static func readFileData(fileHandle: FileHandle, param: FastFileMD5HashParam) -> Data {
+        var readLength = param.bufferLength
+        let currentOffset = fileHandle.offsetInFile
+        if currentOffset >= param.maxOffset {
+            readLength = Int(param.maxOffset + UInt64(param.bufferLength) - currentOffset)
+        } else {
+            readLength = param.bufferLength
+        }
+
+        let data = fileHandle.readData(ofLength: readLength)
+        return data
+    }
+
+    private static func addFileSizeIfNeeded(context: inout CC_MD5_CTX, param: FastFileMD5HashParam) throws {
+        if param.usingFileSize {
+            var fileSize = param.fileSize
+            try withUnsafeBytes(of: &fileSize) { (ptr) -> Void in
+                guard let basePtr = ptr.baseAddress else {
+                    throw BaseAddressError.empty
+                }
+                withUnsafeMutablePointer(to: &context, { (contextPtr) -> Void in
+                    CC_MD5_Update(contextPtr, basePtr, CC_LONG(ptr.count))
+                })
+            }
+        }
+    }
+
+    private static func fileSize(_ url: URL) -> UInt64 {
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path) as NSDictionary
+            return attributes.fileSize()
+        } catch {
+            print("[ERROR]: Read file attributes failed.\nerror: \(error)")
+            return 0
         }
     }
 }

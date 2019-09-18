@@ -135,7 +135,7 @@ open class KVFileService {
             return nil
         }
 
-        return CICOSecurityAide.md5HashString(with: userKey)
+        return SecurityAide.md5HashString(userKey)
     }
 
     private func jsonDataFileURL(forJSONKey jsonKey: String) -> URL {

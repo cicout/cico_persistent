@@ -50,7 +50,7 @@ public class KVKeyChainService {
     ///
     /// - see: kSecAttrAccessGroup
     public init(password: String, accessGroup: String? = nil) {
-        self.passwordData = CICOSecurityAide.shaHashData(with: password, shaType: .SHA256)
+        self.passwordData = SecurityAide.shaHashData(password, type: .SHA256)
         self.keyChainService = KeyChainService.init(accessGroup: accessGroup)
     }
 
@@ -77,7 +77,10 @@ public class KVKeyChainService {
             return nil
         }
 
-        let jsonData = self.decryptData(encryptedData: encryptedData)
+        guard let jsonData = self.decryptData(encryptedData: encryptedData) else {
+            print("[ERROR]: Decrypt data failed.")
+            return nil
+        }
 
         return KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
     }
@@ -99,7 +102,10 @@ public class KVKeyChainService {
             return false
         }
 
-        let encryptedData = self.encryptData(sourceData: jsonData)
+        guard let encryptedData = self.encryptData(sourceData: jsonData) else {
+            print("[ERROR]: Encrypt data failed.")
+            return false
+        }
 
         self.lock.lock()
         defer {
@@ -156,9 +162,9 @@ public class KVKeyChainService {
         // read
         if let encryptedData = self.keyChainService.query(genericKey: kGenericKey,
                                                           accountKey: kAccountKey,
-                                                          serviceKey: jsonKey) {
+                                                          serviceKey: jsonKey),
+            let jsonData = self.decryptData(encryptedData: encryptedData) {
             exist = true
-            let jsonData = self.decryptData(encryptedData: encryptedData)
             object = KVJSONAide.transferJSONDataToObject(jsonData, objectType: objectType)
         }
 
@@ -172,7 +178,10 @@ public class KVKeyChainService {
             return
         }
 
-        let newEncryptedData = self.encryptData(sourceData: newJSONData)
+        guard let newEncryptedData = self.encryptData(sourceData: newJSONData) else {
+            print("[ERROR]: Encrypt data failed.")
+            return
+        }
 
         // write
         if exist {
@@ -206,14 +215,14 @@ public class KVKeyChainService {
             return nil
         }
 
-        return CICOSecurityAide.md5HashString(with: userKey)
+        return SecurityAide.md5HashString(userKey)
     }
 
-    private func encryptData(sourceData: Data) -> Data {
-        return CICOSecurityAide.aesEncrypt(withKeyData: self.passwordData, sourceData: sourceData)!
+    private func encryptData(sourceData: Data) -> Data? {
+        return SecurityAide.aesEncrypt(sourceData, type: .AES256, keyData: self.passwordData)
     }
 
-    private func decryptData(encryptedData: Data) -> Data {
-        return CICOSecurityAide.aesDecrypt(withKeyData: self.passwordData, encryptedData: encryptedData)!
+    private func decryptData(encryptedData: Data) -> Data? {
+        return SecurityAide.aesDecrypt(encryptedData, type: .AES256, keyData: self.passwordData)
     }
 }

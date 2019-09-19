@@ -15,7 +15,7 @@ public class SecurityAide {
     public static func randomData(_ count: Int) -> Data {
         var data = Data.init(count: count)
         do {
-            try data.withUnsafeMutableBytesBaseAddress { (basePtr) in
+            try data.withUnsafeMutableBytesBaseAddress { (basePtr, _) in
                 let result = SecRandomCopyBytes(kSecRandomDefault, count, basePtr)
                 if 0 != result {
                     print("[ERROR]: Copy random bytes failed.")

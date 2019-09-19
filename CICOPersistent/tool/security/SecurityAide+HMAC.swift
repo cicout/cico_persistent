@@ -46,14 +46,14 @@ extension SecurityAide {
         var hashData = Data.init(count: type.digetLength())
 
         do {
-            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr) in
-                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr) in
-                    try keyData.withUnsafeBytesBaseAddress({ (keyBasePtr) in
+            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr, _) in
+                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr, sourceCount) in
+                    try keyData.withUnsafeBytesBaseAddress({ (keyBasePtr, keyCount) in
                         CCHmac(type.hmacAlgorithm(),
                                keyBasePtr,
-                               keyData.count,
+                               keyCount,
                                sourceBasePtr,
-                               sourceData.count,
+                               sourceCount,
                                hashBasePtr)
                     })
                 })

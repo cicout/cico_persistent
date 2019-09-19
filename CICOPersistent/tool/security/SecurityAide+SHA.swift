@@ -21,9 +21,9 @@ extension SecurityAide {
     public static func sha1HashData(_ sourceData: Data) -> Data {
         var hashData = Data.init(count: Int(CC_SHA1_DIGEST_LENGTH))
         do {
-            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr) in
-                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr) in
-                    CC_SHA1(sourceBasePtr, CC_LONG(sourceData.count), hashBasePtr)
+            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr, _) in
+                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr, sourceCount) in
+                    CC_SHA1(sourceBasePtr, CC_LONG(sourceCount), hashBasePtr)
                 })
             }
         } catch {
@@ -56,9 +56,9 @@ extension SecurityAide {
     public static func sha256HashData(_ sourceData: Data) -> Data {
         var hashData = Data.init(count: Int(CC_SHA256_DIGEST_LENGTH))
         do {
-            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr) in
-                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr) in
-                    CC_SHA256(sourceBasePtr, CC_LONG(sourceData.count), hashBasePtr)
+            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr, _) in
+                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr, sourceCount) in
+                    CC_SHA256(sourceBasePtr, CC_LONG(sourceCount), hashBasePtr)
                 })
             }
         } catch {
@@ -72,9 +72,9 @@ extension SecurityAide {
     public static func sha512HashData(_ sourceData: Data) -> Data {
         var hashData = Data.init(count: Int(CC_SHA512_DIGEST_LENGTH))
         do {
-            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr) in
-                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr) in
-                    CC_SHA512(sourceBasePtr, CC_LONG(sourceData.count), hashBasePtr)
+            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr, _) in
+                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr, sourceCount) in
+                    CC_SHA512(sourceBasePtr, CC_LONG(sourceCount), hashBasePtr)
                 })
             }
         } catch {

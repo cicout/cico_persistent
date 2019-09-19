@@ -28,9 +28,9 @@ extension SecurityAide {
     public static func md5HashData(_ sourceData: Data) -> Data {
         var hashData = Data.init(count: Int(CC_MD5_DIGEST_LENGTH))
         do {
-            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr) in
-                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr) in
-                    CC_MD5(sourceBasePtr, CC_LONG(sourceData.count), hashBasePtr)
+            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (hashBasePtr, _) in
+                try sourceData.withUnsafeBytesBaseAddress({ (sourceBasePtr, sourceCount) in
+                    CC_MD5(sourceBasePtr, CC_LONG(sourceCount), hashBasePtr)
                 })
             }
         } catch {
@@ -84,9 +84,9 @@ extension SecurityAide {
                     if data.count <= 0 {
                         loop = false
                     } else {
-                        try data.withUnsafeBytesBaseAddress({ (basePtr) in
+                        try data.withUnsafeBytesBaseAddress({ (basePtr, count) in
                             withUnsafeMutablePointer(to: &context, { (contextPtr) -> Void in
-                                CC_MD5_Update(contextPtr, basePtr, CC_LONG(data.count))
+                                CC_MD5_Update(contextPtr, basePtr, CC_LONG(count))
                             })
                         })
                     }
@@ -204,9 +204,9 @@ extension SecurityAide {
                 try autoreleasepool {
                     let data = self.readFileData(fileHandle: fileHandle, param: param)
                     if data.count > 0 {
-                        try data.withUnsafeBytesBaseAddress({ (basePtr) in
+                        try data.withUnsafeBytesBaseAddress({ (basePtr, count) in
                             withUnsafeMutablePointer(to: &context, { (contextPtr) -> Void in
-                                CC_MD5_Update(contextPtr, basePtr, CC_LONG(data.count))
+                                CC_MD5_Update(contextPtr, basePtr, CC_LONG(count))
                             })
                         })
                     }
@@ -231,7 +231,7 @@ extension SecurityAide {
             try self.addFileSizeIfNeeded(context: &context, param: param)
 
             var hashData = Data.init(count: Int(CC_MD5_DIGEST_LENGTH))
-            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (basePtr) in
+            try hashData.withUnsafeUInt8MutablePointerBaseAddress { (basePtr, _) in
                 withUnsafeMutablePointer(to: &context, { (contextPtr) -> Void in
                     CC_MD5_Final(basePtr, contextPtr)
                 })

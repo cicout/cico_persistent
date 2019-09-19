@@ -36,20 +36,20 @@ extension SecurityAide {
         var numBytesEncrypted: Int = 0
 
         do {
-            try encryptedData.withUnsafeUInt8MutablePointerBaseAddress { (encryptedPtr) in
-                try sourceData.withUnsafeBytesBaseAddress({ (sourcePtr) in
-                    try keyData.withUnsafeBytesBaseAddress({ (keyPtr) in
+            try encryptedData.withUnsafeUInt8MutablePointerBaseAddress { (encryptedPtr, encryptedCount) in
+                try sourceData.withUnsafeBytesBaseAddress({ (sourcePtr, sourceCount) in
+                    try keyData.withUnsafeBytesBaseAddress({ (keyPtr, keyCount) in
 
                         let result = CCCrypt(CCOperation(kCCEncrypt),
                                              CCAlgorithm(kCCAlgorithmAES),
                                              options,
                                              keyPtr,
-                                             keyData.count,
+                                             keyCount,
                                              nil,
                                              sourcePtr,
-                                             sourceData.count,
+                                             sourceCount,
                                              encryptedPtr,
-                                             encryptedLength,
+                                             encryptedCount,
                                              &numBytesEncrypted)
                         guard result == kCCSuccess else {
                             print("[ERROR]: AES encrypt failed.\nresult: \(result)")
@@ -82,20 +82,20 @@ extension SecurityAide {
         var numBytesDecrypted: Int = 0
 
         do {
-            try decryptedData.withUnsafeUInt8MutablePointerBaseAddress { (decryptedPtr) in
-                try encryptedData.withUnsafeBytesBaseAddress({ (encryptedPtr) in
-                    try keyData.withUnsafeBytesBaseAddress({ (keyPtr) in
+            try decryptedData.withUnsafeUInt8MutablePointerBaseAddress { (decryptedPtr, decryptedCount) in
+                try encryptedData.withUnsafeBytesBaseAddress({ (encryptedPtr, encryptedCount) in
+                    try keyData.withUnsafeBytesBaseAddress({ (keyPtr, keyCount) in
 
                         let result = CCCrypt(CCOperation(kCCDecrypt),
                                              CCAlgorithm(kCCAlgorithmAES),
                                              options,
                                              keyPtr,
-                                             keyData.count,
+                                             keyCount,
                                              nil,
                                              encryptedPtr,
-                                             encryptedData.count,
+                                             encryptedCount,
                                              decryptedPtr,
-                                             decryptedLength,
+                                             decryptedCount,
                                              &numBytesDecrypted)
                         guard result == kCCSuccess else {
                             print("[ERROR]: AES decrypt failed.\nresult: \(result)")

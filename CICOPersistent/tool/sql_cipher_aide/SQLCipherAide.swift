@@ -122,7 +122,29 @@ public class SQLCipherAide {
     ///
     /// - returns: Encrypt result;
     public static func encryptDatabase(dbPath: String, password: String) -> Bool {
-        return self.changeDatabasePassword(dbPath: dbPath, originalPassword: nil, newPassword: password)
+        var result = false
+
+        let tmpDBPath = "\(dbPath).tmp.db"
+
+        result = self.exportDatabase(fromDBPath: dbPath,
+                                     fromDBPassword: nil,
+                                     toDBPath: tmpDBPath,
+                                     toDBPassword: password)
+        guard result else {
+            return result
+        }
+
+        result = FileManagerAide.removeItem(dbPath)
+        guard result else {
+            return result
+        }
+
+        result = FileManagerAide.moveItem(from: tmpDBPath, to: dbPath)
+        guard result else {
+            return result
+        }
+
+        return result
     }
 
     /// Decrypt encrypted database into passwordless;
@@ -133,7 +155,29 @@ public class SQLCipherAide {
     ///
     /// - returns: Decrypt result;
     public static func decryptDatabase(dbPath: String, password: String) -> Bool {
-        return self.changeDatabasePassword(dbPath: dbPath, originalPassword: password, newPassword: nil)
+        var result = false
+
+        let tmpDBPath = "\(dbPath).tmp.db"
+
+        result = self.exportDatabase(fromDBPath: dbPath,
+                                     fromDBPassword: password,
+                                     toDBPath: tmpDBPath,
+                                     toDBPassword: nil)
+        guard result else {
+            return result
+        }
+
+        result = FileManagerAide.removeItem(dbPath)
+        guard result else {
+            return result
+        }
+
+        result = FileManagerAide.moveItem(from: tmpDBPath, to: dbPath)
+        guard result else {
+            return result
+        }
+
+        return result
     }
 
     /// Change encrypted database password;
@@ -145,7 +189,7 @@ public class SQLCipherAide {
     ///             The password will be transfered to md5 hash;
     ///
     /// - returns: Change password result;
-    public static func changeDatabasePassword(dbPath: String, originalPassword: String?, newPassword: String?) -> Bool {
+    public static func changeDatabasePassword(dbPath: String, originalPassword: String, newPassword: String) -> Bool {
         do {
             var result: Int32 = -1
 
@@ -163,7 +207,7 @@ public class SQLCipherAide {
                 throw SQLCipherError.openFailed
             }
 
-            if let keyData = originalPassword?.data(using: .utf8) {
+            if let keyData = originalPassword.data(using: .utf8) {
                 try keyData.withUnsafeBytesBaseAddress { (ptr, count) in
                     result = sqlite3_key(database, ptr, Int32(count))
                 }
@@ -173,22 +217,16 @@ public class SQLCipherAide {
                 }
             }
 
-            if let newKeyData = newPassword?.data(using: .utf8) {
+            if let newKeyData = newPassword.data(using: .utf8) {
                 try newKeyData.withUnsafeBytesBaseAddress { (ptr, count) in
                     result = sqlite3_rekey(database, ptr, Int32(count))
                 }
-                
-                guard result == SQLITE_OK else {
-                    throw SQLCipherError.invalidKey
-                }
-            } else {
-                result = sqlite3_rekey(database, nil, 0)
-                
+
                 guard result == SQLITE_OK else {
                     throw SQLCipherError.invalidKey
                 }
             }
-            
+
             return true
         } catch {
             print("[ERROR]: Export database failed.\nerror: \(error)")

@@ -63,12 +63,8 @@ public class SQLCipherAide {
 
             let toDBName = "toDB"
 
-            let attachSQL: String
-            if let toDBPassword = toDBPassword {
-                attachSQL = "ATTACH DATABASE '\(toDBPath)' AS \(toDBName) KEY '\(toDBPassword)';"
-            } else {
-                attachSQL = "ATTACH DATABASE '\(toDBPath)' AS \(toDBName);"
-            }
+            let toPassword: String = toDBPassword ?? ""
+            let attachSQL: String = "ATTACH DATABASE '\(toDBPath)' AS \(toDBName) KEY '\(toPassword)';"
 
             attachSQL.withCString { (ptr) -> Void in
                 result = sqlite3_exec(fromDB, ptr, nil, nil, &errorPtr)

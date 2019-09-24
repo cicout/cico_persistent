@@ -22,10 +22,8 @@ public class SQLCipherAide {
     ///
     /// - parameter fromDBPath: Source database path;
     /// - parameter fromDBPassword: Source database password, no password when nil;
-    ///             The password will be transfered to md5 hash;
     /// - parameter toDBPath: Destination database path;
     /// - parameter toDBPassword: Destination database password, no password when nil;
-    ///             The password will be transfered to md5 hash;
     ///
     /// - returns: Export result;
     public static func exportDatabase(fromDBPath: String,
@@ -114,7 +112,6 @@ public class SQLCipherAide {
     ///
     /// - parameter dbPath: Passwordless database path;
     /// - parameter password: Database encryption password;
-    ///             The password will be transfered to md5 hash;
     ///
     /// - returns: Encrypt result;
     public static func encryptDatabase(dbPath: String, password: String) -> Bool {
@@ -147,7 +144,6 @@ public class SQLCipherAide {
     ///
     /// - parameter dbPath: Encrypted database path;
     /// - parameter password: Encrypted database password;
-    ///             The password will be transfered to md5 hash;
     ///
     /// - returns: Decrypt result;
     public static func decryptDatabase(dbPath: String, password: String) -> Bool {
@@ -180,9 +176,7 @@ public class SQLCipherAide {
     ///
     /// - parameter dbPath: Encrypted database path;
     /// - parameter originalPassword: Original password for encrypted database;
-    ///             The password will be transfered to md5 hash;
     /// - parameter newPassword: New password for encrypted database;
-    ///             The password will be transfered to md5 hash;
     ///
     /// - returns: Change password result;
     public static func changeDatabasePassword(dbPath: String, originalPassword: String, newPassword: String) -> Bool {

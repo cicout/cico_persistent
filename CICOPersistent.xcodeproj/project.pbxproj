@@ -34,8 +34,6 @@
 		E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */; };
 		E42B66B12106D269006EBAC2 /* ORMTableInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */; };
 		E432C6522318D695006181C2 /* PathAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432C6512318D695006181C2 /* PathAide.swift */; };
-		E43374BA21AD64FE00296237 /* CICOSQLCipherAide.h in Headers */ = {isa = PBXBuildFile; fileRef = E43374B821AD64FE00296237 /* CICOSQLCipherAide.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E43374BB21AD64FE00296237 /* CICOSQLCipherAide.m in Sources */ = {isa = PBXBuildFile; fileRef = E43374B921AD64FE00296237 /* CICOSQLCipherAide.m */; };
 		E4710E5C21364BF2003F6798 /* FileURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E5B21364BF2003F6798 /* FileURL.swift */; };
 		E4710E682136C278003F6798 /* FileURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E672136C278003F6798 /* FileURLTests.swift */; };
 		E481121D230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */; };
@@ -71,6 +69,8 @@
 		E4C073BD21A8FB40006F82FE /* SQLCipher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C073B521A8F3B7006F82FE /* SQLCipher.framework */; };
 		E4C073BE21A8FE03006F82FE /* FMDB.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E4C073B421A8F3B7006F82FE /* FMDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4C073BF21A8FE05006F82FE /* SQLCipher.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E4C073B521A8F3B7006F82FE /* SQLCipher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E4CAEDDB2338B32100BA0FB1 /* SQLCipherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */; };
+		E4D3629E2333208500F3700E /* SQLCipherAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3629D2333208500F3700E /* SQLCipherAide.swift */; };
 		E4F7DFA7231E0E4F005D6A95 /* FileManagerAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7DFA6231E0E4F005D6A95 /* FileManagerAide.swift */; };
 		E4FD6C9821129DBC00ECAF4E /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
 		E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */; };
@@ -171,8 +171,6 @@
 		E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLKVFileService.swift; sourceTree = "<group>"; };
 		E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMTableInfoModel.swift; sourceTree = "<group>"; };
 		E432C6512318D695006181C2 /* PathAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAide.swift; sourceTree = "<group>"; };
-		E43374B821AD64FE00296237 /* CICOSQLCipherAide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOSQLCipherAide.h; sourceTree = "<group>"; };
-		E43374B921AD64FE00296237 /* CICOSQLCipherAide.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CICOSQLCipherAide.m; sourceTree = "<group>"; };
 		E4710E5B21364BF2003F6798 /* FileURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURL.swift; sourceTree = "<group>"; };
 		E4710E672136C278003F6798 /* FileURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURLTests.swift; sourceTree = "<group>"; };
 		E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceInnerAide.swift; sourceTree = "<group>"; };
@@ -199,6 +197,8 @@
 		E4AD824E21B00ACF00525B12 /* DBSecurityAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBSecurityAide.swift; sourceTree = "<group>"; };
 		E4C073B421A8F3B7006F82FE /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
 		E4C073B521A8F3B7006F82FE /* SQLCipher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLCipher.framework; path = Carthage/Build/iOS/SQLCipher.framework; sourceTree = "<group>"; };
+		E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCipherTests.swift; sourceTree = "<group>"; };
+		E4D3629D2333208500F3700E /* SQLCipherAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCipherAide.swift; sourceTree = "<group>"; };
 		E4F7DFA6231E0E4F005D6A95 /* FileManagerAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerAide.swift; sourceTree = "<group>"; };
 		E4FD6C9321129DBC00ECAF4E /* CICOPersistentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CICOPersistentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4FD6C9721129DBC00ECAF4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -372,8 +372,7 @@
 		E43374B021ACE8D700296237 /* sql_cipher_aide */ = {
 			isa = PBXGroup;
 			children = (
-				E43374B821AD64FE00296237 /* CICOSQLCipherAide.h */,
-				E43374B921AD64FE00296237 /* CICOSQLCipherAide.m */,
+				E4D3629D2333208500F3700E /* SQLCipherAide.swift */,
 			);
 			path = sql_cipher_aide;
 			sourceTree = "<group>";
@@ -490,6 +489,7 @@
 				E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */,
 				E4FD6DC12115533000ECAF4E /* ORMDBServiceTests.swift */,
 				E409D21F2320A8E700AB42BF /* SecurityAideTests.swift */,
+				E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */,
 				E4FD6DBB21154B5D00ECAF4E /* URLKVFileServiceTests.swift */,
 				E4FD6DB2211483BF00ECAF4E /* internal */,
 			);
@@ -535,7 +535,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E43374BA21AD64FE00296237 /* CICOSQLCipherAide.h in Headers */,
 				E41F764020C8D2F300399E42 /* CICOPersistent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -727,6 +726,7 @@
 				E432C6522318D695006181C2 /* PathAide.swift in Sources */,
 				E48112332313DB69001DA5B9 /* PersistentService+KVKeyChain.swift in Sources */,
 				E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */,
+				E4D3629E2333208500F3700E /* SQLCipherAide.swift in Sources */,
 				E492B4B220EB188200BC48A4 /* SQLiteType.swift in Sources */,
 				E49F7CD6210AC18200CF24F0 /* KeyChainService.swift in Sources */,
 				E4FEA0432323528100E8637D /* SecurityAide+MD5.swift in Sources */,
@@ -757,7 +757,6 @@
 				E418B64121C1315E00D042F0 /* KVFileServiceAide.swift in Sources */,
 				E4FEA04123234C3500E8637D /* Data+Bytes.swift in Sources */,
 				E4FEA09B2323B23500E8637D /* SecurityAide+AES.swift in Sources */,
-				E43374BB21AD64FE00296237 /* CICOSQLCipherAide.m in Sources */,
 				E42B665C21002DDD006EBAC2 /* SQLiteRecordEncoder.swift in Sources */,
 				E420CDB320F84EF900D1BA63 /* TypeProperty.swift in Sources */,
 				E41958BB20F8971D007EA4B4 /* SQLiteRecordDecoder.swift in Sources */,
@@ -786,6 +785,7 @@
 				E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */,
 				E4710E682136C278003F6798 /* FileURLTests.swift in Sources */,
 				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
+				E4CAEDDB2338B32100BA0FB1 /* SQLCipherTests.swift in Sources */,
 				E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,
 				E4FD6DC22115533000ECAF4E /* ORMDBServiceTests.swift in Sources */,
@@ -967,7 +967,11 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"SQLITE_HAS_CODEC=1",
 				);
 				INFOPLIST_FILE = CICOPersistent/main/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1000,8 +1004,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = "SQLITE_HAS_CODEC=1";
 				INFOPLIST_FILE = CICOPersistent/main/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

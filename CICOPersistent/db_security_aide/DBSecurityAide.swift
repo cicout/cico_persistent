@@ -13,10 +13,10 @@ public class DBSecurityAide {
     ///
     /// - parameter fromDBPath: Source database path;
     /// - parameter fromDBPassword: Source database password, no password when nil;
-    ///             The password will be transfered to md5 hash for KVDBService/ORMDBService using;
+    ///             The password will be transfered to md5 hash;
     /// - parameter toDBPath: Destination database path;
     /// - parameter toDBPassword: Destination database password, no password when nil;
-    ///             The password will be transfered to md5 hash for KVDBService/ORMDBService using;
+    ///             The password will be transfered to md5 hash;
     ///
     /// - returns: Export result;
     public static func exportDatabase(fromDBPath: String,
@@ -33,10 +33,10 @@ public class DBSecurityAide {
             realToPassword = SecurityAide.md5HashString(toDBPassword)
         }
 
-        let result = CICOSQLCipherAide.exportDatabase(fromDBPath,
-                                                      fromDBPassword: realFromPassword,
-                                                      toDBPath: toDBPath,
-                                                      toDBPassword: realToPassword)
+        let result = SQLCipherAide.exportDatabase(fromDBPath: fromDBPath,
+                                                  fromDBPassword: realFromPassword,
+                                                  toDBPath: toDBPath,
+                                                  toDBPassword: realToPassword)
 
         return result
     }
@@ -45,12 +45,12 @@ public class DBSecurityAide {
     ///
     /// - parameter dbPath: Passwordless database path;
     /// - parameter password: Database encryption password;
-    ///             The password will be transfered to md5 hash for KVDBService/ORMDBService using;
+    ///             The password will be transfered to md5 hash;
     ///
     /// - returns: Encrypt result;
     public static func encryptDatabase(dbPath: String, password: String) -> Bool {
         let realPassword = SecurityAide.md5HashString(password)
-        let result = CICOSQLCipherAide.encryptDatabase(dbPath, password: realPassword)
+        let result = SQLCipherAide.encryptDatabase(dbPath: dbPath, password: realPassword)
         return result
     }
 
@@ -58,12 +58,12 @@ public class DBSecurityAide {
     ///
     /// - parameter dbPath: Encrypted database path;
     /// - parameter password: Encrypted database password;
-    ///             The password will be transfered to md5 hash for KVDBService/ORMDBService using;
+    ///             The password will be transfered to md5 hash;
     ///
     /// - returns: Decrypt result;
     public static func decryptDatabase(dbPath: String, password: String) -> Bool {
         let realPassword = SecurityAide.md5HashString(password)
-        let result = CICOSQLCipherAide.decryptDatabase(dbPath, password: realPassword)
+        let result = SQLCipherAide.decryptDatabase(dbPath: dbPath, password: realPassword)
         return result
     }
 
@@ -71,17 +71,17 @@ public class DBSecurityAide {
     ///
     /// - parameter dbPath: Encrypted database path;
     /// - parameter originalPassword: Original password for encrypted database;
-    ///             The password will be transfered to md5 hash for KVDBService/ORMDBService using;
+    ///             The password will be transfered to md5 hash;
     /// - parameter newPassword: New password for encrypted database;
-    ///             The password will be transfered to md5 hash for KVDBService/ORMDBService using;
+    ///             The password will be transfered to md5 hash;
     ///
     /// - returns: Change password result;
     public static func changeDatabasePassword(dbPath: String, originalPassword: String, newPassword: String) -> Bool {
         let realOriginalPassword = SecurityAide.md5HashString(originalPassword)
         let realNewPassword = SecurityAide.md5HashString(newPassword)
-        let result = CICOSQLCipherAide.changeDatabasePassword(dbPath,
-                                                              originalPassword: realOriginalPassword,
-                                                              newPassword: realNewPassword)
+        let result = SQLCipherAide.changeDatabasePassword(dbPath: dbPath,
+                                                          originalPassword: realOriginalPassword,
+                                                          newPassword: realNewPassword)
         return result
     }
 }

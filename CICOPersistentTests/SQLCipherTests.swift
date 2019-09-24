@@ -35,6 +35,11 @@ class SQLCipherTests: XCTestCase {
         let url6 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_decrypt.db")
         let originalPassword6 = "cico_test_6"
         let password6 = SecurityAide.md5HashString(originalPassword6)
+        let url7 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_change_password.db")
+        let originalPassword7 = "cico_test_7"
+        let password7 = SecurityAide.md5HashString(originalPassword7)
+        let originalNewPassword7 = "cico_test_new_7"
+        let newPassword7 = SecurityAide.md5HashString(originalNewPassword7)
 
         var result = false
 
@@ -54,6 +59,9 @@ class SQLCipherTests: XCTestCase {
         XCTAssert(result, "Clear db failed.")
 
         result = FileManagerAide.removeItem(url6)
+        XCTAssert(result, "Clear db failed.")
+
+        result = FileManagerAide.removeItem(url7)
         XCTAssert(result, "Clear db failed.")
 
         var ormDBService1: ORMDBService? = ORMDBService.init(fileURL: url1, password: nil)
@@ -76,9 +84,9 @@ class SQLCipherTests: XCTestCase {
 
         // export no password to password
         result = SQLCipherAide.exportDatabase(fromDBPath: url1.path,
-                                                  fromDBPassword: nil,
-                                                  toDBPath: url2.path,
-                                                  toDBPassword: password2)
+                                              fromDBPassword: nil,
+                                              toDBPath: url2.path,
+                                              toDBPassword: password2)
         XCTAssert(result, "Export failed.")
 
         let ormDBService2 = ORMDBService.init(fileURL: url2, password: originalPassword2)
@@ -166,6 +174,26 @@ class SQLCipherTests: XCTestCase {
         XCTAssert(array6!.count == 10, "Invalid exported database.")
 
         // change password
+        result = SQLCipherAide.exportDatabase(fromDBPath: url1.path,
+                                              fromDBPassword: nil,
+                                              toDBPath: url7.path,
+                                              toDBPassword: password7)
+        XCTAssert(result, "Export failed.")
+
+        result = SQLCipherAide.changeDatabasePassword(dbPath: url7.path,
+                                                      originalPassword: password7,
+                                                      newPassword: newPassword7)
+        XCTAssert(result, "Export failed.")
+
+        let ormDBService7 = ORMDBService.init(fileURL: url7, password: originalNewPassword7)
+
+        // read array
+        let array7 = ormDBService7.readObjectArray(ofType: TCodableClass.self,
+                                                   whereString: nil,
+                                                   orderByName: "name",
+                                                   descending: false,
+                                                   limit: 10)
+        XCTAssert(array7!.count == 10, "Invalid exported database.")
     }
 
     func testDBSecurity() {

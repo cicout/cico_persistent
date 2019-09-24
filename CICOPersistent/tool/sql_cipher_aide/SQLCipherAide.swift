@@ -95,12 +95,8 @@ public class SQLCipherAide {
             return true
         } catch {
             if let errorPtr = errorPtr {
-                let message = """
-                [ERROR]: Export database failed.
-                error: \(error)
-                error_message: \(String.init(cString: errorPtr))
-                """
-                print(message)
+                let errorMessage = String.init(cString: errorPtr)
+                print("[ERROR]: Export database failed.\nerror: \(error)\nerror_message: \(errorMessage)")
             } else {
                 print("[ERROR]: Export database failed.\nerror: \(error)")
             }

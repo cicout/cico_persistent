@@ -39,7 +39,7 @@
     
     NSString *attachSQL = nil;
     if (nil == toDBPassword) {
-        attachSQL = [NSString stringWithFormat:@"ATTACH DATABASE '%@' AS %@;",
+        attachSQL = [NSString stringWithFormat:@"ATTACH DATABASE '%@' AS %@ KEY '';",
                      toDBPath, toDBName];
     } else {
         attachSQL = [NSString stringWithFormat:@"ATTACH DATABASE '%@' AS %@ KEY '%@';",

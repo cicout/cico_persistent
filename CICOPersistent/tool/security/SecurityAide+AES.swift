@@ -21,7 +21,7 @@ extension SecurityAide {
     }
 
     // MARK: - AES
-    
+
     /// Encrypt data using AES;
     ///
     /// - Parameter sourceData: Source data;
@@ -76,7 +76,7 @@ extension SecurityAide {
 
         return finalEncryptedData
     }
-    
+
     /// Decrypt data using AES;
     ///
     /// - Parameter encryptedData: AES encrypted data;
@@ -131,7 +131,7 @@ extension SecurityAide {
 
         return finalDecryptedData
     }
-    
+
     /// Encrypt data using AES;
     /// - Parameter sourceData: Source data;
     /// - Parameter type: AES128 or AES256;
@@ -153,7 +153,7 @@ extension SecurityAide {
         }
         return self.aesEncrypt(sourceData, type: type, keyData: keyData, options: options)
     }
-    
+
     /// Decrypt data using AES;
     /// - Parameter encryptedData: AES encrypted data;
     /// - Parameter type: AES128 or AES256;

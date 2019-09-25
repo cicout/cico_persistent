@@ -41,7 +41,7 @@ extension SecurityAide {
     }
 
     // MARK: - HMAC
-    
+
     /// Transfer data to HMAC hash data;
     ///
     /// - Parameter sourceData: Source data;
@@ -71,7 +71,7 @@ extension SecurityAide {
 
         return hashData
     }
-    
+
     /// Transfer string to HMAC hash data;
     ///
     /// - Parameter sourceString: Source string, will be transfered to data using utf-8;
@@ -87,7 +87,7 @@ extension SecurityAide {
         }
         return self.hmacHashData(sourceData: sourceData, keyData: keyData, type: type)
     }
-    
+
     /// Transfer string to HMAC hash hex string in lower case;
     ///
     /// - Parameter sourceString: Source string, will be transfered to data using utf-8;

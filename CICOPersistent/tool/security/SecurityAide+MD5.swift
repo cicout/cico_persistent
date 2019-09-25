@@ -24,7 +24,7 @@ private struct FastFileMD5HashParam {
 
 extension SecurityAide {
     // MARK: - MD5
-    
+
     /// Transfer data to md5 hash data;
     ///
     /// - Parameter sourceData: Source data;
@@ -79,7 +79,7 @@ extension SecurityAide {
     }
 
     // MARK: - FILE MD5
-    
+
     /// Read all data from file url and transfer them to md5 hash data;
     ///
     /// - Parameter url: File url, all data will be read;
@@ -149,7 +149,7 @@ extension SecurityAide {
         }
         return self.hexString(hashData)
     }
-    
+
     /// Read some data from file url and transfer them to md5 hash data;
     ///
     /// File data reading rule:
@@ -161,8 +161,10 @@ extension SecurityAide {
     /// 6) Transfer them to md5 hash data;
     ///
     /// - Parameter url: File url;
-    /// - Parameter ignoreHeadLength: Head length of bytes to ignore, it will be reset to 0 if left data is less than 1M(Bytes);
-    /// - Parameter ignoreTailLength: Tail length of bytes to ignore, it will be reset to 0 if left data is less than 1M(Bytes);
+    /// - Parameter ignoreHeadLength: Head length of bytes to ignore,
+    /// it will be reset to 0 if left data is less than 1M(Bytes);
+    /// - Parameter ignoreTailLength: Tail length of bytes to ignore,
+    /// it will be reset to 0 if left data is less than 1M(Bytes);
     /// - Parameter usingFileSize: Join the read data with file size together if usingFileSize == true;
     ///
     /// - returns: MD5 hash data, return nil when no file existed;
@@ -185,7 +187,8 @@ extension SecurityAide {
 
         let fixedIgnoreHeadLength: UInt64
         let fixedIgnoreTailLength: UInt64
-        if ignoreHeadLength + ignoreTailLength > 0 && Int64(fileSize - ignoreHeadLength + ignoreTailLength) < kBufferLength {
+        if ignoreHeadLength + ignoreTailLength > 0 &&
+            Int64(fileSize - ignoreHeadLength + ignoreTailLength) < kBufferLength {
             fixedIgnoreHeadLength = 0
             fixedIgnoreTailLength = 0
         } else {
@@ -221,8 +224,10 @@ extension SecurityAide {
     /// Read some data from file url and transfer them to md5 hash hex string in lower case;
     ///
     /// - Parameter url: File url;
-    /// - Parameter ignoreHeadLength: Head length of bytes to ignore, it will be reset to 0 if left data is less than 1M(Bytes);
-    /// - Parameter ignoreTailLength: Tail length of bytes to ignore, it will be reset to 0 if left data is less than 1M(Bytes);
+    /// - Parameter ignoreHeadLength: Head length of bytes to ignore,
+    /// it will be reset to 0 if left data is less than 1M(Bytes);
+    /// - Parameter ignoreTailLength: Tail length of bytes to ignore,
+    /// it will be reset to 0 if left data is less than 1M(Bytes);
     /// - Parameter usingFileSize: Join the read data with file size together if usingFileSize == true;
     ///
     /// - returns: MD5 hash hex string in lower case, return nil when no file existed;

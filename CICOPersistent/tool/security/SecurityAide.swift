@@ -11,7 +11,7 @@ import Security
 
 public class SecurityAide {
     // MARK: - RANDOM DATA
-    
+
     /// Create random data;
     ///
     /// - Parameter count: Bytes count;
@@ -34,7 +34,6 @@ public class SecurityAide {
 
     // MARK: - HEX
 
-    
     /// Transfer data to hex string in lower case;
     ///
     /// - Parameter data: Data;
@@ -43,7 +42,7 @@ public class SecurityAide {
     public static func hexString(_ data: Data) -> String {
         return data.map { String.init(format: "%02x", $0) }.joined()
     }
-    
+
     /// Transfer hex string to data;
     ///
     /// - Parameter hexString: Hex string (lower case or upper case);
@@ -77,7 +76,7 @@ public class SecurityAide {
     }
 
     // MARK: - BASE64
-    
+
     /// Encrypt data to base64 string;
     ///
     /// - Parameter sourceData: Source data;
@@ -86,7 +85,7 @@ public class SecurityAide {
     public static func base64EncodedString(_ sourceData: Data) -> String {
         return sourceData.base64EncodedString()
     }
-    
+
     /// Encrypt string to base64 string;
     ///
     /// - Parameter sourceString: Source string, will be transfered to data using utf-8;
@@ -99,7 +98,7 @@ public class SecurityAide {
         }
         return self.base64EncodedString(sourceData)
     }
-    
+
     /// Decrypt base64 string to source data;
     ///
     /// - Parameter base64String: BASE64 string;
@@ -110,7 +109,7 @@ public class SecurityAide {
     }
 
     // MARK: - URL ENCODE/DECODE
-    
+
     /// Encrypt string to url encoded string;
     ///
     /// - Parameter sourceString: Source string;
@@ -119,7 +118,7 @@ public class SecurityAide {
     public static func urlEncodedString(_ sourceString: String) -> String? {
         return sourceString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
-    
+
     /// Decrypt url encoded string to source string;
     ///
     /// - Parameter encodedString: URL encoded string;

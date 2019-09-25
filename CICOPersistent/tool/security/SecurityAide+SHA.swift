@@ -17,7 +17,7 @@ extension SecurityAide {
     }
 
     // MARK: - SHA1
-    
+
     /// Transfer data to sha1 hash data;
     ///
     /// - Parameter sourceData: Source data;
@@ -36,7 +36,7 @@ extension SecurityAide {
         }
         return hashData
     }
-    
+
     /// Transfer string to sha1 hash data;
     ///
     /// - Parameter sourceString: Source string, will be transfered to data using utf-8;
@@ -114,7 +114,7 @@ extension SecurityAide {
     }
 
     // MARK: - SHA FAMILY
-    
+
     /// Transfer data to sha hash data;
     ///
     /// - Parameter sourceData: Source data;

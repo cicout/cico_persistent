@@ -24,7 +24,12 @@ private struct FastFileMD5HashParam {
 
 extension SecurityAide {
     // MARK: - MD5
-
+    
+    /// Transfer data to md5 hash data;
+    ///
+    /// - Parameter sourceData: Source data;
+    ///
+    /// - returns: MD5 hash data;
     public static func md5HashData(_ sourceData: Data) -> Data {
         var hashData = Data.init(count: Int(CC_MD5_DIGEST_LENGTH))
         do {
@@ -39,6 +44,11 @@ extension SecurityAide {
         return hashData
     }
 
+    /// Transfer string to md5 hash data;
+    ///
+    /// - Parameter sourceString: Source string, will be transfered to data using utf-8;
+    ///
+    /// - returns: MD5 hash data;
     public static func md5HashData(_ sourceString: String) -> Data {
         guard let sourceData = sourceString.data(using: .utf8) else {
             assertionFailure("Invalid source string.")
@@ -48,18 +58,33 @@ extension SecurityAide {
         return self.md5HashData(sourceData)
     }
 
+    /// Transfer data to md5 hash hex string in lower case;
+    ///
+    /// - Parameter sourceData: Source data;
+    ///
+    /// - returns: MD5 hash hex string in lower case;
     public static func md5HashString(_ sourceData: Data) -> String {
         let hashData = self.md5HashData(sourceData)
         return self.hexString(hashData)
     }
 
+    /// Transfer string to md5 hash hex string in lower case;
+    ///
+    /// - Parameter sourceString: Source string, will be transfered to data using utf-8;
+    ///
+    /// - returns: MD5 hash hex string in lower case;
     public static func md5HashString(_ sourceString: String) -> String {
         let hashData = self.md5HashData(sourceString)
         return self.hexString(hashData)
     }
 
     // MARK: - FILE MD5
-
+    
+    /// Read all data from file url and transfer them to md5 hash data;
+    ///
+    /// - Parameter url: File url, all data will be read;
+    ///
+    /// - returns: MD5 hash data, return nil when no file existed;
     public static func fileMD5HashData(_ url: URL) -> Data? {
         var isDir = false
         let exist = FileManagerAide.fileExists(url, isDir: &isDir)
@@ -113,13 +138,34 @@ extension SecurityAide {
         }
     }
 
+    /// Read all data from file url and transfer them to md5 hash hex string in lower case;
+    ///
+    /// - Parameter url: File url, all data will be read;
+    ///
+    /// - returns: MD5 hash hex string in lower case, return nil when no file existed;
     public static func fileMD5HashString(_ url: URL) -> String? {
         guard let hashData = self.fileMD5HashData(url) else {
             return nil
         }
         return self.hexString(hashData)
     }
-
+    
+    /// Read some data from file url and transfer them to md5 hash data;
+    ///
+    /// File data reading rule:
+    /// 1) Ignore head and tail if fileSize - headIgnoreLength - tailIgnoreLength >= 1M(Bytes);
+    /// 2) Head and tail ignore length will be reset to 0 if fileSize - headIgnoreLength - tailIgnoreLength < 1M(Bytes);
+    /// 3) Read all left data if they are less than 4M(Bytes);
+    /// 4) Read 1M data from each of the head/middle/tail if left data is greater than or equal to 4M(Bytes);
+    /// 5) Join the read data with file size together if usingFileSize == true;
+    /// 6) Transfer them to md5 hash data;
+    ///
+    /// - Parameter url: File url;
+    /// - Parameter ignoreHeadLength: Head length of bytes to ignore, it will be reset to 0 if left data is less than 1M(Bytes);
+    /// - Parameter ignoreTailLength: Tail length of bytes to ignore, it will be reset to 0 if left data is less than 1M(Bytes);
+    /// - Parameter usingFileSize: Join the read data with file size together if usingFileSize == true;
+    ///
+    /// - returns: MD5 hash data, return nil when no file existed;
     public static func fastFileMD5HashData(_ url: URL,
                                            ignoreHeadLength: UInt64 = 0,
                                            ignoreTailLength: UInt64 = 0,
@@ -139,7 +185,7 @@ extension SecurityAide {
 
         let fixedIgnoreHeadLength: UInt64
         let fixedIgnoreTailLength: UInt64
-        if ignoreHeadLength + ignoreTailLength > 0 && Int64(fileSize - ignoreHeadLength + ignoreTailLength) < 1 {
+        if ignoreHeadLength + ignoreTailLength > 0 && Int64(fileSize - ignoreHeadLength + ignoreTailLength) < kBufferLength {
             fixedIgnoreHeadLength = 0
             fixedIgnoreTailLength = 0
         } else {
@@ -172,6 +218,16 @@ extension SecurityAide {
         return self.fastFileMD5HashData(param: param)
     }
 
+    /// Read some data from file url and transfer them to md5 hash hex string in lower case;
+    ///
+    /// - Parameter url: File url;
+    /// - Parameter ignoreHeadLength: Head length of bytes to ignore, it will be reset to 0 if left data is less than 1M(Bytes);
+    /// - Parameter ignoreTailLength: Tail length of bytes to ignore, it will be reset to 0 if left data is less than 1M(Bytes);
+    /// - Parameter usingFileSize: Join the read data with file size together if usingFileSize == true;
+    ///
+    /// - returns: MD5 hash hex string in lower case, return nil when no file existed;
+    ///
+    /// - see: SecurityAide.fastFileMD5HashData(...)
     public static func fastFileMD5HashString(_ url: URL,
                                              ignoreHeadLength: UInt64 = 0,
                                              ignoreTailLength: UInt64 = 0,

@@ -21,7 +21,16 @@ extension SecurityAide {
     }
 
     // MARK: - AES
-
+    
+    /// Encrypt data using AES;
+    ///
+    /// - Parameter sourceData: Source data;
+    /// - Parameter type: AES128 or AES256;
+    /// - Parameter keyData: AES encryption key data;
+    /// keyData.count == 16 for AES128; keyData.count == 32 for AES256;
+    /// - Parameter options: AES encryption options, CCOptions(kCCOptionPKCS7Padding|kCCOptionECBMode) for default;
+    ///
+    /// - returns: AES encrypted data;
     public static func aesEncrypt(_ sourceData: Data,
                                   type: AESType,
                                   keyData: Data,
@@ -67,7 +76,16 @@ extension SecurityAide {
 
         return finalEncryptedData
     }
-
+    
+    /// Decrypt data using AES;
+    ///
+    /// - Parameter encryptedData: AES encrypted data;
+    /// - Parameter type: AES128 or AES256;
+    /// - Parameter keyData: AES encryption key data;
+    /// keyData.count == 16 for AES128; keyData.count == 32 for AES256;
+    /// - Parameter options: AES decryption options, CCOptions(kCCOptionPKCS7Padding|kCCOptionECBMode) for default;
+    ///
+    /// - returns: Source data;
     public static func aesDecrypt(_ encryptedData: Data,
                                   type: AESType,
                                   keyData: Data,
@@ -113,7 +131,15 @@ extension SecurityAide {
 
         return finalDecryptedData
     }
-
+    
+    /// Encrypt data using AES;
+    /// - Parameter sourceData: Source data;
+    /// - Parameter type: AES128 or AES256;
+    /// - Parameter password: AES encryption key string, will be transfered to hash data;
+    /// MD5 hash for AES128; SHA256 hash for AES256;
+    /// - Parameter options: AES decryption options, CCOptions(kCCOptionPKCS7Padding|kCCOptionECBMode) for default;
+    ///
+    /// - returns: AES encrypted data;
     public static func aesEncrypt(_ sourceData: Data,
                                   type: AESType,
                                   password: String,
@@ -127,7 +153,15 @@ extension SecurityAide {
         }
         return self.aesEncrypt(sourceData, type: type, keyData: keyData, options: options)
     }
-
+    
+    /// Decrypt data using AES;
+    /// - Parameter encryptedData: AES encrypted data;
+    /// - Parameter type: AES128 or AES256;
+    /// - Parameter password: AES encryption key string, will be transfered to hash data;
+    /// MD5 hash for AES128; SHA256 hash for AES256;
+    /// - Parameter options: AES decryption options, CCOptions(kCCOptionPKCS7Padding|kCCOptionECBMode) for default;
+    ///
+    /// - reurns: Source data;
     public static func aesDecrypt(_ encryptedData: Data,
                                   type: AESType,
                                   password: String,

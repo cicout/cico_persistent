@@ -23,7 +23,6 @@ public struct TStructTwo: AutoEquatable {
     var enumValue: MyEnum = .one
 //    var stringValue: String = "test"
 //    var urlValue: URL = URL.init(string: "https://www.apple.com")!
-
 }
 
 public class TClassBase: Equatable, CustomStringConvertible {
@@ -71,4 +70,9 @@ public class TClassChild: TClassBase {
     deinit {
         print("TClassChild: \(self) deinit")
     }
+}
+
+public struct MemoryBytesWrapper: Codable {
+    var sWrapper = StructMemoryBytesWrapper.init(value: TStructTwo.init())
+//    var cWrapper = ClassMemoryBytesWrapper.init(value: TClassChild.init())
 }

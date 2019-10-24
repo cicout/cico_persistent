@@ -71,6 +71,8 @@
 		E4C073BF21A8FE05006F82FE /* SQLCipher.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E4C073B521A8F3B7006F82FE /* SQLCipher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4CAEDDB2338B32100BA0FB1 /* SQLCipherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */; };
 		E4D3629E2333208500F3700E /* SQLCipherAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3629D2333208500F3700E /* SQLCipherAide.swift */; };
+		E4E6380923600636009DE3A5 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
+		E4E6380A2360063F009DE3A5 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
 		E4F7DFA7231E0E4F005D6A95 /* FileManagerAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7DFA6231E0E4F005D6A95 /* FileManagerAide.swift */; };
 		E4FD6C9821129DBC00ECAF4E /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
 		E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */; };
@@ -199,6 +201,7 @@
 		E4C073B521A8F3B7006F82FE /* SQLCipher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLCipher.framework; path = Carthage/Build/iOS/SQLCipher.framework; sourceTree = "<group>"; };
 		E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCipherTests.swift; sourceTree = "<group>"; };
 		E4D3629D2333208500F3700E /* SQLCipherAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCipherAide.swift; sourceTree = "<group>"; };
+		E4E6380823600636009DE3A5 /* TMemoryBytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMemoryBytes.swift; sourceTree = "<group>"; };
 		E4F7DFA6231E0E4F005D6A95 /* FileManagerAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerAide.swift; sourceTree = "<group>"; };
 		E4FD6C9321129DBC00ECAF4E /* CICOPersistentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CICOPersistentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4FD6C9721129DBC00ECAF4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -516,14 +519,15 @@
 		E4FD6DB2211483BF00ECAF4E /* internal */ = {
 			isa = PBXGroup;
 			children = (
-				E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */,
 				E41F767420C9384300399E42 /* default.json */,
-				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
-				E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */,
 				E4FD6DF5211C34DE00ECAF4E /* my.json */,
+				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
+				E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */,
+				E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */,
 				E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */,
 				E41F767520C9384300399E42 /* TCodableClass.swift */,
 				E41F767320C9384300399E42 /* TCodableStruct.swift */,
+				E4E6380823600636009DE3A5 /* TMemoryBytes.swift */,
 			);
 			path = internal;
 			sourceTree = "<group>";
@@ -769,6 +773,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E41F767620C9384300399E42 /* TCodableStruct.swift in Sources */,
+				E4E6380A2360063F009DE3A5 /* TMemoryBytes.swift in Sources */,
 				E41F765F20C9302300399E42 /* ViewController.swift in Sources */,
 				E41F767820C9384300399E42 /* TCodableClass.swift in Sources */,
 				E4FD6DC52115566C00ECAF4E /* AutoEquatable.swift in Sources */,
@@ -789,6 +794,7 @@
 				E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,
 				E4FD6DC22115533000ECAF4E /* ORMDBServiceTests.swift in Sources */,
+				E4E6380923600636009DE3A5 /* TMemoryBytes.swift in Sources */,
 				E4FD6DB421153E4900ECAF4E /* TCodableClass.swift in Sources */,
 				E4FD6DBE2115505A00ECAF4E /* KVKeyChainServiceTests.swift in Sources */,
 				E4FD6DBC21154B5E00ECAF4E /* URLKVFileServiceTests.swift in Sources */,
@@ -949,6 +955,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 arm64e";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

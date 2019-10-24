@@ -8,6 +8,7 @@
 
 import XCTest
 import CICOPersistent
+import CICOAutoCodable
 
 class KVFileServiceTests: XCTestCase {
     var service: KVFileService!
@@ -18,6 +19,7 @@ class KVFileServiceTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
         let url = PathAide.docFileURL(withSubPath: "cico_persistent_tests/kv_file")
+        print("url = \(url)")
         self.service = KVFileService.init(rootDirURL: url)
         self.jsonString = JSONStringAide.jsonString(name: "default")
     }
@@ -131,6 +133,32 @@ class KVFileServiceTests: XCTestCase {
         XCTAssert(clearResult, "[FAILED]: clear failed")
     }
 
+    func test_Memory_Bytes() {
+        var result = false
+        
+        let sKey = "test_struct_memory_bytes"
+        
+        let sInstance = TStructTwo.init()
+//        let sWrapper = StructMemoryBytesWrapper.init(value: sInstance)
+//        result = self.service.writeObject(sWrapper, forKey: sKey)
+//        XCTAssert(result, "Write failed.")
+        
+        let sWrapperX = self.service.readObject(StructMemoryBytesWrapper<TStructTwo>.self, forKey: sKey)
+        XCTAssertNotNil(sWrapperX, "Read failed.")
+        XCTAssert(sWrapperX!.value == sInstance, "Invalid value.")
+        
+//        let cKey = "test_class_memory_bytes"
+//
+//        let cInstance = TClassChild.init()
+//        let cWrapper = ClassMemoryBytesWrapper.init(value: cInstance)
+//        result = self.service.writeObject(cWrapper, forKey: cKey)
+//        XCTAssert(result, "Write failed.")
+//
+//        let cWrapperX = self.service.readObject(ClassMemoryBytesWrapper<TClassChild>.self, forKey: cKey)
+//        XCTAssertNotNil(cWrapperX, "Read failed.")
+//        XCTAssert(cWrapperX!.value == cInstance, "Invalid value.")
+    }
+    
     private func commonTest<T: Codable & Equatable>(_ value: T) {
         let key = "test_\(T.self)"
 

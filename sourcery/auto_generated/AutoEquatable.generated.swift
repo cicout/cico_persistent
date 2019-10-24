@@ -52,5 +52,23 @@ internal func == (lhs: TCodableStruct, rhs: TCodableStruct) -> Bool {
     guard compareOptionals(lhs: lhs.dicValue, rhs: rhs.dicValue, compare: ==) else { return false }
     return true
 }
+// MARK: - TStructOne AutoEquatable
+extension TStructOne: Equatable {}
+public func == (lhs: TStructOne, rhs: TStructOne) -> Bool {
+    guard lhs.intValue == rhs.intValue else { return false }
+    guard lhs.doubleValue == rhs.doubleValue else { return false }
+    guard lhs.boolValue == rhs.boolValue else { return false }
+    return true
+}
+// MARK: - TStructTwo AutoEquatable
+extension TStructTwo: Equatable {}
+public func == (lhs: TStructTwo, rhs: TStructTwo) -> Bool {
+    guard lhs.intValue == rhs.intValue else { return false }
+    guard lhs.doubleValue == rhs.doubleValue else { return false }
+    guard lhs.boolValue == rhs.boolValue else { return false }
+    guard lhs.dateValue == rhs.dateValue else { return false }
+    guard lhs.enumValue == rhs.enumValue else { return false }
+    return true
+}
 
 // MARK: - AutoEquatable for Enums

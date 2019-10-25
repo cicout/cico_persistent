@@ -8,19 +8,22 @@
 
 import Foundation
 
-private struct SizedPointer {
+private class Factory<T> {
     private let pointer: UnsafeMutableRawPointer
-    private let size: Int
-    init<T>(of type: T.Type = T.self) {
-        size = MemoryLayout<T>.size
-        pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: 1)
+
+    init() {
+        let size = MemoryLayout<T>.size
+        self.pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: 1)
         memset(pointer, 0, size)
     }
-    func deallocate() {
-        pointer.deallocate()
+
+    deinit {
+//        print("\(self) deinit")
+        self.pointer.deallocate()
     }
-    func getPointee<T>(of type: T.Type = T.self) -> T {
-        return pointer.assumingMemoryBound(to: type).pointee
+
+    func instance() -> T {
+        return self.pointer.assumingMemoryBound(to: T.self).pointee
     }
 }
 
@@ -60,18 +63,13 @@ class SQLiteTypeDecoder: Decoder {
     private class CICOTypeKeyedDecodingContainer<KEY: CodingKey>: KeyedDecodingContainerProtocol {
         private let decoder: SQLiteTypeDecoder
 
-        private var sizedPointers: ContiguousArray<SizedPointer>
+        private var factoryArray: [Any] = [Any].init()
 
         init(with decoder: SQLiteTypeDecoder) {
             self.decoder = decoder
-            self.sizedPointers = ContiguousArray<SizedPointer>()
         }
 
-        deinit {
-            for sizedPointer in sizedPointers {
-                sizedPointer.deallocate()
-            }
-        }
+        deinit {}
 
         var codingPath: [CodingKey] {
             fatalError("[ERROR]: NOT IMPLEMENTED")
@@ -123,9 +121,9 @@ class SQLiteTypeDecoder: Decoder {
             decoder.typeDic[key.stringValue] =
                 TypeProperty.init(name: key.stringValue, swiftType: T.self, sqliteType: .BLOB, value: 0)
 
-            let sizedPointer = SizedPointer(of: T.self)
-            sizedPointers.append(sizedPointer)
-            return sizedPointer.getPointee()
+            let factory = Factory<T>.init()
+            self.factoryArray.append(factory)
+            return factory.instance()
         }
 
         func decode(_ type: Bool.Type, forKey key: KEY) throws -> Bool {

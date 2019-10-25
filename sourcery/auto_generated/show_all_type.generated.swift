@@ -3,13 +3,11 @@
 
 // swiftlint:disable file_length
 
-/** Found 99 Types
+/** Found 98 Types
  * AESError
  * AppDelegate
  * BaseAddressError
  * Bool
- * CStructWrapper
- * CStructWrapper.CodingKeys
  * ClassMemoryBytesWrapper
  * ClassMemoryBytesWrapper.CodingKeys
  * CodableError
@@ -19,6 +17,7 @@
  * Decodable
  * Double
  * Encodable
+ * Factory
  * FastFileMD5HashParam
  * FileManagerAide
  * FileURL
@@ -45,6 +44,7 @@
  * KVKeyChainServiceTests
  * KeyChainService
  * MemoryBytesAide
+ * MemoryBytesWrapper
  * MyClass
  * MyEnum
  * OCCodingObjectArrayWrapper
@@ -81,7 +81,6 @@
  * SecurityAide.HMACType
  * SecurityAide.SHAType
  * SecurityAideTests
- * SizedPointer
  * String
  * StructMemoryBytesWrapper
  * StructMemoryBytesWrapper.CodingKeys

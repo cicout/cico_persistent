@@ -3,13 +3,12 @@
 
 // swiftlint:disable file_length
 
-/** Found 98 Types
+/** Found 99 Types
  * AESError
  * AppDelegate
+ * Array
  * BaseAddressError
  * Bool
- * ClassMemoryBytesWrapper
- * ClassMemoryBytesWrapper.CodingKeys
  * CodableError
  * DBSecurityAide
  * Data
@@ -81,6 +80,8 @@
  * SecurityAide.HMACType
  * SecurityAide.SHAType
  * SecurityAideTests
+ * SerializableWrapper
+ * SerializableWrapper.CodingKeys
  * String
  * StructMemoryBytesWrapper
  * StructMemoryBytesWrapper.CodingKeys

@@ -27,7 +27,7 @@ public class KVKeyChainService {
         } else {
             return KVKeyChainService.init(password: kDefaultPassword)
         }
-    } ()
+    }()
 
     private let passwordData: Data
     private let keyChainService: KeyChainService

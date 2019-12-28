@@ -42,6 +42,6 @@ class FileURLTests: XCTestCase {
 
         let curlx = FileURL.init(jsonString: jsonString!)
         XCTAssertNotNil(curlx, "[FAILED]: JSON string transfer back to CICOURL failed.")
-        XCTAssert(curlx!.fileURL! == curl.fileURL!, "[FAILED]: curlx != curl.")
+        XCTAssert(curlx!.fileURL == curl.fileURL, "[FAILED]: curlx != curl.")
     }
 }

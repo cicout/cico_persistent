@@ -16,7 +16,7 @@ public enum FileURLType: String, Codable {
 }
 
 public struct FileURL: Codable {
-    public var fileURL: URL?
+    public var fileURL: URL
 
     public static func transferPropertyToFileURL(type: FileURLType, relativePath: String) -> URL? {
         switch type {
@@ -65,11 +65,15 @@ public struct FileURL: Codable {
         return (type, relativePath)
     }
 
-    public init(type: FileURLType, relativePath: String) {
-        self.fileURL = FileURL.transferPropertyToFileURL(type: type, relativePath: relativePath)
+    public init?(type: FileURLType, relativePath: String) {
+        if let fileURL = FileURL.transferPropertyToFileURL(type: type, relativePath: relativePath) {
+            self.init(fileURL: fileURL)
+        } else {
+            return nil
+        }
     }
 
-    public init(fileURL: URL?) {
+    public init(fileURL: URL) {
         self.fileURL = fileURL
     }
 }
@@ -85,7 +89,11 @@ extension FileURL {
         let type = try container.decode(FileURLType.self, forKey: .type)
         let relativePath = try container.decode(String.self, forKey: .relativePath)
 
-        self.fileURL = FileURL.transferPropertyToFileURL(type: type, relativePath: relativePath)
+        guard let fileURL = FileURL.transferPropertyToFileURL(type: type, relativePath: relativePath) else {
+            throw CodableError.decodeFailed
+        }
+
+        self.fileURL = fileURL
     }
 
     public func encode(to encoder: Encoder) throws {

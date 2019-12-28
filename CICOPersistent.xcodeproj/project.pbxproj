@@ -34,6 +34,8 @@
 		E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */; };
 		E42B66B12106D269006EBAC2 /* ORMTableInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */; };
 		E432C6522318D695006181C2 /* PathAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432C6512318D695006181C2 /* PathAide.swift */; };
+		E442E6C923B7421000B9C95D /* DebugAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6C823B7421000B9C95D /* DebugAide.swift */; };
+		E442E6CC23B74CA500B9C95D /* CodableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6CB23B74CA500B9C95D /* CodableError.swift */; };
 		E4710E5C21364BF2003F6798 /* FileURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E5B21364BF2003F6798 /* FileURL.swift */; };
 		E4710E682136C278003F6798 /* FileURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E672136C278003F6798 /* FileURLTests.swift */; };
 		E481121D230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */; };
@@ -173,6 +175,8 @@
 		E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLKVFileService.swift; sourceTree = "<group>"; };
 		E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMTableInfoModel.swift; sourceTree = "<group>"; };
 		E432C6512318D695006181C2 /* PathAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAide.swift; sourceTree = "<group>"; };
+		E442E6C823B7421000B9C95D /* DebugAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugAide.swift; sourceTree = "<group>"; };
+		E442E6CB23B74CA500B9C95D /* CodableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableError.swift; sourceTree = "<group>"; };
 		E4710E5B21364BF2003F6798 /* FileURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURL.swift; sourceTree = "<group>"; };
 		E4710E672136C278003F6798 /* FileURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURLTests.swift; sourceTree = "<group>"; };
 		E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceInnerAide.swift; sourceTree = "<group>"; };
@@ -380,6 +384,22 @@
 			path = sql_cipher_aide;
 			sourceTree = "<group>";
 		};
+		E442E6C723B741F200B9C95D /* debug */ = {
+			isa = PBXGroup;
+			children = (
+				E442E6C823B7421000B9C95D /* DebugAide.swift */,
+			);
+			path = debug;
+			sourceTree = "<group>";
+		};
+		E442E6CA23B74C8A00B9C95D /* error */ = {
+			isa = PBXGroup;
+			children = (
+				E442E6CB23B74CA500B9C95D /* CodableError.swift */,
+			);
+			path = error;
+			sourceTree = "<group>";
+		};
 		E4710E5A21364BD4003F6798 /* url */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,6 +487,8 @@
 		E49F7D00210C66B900CF24F0 /* tool */ = {
 			isa = PBXGroup;
 			children = (
+				E442E6C723B741F200B9C95D /* debug */,
+				E442E6CA23B74C8A00B9C95D /* error */,
 				E41F765120C92CAD00399E42 /* path */,
 				E41F764820C9221C00399E42 /* security */,
 				E43374B021ACE8D700296237 /* sql_cipher_aide */,
@@ -730,6 +752,7 @@
 				E432C6522318D695006181C2 /* PathAide.swift in Sources */,
 				E48112332313DB69001DA5B9 /* PersistentService+KVKeyChain.swift in Sources */,
 				E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */,
+				E442E6C923B7421000B9C95D /* DebugAide.swift in Sources */,
 				E4D3629E2333208500F3700E /* SQLCipherAide.swift in Sources */,
 				E492B4B220EB188200BC48A4 /* SQLiteType.swift in Sources */,
 				E49F7CD6210AC18200CF24F0 /* KeyChainService.swift in Sources */,
@@ -765,6 +788,7 @@
 				E420CDB320F84EF900D1BA63 /* TypeProperty.swift in Sources */,
 				E41958BB20F8971D007EA4B4 /* SQLiteRecordDecoder.swift in Sources */,
 				E4AD824F21B00ACF00525B12 /* DBSecurityAide.swift in Sources */,
+				E442E6CC23B74CA500B9C95D /* CodableError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -968,7 +992,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.28.41;
+				CURRENT_PROJECT_VERSION = 0.29.42;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -990,7 +1014,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.28;
+				MARKETING_VERSION = 0.29;
 				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistent;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1008,7 +1032,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.28.41;
+				CURRENT_PROJECT_VERSION = 0.29.42;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1026,7 +1050,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.28;
+				MARKETING_VERSION = 0.29;
 				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistent;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

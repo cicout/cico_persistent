@@ -3,7 +3,7 @@
 
 // swiftlint:disable file_length
 
-/** Found 99 Types
+/** Found 96 Types
  * AESError
  * AppDelegate
  * Array
@@ -13,6 +13,7 @@
  * DBSecurityAide
  * Data
  * Date
+ * DebugAide
  * Decodable
  * Double
  * Encodable
@@ -46,10 +47,6 @@
  * MemoryBytesWrapper
  * MyClass
  * MyEnum
- * OCCodingObjectArrayWrapper
- * OCCodingObjectArrayWrapper.CodingKeys
- * OCCodingObjectWrapper
- * OCCodingObjectWrapper.CodingKeys
  * OCEnumWrapper
  * OCEnumWrapper.CodingKeys
  * ORMDBService

@@ -48,30 +48,42 @@ class ORMDBServiceTests: XCTestCase {
         let object = TCodableClass.init(jsonString: self.jsonString)
         XCTAssertNotNil(object, "[FAILED]: invalid object")
 
-        let writeResult = self.service.writeObject(object!)
-        XCTAssert(writeResult, "[FAILED]: write failed")
+        DebugAide.showDuration(closure: {
+            let writeResult = self.service.writeObject(object!)
+            XCTAssert(writeResult, "[FAILED]: write failed")
+        }, customKey: "writeObject")
 
-        let readObject = self.service.readObject(ofType: TCodableClass.self, primaryKeyValue: object!.name)
-        XCTAssertNotNil(readObject, "[FAILED]: read failed")
-        XCTAssert(readObject! == object!, "[FAILED]: read object is not equal to original object")
+        DebugAide.showDuration(closure: {
+            let readObject = self.service.readObject(ofType: TCodableClass.self, primaryKeyValue: object!.name)
+            XCTAssertNotNil(readObject, "[FAILED]: read failed")
+            XCTAssert(readObject! == object!, "[FAILED]: read object is not equal to original object")
+        }, customKey: "readObject")
 
-        let removeResult = self.service.removeObject(ofType: TCodableClass.self, primaryKeyValue: object!.name)
-        XCTAssert(removeResult, "[FAILED]: write failed")
+        DebugAide.showDuration(closure: {
+            let removeResult = self.service.removeObject(ofType: TCodableClass.self, primaryKeyValue: object!.name)
+            XCTAssert(removeResult, "[FAILED]: write failed")
+        }, customKey: "removeObject")
     }
 
     func test_Struct() {
         let object = TCodableStruct.init(jsonString: self.jsonString)
         XCTAssertNotNil(object, "[FAILED]: invalid object")
 
-        let writeResult = self.service.writeObject(object!)
-        XCTAssert(writeResult, "[FAILED]: write failed")
+        DebugAide.showDuration(closure: {
+            let writeResult = self.service.writeObject(object!)
+            XCTAssert(writeResult, "[FAILED]: write failed")
+        }, customKey: "writeObject")
 
-        let readObject = self.service.readObject(ofType: TCodableStruct.self, primaryKeyValue: object!.name)
-        XCTAssertNotNil(readObject, "[FAILED]: read failed")
-        XCTAssert(readObject! == object!, "[FAILED]: read object is not equal to original object")
+        DebugAide.showDuration(closure: {
+            let readObject = self.service.readObject(ofType: TCodableStruct.self, primaryKeyValue: object!.name)
+            XCTAssertNotNil(readObject, "[FAILED]: read failed")
+            XCTAssert(readObject! == object!, "[FAILED]: read object is not equal to original object")
+        }, customKey: "readObject")
 
-        let removeResult = self.service.removeObject(ofType: TCodableStruct.self, primaryKeyValue: object!.name)
-        XCTAssert(removeResult, "[FAILED]: write failed")
+        DebugAide.showDuration(closure: {
+            let removeResult = self.service.removeObject(ofType: TCodableStruct.self, primaryKeyValue: object!.name)
+            XCTAssert(removeResult, "[FAILED]: write failed")
+        }, customKey: "removeObject")
     }
 
     func test_Class_Array() {
@@ -85,21 +97,23 @@ class ORMDBServiceTests: XCTestCase {
         let writeResult = self.service.writeObjectArray(objectArray)
         XCTAssert(writeResult, "[FAILED]: write failed")
 
-        let readObjectArray =
-            self.service
-                .readObjectArray(ofType: TCodableClass.self,
-                                 whereString: nil,
-                                 orderByName: "name",
-                                 descending: true,
-                                 limit: 10)
-        XCTAssertNotNil(readObjectArray, "[FAILED]: read failed")
-        XCTAssert(readObjectArray!.count > 1, "[FAILED]: read failed")
+        DebugAide.showDuration(closure: {
+            let readObjectArray =
+                self.service
+                    .readObjectArray(ofType: TCodableClass.self,
+                                     whereString: nil,
+                                     orderByName: "name",
+                                     descending: true,
+                                     limit: 10)
+            XCTAssertNotNil(readObjectArray, "[FAILED]: read failed")
+            XCTAssert(readObjectArray!.count > 1, "[FAILED]: read failed")
 
-        let object0 = readObjectArray![0]
-        let object1 = readObjectArray![1]
-        XCTAssertNotNil(object0.name, "[FAILED]: read failed")
-        XCTAssertNotNil(object1.name, "[FAILED]: read failed")
-        XCTAssert(object0.name! > object1.name!, "[FAILED]: read failed")
+            let object0 = readObjectArray![0]
+            let object1 = readObjectArray![1]
+            XCTAssertNotNil(object0.name, "[FAILED]: read failed")
+            XCTAssertNotNil(object1.name, "[FAILED]: read failed")
+            XCTAssert(object0.name! > object1.name!, "[FAILED]: read failed")
+        }, customKey: "readObjectArray")
     }
 
     func test_Class_updateObject() {
@@ -183,5 +197,19 @@ class ORMDBServiceTests: XCTestCase {
     func test_clearAll() {
         let clearResult = self.service.clearAll()
         XCTAssert(clearResult, "[FAILED]: clear failed")
+    }
+
+    func test_performance() {
+        let url1 = PathAide.docFileURL(withSubPath: "cico_persistent_tests/encrypted_orm_db")
+        DebugAide.showDuration(closure: {
+            _ = ORMDBService.init(fileURL: url1, password: "cico_test")
+        }, customKey: "encrypted_orm_db")
+
+        let url2 = PathAide.docFileURL(withSubPath: "cico_persistent_tests/unencrypted_orm_db")
+        DebugAide.showDuration(closure: {
+            _ = ORMDBService.init(fileURL: url2, password: nil)
+        }, customKey: "unencrypted_orm_db")
+
+        XCTAssert(true, "Done!")
     }
 }

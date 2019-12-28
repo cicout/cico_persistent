@@ -186,6 +186,10 @@ open class KVDBService {
         }
 
         dbQueue.inDatabase { (database) in
+            if let key = self.dbPasswordKey {
+                database.setKey(key)
+            }
+
             let createTableSQL = """
             CREATE TABLE IF NOT EXISTS \(kJSONTableName) (\(kJSONKeyColumnName) TEXT NOT NULL,
             \(kJSONDataColumnName) BLOB NOT NULL,

@@ -150,4 +150,18 @@ class KVDBServiceTests: XCTestCase {
         let removeResult = self.service.removeObject(forKey: key)
         XCTAssert(removeResult, "[FAILED]: remove failed: value = \(value)")
     }
+
+    func test_performance() {
+        let url1 = PathAide.docFileURL(withSubPath: "cico_persistent_tests/encrypted_kv_db")
+        DebugAide.showDuration(closure: {
+            _ = KVDBService.init(fileURL: url1, password: "cico_test")
+        }, customKey: "encrypted_kv_db")
+
+        let url2 = PathAide.docFileURL(withSubPath: "cico_persistent_tests/unencrypted_kv_db")
+        DebugAide.showDuration(closure: {
+            _ = KVDBService.init(fileURL: url2, password: nil)
+        }, customKey: "unencrypted_kv_db")
+
+        XCTAssert(true, "Done!")
+    }
 }

@@ -197,7 +197,7 @@ class ORMDBServiceTests: XCTestCase {
     func test_clearAll() {
         let clearResult = self.service.clearAll()
         XCTAssert(clearResult, "[FAILED]: clear failed")
-        
+
         let object = TCodableStruct.init(jsonString: self.jsonString)
         XCTAssertNotNil(object, "[FAILED]: invalid object")
 

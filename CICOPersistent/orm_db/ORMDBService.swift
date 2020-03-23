@@ -54,7 +54,7 @@ open class ORMDBService {
         self.initDB()
         return result
     }
-    
+
     private func initDB() {
         let dirURL = self.fileURL.deletingLastPathComponent()
         let result = FileManagerAide.createDirIfNeeded(dirURL)

@@ -165,7 +165,7 @@ open class KVDBService {
     /// Remove all objects from database;
     ///
     /// - returns: Remove result;
-    open func clearAll() -> Bool {        
+    open func clearAll() -> Bool {
         let result = FileManagerAide.removeItem(self.fileURL)
         self.dbQueue = nil
         self.initDB()

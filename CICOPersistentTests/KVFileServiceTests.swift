@@ -131,6 +131,9 @@ class KVFileServiceTests: XCTestCase {
     func test_clearAll() {
         let clearResult = self.service.clearAll()
         XCTAssert(clearResult, "[FAILED]: clear failed")
+        
+        let value: Int = 8
+        self.commonTest(value)
     }
 
     func test_Memory_Bytes() {

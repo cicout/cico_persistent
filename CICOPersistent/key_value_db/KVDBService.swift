@@ -165,10 +165,10 @@ open class KVDBService {
     /// Remove all objects from database;
     ///
     /// - returns: Remove result;
-    open func clearAll() -> Bool {
-        self.dbQueue = nil
+    open func clearAll() -> Bool {        
         let result = FileManagerAide.removeItem(self.fileURL)
-        self.dbQueue = FMDatabaseQueue.init(url: self.fileURL)
+        self.dbQueue = nil
+        self.initDB()
         return result
     }
 

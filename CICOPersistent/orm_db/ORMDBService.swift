@@ -45,6 +45,16 @@ open class ORMDBService {
         self.initDB()
     }
 
+    /// Remove all tables from database;
+    ///
+    /// - returns: Remove result;
+    open func clearAll() -> Bool {
+        let result = FileManagerAide.removeItem(self.fileURL)
+        self.dbQueue = nil
+        self.initDB()
+        return result
+    }
+    
     private func initDB() {
         let dirURL = self.fileURL.deletingLastPathComponent()
         let result = FileManagerAide.createDirIfNeeded(dirURL)
@@ -68,17 +78,5 @@ open class ORMDBService {
                 self.dbQueue = dbQueue
             }
         }
-    }
-}
-
-extension ORMDBService {
-    /// Remove all tables from database;
-    ///
-    /// - returns: Remove result;
-    open func clearAll() -> Bool {
-        self.dbQueue = nil
-        let result = FileManagerAide.removeItem(self.fileURL)
-        self.dbQueue = FMDatabaseQueue.init(url: self.fileURL)
-        return result
     }
 }

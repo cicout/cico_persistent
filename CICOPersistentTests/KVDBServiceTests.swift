@@ -135,6 +135,9 @@ class KVDBServiceTests: XCTestCase {
     func test_clearAll() {
         let clearResult = self.service.clearAll()
         XCTAssert(clearResult, "[FAILED]: clear failed")
+        
+        let value: Int = 8
+        self.commonTest(value)
     }
 
     private func commonTest<T: Codable & Equatable>(_ value: T) {

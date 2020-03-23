@@ -197,6 +197,14 @@ class ORMDBServiceTests: XCTestCase {
     func test_clearAll() {
         let clearResult = self.service.clearAll()
         XCTAssert(clearResult, "[FAILED]: clear failed")
+        
+        let object = TCodableStruct.init(jsonString: self.jsonString)
+        XCTAssertNotNil(object, "[FAILED]: invalid object")
+
+        DebugAide.showDuration(closure: {
+            let writeResult = self.service.writeObject(object!)
+            XCTAssert(writeResult, "[FAILED]: write failed")
+        }, customKey: "writeObject")
     }
 
     func test_performance() {

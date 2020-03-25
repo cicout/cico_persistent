@@ -11,10 +11,11 @@ import CICOAutoCodable
 import CICOPersistent
 
 struct TAutoIncrement: CICOAutoCodable {
-    private(set) var rowID: Int?
+    let rowID: Int?
     var stringValue: String
 
     init(stringValue: String) {
+        self.rowID = nil
         self.stringValue = stringValue
     }
 }

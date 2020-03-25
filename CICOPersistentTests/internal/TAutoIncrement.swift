@@ -14,8 +14,7 @@ struct TAutoIncrement: CICOAutoCodable {
     private(set) var rowID: Int?
     var stringValue: String
 
-    init(stringValue: String, rowID: Int? = nil) {
-        self.rowID = rowID
+    init(stringValue: String) {
         self.stringValue = stringValue
     }
 }

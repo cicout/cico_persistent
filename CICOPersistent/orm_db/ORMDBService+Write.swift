@@ -26,6 +26,7 @@ extension ORMDBService {
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
         let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
         let objectTypeVersion = T.cicoORMObjectTypeVersion()
+        let autoIncrement = T.cicoORMIntegerPrimaryKeyAutoIncrement()
         let objectType = T.self
 
         var result = false
@@ -35,7 +36,8 @@ extension ORMDBService {
             let paramConfig = ParamConfigModel.init(tableName: tableName,
                                                     primaryKeyColumnName: primaryKeyColumnName,
                                                     indexColumnNameArray: indexColumnNameArray,
-                                                    objectTypeVersion: objectTypeVersion)
+                                                    objectTypeVersion: objectTypeVersion,
+                                                    autoIncrement: autoIncrement)
             let isTableReady =
                 self.createAndUpgradeTableIfNeeded(database: database,
                                                    objectType: objectType,
@@ -73,6 +75,7 @@ extension ORMDBService {
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
         let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
         let objectTypeVersion = T.cicoORMObjectTypeVersion()
+        let autoIncrement = T.cicoORMIntegerPrimaryKeyAutoIncrement()
         let objectType = T.self
 
         var result = false
@@ -82,7 +85,8 @@ extension ORMDBService {
             let paramConfig = ParamConfigModel.init(tableName: tableName,
                                                     primaryKeyColumnName: primaryKeyColumnName,
                                                     indexColumnNameArray: indexColumnNameArray,
-                                                    objectTypeVersion: objectTypeVersion)
+                                                    objectTypeVersion: objectTypeVersion,
+                                                    autoIncrement: autoIncrement)
             let isTableReady =
                 self.createAndUpgradeTableIfNeeded(database: database,
                                                    objectType: objectType,
@@ -129,6 +133,7 @@ extension ORMDBService {
         let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
         let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
         let objectTypeVersion = T.cicoORMObjectTypeVersion()
+        let autoIncrement = T.cicoORMIntegerPrimaryKeyAutoIncrement()
         let objectTypeName = "\(objectType)"
 
         var result = false
@@ -158,7 +163,8 @@ extension ORMDBService {
             let paramConfig = ParamConfigModel.init(tableName: tableName,
                                                     primaryKeyColumnName: primaryKeyColumnName,
                                                     indexColumnNameArray: indexColumnNameArray,
-                                                    objectTypeVersion: objectTypeVersion)
+                                                    objectTypeVersion: objectTypeVersion,
+                                                    autoIncrement: autoIncrement)
             let isTableReady =
                 self.createAndUpgradeTableIfNeeded(database: database,
                                                    objectType: objectType,
@@ -222,7 +228,8 @@ extension ORMDBService {
         result = ORMDBServiceInnerAide.createTableIfNotExists(database: database,
                                                               objectType: objectType,
                                                               tableName: paramConfig.tableName,
-                                                              primaryKeyColumnName: paramConfig.primaryKeyColumnName)
+                                                              primaryKeyColumnName: paramConfig.primaryKeyColumnName,
+                                                              autoIncrement: paramConfig.autoIncrement)
         if !result {
             return result
         }

@@ -29,7 +29,8 @@ extension ORMDBServiceInnerAide {
     static func createTableIfNotExists<T: Codable>(database: FMDatabase,
                                                    objectType: T.Type,
                                                    tableName: String,
-                                                   primaryKeyColumnName: String) -> Bool {
+                                                   primaryKeyColumnName: String,
+                                                   autoIncrement: Bool) -> Bool {
         var result = false
 
         let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
@@ -48,9 +49,12 @@ extension ORMDBServiceInnerAide {
 
             if name == primaryKeyColumnName {
                 createTableSQL.append(" NOT NULL")
+                createTableSQL.append(" PRIMARY KEY")
+                if autoIncrement && sqliteType.sqliteType == .INTEGER {
+                    createTableSQL.append(" AUTOINCREMENT")
+                }
             }
         })
-        createTableSQL.append(", PRIMARY KEY(\(primaryKeyColumnName))")
         createTableSQL.append(");")
 
         result = database.executeUpdate(createTableSQL, withArgumentsIn: [])

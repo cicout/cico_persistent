@@ -20,6 +20,9 @@ public protocol ORMProtocol {
     /// What you need to do is just increase this version number.
     /// The default version number is 1;
     static func cicoORMObjectTypeVersion() -> Int
+    
+    /// You can define auto increment for integer primary key;
+    static func cicoORMIntegerPrimaryKeyAutoIncrement() -> Bool
 }
 
 public extension ORMProtocol {
@@ -29,6 +32,10 @@ public extension ORMProtocol {
 
     static func cicoORMObjectTypeVersion() -> Int {
         return 1
+    }
+    
+    static func cicoORMIntegerPrimaryKeyAutoIncrement() -> Bool {
+        return false
     }
 }
 

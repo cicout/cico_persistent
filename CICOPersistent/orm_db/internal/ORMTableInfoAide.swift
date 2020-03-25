@@ -22,11 +22,13 @@ class ORMTableInfoAide {
 
     static func createORMTableInfoTableIfNotExists(database: FMDatabase) -> Bool {
         let primaryKeyColumnName = ORMTableInfoModel.cicoORMPrimaryKeyColumnName()
+        let autoIncrement = ORMTableInfoModel.cicoORMIntegerPrimaryKeyAutoIncrement()
 
         return ORMDBServiceInnerAide.createTableIfNotExists(database: database,
                                                             objectType: ORMTableInfoModel.self,
                                                             tableName: kORMTableName,
-                                                            primaryKeyColumnName: primaryKeyColumnName)
+                                                            primaryKeyColumnName: primaryKeyColumnName,
+                                                            autoIncrement: autoIncrement)
     }
 
     static func readORMTableInfo(database: FMDatabase,

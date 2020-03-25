@@ -13,4 +13,5 @@ struct ParamConfigModel {
     let primaryKeyColumnName: String
     let indexColumnNameArray: [String]?
     let objectTypeVersion: Int
+    let autoIncrement: Bool
 }

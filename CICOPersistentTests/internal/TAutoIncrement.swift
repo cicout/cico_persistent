@@ -13,7 +13,7 @@ import CICOPersistent
 struct TAutoIncrement: CICOAutoCodable {
     private(set) var rowID: Int?
     var stringValue: String
-    
+
     init(stringValue: String, rowID: Int? = nil) {
         self.rowID = rowID
         self.stringValue = stringValue
@@ -24,7 +24,7 @@ extension TAutoIncrement: ORMProtocol {
     static func cicoORMPrimaryKeyColumnName() -> String {
         return "rowID"
     }
-    
+
     static func cicoORMIntegerPrimaryKeyAutoIncrement() -> Bool {
         return true
     }

@@ -220,7 +220,7 @@ class ORMDBServiceTests: XCTestCase {
 
         XCTAssert(true, "Done!")
     }
-    
+
     func test_auto_increment() {
         var objectArray = [TAutoIncrement].init()
         for index in 0..<10 {

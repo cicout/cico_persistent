@@ -1,9 +1,9 @@
-// Generated using Sourcery 0.16.2 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 0.17.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
 // swiftlint:disable file_length
 
-/** Found 96 Types
+/** Found 97 Types
  * AESError
  * AppDelegate
  * Array
@@ -82,6 +82,7 @@
  * String
  * StructMemoryBytesWrapper
  * StructMemoryBytesWrapper.CodingKeys
+ * TAutoIncrement
  * TClassBase
  * TClassChild
  * TCodableClass
@@ -102,10 +103,11 @@
  * ViewController
  */
 
-/** Found 5 CICOAutoCodable Types
+/** Found 6 CICOAutoCodable Types
  * MyClass
  * MyEnum
  * ORMTableInfoModel
+ * TAutoIncrement
  * TCodableClass
  * TCodableStruct
  */

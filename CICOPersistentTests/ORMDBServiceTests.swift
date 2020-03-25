@@ -22,7 +22,7 @@ class ORMDBServiceTests: XCTestCase {
 //        self.service = ORMDBService.init(fileURL: url)
 
         let customURL = PathAide.docFileURL(withSubPath: "cico_persistent_tests/custom_password_orm_db")
-//        print("\(customURL)")
+        print("\(customURL)")
         self.service = ORMDBService.init(fileURL: customURL, password: "cico_test")
 
         self.jsonString = JSONStringAide.jsonString(name: "default")
@@ -219,5 +219,32 @@ class ORMDBServiceTests: XCTestCase {
         }, customKey: "unencrypted_orm_db")
 
         XCTAssert(true, "Done!")
+    }
+    
+    func test_auto_increment() {
+        var objectArray = [TAutoIncrement].init()
+        for index in 0..<10 {
+            let object = TAutoIncrement.init(stringValue: "test_\(index)")
+            objectArray.append(object)
+        }
+        let writeResult = self.service.writeObjectArray(objectArray)
+        XCTAssert(writeResult, "[FAILED]: write failed")
+
+        let readObjectArray =
+            self.service
+                .readObjectArray(ofType: TAutoIncrement.self,
+                                 whereString: nil,
+                                 orderByName: "rowID",
+                                 descending: true,
+                                 limit: 10)
+        XCTAssertNotNil(readObjectArray, "[FAILED]: read failed")
+        XCTAssert(readObjectArray!.count == 10, "[FAILED]: read failed")
+
+        let object0 = readObjectArray![0]
+        let object9 = readObjectArray![9]
+        XCTAssertNotNil(object0.rowID, "[FAILED]: read failed")
+        XCTAssertNotNil(object9.rowID, "[FAILED]: read failed")
+        print("[#]: object0.rowID = \(object0.rowID!), object9.rowID = \(object9.rowID!)")
+        XCTAssert(object0.rowID! - object9.rowID! == 9, "[FAILED]: read failed")
     }
 }

@@ -160,3 +160,67 @@ class KVTableService {
         return result
     }
 }
+
+extension KVTableService {
+    func readObject<T: Codable>(dbQueue: FMDatabaseQueue?, objectType: T.Type, userKey: String) -> T? {
+        var object: T?
+
+        dbQueue?.inDatabase({ (database) in
+            object = self.readObject(database: database, objectType: objectType, userKey: userKey)
+        })
+
+        return object
+    }
+
+    func writeObject<T: Codable>(dbQueue: FMDatabaseQueue?, object: T, userKey: String) -> Bool {
+        var result = false
+
+        dbQueue?.inTransaction({ (database, rollback) in
+            result = self.writeObject(database: database, object: object, userKey: userKey)
+            if !result {
+                rollback.pointee = true
+            }
+        })
+
+        return result
+    }
+
+    func updateObject<T: Codable>(dbQueue: FMDatabaseQueue?,
+                                  objectType: T.Type,
+                                  userKey: String,
+                                  updateClosure: (T?) -> T?,
+                                  completionClosure: ((Bool) -> Void)? = nil) {
+        dbQueue?.inTransaction({ (database, rollback) in
+            let result = self.updateObject(database: database,
+                                           objectType: objectType,
+                                           userKey: userKey,
+                                           updateClosure: updateClosure)
+
+            if !result {
+                rollback.pointee = true
+            }
+
+            completionClosure?(result)
+        })
+    }
+
+    func removeObject(dbQueue: FMDatabaseQueue?, userKey: String) -> Bool {
+        var result = false
+
+        dbQueue?.inDatabase { (database) in
+            result = self.removeObject(database: database, userKey: userKey)
+        }
+
+        return result
+    }
+
+    func clearAll(dbQueue: FMDatabaseQueue?) -> Bool {
+        var result = false
+
+        dbQueue?.inDatabase { (database) in
+            result = self.clearAll(database: database)
+        }
+
+        return result
+    }
+}

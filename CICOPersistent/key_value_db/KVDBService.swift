@@ -54,13 +54,7 @@ open class KVDBService {
     ///
     /// - returns: Read object, nil when no object for this key;
     open func readObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
-        var object: T?
-
-        self.dbQueue?.inDatabase({ (database) in
-            object = self.tableService.readObject(database: database, objectType: objectType, userKey: userKey)
-        })
-
-        return object
+        return self.tableService.readObject(dbQueue: self.dbQueue, objectType: objectType, userKey: userKey)
     }
 
     /// Write object into database using key;
@@ -72,16 +66,7 @@ open class KVDBService {
     ///
     /// - returns: Write result;
     open func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
-        var result = false
-
-        self.dbQueue?.inTransaction({ (database, rollback) in
-            result = self.tableService.writeObject(database: database, object: object, userKey: userKey)
-            if !result {
-                rollback.pointee = true
-            }
-        })
-
-        return result
+        return self.tableService.writeObject(dbQueue: self.dbQueue, object: object, userKey: userKey)
     }
 
     /// Update object in database using key;
@@ -99,18 +84,11 @@ open class KVDBService {
                                        forKey userKey: String,
                                        updateClosure: (T?) -> T?,
                                        completionClosure: ((Bool) -> Void)? = nil) {
-        self.dbQueue?.inTransaction({ (database, rollback) in
-            let result = self.tableService.updateObject(database: database,
-                                                        objectType: objectType,
-                                                        userKey: userKey,
-                                                        updateClosure: updateClosure)
-
-            if !result {
-                rollback.pointee = true
-            }
-
-            completionClosure?(result)
-        })
+        self.tableService.updateObject(dbQueue: self.dbQueue,
+                                       objectType: objectType,
+                                       userKey: userKey,
+                                       updateClosure: updateClosure,
+                                       completionClosure: completionClosure)
     }
 
     /// Remove object from database using key;
@@ -119,26 +97,14 @@ open class KVDBService {
     ///
     /// - returns: Remove result;
     open func removeObject(forKey userKey: String) -> Bool {
-        var result = false
-
-        self.dbQueue?.inDatabase { (database) in
-            result = self.tableService.removeObject(database: database, userKey: userKey)
-        }
-
-        return result
+        return self.tableService.removeObject(dbQueue: self.dbQueue, userKey: userKey)
     }
 
     /// Remove all objects from database;
     ///
     /// - returns: Remove result;
     open func clearAll() -> Bool {
-        var result = false
-
-        self.dbQueue?.inDatabase { (database) in
-            result = self.tableService.clearAll(database: database)
-        }
-
-        return result
+        return self.tableService.clearAll(dbQueue: self.dbQueue)
     }
 
     private func initDB() {

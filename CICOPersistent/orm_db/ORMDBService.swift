@@ -11,6 +11,8 @@ import FMDB
 
 public let kCICOORMDBDefaultPassword = "cico_orm_db_default_password"
 
+private let kDefaultKVTableName = "cico_default_kv_table"
+
 ///
 /// ORM database service;
 ///
@@ -20,6 +22,7 @@ open class ORMDBService {
     public let fileURL: URL
 
     private(set) var dbQueue: FMDatabaseQueue?
+    let kvTableService: KVTableService
 
     private let dbPasswordKey: String?
 
@@ -33,15 +36,26 @@ open class ORMDBService {
     /// - parameter fileURL: Database file URL;
     /// - parameter password: Database encryption password; It will use default password if not passing this parameter;
     ///             Database won't be encrypted when password is nil;
+    /// - parameter customKVTableName: Key-Value table name; It will use default table name when passing nil;
     ///
     /// - returns: Init object;
-    public init(fileURL: URL, password: String? = kCICOORMDBDefaultPassword) {
+    public init(fileURL: URL, password: String? = kCICOORMDBDefaultPassword, customKVTableName: String? = nil) {
         self.fileURL = fileURL
+        
         if let password = password {
             self.dbPasswordKey = SecurityAide.md5HashString(password)
         } else {
             self.dbPasswordKey = nil
         }
+        
+        let tableName: String
+        if let customTableName = customKVTableName {
+            tableName = customTableName
+        } else {
+            tableName = kDefaultKVTableName
+        }
+        self.kvTableService = KVTableService.init(tableName: tableName)
+        
         self.initDB()
     }
 

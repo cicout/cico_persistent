@@ -11,7 +11,7 @@ import FMDB
 
 public let kCICOKVDBDefaultPassword = "cico_kv_db_default_password"
 
-private let kDefaultTableName = "cico_default_kv_table"
+private let kDefaultKVTableName = "cico_default_kv_table"
 
 ///
 /// Key-Value database service;
@@ -23,7 +23,7 @@ open class KVDBService {
 
     private let dbPasswordKey: String?
     private var dbQueue: FMDatabaseQueue?
-    private var kvTableService: KVTableService!
+    private let kvTableService: KVTableService
 
     deinit {
         print("\(self) deinit")
@@ -35,6 +35,7 @@ open class KVDBService {
     /// - parameter fileURL: Database file URL;
     /// - parameter password: Database encryption password; It will use default password if not passing this parameter;
     ///             Database won't be encrypted when password is nil;
+    /// - parameter customTableName: Table name; It will use default table name when passing nil;
     ///
     /// - returns: Init object;
     public init(fileURL: URL, password: String? = kCICOKVDBDefaultPassword, customTableName: String? = nil) {
@@ -50,7 +51,7 @@ open class KVDBService {
         if let customTableName = customTableName {
             tableName = customTableName
         } else {
-            tableName = kDefaultTableName
+            tableName = kDefaultKVTableName
         }
         self.kvTableService = KVTableService.init(tableName: tableName)
 

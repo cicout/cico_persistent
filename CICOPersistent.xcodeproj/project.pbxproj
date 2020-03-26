@@ -76,6 +76,7 @@
 		E4D091A8242C5265007CEF88 /* DBAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091A7242C5265007CEF88 /* DBAide.swift */; };
 		E4D091AA242C58FD007CEF88 /* ColumnModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091A9242C58FD007CEF88 /* ColumnModel.swift */; };
 		E4D091AC242C5C5F007CEF88 /* KVTableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091AB242C5C5F007CEF88 /* KVTableService.swift */; };
+		E4D091AF242C950B007CEF88 /* ORMDBService+KV.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091AE242C950B007CEF88 /* ORMDBService+KV.swift */; };
 		E4D3629E2333208500F3700E /* SQLCipherAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3629D2333208500F3700E /* SQLCipherAide.swift */; };
 		E4E6380923600636009DE3A5 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
 		E4E6380A2360063F009DE3A5 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
@@ -212,6 +213,7 @@
 		E4D091A7242C5265007CEF88 /* DBAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBAide.swift; sourceTree = "<group>"; };
 		E4D091A9242C58FD007CEF88 /* ColumnModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnModel.swift; sourceTree = "<group>"; };
 		E4D091AB242C5C5F007CEF88 /* KVTableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVTableService.swift; sourceTree = "<group>"; };
+		E4D091AE242C950B007CEF88 /* ORMDBService+KV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORMDBService+KV.swift"; sourceTree = "<group>"; };
 		E4D3629D2333208500F3700E /* SQLCipherAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCipherAide.swift; sourceTree = "<group>"; };
 		E4E6380823600636009DE3A5 /* TMemoryBytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMemoryBytes.swift; sourceTree = "<group>"; };
 		E4F7DFA6231E0E4F005D6A95 /* FileManagerAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerAide.swift; sourceTree = "<group>"; };
@@ -458,13 +460,14 @@
 		E484B44720DCA0E400FE0AC9 /* orm_db */ = {
 			isa = PBXGroup;
 			children = (
-				E42B66A52102D547006EBAC2 /* internal */,
 				E484B44820DCA34600FE0AC9 /* ORMDBService.swift */,
+				E4D091AE242C950B007CEF88 /* ORMDBService+KV.swift */,
 				E48112262313D8F8001DA5B9 /* ORMDBService+Read.swift */,
 				E48112282313D907001DA5B9 /* ORMDBService+Remove.swift */,
 				E48112242313D7A3001DA5B9 /* ORMDBService+Write.swift */,
 				E418B64221C131D000D042F0 /* ORMDBServiceAide.swift */,
 				E42B66A32102CECE006EBAC2 /* ORMProtocol.swift */,
+				E42B66A52102D547006EBAC2 /* internal */,
 			);
 			path = orm_db;
 			sourceTree = "<group>";
@@ -778,6 +781,7 @@
 				E418B64321C131D000D042F0 /* ORMDBServiceAide.swift in Sources */,
 				E48112212313D21C001DA5B9 /* ORMTableInfoAide.swift in Sources */,
 				E432C6522318D695006181C2 /* PathAide.swift in Sources */,
+				E4D091AF242C950B007CEF88 /* ORMDBService+KV.swift in Sources */,
 				E48112332313DB69001DA5B9 /* PersistentService+KVKeyChain.swift in Sources */,
 				E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */,
 				E442E6C923B7421000B9C95D /* DebugAide.swift in Sources */,
@@ -1024,7 +1028,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.30.43;
+				CURRENT_PROJECT_VERSION = 0.31.44;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1046,7 +1050,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.30;
+				MARKETING_VERSION = 0.31;
 				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistent;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1064,7 +1068,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.30.43;
+				CURRENT_PROJECT_VERSION = 0.31.44;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1082,7 +1086,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.30;
+				MARKETING_VERSION = 0.31;
 				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistent;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

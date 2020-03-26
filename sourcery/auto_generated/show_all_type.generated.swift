@@ -3,13 +3,15 @@
 
 // swiftlint:disable file_length
 
-/** Found 97 Types
+/** Found 100 Types
  * AESError
  * AppDelegate
  * Array
  * BaseAddressError
  * Bool
  * CodableError
+ * ColumnModel
+ * DBAide
  * DBSecurityAide
  * Data
  * Date
@@ -42,6 +44,7 @@
  * KVJSONAide
  * KVKeyChainService
  * KVKeyChainServiceTests
+ * KVTableService
  * KeyChainService
  * MemoryBytesAide
  * MemoryBytesWrapper

@@ -73,6 +73,9 @@
 		E4C073BE21A8FE03006F82FE /* FMDB.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E4C073B421A8F3B7006F82FE /* FMDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4C073BF21A8FE05006F82FE /* SQLCipher.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E4C073B521A8F3B7006F82FE /* SQLCipher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4CAEDDB2338B32100BA0FB1 /* SQLCipherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */; };
+		E4D091A8242C5265007CEF88 /* DBAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091A7242C5265007CEF88 /* DBAide.swift */; };
+		E4D091AA242C58FD007CEF88 /* ColumnModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091A9242C58FD007CEF88 /* ColumnModel.swift */; };
+		E4D091AC242C5C5F007CEF88 /* KVTableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091AB242C5C5F007CEF88 /* KVTableService.swift */; };
 		E4D3629E2333208500F3700E /* SQLCipherAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3629D2333208500F3700E /* SQLCipherAide.swift */; };
 		E4E6380923600636009DE3A5 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
 		E4E6380A2360063F009DE3A5 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
@@ -206,6 +209,9 @@
 		E4C073B421A8F3B7006F82FE /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
 		E4C073B521A8F3B7006F82FE /* SQLCipher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLCipher.framework; path = Carthage/Build/iOS/SQLCipher.framework; sourceTree = "<group>"; };
 		E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCipherTests.swift; sourceTree = "<group>"; };
+		E4D091A7242C5265007CEF88 /* DBAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBAide.swift; sourceTree = "<group>"; };
+		E4D091A9242C58FD007CEF88 /* ColumnModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnModel.swift; sourceTree = "<group>"; };
+		E4D091AB242C5C5F007CEF88 /* KVTableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVTableService.swift; sourceTree = "<group>"; };
 		E4D3629D2333208500F3700E /* SQLCipherAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCipherAide.swift; sourceTree = "<group>"; };
 		E4E6380823600636009DE3A5 /* TMemoryBytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMemoryBytes.swift; sourceTree = "<group>"; };
 		E4F7DFA6231E0E4F005D6A95 /* FileManagerAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerAide.swift; sourceTree = "<group>"; };
@@ -290,11 +296,13 @@
 		E41F763D20C8D2F300399E42 /* CICOPersistent */ = {
 			isa = PBXGroup;
 			children = (
+				E4D091A6242C5248007CEF88 /* db_aide */,
 				E4AD824D21B00A9400525B12 /* db_security_aide */,
 				E49F7CF7210C20EE00CF24F0 /* key_value_aide */,
 				E482ED0520CE1613001FF435 /* key_value_db */,
 				E482ED1220CF6902001FF435 /* key_value_file */,
 				E49F7CD3210AC14E00CF24F0 /* key_value_key_chain */,
+				E4D091AD242C8204007CEF88 /* key_value_table */,
 				E41F764D20C9222500399E42 /* main */,
 				E484B44720DCA0E400FE0AC9 /* orm_db */,
 				E41F764E20C9223000399E42 /* persistent */,
@@ -505,6 +513,23 @@
 				E4AD824E21B00ACF00525B12 /* DBSecurityAide.swift */,
 			);
 			path = db_security_aide;
+			sourceTree = "<group>";
+		};
+		E4D091A6242C5248007CEF88 /* db_aide */ = {
+			isa = PBXGroup;
+			children = (
+				E4D091A9242C58FD007CEF88 /* ColumnModel.swift */,
+				E4D091A7242C5265007CEF88 /* DBAide.swift */,
+			);
+			path = db_aide;
+			sourceTree = "<group>";
+		};
+		E4D091AD242C8204007CEF88 /* key_value_table */ = {
+			isa = PBXGroup;
+			children = (
+				E4D091AB242C5C5F007CEF88 /* KVTableService.swift */,
+			);
+			path = key_value_table;
 			sourceTree = "<group>";
 		};
 		E4FD6C9421129DBC00ECAF4E /* CICOPersistentTests */ = {
@@ -761,6 +786,7 @@
 				E49F7CD6210AC18200CF24F0 /* KeyChainService.swift in Sources */,
 				E4FEA0432323528100E8637D /* SecurityAide+MD5.swift in Sources */,
 				E481122D2313DB33001DA5B9 /* PersistentService+KVFile.swift in Sources */,
+				E4D091AC242C5C5F007CEF88 /* KVTableService.swift in Sources */,
 				E482ED0720CE167B001FF435 /* KVDBService.swift in Sources */,
 				E481121D230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift in Sources */,
 				E42B66A42102CECE006EBAC2 /* ORMProtocol.swift in Sources */,
@@ -773,6 +799,7 @@
 				E4FEA0452323546800E8637D /* SecurityAide+SHA.swift in Sources */,
 				E409D21E2320A43D00AB42BF /* SecurityAide.swift in Sources */,
 				E492B4DD20EC6FB200BC48A4 /* SQLiteTypeDecoder.swift in Sources */,
+				E4D091AA242C58FD007CEF88 /* ColumnModel.swift in Sources */,
 				E48112292313D907001DA5B9 /* ORMDBService+Remove.swift in Sources */,
 				E481122F2313DB4D001DA5B9 /* PersistentService+KVDB.swift in Sources */,
 				E48112312313DB5B001DA5B9 /* PersistentService+ORMDB.swift in Sources */,
@@ -785,6 +812,7 @@
 				E484B44920DCA34600FE0AC9 /* ORMDBService.swift in Sources */,
 				E4FEA04723235EA300E8637D /* SecurityAide+HMAC.swift in Sources */,
 				E418B64121C1315E00D042F0 /* KVFileServiceAide.swift in Sources */,
+				E4D091A8242C5265007CEF88 /* DBAide.swift in Sources */,
 				E4FEA04123234C3500E8637D /* Data+Bytes.swift in Sources */,
 				E4FEA09B2323B23500E8637D /* SecurityAide+AES.swift in Sources */,
 				E42B665C21002DDD006EBAC2 /* SQLiteRecordEncoder.swift in Sources */,

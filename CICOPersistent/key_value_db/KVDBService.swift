@@ -11,7 +11,7 @@ import FMDB
 
 public let kCICOKVDBDefaultPassword = "cico_kv_db_default_password"
 
-private let kJSONTableName = "json_table"
+private let kDefaultTableName = "cico_default_kv_table"
 
 ///
 /// Key-Value database service;
@@ -23,7 +23,7 @@ open class KVDBService {
 
     private let dbPasswordKey: String?
     private var dbQueue: FMDatabaseQueue?
-    private var tableService: KVTableService!
+    private var kvTableService: KVTableService!
 
     deinit {
         print("\(self) deinit")
@@ -37,13 +37,23 @@ open class KVDBService {
     ///             Database won't be encrypted when password is nil;
     ///
     /// - returns: Init object;
-    public init(fileURL: URL, password: String? = kCICOKVDBDefaultPassword) {
+    public init(fileURL: URL, password: String? = kCICOKVDBDefaultPassword, customTableName: String? = nil) {
         self.fileURL = fileURL
+
         if let password = password {
             self.dbPasswordKey = SecurityAide.md5HashString(password)
         } else {
             self.dbPasswordKey = nil
         }
+
+        let tableName: String
+        if let customTableName = customTableName {
+            tableName = customTableName
+        } else {
+            tableName = kDefaultTableName
+        }
+        self.kvTableService = KVTableService.init(tableName: tableName)
+
         self.initDB()
     }
 
@@ -54,7 +64,7 @@ open class KVDBService {
     ///
     /// - returns: Read object, nil when no object for this key;
     open func readObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
-        return self.tableService.readObject(dbQueue: self.dbQueue, objectType: objectType, userKey: userKey)
+        return self.kvTableService.readObject(dbQueue: self.dbQueue, objectType: objectType, userKey: userKey)
     }
 
     /// Write object into database using key;
@@ -66,7 +76,7 @@ open class KVDBService {
     ///
     /// - returns: Write result;
     open func writeObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
-        return self.tableService.writeObject(dbQueue: self.dbQueue, object: object, userKey: userKey)
+        return self.kvTableService.writeObject(dbQueue: self.dbQueue, object: object, userKey: userKey)
     }
 
     /// Update object in database using key;
@@ -84,7 +94,7 @@ open class KVDBService {
                                        forKey userKey: String,
                                        updateClosure: (T?) -> T?,
                                        completionClosure: ((Bool) -> Void)? = nil) {
-        self.tableService.updateObject(dbQueue: self.dbQueue,
+        self.kvTableService.updateObject(dbQueue: self.dbQueue,
                                        objectType: objectType,
                                        userKey: userKey,
                                        updateClosure: updateClosure,
@@ -97,14 +107,14 @@ open class KVDBService {
     ///
     /// - returns: Remove result;
     open func removeObject(forKey userKey: String) -> Bool {
-        return self.tableService.removeObject(dbQueue: self.dbQueue, userKey: userKey)
+        return self.kvTableService.removeObject(dbQueue: self.dbQueue, userKey: userKey)
     }
 
     /// Remove all objects from database;
     ///
     /// - returns: Remove result;
     open func clearAll() -> Bool {
-        return self.tableService.clearAll(dbQueue: self.dbQueue)
+        return self.kvTableService.clearAll(dbQueue: self.dbQueue)
     }
 
     private func initDB() {
@@ -125,13 +135,10 @@ open class KVDBService {
                 database.setKey(key)
             }
 
-            let tableService = KVTableService.init(tableName: kJSONTableName)
-
-            let result = tableService.createTableIfNotExists(database: database)
+            let result = self.kvTableService.createTableIfNotExists(database: database)
 
             if result {
                 self.dbQueue = dbQueue
-                self.tableService = tableService
             } else {
                 print("[ERROR]: Init KVDBService failed.")
             }

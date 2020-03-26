@@ -219,6 +219,11 @@ extension KVTableService {
 
         dbQueue?.inDatabase { (database) in
             result = self.clearAll(database: database)
+            if !result {
+                return
+            }
+
+            result = self.createTableIfNotExists(database: database)
         }
 
         return result

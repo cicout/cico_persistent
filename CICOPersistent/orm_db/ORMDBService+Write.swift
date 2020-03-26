@@ -239,10 +239,10 @@ extension ORMDBService {
             for indexColumnName in indexColumnNameArray {
                 let indexName = ORMDBServiceInnerAide.indexName(indexColumnName: indexColumnName,
                                                                 tableName: paramConfig.tableName)
-                result = ORMDBServiceInnerAide.createIndex(database: database,
-                                                           indexName: indexName,
-                                                           tableName: paramConfig.tableName,
-                                                           indexColumnName: indexColumnName)
+                result = DBAide.createIndex(database: database,
+                                            indexName: indexName,
+                                            tableName: paramConfig.tableName,
+                                            indexColumnName: indexColumnName)
                 if !result {
                     return result
                 }

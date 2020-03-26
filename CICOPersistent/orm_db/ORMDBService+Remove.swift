@@ -73,7 +73,7 @@ extension ORMDBService {
                                                     return
             }
 
-            result = ORMDBServiceInnerAide.dropTable(database: database, tableName: tableName)
+            result = DBAide.dropTable(database: database, tableName: tableName)
             if !result {
                 rollback.pointee = true
                 return

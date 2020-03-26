@@ -65,97 +65,6 @@ extension ORMDBServiceInnerAide {
 
         return result
     }
-
-    static func dropTable(database: FMDatabase, tableName: String) -> Bool {
-        var result = false
-
-        let dropSQL = "DROP TABLE \(tableName);"
-
-        result = database.executeUpdate(dropSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(dropSQL)")
-        }
-
-        return result
-    }
-
-    static func queryTableColumns(database: FMDatabase, tableName: String) -> Set<String> {
-        var columnSet = Set<String>.init()
-
-        let querySQL = "PRAGMA TABLE_INFO(\(tableName));"
-
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: []) else {
-            return columnSet
-        }
-
-        while resultSet.next() {
-            if let name = resultSet.string(forColumn: "name") {
-                columnSet.insert(name)
-            }
-        }
-
-        resultSet.close()
-
-        return columnSet
-    }
-
-    static func addColumn(database: FMDatabase, tableName: String, columnName: String, columnType: String) -> Bool {
-        let alterSQL = "ALTER TABLE \(tableName) ADD COLUMN \(columnName) \(columnType);"
-
-        let result = database.executeUpdate(alterSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(alterSQL)")
-        }
-
-        return result
-    }
-
-    static func queryTableIndexs(database: FMDatabase, tableName: String) -> Set<String> {
-        var indexSet = Set<String>.init()
-
-        let querySQL = """
-        SELECT name FROM SQLITE_MASTER WHERE type = 'index' AND tbl_name = '\(tableName)' AND sql IS NOT NULL;
-        """
-
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: []) else {
-            return indexSet
-        }
-
-        while resultSet.next() {
-            if let name = resultSet.string(forColumn: "name") {
-                indexSet.insert(name)
-            }
-        }
-
-        resultSet.close()
-
-        return indexSet
-    }
-
-    static func createIndex(database: FMDatabase,
-                            indexName: String,
-                            tableName: String,
-                            indexColumnName: String) -> Bool {
-        let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(indexColumnName));"
-
-        let result = database.executeUpdate(createIndexSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(createIndexSQL)")
-        }
-
-        return result
-    }
-
-    static func dropIndex(database: FMDatabase, indexName: String) -> Bool {
-        let dropIndexSQL = "DROP INDEX \(indexName);"
-
-        let result = database.executeUpdate(dropIndexSQL, withArgumentsIn: [])
-        if !result {
-            print("[ERROR]: SQL = \(dropIndexSQL)")
-        }
-
-        return result
-    }
 }
 
 extension ORMDBServiceInnerAide {
@@ -164,17 +73,17 @@ extension ORMDBServiceInnerAide {
                                                tableName: String) -> Bool {
         var result = false
 
-        let columnSet = ORMDBServiceInnerAide.queryTableColumns(database: database, tableName: tableName)
+        let columnSet = DBAide.queryTableColumns(database: database, tableName: tableName)
         let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
         let newColumnSet = Set<String>.init(sqliteTypeDic.keys)
         let needAddColumnSet = newColumnSet.subtracting(columnSet)
 
         for columnName in needAddColumnSet {
             let sqliteType = sqliteTypeDic[columnName]!
-            result = ORMDBServiceInnerAide.addColumn(database: database,
-                                                     tableName: tableName,
-                                                     columnName: columnName,
-                                                     columnType: sqliteType.sqliteType.rawValue)
+            result = DBAide.addColumn(database: database,
+                                      tableName: tableName,
+                                      columnName: columnName,
+                                      columnType: sqliteType.sqliteType.rawValue)
             if !result {
                 return result
             }
@@ -191,7 +100,7 @@ extension ORMDBServiceInnerAide {
                                               indexColumnNameArray: [String]?) -> Bool {
         var result = false
 
-        let indexSet = ORMDBServiceInnerAide.queryTableIndexs(database: database, tableName: tableName)
+        let indexSet = DBAide.queryTableIndexs(database: database, tableName: tableName)
         let newIndexSet: Set<String>
         let newIndexDic: [String: String]
         if let indexColumnNameArray = indexColumnNameArray {
@@ -212,10 +121,10 @@ extension ORMDBServiceInnerAide {
         let needAddIndexSet = newIndexSet.subtracting(indexSet)
         for indexName in needAddIndexSet {
             let indexColumnName = newIndexDic[indexName]!
-            result = ORMDBServiceInnerAide.createIndex(database: database,
-                                                       indexName: indexName,
-                                                       tableName: tableName,
-                                                       indexColumnName: indexColumnName)
+            result = DBAide.createIndex(database: database,
+                                        indexName: indexName,
+                                        tableName: tableName,
+                                        indexColumnName: indexColumnName)
             if !result {
                 return result
             }
@@ -223,7 +132,7 @@ extension ORMDBServiceInnerAide {
 
         let needDeleteIndexSet = indexSet.subtracting(newIndexSet)
         for indexName in needDeleteIndexSet {
-            result = ORMDBServiceInnerAide.dropIndex(database: database, indexName: indexName)
+            result = DBAide.dropIndex(database: database, indexName: indexName)
             if !result {
                 return result
             }

@@ -3,6 +3,17 @@
 
 // swiftlint:disable file_length
 
+
+/** Found 6 CICOAutoCodable Types
+ * MyClass
+ * MyEnum
+ * ORMTableInfoModel
+ * TAutoIncrement
+ * TCodableClass
+ * TCodableStruct
+ */
+
+
 /** Found 100 Types
  * AESError
  * AppDelegate
@@ -104,13 +115,4 @@
  * URLKVFileService
  * URLKVFileServiceTests
  * ViewController
- */
-
-/** Found 6 CICOAutoCodable Types
- * MyClass
- * MyEnum
- * ORMTableInfoModel
- * TAutoIncrement
- * TCodableClass
- * TCodableStruct
  */

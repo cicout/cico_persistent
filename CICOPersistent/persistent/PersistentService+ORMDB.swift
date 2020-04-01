@@ -25,7 +25,7 @@ extension PersistentService {
     /// - returns: Read object, nil when no object for this primary key;
     ///
     /// - see: ORMDBService.readObject(ofType:primaryKeyValue:customTableName:)
-    open func readORMDBObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func readORMDBObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
                                                          primaryKeyValue: Codable,
                                                          customTableName: String? = nil) -> T? {
         return self.ormDBService.readObject(ofType: objectType,
@@ -47,7 +47,7 @@ extension PersistentService {
     /// - returns: Read object, nil when no object for this primary key;
     ///
     /// - see: ORMDBService.readObjectArray(ofType:whereString:orderByName:descending:limit:customTableName:)
-    open func readORMDBObjectArray<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func readORMDBObjectArray<T: ORMCodableProtocol>(ofType objectType: T.Type,
                                                               whereString: String? = nil,
                                                               orderByName: String? = nil,
                                                               descending: Bool = true,
@@ -73,7 +73,7 @@ extension PersistentService {
     /// - returns: Write result;
     ///
     /// - see: ORMDBService.writeObject(_:customTableName:)
-    open func writeORMDBObject<T: CICOORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
+    open func writeORMDBObject<T: ORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
         return self.ormDBService.writeObject(object, customTableName: customTableName)
     }
 
@@ -90,7 +90,7 @@ extension PersistentService {
     /// - returns: Write result;
     ///
     /// - see: ORMDBService.writeObjectArray(_:customTableName:)
-    open func writeORMDBObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T],
+    open func writeORMDBObjectArray<T: ORMCodableProtocol>(_ objectArray: [T],
                                                                customTableName: String? = nil) -> Bool {
         return self.ormDBService.writeObjectArray(objectArray, customTableName: customTableName)
     }
@@ -111,7 +111,7 @@ extension PersistentService {
     /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
     ///
     /// - see: ORMDBService.updateObject(ofType:primaryKeyValue:customTableName:updateClosure:completionClosure:)
-    open func updateORMDBObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func updateORMDBObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
                                                            primaryKeyValue: Codable,
                                                            customTableName: String? = nil,
                                                            updateClosure: (T?) -> T?,
@@ -134,7 +134,7 @@ extension PersistentService {
     /// - returns: Remove result;
     ///
     /// - see: ORMDBService.removeObject(ofType:primaryKeyValue:customTableName: customTableName)
-    open func removeORMDBObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func removeORMDBObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
                                                            primaryKeyValue: Codable,
                                                            customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObject(ofType: objectType,
@@ -152,7 +152,7 @@ extension PersistentService {
     /// - returns: Remove result;
     ///
     /// - see: ORMDBService.removeObjectTable(ofType:customTableName:)
-    open func removeORMDBObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func removeORMDBObjectTable<T: ORMCodableProtocol>(ofType objectType: T.Type,
                                                                 customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObjectTable(ofType: objectType, customTableName: customTableName)
     }

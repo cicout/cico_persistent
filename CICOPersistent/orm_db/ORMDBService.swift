@@ -41,13 +41,13 @@ open class ORMDBService {
     /// - returns: Init object;
     public init(fileURL: URL, password: String? = kCICOORMDBDefaultPassword, customKVTableName: String? = nil) {
         self.fileURL = fileURL
-        
+
         if let password = password {
             self.dbPasswordKey = SecurityAide.md5HashString(password)
         } else {
             self.dbPasswordKey = nil
         }
-        
+
         let tableName: String
         if let customTableName = customKVTableName {
             tableName = customTableName
@@ -55,7 +55,7 @@ open class ORMDBService {
             tableName = kDefaultKVTableName
         }
         self.kvTableService = KVTableService.init(tableName: tableName)
-        
+
         self.initDB()
     }
 

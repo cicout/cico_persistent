@@ -10,34 +10,34 @@ import Foundation
 
 public protocol ORMProtocol {
     /// You must choose one primary key name from the codable properties in your class or struct;
-    static func cicoORMPrimaryKeyColumnName() -> String
+    static func ormPrimaryKeyColumnName() -> String
 
     /// You can define some index column from the codable properties in your class or struct;
-    static func cicoORMIndexColumnNameArray() -> [String]?
+    static func ormIndexColumnNameArray() -> [String]?
 
     /// You can use version number to upgrade database automaticaly
     /// when you add/delete/update any codable property in your class or struct;
     /// What you need to do is just increase this version number.
     /// The default version number is 1;
-    static func cicoORMObjectTypeVersion() -> Int
+    static func ormObjectTypeVersion() -> Int
 
     /// You can define auto increment for integer primary key;
     /// It works only if the primary key is integer;
-    static func cicoORMIntegerPrimaryKeyAutoIncrement() -> Bool
+    static func ormIntegerPrimaryKeyAutoIncrement() -> Bool
 }
 
 public extension ORMProtocol {
-    static func cicoORMIndexColumnNameArray() -> [String]? {
+    static func ormIndexColumnNameArray() -> [String]? {
         return nil
     }
 
-    static func cicoORMObjectTypeVersion() -> Int {
+    static func ormObjectTypeVersion() -> Int {
         return 1
     }
 
-    static func cicoORMIntegerPrimaryKeyAutoIncrement() -> Bool {
+    static func ormIntegerPrimaryKeyAutoIncrement() -> Bool {
         return false
     }
 }
 
-public typealias CICOORMCodableProtocol = Codable & ORMProtocol
+public typealias ORMCodableProtocol = Codable & ORMProtocol

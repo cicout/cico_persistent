@@ -21,12 +21,12 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Write result;
-    open func writeObject<T: CICOORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
+    open func writeObject<T: ORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: T.self, customTableName: customTableName)
-        let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
-        let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
-        let objectTypeVersion = T.cicoORMObjectTypeVersion()
-        let autoIncrement = T.cicoORMIntegerPrimaryKeyAutoIncrement()
+        let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
+        let indexColumnNameArray = T.ormIndexColumnNameArray()
+        let objectTypeVersion = T.ormObjectTypeVersion()
+        let autoIncrement = T.ormIntegerPrimaryKeyAutoIncrement()
         let objectType = T.self
 
         var result = false
@@ -70,12 +70,12 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Write result;
-    open func writeObjectArray<T: CICOORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
+    open func writeObjectArray<T: ORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: T.self, customTableName: customTableName)
-        let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
-        let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
-        let objectTypeVersion = T.cicoORMObjectTypeVersion()
-        let autoIncrement = T.cicoORMIntegerPrimaryKeyAutoIncrement()
+        let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
+        let indexColumnNameArray = T.ormIndexColumnNameArray()
+        let objectTypeVersion = T.ormObjectTypeVersion()
+        let autoIncrement = T.ormIntegerPrimaryKeyAutoIncrement()
         let objectType = T.self
 
         var result = false
@@ -124,16 +124,16 @@ extension ORMDBService {
     ///             the read object will be passed as parameter, you can return a new value to update in database;
     ///             It won't be updated to database when you return nil by this closure;
     /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
-    open func updateObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func updateObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil,
                                                       updateClosure: (T?) -> T?,
                                                       completionClosure: ((Bool) -> Void)? = nil) {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
-        let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
-        let indexColumnNameArray = T.cicoORMIndexColumnNameArray()
-        let objectTypeVersion = T.cicoORMObjectTypeVersion()
-        let autoIncrement = T.cicoORMIntegerPrimaryKeyAutoIncrement()
+        let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
+        let indexColumnNameArray = T.ormIndexColumnNameArray()
+        let objectTypeVersion = T.ormObjectTypeVersion()
+        let autoIncrement = T.ormIntegerPrimaryKeyAutoIncrement()
         let objectTypeName = "\(objectType)"
 
         var result = false

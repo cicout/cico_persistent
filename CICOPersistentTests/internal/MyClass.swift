@@ -29,7 +29,7 @@ class MyClass: CICOAutoCodable {
 }
 
 extension MyClass: ORMProtocol {
-    static func cicoORMPrimaryKeyColumnName() -> String {
+    static func ormPrimaryKeyColumnName() -> String {
         return "stringValue"
     }
 }

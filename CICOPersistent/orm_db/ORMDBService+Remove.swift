@@ -20,11 +20,11 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Remove result;
-    open func removeObject<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func removeObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
                                                       primaryKeyValue: Codable,
                                                       customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
-        let primaryKeyColumnName = T.cicoORMPrimaryKeyColumnName()
+        let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
         let objectTypeName = "\(objectType)"
 
         var result = false
@@ -58,7 +58,7 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Remove result;
-    open func removeObjectTable<T: CICOORMCodableProtocol>(ofType objectType: T.Type,
+    open func removeObjectTable<T: ORMCodableProtocol>(ofType objectType: T.Type,
                                                            customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let objectTypeName = "\(objectType)"

@@ -30,7 +30,7 @@ extension ORMTableInfoModel {
 }
 
 extension ORMTableInfoModel: ORMProtocol {
-    static func cicoORMPrimaryKeyColumnName() -> String {
+    static func ormPrimaryKeyColumnName() -> String {
         return CodingKeys.tableName.stringValue
     }
 }

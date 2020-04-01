@@ -21,8 +21,8 @@ class ORMTableInfoAide {
     }
 
     static func createORMTableInfoTableIfNotExists(database: FMDatabase) -> Bool {
-        let primaryKeyColumnName = ORMTableInfoModel.cicoORMPrimaryKeyColumnName()
-        let autoIncrement = ORMTableInfoModel.cicoORMIntegerPrimaryKeyAutoIncrement()
+        let primaryKeyColumnName = ORMTableInfoModel.ormPrimaryKeyColumnName()
+        let autoIncrement = ORMTableInfoModel.ormIntegerPrimaryKeyAutoIncrement()
 
         return ORMDBServiceInnerAide.createTableIfNotExists(database: database,
                                                             objectType: ORMTableInfoModel.self,
@@ -34,7 +34,7 @@ class ORMTableInfoAide {
     static func readORMTableInfo(database: FMDatabase,
                                  objectTypeName: String,
                                  tableName: String) -> ORMTableInfoModel? {
-        let primaryKeyColumnName = ORMTableInfoModel.cicoORMPrimaryKeyColumnName()
+        let primaryKeyColumnName = ORMTableInfoModel.ormPrimaryKeyColumnName()
 
         guard let tableInfo = ORMDBServiceInnerAide.readObject(database: database,
                                                                objectType: ORMTableInfoModel.self,
@@ -58,7 +58,7 @@ class ORMTableInfoAide {
     }
 
     static func removeORMTableInfo(database: FMDatabase, tableName: String) -> Bool {
-        let primaryKeyColumnName = ORMTableInfoModel.cicoORMPrimaryKeyColumnName()
+        let primaryKeyColumnName = ORMTableInfoModel.ormPrimaryKeyColumnName()
         return ORMDBServiceInnerAide.deleteRecord(database: database,
                                                   tableName: kORMTableName,
                                                   primaryKeyColumnName: primaryKeyColumnName,

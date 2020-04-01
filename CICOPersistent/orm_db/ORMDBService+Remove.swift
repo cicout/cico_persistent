@@ -21,8 +21,8 @@ extension ORMDBService {
     ///
     /// - returns: Remove result;
     open func removeObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                      primaryKeyValue: Codable,
-                                                      customTableName: String? = nil) -> Bool {
+                                                  primaryKeyValue: Codable,
+                                                  customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
         let objectTypeName = "\(objectType)"
@@ -59,7 +59,7 @@ extension ORMDBService {
     ///
     /// - returns: Remove result;
     open func removeObjectTable<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                           customTableName: String? = nil) -> Bool {
+                                                       customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let objectTypeName = "\(objectType)"
 

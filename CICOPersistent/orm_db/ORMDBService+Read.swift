@@ -21,8 +21,8 @@ extension ORMDBService {
     ///
     /// - returns: Read object, nil when no object for this primary key;
     open func readObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                    primaryKeyValue: Codable,
-                                                    customTableName: String? = nil) -> T? {
+                                                primaryKeyValue: Codable,
+                                                customTableName: String? = nil) -> T? {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
         let objectTypeName = "\(objectType)"
@@ -59,11 +59,11 @@ extension ORMDBService {
     ///
     /// - returns: Read object, nil when no object for this primary key;
     open func readObjectArray<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                         whereString: String? = nil,
-                                                         orderByName: String? = nil,
-                                                         descending: Bool = true,
-                                                         limit: Int? = nil,
-                                                         customTableName: String? = nil) -> [T]? {
+                                                     whereString: String? = nil,
+                                                     orderByName: String? = nil,
+                                                     descending: Bool = true,
+                                                     limit: Int? = nil,
+                                                     customTableName: String? = nil) -> [T]? {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let objectTypeName = "\(objectType)"
 

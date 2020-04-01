@@ -26,8 +26,8 @@ extension PersistentService {
     ///
     /// - see: ORMDBService.readObject(ofType:primaryKeyValue:customTableName:)
     open func readORMDBObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                         primaryKeyValue: Codable,
-                                                         customTableName: String? = nil) -> T? {
+                                                     primaryKeyValue: Codable,
+                                                     customTableName: String? = nil) -> T? {
         return self.ormDBService.readObject(ofType: objectType,
                                             primaryKeyValue: primaryKeyValue,
                                             customTableName: customTableName)
@@ -48,11 +48,11 @@ extension PersistentService {
     ///
     /// - see: ORMDBService.readObjectArray(ofType:whereString:orderByName:descending:limit:customTableName:)
     open func readORMDBObjectArray<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                              whereString: String? = nil,
-                                                              orderByName: String? = nil,
-                                                              descending: Bool = true,
-                                                              limit: Int? = nil,
-                                                              customTableName: String? = nil) -> [T]? {
+                                                          whereString: String? = nil,
+                                                          orderByName: String? = nil,
+                                                          descending: Bool = true,
+                                                          limit: Int? = nil,
+                                                          customTableName: String? = nil) -> [T]? {
         return self.ormDBService.readObjectArray(ofType: objectType,
                                                  whereString: whereString,
                                                  orderByName: orderByName,
@@ -90,8 +90,7 @@ extension PersistentService {
     /// - returns: Write result;
     ///
     /// - see: ORMDBService.writeObjectArray(_:customTableName:)
-    open func writeORMDBObjectArray<T: ORMCodableProtocol>(_ objectArray: [T],
-                                                               customTableName: String? = nil) -> Bool {
+    open func writeORMDBObjectArray<T: ORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
         return self.ormDBService.writeObjectArray(objectArray, customTableName: customTableName)
     }
 
@@ -112,10 +111,10 @@ extension PersistentService {
     ///
     /// - see: ORMDBService.updateObject(ofType:primaryKeyValue:customTableName:updateClosure:completionClosure:)
     open func updateORMDBObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                           primaryKeyValue: Codable,
-                                                           customTableName: String? = nil,
-                                                           updateClosure: (T?) -> T?,
-                                                           completionClosure: ((Bool) -> Void)? = nil) {
+                                                       primaryKeyValue: Codable,
+                                                       customTableName: String? = nil,
+                                                       updateClosure: (T?) -> T?,
+                                                       completionClosure: ((Bool) -> Void)? = nil) {
         return self.ormDBService.updateObject(ofType: objectType,
                                               primaryKeyValue: primaryKeyValue,
                                               customTableName: customTableName,
@@ -135,8 +134,8 @@ extension PersistentService {
     ///
     /// - see: ORMDBService.removeObject(ofType:primaryKeyValue:customTableName: customTableName)
     open func removeORMDBObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                           primaryKeyValue: Codable,
-                                                           customTableName: String? = nil) -> Bool {
+                                                       primaryKeyValue: Codable,
+                                                       customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObject(ofType: objectType,
                                               primaryKeyValue: primaryKeyValue,
                                               customTableName: customTableName)
@@ -153,7 +152,7 @@ extension PersistentService {
     ///
     /// - see: ORMDBService.removeObjectTable(ofType:customTableName:)
     open func removeORMDBObjectTable<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                                customTableName: String? = nil) -> Bool {
+                                                            customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObjectTable(ofType: objectType, customTableName: customTableName)
     }
 

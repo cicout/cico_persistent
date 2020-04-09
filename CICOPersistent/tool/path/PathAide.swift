@@ -216,7 +216,7 @@ public class PathAide {
     ///                It will return the root directory URL when nil;
     ///
     /// - returns: Full file path;
-    public static func defaultPrivatePath(withSubPath subPath: String?) -> String {
+    public static func defaultPrivatePath(withSubPath subPath: String? = nil) -> String {
         return self.defaultPrivateFileURL(withSubPath: subPath).path
     }
 
@@ -232,7 +232,7 @@ public class PathAide {
     ///                It will return the root directory URL when nil;
     ///
     /// - returns: Full file URL;
-    public static func defaultPrivateFileURL(withSubPath subPath: String?) -> URL {
+    public static func defaultPrivateFileURL(withSubPath subPath: String? = nil) -> URL {
         var fileURL = self.libFileURL(withSubPath: kDefaultPrivateDirName)
         if let subPath = subPath, subPath.count > 0 {
             fileURL = fileURL.appendingPathComponent(subPath)

@@ -14,12 +14,14 @@
  */
 
 
-/** Found 100 Types
+/** Found 106 Types
  * AESError
  * AppDelegate
  * Array
  * BaseAddressError
  * Bool
+ * CStructWrapper
+ * CStructWrapper.CodingKeys
  * CodableError
  * ColumnModel
  * DBAide
@@ -61,6 +63,10 @@
  * MemoryBytesWrapper
  * MyClass
  * MyEnum
+ * OCCodingObjectArrayWrapper
+ * OCCodingObjectArrayWrapper.CodingKeys
+ * OCCodingObjectWrapper
+ * OCCodingObjectWrapper.CodingKeys
  * OCEnumWrapper
  * OCEnumWrapper.CodingKeys
  * ORMDBService

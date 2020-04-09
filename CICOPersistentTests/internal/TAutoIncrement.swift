@@ -25,7 +25,7 @@ extension TAutoIncrement: ORMProtocol {
         return "rowID"
     }
 
-    static func cicoORMIntegerPrimaryKeyAutoIncrement() -> Bool {
+    static func ormIntegerPrimaryKeyAutoIncrement() -> Bool {
         return true
     }
 }

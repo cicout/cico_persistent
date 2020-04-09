@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E409D21E2320A43D00AB42BF /* SecurityAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E409D21D2320A43D00AB42BF /* SecurityAide.swift */; };
 		E409D2202320A8E700AB42BF /* SecurityAideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E409D21F2320A8E700AB42BF /* SecurityAideTests.swift */; };
+		E4107D4F243EF65D0089A296 /* DebugAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6C823B7421000B9C95D /* DebugAide.swift */; };
 		E418B63F21C1301B00D042F0 /* KVDBServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */; };
 		E418B64121C1315E00D042F0 /* KVFileServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B64021C1315E00D042F0 /* KVFileServiceAide.swift */; };
 		E418B64321C131D000D042F0 /* ORMDBServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B64221C131D000D042F0 /* ORMDBServiceAide.swift */; };
@@ -34,8 +35,6 @@
 		E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */; };
 		E42B66B12106D269006EBAC2 /* ORMTableInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */; };
 		E432C6522318D695006181C2 /* PathAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432C6512318D695006181C2 /* PathAide.swift */; };
-		E442E6C923B7421000B9C95D /* DebugAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6C823B7421000B9C95D /* DebugAide.swift */; };
-		E442E6CC23B74CA500B9C95D /* CodableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6CB23B74CA500B9C95D /* CodableError.swift */; };
 		E45C2FC2242B027600D2F49D /* TAutoIncrement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C2FC1242B027600D2F49D /* TAutoIncrement.swift */; };
 		E4710E5C21364BF2003F6798 /* FileURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E5B21364BF2003F6798 /* FileURL.swift */; };
 		E4710E682136C278003F6798 /* FileURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E672136C278003F6798 /* FileURLTests.swift */; };
@@ -181,7 +180,6 @@
 		E42B66B02106D269006EBAC2 /* ORMTableInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMTableInfoModel.swift; sourceTree = "<group>"; };
 		E432C6512318D695006181C2 /* PathAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAide.swift; sourceTree = "<group>"; };
 		E442E6C823B7421000B9C95D /* DebugAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugAide.swift; sourceTree = "<group>"; };
-		E442E6CB23B74CA500B9C95D /* CodableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableError.swift; sourceTree = "<group>"; };
 		E45C2FC1242B027600D2F49D /* TAutoIncrement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAutoIncrement.swift; sourceTree = "<group>"; };
 		E4710E5B21364BF2003F6798 /* FileURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURL.swift; sourceTree = "<group>"; };
 		E4710E672136C278003F6798 /* FileURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURLTests.swift; sourceTree = "<group>"; };
@@ -396,22 +394,6 @@
 			path = sql_cipher_aide;
 			sourceTree = "<group>";
 		};
-		E442E6C723B741F200B9C95D /* debug */ = {
-			isa = PBXGroup;
-			children = (
-				E442E6C823B7421000B9C95D /* DebugAide.swift */,
-			);
-			path = debug;
-			sourceTree = "<group>";
-		};
-		E442E6CA23B74C8A00B9C95D /* error */ = {
-			isa = PBXGroup;
-			children = (
-				E442E6CB23B74CA500B9C95D /* CodableError.swift */,
-			);
-			path = error;
-			sourceTree = "<group>";
-		};
 		E4710E5A21364BD4003F6798 /* url */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,8 +482,6 @@
 		E49F7D00210C66B900CF24F0 /* tool */ = {
 			isa = PBXGroup;
 			children = (
-				E442E6C723B741F200B9C95D /* debug */,
-				E442E6CA23B74C8A00B9C95D /* error */,
 				E41F765120C92CAD00399E42 /* path */,
 				E41F764820C9221C00399E42 /* security */,
 				E43374B021ACE8D700296237 /* sql_cipher_aide */,
@@ -575,6 +555,7 @@
 				E4FD6DF5211C34DE00ECAF4E /* my.json */,
 				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
 				E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */,
+				E442E6C823B7421000B9C95D /* DebugAide.swift */,
 				E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */,
 				E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */,
 				E45C2FC1242B027600D2F49D /* TAutoIncrement.swift */,
@@ -784,7 +765,6 @@
 				E4D091AF242C950B007CEF88 /* ORMDBService+KV.swift in Sources */,
 				E48112332313DB69001DA5B9 /* PersistentService+KVKeyChain.swift in Sources */,
 				E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */,
-				E442E6C923B7421000B9C95D /* DebugAide.swift in Sources */,
 				E4D3629E2333208500F3700E /* SQLCipherAide.swift in Sources */,
 				E492B4B220EB188200BC48A4 /* SQLiteType.swift in Sources */,
 				E49F7CD6210AC18200CF24F0 /* KeyChainService.swift in Sources */,
@@ -823,7 +803,6 @@
 				E420CDB320F84EF900D1BA63 /* TypeProperty.swift in Sources */,
 				E41958BB20F8971D007EA4B4 /* SQLiteRecordDecoder.swift in Sources */,
 				E4AD824F21B00ACF00525B12 /* DBSecurityAide.swift in Sources */,
-				E442E6CC23B74CA500B9C95D /* CodableError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -851,6 +830,7 @@
 				E4710E682136C278003F6798 /* FileURLTests.swift in Sources */,
 				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
 				E4CAEDDB2338B32100BA0FB1 /* SQLCipherTests.swift in Sources */,
+				E4107D4F243EF65D0089A296 /* DebugAide.swift in Sources */,
 				E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,
 				E4FD6DC22115533000ECAF4E /* ORMDBServiceTests.swift in Sources */,
@@ -1028,7 +1008,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.32.45;
+				CURRENT_PROJECT_VERSION = 0.32.46;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1068,7 +1048,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.32.45;
+				CURRENT_PROJECT_VERSION = 0.32.46;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

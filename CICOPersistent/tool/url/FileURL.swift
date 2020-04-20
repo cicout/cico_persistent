@@ -22,7 +22,12 @@ public struct FileURL: Codable {
     public static func transferPropertyToFileURL(type: FileURLType, relativePath: String) -> URL? {
         switch type {
         case .unknown:
-            return URL.init(string: relativePath)
+            if relativePath.count == 0 {
+                print("[WARN]: Empty file URL.")
+                return URL.init(string: "https://www.cico.com/unknown")
+            } else {
+                return URL.init(string: relativePath)
+            }
         case .documents:
             return PathAide.docFileURL(withSubPath: relativePath)
         case .library:
@@ -37,7 +42,7 @@ public struct FileURL: Codable {
         var relativePath = ""
 
         guard let url = fileURL, url.isFileURL else {
-            relativePath = fileURL?.path ?? ""
+            relativePath = fileURL?.absoluteString ?? ""
             return (type, relativePath)
         }
 
@@ -91,6 +96,7 @@ extension FileURL {
         let relativePath = try container.decode(String.self, forKey: .relativePath)
 
         guard let fileURL = FileURL.transferPropertyToFileURL(type: type, relativePath: relativePath) else {
+            print("[ERROR]: Invalid file url.")
             throw CodableError.decodeFailed
         }
 

@@ -31,6 +31,7 @@ class FileURLTests: XCTestCase {
         self.commonTest(url: PathAide.cacheFileURL(withSubPath: "test"))
         self.commonTest(url: PathAide.tempFileURL(withSubPath: nil))
         self.commonTest(url: PathAide.tempFileURL(withSubPath: "test"))
+        self.commonTest(url: URL.init(string: "https://www.cico.com/test")!)
     }
 
     private func commonTest(url: URL) {
@@ -43,5 +44,6 @@ class FileURLTests: XCTestCase {
         let curlx = FileURL.init(jsonString: jsonString!)
         XCTAssertNotNil(curlx, "[FAILED]: JSON string transfer back to CICOURL failed.")
         XCTAssert(curlx!.fileURL == curl.fileURL, "[FAILED]: curlx != curl.")
+        print("curlx = \(curlx!)")
     }
 }

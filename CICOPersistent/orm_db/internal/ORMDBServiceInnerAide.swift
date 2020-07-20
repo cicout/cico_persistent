@@ -177,8 +177,6 @@ extension ORMDBServiceInnerAide {
                                             limit: Int? = nil) -> [T]? {
         var array: [T]?
 
-        let objectTypeName = "\(objectType)"
-
         var querySQL = "SELECT * FROM \(tableName)"
         var argumentArray = [Any]()
 

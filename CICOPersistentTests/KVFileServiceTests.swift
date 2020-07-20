@@ -176,6 +176,23 @@ class KVFileServiceTests: XCTestCase {
 //        XCTAssert(cWrapperX!.value == cInstance, "Invalid value.")
     }
 
+    func test_int_to_double() {
+        var result = false
+
+        let key = "test_int_to_double"
+
+        let intObject = TIntStruct.init(one: 1, two: 1024, three: 999)
+
+        result = self.service.writeObject(intObject, forKey: key)
+        XCTAssert(result, "Write failed.")
+
+        let doubleObject = self.service.readObject(TDoubleStruct.self, forKey: key)
+        XCTAssertNotNil(doubleObject, "Read failed.")
+
+        print("intObject = \(intObject)")
+        print("doubleObject = \(doubleObject!)")
+    }
+
     private func commonTest<T: Codable & Equatable>(_ value: T) {
         let key = "test_\(T.self)"
 

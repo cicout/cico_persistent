@@ -1,2 +1,2 @@
-github "cicout/cico_auto_codable" "0.29.33"
+github "cicout/cico_auto_codable" "0.30.35"
 github "cicout/fmdb_with_sqlcipher_p2c" "2.7.5_4.1.0"

@@ -38,6 +38,8 @@
 		E45C2FC2242B027600D2F49D /* TAutoIncrement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C2FC1242B027600D2F49D /* TAutoIncrement.swift */; };
 		E4710E5C21364BF2003F6798 /* FileURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E5B21364BF2003F6798 /* FileURL.swift */; };
 		E4710E682136C278003F6798 /* FileURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4710E672136C278003F6798 /* FileURLTests.swift */; };
+		E47E294A24C14E5800F0B7D7 /* TIntStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47E294924C14E5800F0B7D7 /* TIntStruct.swift */; };
+		E47E294C24C14F2800F0B7D7 /* TDoubleStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47E294B24C14F2800F0B7D7 /* TDoubleStruct.swift */; };
 		E481121D230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */; };
 		E481121F230FD7BD001DA5B9 /* ParamConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E481121E230FD7BD001DA5B9 /* ParamConfigModel.swift */; };
 		E48112212313D21C001DA5B9 /* ORMTableInfoAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48112202313D21C001DA5B9 /* ORMTableInfoAide.swift */; };
@@ -183,6 +185,8 @@
 		E45C2FC1242B027600D2F49D /* TAutoIncrement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAutoIncrement.swift; sourceTree = "<group>"; };
 		E4710E5B21364BF2003F6798 /* FileURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURL.swift; sourceTree = "<group>"; };
 		E4710E672136C278003F6798 /* FileURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileURLTests.swift; sourceTree = "<group>"; };
+		E47E294924C14E5800F0B7D7 /* TIntStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TIntStruct.swift; sourceTree = "<group>"; };
+		E47E294B24C14F2800F0B7D7 /* TDoubleStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDoubleStruct.swift; sourceTree = "<group>"; };
 		E481121C230FD64B001DA5B9 /* ORMDBServiceInnerAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceInnerAide.swift; sourceTree = "<group>"; };
 		E481121E230FD7BD001DA5B9 /* ParamConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParamConfigModel.swift; sourceTree = "<group>"; };
 		E48112202313D21C001DA5B9 /* ORMTableInfoAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMTableInfoAide.swift; sourceTree = "<group>"; };
@@ -561,6 +565,8 @@
 				E45C2FC1242B027600D2F49D /* TAutoIncrement.swift */,
 				E41F767520C9384300399E42 /* TCodableClass.swift */,
 				E41F767320C9384300399E42 /* TCodableStruct.swift */,
+				E47E294B24C14F2800F0B7D7 /* TDoubleStruct.swift */,
+				E47E294924C14E5800F0B7D7 /* TIntStruct.swift */,
 				E4E6380823600636009DE3A5 /* TMemoryBytes.swift */,
 			);
 			path = internal;
@@ -826,6 +832,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */,
+				E47E294C24C14F2800F0B7D7 /* TDoubleStruct.swift in Sources */,
 				E45C2FC2242B027600D2F49D /* TAutoIncrement.swift in Sources */,
 				E4710E682136C278003F6798 /* FileURLTests.swift in Sources */,
 				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
@@ -840,6 +847,7 @@
 				E4FD6DBC21154B5E00ECAF4E /* URLKVFileServiceTests.swift in Sources */,
 				E4FD6DC4211555F900ECAF4E /* AutoEquatable.swift in Sources */,
 				E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */,
+				E47E294A24C14E5800F0B7D7 /* TIntStruct.swift in Sources */,
 				E4FD6DB721153E8600ECAF4E /* JSONStringAide.swift in Sources */,
 				E409D2202320A8E700AB42BF /* SecurityAideTests.swift in Sources */,
 			);

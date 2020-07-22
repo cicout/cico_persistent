@@ -8,6 +8,7 @@
 // swiftlint:disable function_body_length
 
 import XCTest
+import CICOFoundationKit
 import CICOPersistent
 
 class SQLCipherTests: XCTestCase {

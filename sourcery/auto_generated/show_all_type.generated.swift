@@ -14,25 +14,20 @@
  */
 
 
-/** Found 100 Types
- * AESError
+/** Found 90 Types
  * AppDelegate
  * Array
- * BaseAddressError
  * Bool
  * CodableError
  * ColumnModel
  * DBAide
  * DBSecurityAide
- * Data
  * Date
  * DebugAide
  * Decodable
  * Double
  * Encodable
  * Factory
- * FastFileMD5HashParam
- * FileManagerAide
  * FileURL
  * FileURL.CodingKeys
  * FileURLTests
@@ -69,7 +64,6 @@
  * ORMTableInfoModel
  * ORMTableInfoModel.CodingKeys
  * ParamConfigModel
- * PathAide
  * PersistentService
  * PersistentServiceAide
  * SQLCipherAide
@@ -84,10 +78,6 @@
  * SQLiteTypeDecoder
  * SQLiteTypeDecoder.CICOTypeKeyedDecodingContainer
  * SQLiteTypeDecoderError
- * SecurityAide
- * SecurityAide.AESType
- * SecurityAide.HMACType
- * SecurityAide.SHAType
  * SecurityAideTests
  * SerializableWrapper
  * SerializableWrapper.CodingKeys

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CICOFoundationKit
 
 private let kDBSubPath = "cico_orm_db/db.sqlite"
 

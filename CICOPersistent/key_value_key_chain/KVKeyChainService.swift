@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CICOFoundationKit
 import CICOAutoCodable
 
 private let kDefaultPassword = "cico_kv_key_chain_default_password"

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CICOFoundationKit
 
 public let kCICOURLKVFileDefaultPassword = "cico_url_kv_file_default_password"
 

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CICOFoundationKit
 
 ///
 /// Key-Value file service;

@@ -1,2 +1,3 @@
+github "cicout/cico_foundation_kit"
 github "cicout/cico_auto_codable"
 github "cicout/fmdb_with_sqlcipher_p2c"

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CICOFoundationKit
 
 private let kRootDirName = "cico_kv_file"
 

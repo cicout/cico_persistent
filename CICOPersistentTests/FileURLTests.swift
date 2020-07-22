@@ -7,8 +7,9 @@
 //
 
 import XCTest
-import CICOPersistent
+import CICOFoundationKit
 import CICOAutoCodable
+import CICOPersistent
 
 class FileURLTests: XCTestCase {
 

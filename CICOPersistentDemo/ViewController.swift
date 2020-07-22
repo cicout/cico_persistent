@@ -7,8 +7,9 @@
 //
 
 import UIKit
-import CICOPersistent
+import CICOFoundationKit
 import CICOAutoCodable
+import CICOPersistent
 import FMDB
 
 class ViewController: UIViewController {

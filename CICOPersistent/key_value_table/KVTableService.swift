@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CICOFoundationKit
 import FMDB
 
 private let kJSONKeyColumnName = "json_key"

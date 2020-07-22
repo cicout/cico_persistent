@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CICOFoundationKit
 import SQLCipher
 
 public enum SQLCipherError: Int, Error {

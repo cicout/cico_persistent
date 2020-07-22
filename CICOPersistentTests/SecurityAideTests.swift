@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import CICOFoundationKit
 import CICOPersistent
 
 private let kText0: String = ""

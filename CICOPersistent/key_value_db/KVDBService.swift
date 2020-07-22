@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CICOFoundationKit
 import FMDB
 
 public let kCICOKVDBDefaultPassword = "cico_kv_db_default_password"

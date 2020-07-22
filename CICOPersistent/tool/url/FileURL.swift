@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CICOFoundationKit
 import CICOAutoCodable
 
 public enum FileURLType: String, Codable {

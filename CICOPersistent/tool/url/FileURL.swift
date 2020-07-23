@@ -15,6 +15,7 @@ public enum FileURLType: String, Codable {
     case documents
     case library
     case tmp
+    case app
 }
 
 public struct FileURL: Codable {
@@ -35,6 +36,8 @@ public struct FileURL: Codable {
             return PathAide.libFileURL(withSubPath: relativePath)
         case .tmp:
             return PathAide.tempFileURL(withSubPath: relativePath)
+        case .app:
+            return Bundle.main.bundleURL.appendingPathComponent(relativePath)
         }
     }
 
@@ -51,6 +54,7 @@ public struct FileURL: Codable {
         let docPath = PathAide.docPath(withSubPath: nil)
         let libPath = PathAide.libPath(withSubPath: nil)
         let tmpPath = PathAide.tempPath(withSubPath: nil)
+        let appPath = Bundle.main.bundleURL.path
 
         if path.hasPrefix(docPath) {
             type = .documents
@@ -67,6 +71,13 @@ public struct FileURL: Codable {
             if path.count > tmpPath.count {
                 relativePath = String(path.dropFirst(tmpPath.count + 1))
             }
+        } else if path.hasPrefix(appPath) {
+            type = .app
+            if path.count > appPath.count {
+                relativePath = String(path.dropFirst(appPath.count + 1))
+            }
+        } else {
+            fatalError("Invalid file url: \(url)")
         }
 
         return (type, relativePath)

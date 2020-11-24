@@ -623,7 +623,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = cico;
 				TargetAttributes = {
 					E41F763A20C8D2F300399E42 = {

@@ -1,6 +1,5 @@
-// Generated using Sourcery 1.0.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 1.4.2 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
-
 // swiftlint:disable file_length
 
 
@@ -14,7 +13,7 @@
  */
 
 
-/** Found 90 Types
+/** Found 89 Types
  * AppDelegate
  * Array
  * Bool
@@ -78,7 +77,6 @@
  * SQLiteTypeDecoder
  * SQLiteTypeDecoder.CICOTypeKeyedDecodingContainer
  * SQLiteTypeDecoderError
- * SecurityAideTests
  * SerializableWrapper
  * SerializableWrapper.CodingKeys
  * String

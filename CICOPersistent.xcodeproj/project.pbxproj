@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E409D2202320A8E700AB42BF /* SecurityAideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E409D21F2320A8E700AB42BF /* SecurityAideTests.swift */; };
 		E4107D4F243EF65D0089A296 /* DebugAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6C823B7421000B9C95D /* DebugAide.swift */; };
 		E418B63F21C1301B00D042F0 /* KVDBServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */; };
 		E418B64121C1315E00D042F0 /* KVFileServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B64021C1315E00D042F0 /* KVFileServiceAide.swift */; };
@@ -153,7 +152,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E409D21F2320A8E700AB42BF /* SecurityAideTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityAideTests.swift; sourceTree = "<group>"; };
 		E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBServiceAide.swift; sourceTree = "<group>"; };
 		E418B64021C1315E00D042F0 /* KVFileServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileServiceAide.swift; sourceTree = "<group>"; };
 		E418B64221C131D000D042F0 /* ORMDBServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceAide.swift; sourceTree = "<group>"; };
@@ -499,7 +497,6 @@
 				E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */,
 				E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */,
 				E4FD6DC12115533000ECAF4E /* ORMDBServiceTests.swift */,
-				E409D21F2320A8E700AB42BF /* SecurityAideTests.swift */,
 				E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */,
 				E4FD6DBB21154B5D00ECAF4E /* URLKVFileServiceTests.swift */,
 				E4FD6DB2211483BF00ECAF4E /* internal */,
@@ -623,7 +620,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = cico;
 				TargetAttributes = {
 					E41F763A20C8D2F300399E42 = {
@@ -727,7 +724,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    if which sourcery >/dev/null; then\n        sourcery\n    else\n        echo \"[WARNING]: Sourcery is not installed, install using \\\"brew install sourcery\\\".\"\n    fi\nfi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    if which sourcery >/dev/null; then\n        sourcery --disableCache\n    else\n        echo \"[WARNING]: Sourcery is not installed, install using \\\"brew install sourcery\\\".\"\n    fi\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -813,7 +810,6 @@
 				E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */,
 				E47E294A24C14E5800F0B7D7 /* TIntStruct.swift in Sources */,
 				E4FD6DB721153E8600ECAF4E /* JSONStringAide.swift in Sources */,
-				E409D2202320A8E700AB42BF /* SecurityAideTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -905,7 +901,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -963,7 +959,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -981,7 +977,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -997,7 +993,7 @@
 				);
 				INFOPLIST_FILE = CICOPersistent/main/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1021,7 +1017,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1033,7 +1029,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "SQLITE_HAS_CODEC=1";
 				INFOPLIST_FILE = CICOPersistent/main/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1074,6 +1070,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Debug;
 		};
@@ -1102,6 +1099,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};
@@ -1124,6 +1122,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Debug;
 		};
@@ -1146,6 +1145,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};

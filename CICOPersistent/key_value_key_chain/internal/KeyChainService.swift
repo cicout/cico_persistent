@@ -19,7 +19,7 @@ class KeyChainService {
     }
 
     init(accessGroup: String? = nil,
-         accessibleType: String = kSecAttrAccessibleAlwaysThisDeviceOnly as String,
+         accessibleType: String = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly as String,
          secClassType: String = kSecClassGenericPassword as String) {
         self.accessGroup = accessGroup
         self.accessibleType = accessibleType

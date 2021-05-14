@@ -199,6 +199,7 @@ class SQLCipherTests: XCTestCase {
 
     func testDBSecurity() {
         let url1 = PathAide.docFileURL(withSubPath: "orm_db_security_decrypt.db")
+        let password1 = "cico_test_1"
         let url2 = PathAide.docFileURL(withSubPath: "orm_db_security_encrypt.db")
         let password2 = "cico_test_2"
         let url3 = PathAide.docFileURL(withSubPath: "orm_db_security_change_password.db")
@@ -216,7 +217,7 @@ class SQLCipherTests: XCTestCase {
         result = FileManagerAide.removeItem(url3)
         XCTAssert(result, "Clear db failed.")
 
-        var ormDBService1: ORMDBService? = ORMDBService.init(fileURL: url1)
+        var ormDBService1: ORMDBService? = ORMDBService.init(fileURL: url1, password: password1)
 
         // read json
         let jsonString = JSONStringAide.jsonString(name: "default")
@@ -235,7 +236,7 @@ class SQLCipherTests: XCTestCase {
         ormDBService1 = nil
 
         // decrypt
-        result = DBSecurityAide.decryptDatabase(dbPath: url1.path, password: kCICOORMDBDefaultPassword)
+        result = DBSecurityAide.decryptDatabase(dbPath: url1.path, password: password1)
         XCTAssert(result, "Decrypt database failed.")
 
         var ormDBService1x: ORMDBService? = ORMDBService.init(fileURL: url1, password: nil)

@@ -10,8 +10,6 @@ import Foundation
 import CICOFoundationKit
 import FMDB
 
-public let kCICOORMDBDefaultPassword = "cico_orm_db_default_password"
-
 private let kDefaultKVTableName = "cico_default_kv_table"
 
 ///
@@ -40,7 +38,7 @@ open class ORMDBService {
     /// - parameter customKVTableName: Key-Value table name; It will use default table name when passing nil;
     ///
     /// - returns: Init object;
-    public init(fileURL: URL, password: String? = kCICOORMDBDefaultPassword, customKVTableName: String? = nil) {
+    public init(fileURL: URL, password: String? = nil, customKVTableName: String? = nil) {
         self.fileURL = fileURL
 
         if let password = password {

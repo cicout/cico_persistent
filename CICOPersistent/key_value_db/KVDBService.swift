@@ -10,8 +10,6 @@ import Foundation
 import CICOFoundationKit
 import FMDB
 
-public let kCICOKVDBDefaultPassword = "cico_kv_db_default_password"
-
 private let kDefaultKVTableName = "cico_default_kv_table"
 
 ///
@@ -39,7 +37,7 @@ open class KVDBService {
     /// - parameter customTableName: Table name; It will use default table name when passing nil;
     ///
     /// - returns: Init object;
-    public init(fileURL: URL, password: String? = kCICOKVDBDefaultPassword, customTableName: String? = nil) {
+    public init(fileURL: URL, password: String? = nil, customTableName: String? = nil) {
         self.fileURL = fileURL
 
         if let password = password {

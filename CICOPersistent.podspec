@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "CICOPersistent"
-  spec.version      = "0.37.55"
+  spec.version      = "0.37.56"
   spec.summary      = "A simple local storage service using codable."
 
   # This description is used to generate tags and improve search results.
@@ -137,7 +137,7 @@ Pod::Spec.new do |spec|
 
   spec.dependency "CICOFoundationKit"
   spec.dependency "CICOAutoCodable"
-  spec.dependency "FMDB/SQLCipher", "2.7.5"
-  spec.dependency "SQLCipher", "4.1.0"
+  spec.dependency "FMDB/SQLCipher"
+  spec.dependency "SQLCipher"
 
 end

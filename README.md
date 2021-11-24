@@ -1,5 +1,5 @@
 # CICOPersistent
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+![Swift5 compatible][Swift5Badge] [![Carthage compatible][CartagheBadge]][CarthageLink] [![CocoaPods][PodBadge]][PodLink] [![License MIT][MITBadge]][MITLink]
 
 CICOPersistent is a simple local storage service using codable, a new feature in Swift 4. It contains key-value file, key-value database, orm database, and key-value key chain. You can easily choose what you want. You can also use CICOAutoCodable, a simple extension for codable.
 
@@ -319,3 +319,15 @@ CICOPersistent is released under the MIT license. See [LICENSE](https://github.c
 
 ## More
 Have a question? Please open an [issue](https://github.com/cicout/cico_persistent/issues/new)!
+
+[Swift5Badge]: https://img.shields.io/badge/swift-5-orange.svg?style=flat
+[Swift5Link]: https://developer.apple.com/swift/
+
+[CartagheBadge]: https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat
+[CarthageLink]: https://github.com/Carthage/Carthage
+
+[PodBadge]: https://img.shields.io/cocoapods/v/CICOPersistent.svg?style=flat
+[PodLink]: http://cocoapods.org/pods/CICOPersistent
+
+[MITBadge]: https://img.shields.io/badge/License-MIT-blue.svg?style=flat
+[MITLink]: https://github.com/cicout/cico_persistent/blob/develop/LICENSE

@@ -9,7 +9,9 @@
 
 import XCTest
 import CICOFoundationKit
+import CICOAutoCodable
 import CICOPersistent
+import CICOPersistentCipher
 
 class SQLCipherTests: XCTestCase {
 

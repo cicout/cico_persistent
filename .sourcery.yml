@@ -1,8 +1,11 @@
 sources:
     - Carthage/Checkouts/cico_auto_codable/CICOAutoCodable
     - CICOPersistent
+    - CICOPersistentStandard
+    - CICOPersistentStandardTests
+    - CICOPersistentCipher
+    - CICOPersistentCipherTests
     - CICOPersistentDemo
-    - CICOPersistentTests
 templates:
     - Carthage/Checkouts/cico_auto_codable/sourcery/templates/show_all_type.stencil
     - Carthage/Checkouts/cico_auto_codable/sourcery/templates/cico_auto_codable.swifttemplate

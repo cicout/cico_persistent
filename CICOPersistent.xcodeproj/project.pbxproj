@@ -3,37 +3,51 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		961B77332744E04A00194504 /* CICOFoundationKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B772F2744E04A00194504 /* CICOFoundationKit.xcframework */; };
-		961B77362744E04A00194504 /* FMDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77302744E04A00194504 /* FMDB.xcframework */; };
-		961B77392744E04A00194504 /* SQLCipher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77312744E04A00194504 /* SQLCipher.xcframework */; };
 		961B773C2744E04A00194504 /* CICOAutoCodable.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77322744E04A00194504 /* CICOAutoCodable.xcframework */; };
 		961B773F2744E05800194504 /* CICOAutoCodable.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77322744E04A00194504 /* CICOAutoCodable.xcframework */; };
 		961B77402744E05800194504 /* CICOAutoCodable.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77322744E04A00194504 /* CICOAutoCodable.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		961B77412744E05900194504 /* CICOFoundationKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B772F2744E04A00194504 /* CICOFoundationKit.xcframework */; };
 		961B77422744E05900194504 /* CICOFoundationKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 961B772F2744E04A00194504 /* CICOFoundationKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		961B77432744E05B00194504 /* FMDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77302744E04A00194504 /* FMDB.xcframework */; };
-		961B77442744E05B00194504 /* FMDB.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77302744E04A00194504 /* FMDB.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		961B77452744E05D00194504 /* SQLCipher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77312744E04A00194504 /* SQLCipher.xcframework */; };
-		961B77462744E05D00194504 /* SQLCipher.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77312744E04A00194504 /* SQLCipher.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9628CD692CDC9EE100965DC1 /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
+		9628CD7B2CDCA56300965DC1 /* FMDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628CD772CDCA4F000965DC1 /* FMDB.xcframework */; };
+		9628CD7D2CDCA56300965DC1 /* SQLCipher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628CD782CDCA4F000965DC1 /* SQLCipher.xcframework */; };
+		9628CD802CDCABA900965DC1 /* JSONStringAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */; };
+		9628CD812CDCABC000965DC1 /* TCodableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767520C9384300399E42 /* TCodableClass.swift */; };
+		9628CD822CDCAC8000965DC1 /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC62115569000ECAF4E /* AutoEquatable.generated.swift */; };
+		9628CD832CDCACE100965DC1 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
+		9628CD842CDCACE900965DC1 /* TCodableStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767320C9384300399E42 /* TCodableStruct.swift */; };
+		9628CD852CDCAEBF00965DC1 /* AutoEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */; };
+		9628CD862CDCAED000965DC1 /* MyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */; };
+		9628CD872CDCAFB800965DC1 /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = E41F767420C9384300399E42 /* default.json */; };
+		9628CD882CDCAFB800965DC1 /* my.json in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6DF5211C34DE00ECAF4E /* my.json */; };
+		9628CD942CDCB05D00965DC1 /* CICOPersistentStandard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628CD8E2CDCB05C00965DC1 /* CICOPersistentStandard.framework */; };
+		9628CD952CDCB05D00965DC1 /* CICOPersistentStandard.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9628CD8E2CDCB05C00965DC1 /* CICOPersistentStandard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9628CDF12CDCB08E00965DC1 /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
+		9628CDF62CDCB09900965DC1 /* FMDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77302744E04A00194504 /* FMDB.xcframework */; };
+		9628CDFD2CDCB18D00965DC1 /* CICOPersistentStandard.h in Headers */ = {isa = PBXBuildFile; fileRef = E41F763E20C8D2F300399E42 /* CICOPersistentStandard.h */; };
+		9628CDFF2CDCB20000965DC1 /* CICOPersistent.h in Headers */ = {isa = PBXBuildFile; fileRef = 9628CDFE2CDCB20000965DC1 /* CICOPersistent.h */; };
+		9628CE002CDCB46C00965DC1 /* CICOPersistentStandard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628CD8E2CDCB05C00965DC1 /* CICOPersistentStandard.framework */; };
+		9628CE052CDCB85500965DC1 /* FMDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77302744E04A00194504 /* FMDB.xcframework */; };
+		9628CE062CDCB85600965DC1 /* FMDB.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77302744E04A00194504 /* FMDB.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9628CE072CDCCA1500965DC1 /* CICOPersistentCipher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628CD3B2CDC9DCA00965DC1 /* CICOPersistentCipher.framework */; };
+		967C34F22CDCD09000A909E4 /* DebugAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6C823B7421000B9C95D /* DebugAide.swift */; };
 		E4107D4F243EF65D0089A296 /* DebugAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6C823B7421000B9C95D /* DebugAide.swift */; };
 		E418B63F21C1301B00D042F0 /* KVDBServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */; };
 		E418B64121C1315E00D042F0 /* KVFileServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B64021C1315E00D042F0 /* KVFileServiceAide.swift */; };
 		E418B64321C131D000D042F0 /* ORMDBServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B64221C131D000D042F0 /* ORMDBServiceAide.swift */; };
 		E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B64421C1329D00D042F0 /* PersistentServiceAide.swift */; };
 		E41958BB20F8971D007EA4B4 /* SQLiteRecordDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41958BA20F8971D007EA4B4 /* SQLiteRecordDecoder.swift */; };
-		E41F764020C8D2F300399E42 /* CICOPersistent.h in Headers */ = {isa = PBXBuildFile; fileRef = E41F763E20C8D2F300399E42 /* CICOPersistent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E41F764720C8D32A00399E42 /* PersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F764620C8D32A00399E42 /* PersistentService.swift */; };
 		E41F765D20C9302300399E42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F765C20C9302300399E42 /* AppDelegate.swift */; };
 		E41F765F20C9302300399E42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F765E20C9302300399E42 /* ViewController.swift */; };
 		E41F766220C9302300399E42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E41F766020C9302300399E42 /* Main.storyboard */; };
 		E41F766420C9302400399E42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E41F766320C9302400399E42 /* Assets.xcassets */; };
 		E41F766720C9302400399E42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E41F766520C9302400399E42 /* LaunchScreen.storyboard */; };
-		E41F766C20C9313000399E42 /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
-		E41F766D20C9313000399E42 /* CICOPersistent.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E41F767620C9384300399E42 /* TCodableStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767320C9384300399E42 /* TCodableStruct.swift */; };
 		E41F767720C9384300399E42 /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = E41F767420C9384300399E42 /* default.json */; };
 		E41F767820C9384300399E42 /* TCodableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767520C9384300399E42 /* TCodableClass.swift */; };
@@ -68,16 +82,12 @@
 		E49F7CD6210AC18200CF24F0 /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CD5210AC18200CF24F0 /* KeyChainService.swift */; };
 		E49F7CD8210ACE8700CF24F0 /* KVKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CD7210ACE8700CF24F0 /* KVKeyChainService.swift */; };
 		E49F7CF9210C447400CF24F0 /* KVJSONAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F7CF8210C447400CF24F0 /* KVJSONAide.swift */; };
-		E4AD824F21B00ACF00525B12 /* DBSecurityAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AD824E21B00ACF00525B12 /* DBSecurityAide.swift */; };
-		E4CAEDDB2338B32100BA0FB1 /* SQLCipherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */; };
 		E4D091A8242C5265007CEF88 /* DBAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091A7242C5265007CEF88 /* DBAide.swift */; };
 		E4D091AA242C58FD007CEF88 /* ColumnModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091A9242C58FD007CEF88 /* ColumnModel.swift */; };
 		E4D091AC242C5C5F007CEF88 /* KVTableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091AB242C5C5F007CEF88 /* KVTableService.swift */; };
 		E4D091AF242C950B007CEF88 /* ORMDBService+KV.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D091AE242C950B007CEF88 /* ORMDBService+KV.swift */; };
-		E4D3629E2333208500F3700E /* SQLCipherAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3629D2333208500F3700E /* SQLCipherAide.swift */; };
 		E4E6380923600636009DE3A5 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
 		E4E6380A2360063F009DE3A5 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
-		E4FD6C9821129DBC00ECAF4E /* CICOPersistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41F763B20C8D2F300399E42 /* CICOPersistent.framework */; };
 		E4FD6C9F21129E4100ECAF4E /* KVFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */; };
 		E4FD6DB321153E4600ECAF4E /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = E41F767420C9384300399E42 /* default.json */; };
 		E4FD6DB421153E4900ECAF4E /* TCodableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767520C9384300399E42 /* TCodableClass.swift */; };
@@ -96,18 +106,46 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E41F766E20C9313000399E42 /* PBXContainerItemProxy */ = {
+		9628CD462CDC9DCB00965DC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E41F763220C8D2F300399E42 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9628CD3A2CDC9DCA00965DC1;
+			remoteInfo = CICOPersistentCipher;
+		};
+		9628CD592CDC9DF100965DC1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E41F763220C8D2F300399E42 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = E41F763A20C8D2F300399E42;
 			remoteInfo = CICOPersistent;
 		};
-		E4FD6C9921129DBC00ECAF4E /* PBXContainerItemProxy */ = {
+		9628CD6B2CDC9EE100965DC1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E41F763220C8D2F300399E42 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = E41F763A20C8D2F300399E42;
+			remoteInfo = CICOPersistent;
+		};
+		9628CD922CDCB05D00965DC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E41F763220C8D2F300399E42 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9628CD8D2CDCB05C00965DC1;
+			remoteInfo = CICOPersistent;
+		};
+		9628CDF32CDCB08E00965DC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E41F763220C8D2F300399E42 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E41F763A20C8D2F300399E42;
+			remoteInfo = CICOPersistentCore;
+		};
+		9628CE022CDCB46C00965DC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E41F763220C8D2F300399E42 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9628CD8D2CDCB05C00965DC1;
 			remoteInfo = CICOPersistent;
 		};
 /* End PBXContainerItemProxy section */
@@ -119,22 +157,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				961B77442744E05B00194504 /* FMDB.xcframework in Embed Frameworks */,
-				961B77462744E05D00194504 /* SQLCipher.xcframework in Embed Frameworks */,
+				9628CE062CDCB85600965DC1 /* FMDB.xcframework in Embed Frameworks */,
 				961B77422744E05900194504 /* CICOFoundationKit.xcframework in Embed Frameworks */,
-				E41F766D20C9313000399E42 /* CICOPersistent.framework in Embed Frameworks */,
 				961B77402744E05800194504 /* CICOAutoCodable.xcframework in Embed Frameworks */,
+				9628CD952CDCB05D00965DC1 /* CICOPersistentStandard.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E4FD6DAF2114839300ECAF4E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -142,15 +170,20 @@
 /* Begin PBXFileReference section */
 		961B772F2744E04A00194504 /* CICOFoundationKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CICOFoundationKit.xcframework; path = Carthage/Build/CICOFoundationKit.xcframework; sourceTree = "<group>"; };
 		961B77302744E04A00194504 /* FMDB.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FMDB.xcframework; path = Carthage/Build/FMDB.xcframework; sourceTree = "<group>"; };
-		961B77312744E04A00194504 /* SQLCipher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SQLCipher.xcframework; path = Carthage/Build/SQLCipher.xcframework; sourceTree = "<group>"; };
 		961B77322744E04A00194504 /* CICOAutoCodable.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CICOAutoCodable.xcframework; path = Carthage/Build/CICOAutoCodable.xcframework; sourceTree = "<group>"; };
+		9628CD3B2CDC9DCA00965DC1 /* CICOPersistentCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CICOPersistentCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9628CD442CDC9DCB00965DC1 /* CICOPersistentCipherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CICOPersistentCipherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9628CD772CDCA4F000965DC1 /* FMDB.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FMDB.xcframework; path = CICOPersistentCipherCarthage/Carthage/Build/FMDB.xcframework; sourceTree = "<group>"; };
+		9628CD782CDCA4F000965DC1 /* SQLCipher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SQLCipher.xcframework; path = CICOPersistentCipherCarthage/Carthage/Build/SQLCipher.xcframework; sourceTree = "<group>"; };
+		9628CD8E2CDCB05C00965DC1 /* CICOPersistentStandard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CICOPersistentStandard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9628CDFE2CDCB20000965DC1 /* CICOPersistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOPersistent.h; sourceTree = "<group>"; };
 		E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBServiceAide.swift; sourceTree = "<group>"; };
 		E418B64021C1315E00D042F0 /* KVFileServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileServiceAide.swift; sourceTree = "<group>"; };
 		E418B64221C131D000D042F0 /* ORMDBServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceAide.swift; sourceTree = "<group>"; };
 		E418B64421C1329D00D042F0 /* PersistentServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentServiceAide.swift; sourceTree = "<group>"; };
 		E41958BA20F8971D007EA4B4 /* SQLiteRecordDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteRecordDecoder.swift; sourceTree = "<group>"; };
 		E41F763B20C8D2F300399E42 /* CICOPersistent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CICOPersistent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E41F763E20C8D2F300399E42 /* CICOPersistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOPersistent.h; sourceTree = "<group>"; };
+		E41F763E20C8D2F300399E42 /* CICOPersistentStandard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOPersistentStandard.h; sourceTree = "<group>"; };
 		E41F763F20C8D2F300399E42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E41F764620C8D32A00399E42 /* PersistentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentService.swift; sourceTree = "<group>"; };
 		E41F765A20C9302300399E42 /* CICOPersistentDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CICOPersistentDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,15 +227,12 @@
 		E49F7CD7210ACE8700CF24F0 /* KVKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVKeyChainService.swift; sourceTree = "<group>"; };
 		E49F7CF6210C1CD800CF24F0 /* CICOPersistentDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CICOPersistentDemo.entitlements; sourceTree = "<group>"; };
 		E49F7CF8210C447400CF24F0 /* KVJSONAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVJSONAide.swift; sourceTree = "<group>"; };
-		E4AD824E21B00ACF00525B12 /* DBSecurityAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBSecurityAide.swift; sourceTree = "<group>"; };
-		E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCipherTests.swift; sourceTree = "<group>"; };
 		E4D091A7242C5265007CEF88 /* DBAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBAide.swift; sourceTree = "<group>"; };
 		E4D091A9242C58FD007CEF88 /* ColumnModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnModel.swift; sourceTree = "<group>"; };
 		E4D091AB242C5C5F007CEF88 /* KVTableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVTableService.swift; sourceTree = "<group>"; };
 		E4D091AE242C950B007CEF88 /* ORMDBService+KV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORMDBService+KV.swift"; sourceTree = "<group>"; };
-		E4D3629D2333208500F3700E /* SQLCipherAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCipherAide.swift; sourceTree = "<group>"; };
 		E4E6380823600636009DE3A5 /* TMemoryBytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMemoryBytes.swift; sourceTree = "<group>"; };
-		E4FD6C9321129DBC00ECAF4E /* CICOPersistentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CICOPersistentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4FD6C9321129DBC00ECAF4E /* CICOPersistentStandardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CICOPersistentStandardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4FD6C9721129DBC00ECAF4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileServiceTests.swift; sourceTree = "<group>"; };
 		E4FD6CA321129F4C00ECAF4E /* show_all_type.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = show_all_type.generated.swift; sourceTree = "<group>"; };
@@ -217,13 +247,53 @@
 		E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9628CD562CDC9DCB00965DC1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				CICOPersistentCipher.h,
+			);
+			target = 9628CD3A2CDC9DCA00965DC1 /* CICOPersistentCipher */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		9628CD3C2CDC9DCA00965DC1 /* CICOPersistentCipher */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9628CD562CDC9DCB00965DC1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CICOPersistentCipher; sourceTree = "<group>"; };
+		9628CD4A2CDC9DCB00965DC1 /* CICOPersistentCipherTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CICOPersistentCipherTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		9628CD382CDC9DCA00965DC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9628CD7B2CDCA56300965DC1 /* FMDB.xcframework in Frameworks */,
+				9628CD7D2CDCA56300965DC1 /* SQLCipher.xcframework in Frameworks */,
+				9628CD692CDC9EE100965DC1 /* CICOPersistent.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9628CD412CDC9DCB00965DC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9628CE072CDCCA1500965DC1 /* CICOPersistentCipher.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9628CD8B2CDCB05C00965DC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9628CDF62CDCB09900965DC1 /* FMDB.xcframework in Frameworks */,
+				9628CDF12CDCB08E00965DC1 /* CICOPersistent.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E41F763720C8D2F300399E42 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				961B77362744E04A00194504 /* FMDB.xcframework in Frameworks */,
-				961B77392744E04A00194504 /* SQLCipher.xcframework in Frameworks */,
 				961B77332744E04A00194504 /* CICOFoundationKit.xcframework in Frameworks */,
 				961B773C2744E04A00194504 /* CICOAutoCodable.xcframework in Frameworks */,
 			);
@@ -233,11 +303,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9628CE052CDCB85500965DC1 /* FMDB.xcframework in Frameworks */,
 				961B773F2744E05800194504 /* CICOAutoCodable.xcframework in Frameworks */,
-				961B77452744E05D00194504 /* SQLCipher.xcframework in Frameworks */,
 				961B77412744E05900194504 /* CICOFoundationKit.xcframework in Frameworks */,
-				961B77432744E05B00194504 /* FMDB.xcframework in Frameworks */,
-				E41F766C20C9313000399E42 /* CICOPersistent.framework in Frameworks */,
+				9628CD942CDCB05D00965DC1 /* CICOPersistentStandard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,19 +314,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4FD6C9821129DBC00ECAF4E /* CICOPersistent.framework in Frameworks */,
+				9628CE002CDCB46C00965DC1 /* CICOPersistentStandard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9628CD762CDCA43100965DC1 /* CipherCarthage */ = {
+			isa = PBXGroup;
+			children = (
+				9628CD772CDCA4F000965DC1 /* FMDB.xcframework */,
+				9628CD782CDCA4F000965DC1 /* SQLCipher.xcframework */,
+			);
+			name = CipherCarthage;
+			sourceTree = "<group>";
+		};
+		9628CDFC2CDCB17500965DC1 /* CICOPersistentStandard */ = {
+			isa = PBXGroup;
+			children = (
+				E41F763E20C8D2F300399E42 /* CICOPersistentStandard.h */,
+			);
+			path = CICOPersistentStandard;
+			sourceTree = "<group>";
+		};
 		E41F763120C8D2F300399E42 = {
 			isa = PBXGroup;
 			children = (
 				E41F763D20C8D2F300399E42 /* CICOPersistent */,
+				9628CDFC2CDCB17500965DC1 /* CICOPersistentStandard */,
+				E4FD6C9421129DBC00ECAF4E /* CICOPersistentStandardTests */,
+				9628CD3C2CDC9DCA00965DC1 /* CICOPersistentCipher */,
+				9628CD4A2CDC9DCB00965DC1 /* CICOPersistentCipherTests */,
 				E41F765B20C9302300399E42 /* CICOPersistentDemo */,
-				E4FD6C9421129DBC00ECAF4E /* CICOPersistentTests */,
 				E482ECFE20CE15B4001FF435 /* Frameworks */,
 				E41F763C20C8D2F300399E42 /* Products */,
 				E4FD6CA121129F4C00ECAF4E /* sourcery */,
@@ -269,7 +358,10 @@
 			children = (
 				E41F763B20C8D2F300399E42 /* CICOPersistent.framework */,
 				E41F765A20C9302300399E42 /* CICOPersistentDemo.app */,
-				E4FD6C9321129DBC00ECAF4E /* CICOPersistentTests.xctest */,
+				E4FD6C9321129DBC00ECAF4E /* CICOPersistentStandardTests.xctest */,
+				9628CD3B2CDC9DCA00965DC1 /* CICOPersistentCipher.framework */,
+				9628CD442CDC9DCB00965DC1 /* CICOPersistentCipherTests.xctest */,
+				9628CD8E2CDCB05C00965DC1 /* CICOPersistentStandard.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -278,7 +370,6 @@
 			isa = PBXGroup;
 			children = (
 				E4D091A6242C5248007CEF88 /* db_aide */,
-				E4AD824D21B00A9400525B12 /* db_security_aide */,
 				E49F7CF7210C20EE00CF24F0 /* key_value_aide */,
 				E482ED0520CE1613001FF435 /* key_value_db */,
 				E482ED1220CF6902001FF435 /* key_value_file */,
@@ -295,7 +386,7 @@
 		E41F764D20C9222500399E42 /* main */ = {
 			isa = PBXGroup;
 			children = (
-				E41F763E20C8D2F300399E42 /* CICOPersistent.h */,
+				9628CDFE2CDCB20000965DC1 /* CICOPersistent.h */,
 				E41F763F20C8D2F300399E42 /* Info.plist */,
 			);
 			path = main;
@@ -345,14 +436,6 @@
 			path = internal;
 			sourceTree = "<group>";
 		};
-		E43374B021ACE8D700296237 /* sql_cipher_aide */ = {
-			isa = PBXGroup;
-			children = (
-				E4D3629D2333208500F3700E /* SQLCipherAide.swift */,
-			);
-			path = sql_cipher_aide;
-			sourceTree = "<group>";
-		};
 		E4710E5A21364BD4003F6798 /* url */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				E482ED0020CE15D5001FF435 /* Carthage */,
+				9628CD762CDCA43100965DC1 /* CipherCarthage */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -375,7 +459,6 @@
 				961B77322744E04A00194504 /* CICOAutoCodable.xcframework */,
 				961B772F2744E04A00194504 /* CICOFoundationKit.xcframework */,
 				961B77302744E04A00194504 /* FMDB.xcframework */,
-				961B77312744E04A00194504 /* SQLCipher.xcframework */,
 			);
 			name = Carthage;
 			sourceTree = "<group>";
@@ -442,18 +525,9 @@
 		E49F7D00210C66B900CF24F0 /* tool */ = {
 			isa = PBXGroup;
 			children = (
-				E43374B021ACE8D700296237 /* sql_cipher_aide */,
 				E4710E5A21364BD4003F6798 /* url */,
 			);
 			path = tool;
-			sourceTree = "<group>";
-		};
-		E4AD824D21B00A9400525B12 /* db_security_aide */ = {
-			isa = PBXGroup;
-			children = (
-				E4AD824E21B00ACF00525B12 /* DBSecurityAide.swift */,
-			);
-			path = db_security_aide;
 			sourceTree = "<group>";
 		};
 		E4D091A6242C5248007CEF88 /* db_aide */ = {
@@ -473,7 +547,7 @@
 			path = key_value_table;
 			sourceTree = "<group>";
 		};
-		E4FD6C9421129DBC00ECAF4E /* CICOPersistentTests */ = {
+		E4FD6C9421129DBC00ECAF4E /* CICOPersistentStandardTests */ = {
 			isa = PBXGroup;
 			children = (
 				E4710E672136C278003F6798 /* FileURLTests.swift */,
@@ -481,11 +555,10 @@
 				E4FD6C9E21129E4100ECAF4E /* KVFileServiceTests.swift */,
 				E4FD6DBD2115505A00ECAF4E /* KVKeyChainServiceTests.swift */,
 				E4FD6DC12115533000ECAF4E /* ORMDBServiceTests.swift */,
-				E4CAEDDA2338B32100BA0FB1 /* SQLCipherTests.swift */,
 				E4FD6DBB21154B5D00ECAF4E /* URLKVFileServiceTests.swift */,
 				E4FD6DB2211483BF00ECAF4E /* internal */,
 			);
-			path = CICOPersistentTests;
+			path = CICOPersistentStandardTests;
 			sourceTree = "<group>";
 		};
 		E4FD6CA121129F4C00ECAF4E /* sourcery */ = {
@@ -528,17 +601,101 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		9628CD362CDC9DCA00965DC1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9628CD892CDCB05C00965DC1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9628CDFD2CDCB18D00965DC1 /* CICOPersistentStandard.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E41F763820C8D2F300399E42 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E41F764020C8D2F300399E42 /* CICOPersistent.h in Headers */,
+				9628CDFF2CDCB20000965DC1 /* CICOPersistent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		9628CD3A2CDC9DCA00965DC1 /* CICOPersistentCipher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9628CD572CDC9DCB00965DC1 /* Build configuration list for PBXNativeTarget "CICOPersistentCipher" */;
+			buildPhases = (
+				9628CD362CDC9DCA00965DC1 /* Headers */,
+				9628CD372CDC9DCA00965DC1 /* Sources */,
+				9628CD382CDC9DCA00965DC1 /* Frameworks */,
+				9628CD392CDC9DCA00965DC1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9628CD5A2CDC9DF100965DC1 /* PBXTargetDependency */,
+				9628CD6C2CDC9EE100965DC1 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9628CD3C2CDC9DCA00965DC1 /* CICOPersistentCipher */,
+			);
+			name = CICOPersistentCipher;
+			packageProductDependencies = (
+			);
+			productName = CICOPersistentCipher;
+			productReference = 9628CD3B2CDC9DCA00965DC1 /* CICOPersistentCipher.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		9628CD432CDC9DCB00965DC1 /* CICOPersistentCipherTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9628CD582CDC9DCB00965DC1 /* Build configuration list for PBXNativeTarget "CICOPersistentCipherTests" */;
+			buildPhases = (
+				9628CD402CDC9DCB00965DC1 /* Sources */,
+				9628CD412CDC9DCB00965DC1 /* Frameworks */,
+				9628CD422CDC9DCB00965DC1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9628CD472CDC9DCB00965DC1 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9628CD4A2CDC9DCB00965DC1 /* CICOPersistentCipherTests */,
+			);
+			name = CICOPersistentCipherTests;
+			packageProductDependencies = (
+			);
+			productName = CICOPersistentCipherTests;
+			productReference = 9628CD442CDC9DCB00965DC1 /* CICOPersistentCipherTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9628CD8D2CDCB05C00965DC1 /* CICOPersistentStandard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9628CD972CDCB05D00965DC1 /* Build configuration list for PBXNativeTarget "CICOPersistentStandard" */;
+			buildPhases = (
+				9628CD892CDCB05C00965DC1 /* Headers */,
+				9628CD8A2CDCB05C00965DC1 /* Sources */,
+				9628CD8B2CDCB05C00965DC1 /* Frameworks */,
+				9628CD8C2CDCB05C00965DC1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9628CDF42CDCB08E00965DC1 /* PBXTargetDependency */,
+			);
+			name = CICOPersistentStandard;
+			packageProductDependencies = (
+			);
+			productName = CICOPersistent;
+			productReference = 9628CD8E2CDCB05C00965DC1 /* CICOPersistentStandard.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		E41F763A20C8D2F300399E42 /* CICOPersistent */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E41F764320C8D2F300399E42 /* Build configuration list for PBXNativeTarget "CICOPersistent" */;
@@ -571,30 +728,29 @@
 			buildRules = (
 			);
 			dependencies = (
-				E41F766F20C9313000399E42 /* PBXTargetDependency */,
+				9628CD932CDCB05D00965DC1 /* PBXTargetDependency */,
 			);
 			name = CICOPersistentDemo;
 			productName = CICOPersistentDemo;
 			productReference = E41F765A20C9302300399E42 /* CICOPersistentDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E4FD6C9221129DBC00ECAF4E /* CICOPersistentTests */ = {
+		E4FD6C9221129DBC00ECAF4E /* CICOPersistentStandardTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4FD6C9D21129DBC00ECAF4E /* Build configuration list for PBXNativeTarget "CICOPersistentTests" */;
+			buildConfigurationList = E4FD6C9D21129DBC00ECAF4E /* Build configuration list for PBXNativeTarget "CICOPersistentStandardTests" */;
 			buildPhases = (
 				E4FD6C8F21129DBC00ECAF4E /* Sources */,
 				E4FD6C9021129DBC00ECAF4E /* Frameworks */,
 				E4FD6C9121129DBC00ECAF4E /* Resources */,
-				E4FD6DAF2114839300ECAF4E /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E4FD6C9A21129DBC00ECAF4E /* PBXTargetDependency */,
+				9628CE032CDCB46C00965DC1 /* PBXTargetDependency */,
 			);
-			name = CICOPersistentTests;
+			name = CICOPersistentStandardTests;
 			productName = CICOPersistentTests;
-			productReference = E4FD6C9321129DBC00ECAF4E /* CICOPersistentTests.xctest */;
+			productReference = E4FD6C9321129DBC00ECAF4E /* CICOPersistentStandardTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -603,10 +759,19 @@
 		E41F763220C8D2F300399E42 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = cico;
 				TargetAttributes = {
+					9628CD3A2CDC9DCA00965DC1 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					9628CD432CDC9DCB00965DC1 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					9628CD8D2CDCB05C00965DC1 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					E41F763A20C8D2F300399E42 = {
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 1020;
@@ -640,13 +805,39 @@
 			projectRoot = "";
 			targets = (
 				E41F763A20C8D2F300399E42 /* CICOPersistent */,
+				9628CD8D2CDCB05C00965DC1 /* CICOPersistentStandard */,
+				E4FD6C9221129DBC00ECAF4E /* CICOPersistentStandardTests */,
+				9628CD3A2CDC9DCA00965DC1 /* CICOPersistentCipher */,
+				9628CD432CDC9DCB00965DC1 /* CICOPersistentCipherTests */,
 				E41F765920C9302300399E42 /* CICOPersistentDemo */,
-				E4FD6C9221129DBC00ECAF4E /* CICOPersistentTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9628CD392CDC9DCA00965DC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9628CD422CDC9DCB00965DC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9628CD872CDCAFB800965DC1 /* default.json in Resources */,
+				9628CD882CDCAFB800965DC1 /* my.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9628CD8C2CDCB05C00965DC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E41F763920C8D2F300399E42 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -713,6 +904,35 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9628CD372CDC9DCA00965DC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9628CD402CDC9DCB00965DC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9628CD822CDCAC8000965DC1 /* AutoEquatable.generated.swift in Sources */,
+				9628CD832CDCACE100965DC1 /* TMemoryBytes.swift in Sources */,
+				967C34F22CDCD09000A909E4 /* DebugAide.swift in Sources */,
+				9628CD862CDCAED000965DC1 /* MyClass.swift in Sources */,
+				9628CD852CDCAEBF00965DC1 /* AutoEquatable.swift in Sources */,
+				9628CD802CDCABA900965DC1 /* JSONStringAide.swift in Sources */,
+				9628CD842CDCACE900965DC1 /* TCodableStruct.swift in Sources */,
+				9628CD812CDCABC000965DC1 /* TCodableClass.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9628CD8A2CDCB05C00965DC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E41F763620C8D2F300399E42 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -723,7 +943,6 @@
 				E4D091AF242C950B007CEF88 /* ORMDBService+KV.swift in Sources */,
 				E48112332313DB69001DA5B9 /* PersistentService+KVKeyChain.swift in Sources */,
 				E418B64521C1329D00D042F0 /* PersistentServiceAide.swift in Sources */,
-				E4D3629E2333208500F3700E /* SQLCipherAide.swift in Sources */,
 				E492B4B220EB188200BC48A4 /* SQLiteType.swift in Sources */,
 				E49F7CD6210AC18200CF24F0 /* KeyChainService.swift in Sources */,
 				E481122D2313DB33001DA5B9 /* PersistentService+KVFile.swift in Sources */,
@@ -753,7 +972,6 @@
 				E42B665C21002DDD006EBAC2 /* SQLiteRecordEncoder.swift in Sources */,
 				E420CDB320F84EF900D1BA63 /* TypeProperty.swift in Sources */,
 				E41958BB20F8971D007EA4B4 /* SQLiteRecordDecoder.swift in Sources */,
-				E4AD824F21B00ACF00525B12 /* DBSecurityAide.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,7 +999,6 @@
 				E45C2FC2242B027600D2F49D /* TAutoIncrement.swift in Sources */,
 				E4710E682136C278003F6798 /* FileURLTests.swift in Sources */,
 				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
-				E4CAEDDB2338B32100BA0FB1 /* SQLCipherTests.swift in Sources */,
 				E4107D4F243EF65D0089A296 /* DebugAide.swift in Sources */,
 				E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,
@@ -800,15 +1017,35 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E41F766F20C9313000399E42 /* PBXTargetDependency */ = {
+		9628CD472CDC9DCB00965DC1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E41F763A20C8D2F300399E42 /* CICOPersistent */;
-			targetProxy = E41F766E20C9313000399E42 /* PBXContainerItemProxy */;
+			target = 9628CD3A2CDC9DCA00965DC1 /* CICOPersistentCipher */;
+			targetProxy = 9628CD462CDC9DCB00965DC1 /* PBXContainerItemProxy */;
 		};
-		E4FD6C9A21129DBC00ECAF4E /* PBXTargetDependency */ = {
+		9628CD5A2CDC9DF100965DC1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E41F763A20C8D2F300399E42 /* CICOPersistent */;
-			targetProxy = E4FD6C9921129DBC00ECAF4E /* PBXContainerItemProxy */;
+			targetProxy = 9628CD592CDC9DF100965DC1 /* PBXContainerItemProxy */;
+		};
+		9628CD6C2CDC9EE100965DC1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E41F763A20C8D2F300399E42 /* CICOPersistent */;
+			targetProxy = 9628CD6B2CDC9EE100965DC1 /* PBXContainerItemProxy */;
+		};
+		9628CD932CDCB05D00965DC1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9628CD8D2CDCB05C00965DC1 /* CICOPersistentStandard */;
+			targetProxy = 9628CD922CDCB05D00965DC1 /* PBXContainerItemProxy */;
+		};
+		9628CDF42CDCB08E00965DC1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E41F763A20C8D2F300399E42 /* CICOPersistent */;
+			targetProxy = 9628CDF32CDCB08E00965DC1 /* PBXContainerItemProxy */;
+		};
+		9628CE032CDCB46C00965DC1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9628CD8D2CDCB05C00965DC1 /* CICOPersistentStandard */;
+			targetProxy = 9628CE022CDCB46C00965DC1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -832,6 +1069,224 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9628CD522CDC9DCB00965DC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"SQLITE_HAS_CODEC=1",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 cico. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentCipher;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9628CD532CDC9DCB00965DC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = "SQLITE_HAS_CODEC=1";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 cico. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentCipher;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9628CD542CDC9DCB00965DC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q3H7T2VPJ2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentCipherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9628CD552CDC9DCB00965DC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q3H7T2VPJ2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentCipherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9628CD982CDCB05D00965DC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 cico. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistent;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9628CD992CDCB05D00965DC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 cico. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistent;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		E41F764120C8D2F300399E42 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -967,13 +1422,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited) ";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"SQLITE_HAS_CODEC=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				INFOPLIST_FILE = CICOPersistent/main/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -982,7 +1434,7 @@
 				MARKETING_VERSION = 0.37;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cico.Persistent;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1004,10 +1456,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited) ";
-				GCC_PREPROCESSOR_DEFINITIONS = "SQLITE_HAS_CODEC=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = CICOPersistent/main/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1016,7 +1468,7 @@
 				MARKETING_VERSION = 0.37;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cico.Persistent;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cico.CICOPersistentCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1027,7 +1479,6 @@
 		E41F766A20C9302400399E42 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CICOPersistentDemo/CICOPersistentDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -1052,7 +1503,6 @@
 		E41F766B20C9302400399E42 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CICOPersistentDemo/CICOPersistentDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -1079,7 +1529,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = CICOPersistentTests/internal/Info.plist;
+				INFOPLIST_FILE = CICOPersistentStandardTests/internal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1099,7 +1549,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = CICOPersistentTests/internal/Info.plist;
+				INFOPLIST_FILE = CICOPersistentStandardTests/internal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1117,6 +1567,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9628CD572CDC9DCB00965DC1 /* Build configuration list for PBXNativeTarget "CICOPersistentCipher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9628CD522CDC9DCB00965DC1 /* Debug */,
+				9628CD532CDC9DCB00965DC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9628CD582CDC9DCB00965DC1 /* Build configuration list for PBXNativeTarget "CICOPersistentCipherTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9628CD542CDC9DCB00965DC1 /* Debug */,
+				9628CD552CDC9DCB00965DC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9628CD972CDCB05D00965DC1 /* Build configuration list for PBXNativeTarget "CICOPersistentStandard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9628CD982CDCB05D00965DC1 /* Debug */,
+				9628CD992CDCB05D00965DC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E41F763520C8D2F300399E42 /* Build configuration list for PBXProject "CICOPersistent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1144,7 +1621,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4FD6C9D21129DBC00ECAF4E /* Build configuration list for PBXNativeTarget "CICOPersistentTests" */ = {
+		E4FD6C9D21129DBC00ECAF4E /* Build configuration list for PBXNativeTarget "CICOPersistentStandardTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4FD6C9B21129DBC00ECAF4E /* Debug */,

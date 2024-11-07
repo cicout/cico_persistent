@@ -13,12 +13,6 @@ struct ORMTableInfoModel: CICOAutoCodable {
     let tableName: String
     let objectTypeName: String
     let objectTypeVersion: Int
-
-    init(tableName: String, objectTypeName: String, objectTypeVersion: Int) {
-        self.tableName = tableName
-        self.objectTypeName = objectTypeName
-        self.objectTypeVersion = objectTypeVersion
-    }
 }
 
 extension ORMTableInfoModel {

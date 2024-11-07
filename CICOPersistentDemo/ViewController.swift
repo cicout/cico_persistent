@@ -22,11 +22,6 @@ class ViewController: UIViewController {
         print("\(PathAide.docPath(withSubPath: nil))")
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     @IBAction func testBtnAction(_ sender: Any) {
         self.doKVKeyChainTest()
     }

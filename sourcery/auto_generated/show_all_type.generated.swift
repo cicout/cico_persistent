@@ -1,4 +1,4 @@
-// Generated using Sourcery 1.7.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 2.1.1 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 // swiftlint:disable file_length
 
@@ -13,10 +13,11 @@
  */
 
 
-/** Found 89 Types
+/** Found 90 Types
  * AppDelegate
  * Array
  * Bool
+ * CICOPersistentCipherTests
  * CodableError
  * ColumnModel
  * DBAide

@@ -32,8 +32,7 @@ open class KVDBService {
     /// Init with database file URL and database encryption password;
     ///
     /// - parameter fileURL: Database file URL;
-    /// - parameter password: Database encryption password; It will use default password if not passing this parameter;
-    ///             Database won't be encrypted when password is nil;
+    /// - parameter password: Database encryption password; Database won't be encrypted when password is nil;
     /// - parameter customTableName: Table name; It will use default table name when passing nil;
     ///
     /// - returns: Init object;

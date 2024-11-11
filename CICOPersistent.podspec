@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "CICOPersistent"
-  spec.version      = "0.37.56"
+  spec.version      = "0.38.57"
   spec.summary      = "A simple local storage service using codable."
 
   # This description is used to generate tags and improve search results.
@@ -65,10 +65,10 @@ Pod::Spec.new do |spec|
   #
 
   spec.platform     = :ios
-  spec.platform     = :ios, "11.0"
+  spec.platform     = :ios, "12.0"
 
   #  When using multiple platforms
-  spec.ios.deployment_target = "11.0"
+  spec.ios.deployment_target = "12.0"
   # spec.osx.deployment_target = "10.7"
   # spec.watchos.deployment_target = "2.0"
   # spec.tvos.deployment_target = "9.0"
@@ -92,7 +92,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "CICOPersistent/**/*.swift"
+  # spec.source_files  = "CICOPersistent/**/*.swift"
   # spec.exclude_files = "xx/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
@@ -133,11 +133,29 @@ Pod::Spec.new do |spec|
 
   # spec.requires_arc = true
 
-  spec.xcconfig = { "GCC_PREPROCESSOR_DEFINITIONS" => "$(inherited) SQLITE_HAS_CODEC=1" }
+  spec.default_subspec = 'Standard'
 
-  spec.dependency "CICOFoundationKit"
-  spec.dependency "CICOAutoCodable"
-  spec.dependency "FMDB/SQLCipher"
-  spec.dependency "SQLCipher"
+  spec.subspec 'Core' do |s|
+    s.source_files  = "CICOPersistent/**/*.swift"
+    s.dependency "CICOFoundationKit"
+    s.dependency "CICOAutoCodable"
+  end
+  
+  
+  spec.subspec 'Standard' do |s|
+    #s.source_files  = "CICOPersistentStandard/**/*.swift"
+    s.dependency 'CICOPersistent/Core'
+    s.dependency 'FMDB'
+  end
+  
+  
+  spec.subspec 'SQLCipher' do |s|
+    s.source_files  = "CICOPersistentCipher/**/*.swift"
+    s.xcconfig = { "GCC_PREPROCESSOR_DEFINITIONS" => "$(inherited) SQLITE_HAS_CODEC=1" }
+    s.dependency 'CICOPersistent/Core'
+    s.dependency 'FMDB/SQLCipher'
+    s.dependency 'SQLCipher'
+  end
+
 
 end

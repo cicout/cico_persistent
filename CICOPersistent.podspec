@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "CICOPersistent"
-  spec.version      = "0.38.57"
+  spec.version      = "0.38.58"
   spec.summary      = "A simple local storage service using codable."
 
   # This description is used to generate tags and improve search results.
@@ -135,24 +135,19 @@ Pod::Spec.new do |spec|
 
   spec.default_subspec = 'Standard'
 
-  spec.subspec 'Core' do |s|
+  spec.subspec 'Standard' do |s|
     s.source_files  = "CICOPersistent/**/*.swift"
     s.dependency "CICOFoundationKit"
     s.dependency "CICOAutoCodable"
-  end
-  
-  
-  spec.subspec 'Standard' do |s|
-    #s.source_files  = "CICOPersistentStandard/**/*.swift"
-    s.dependency 'CICOPersistent/Core'
     s.dependency 'FMDB'
   end
   
   
   spec.subspec 'SQLCipher' do |s|
-    s.source_files  = "CICOPersistentCipher/**/*.swift"
+    s.source_files  = "CICOPersistent/**/*.swift", "CICOPersistentCipher/**/*.swift"
     s.xcconfig = { "GCC_PREPROCESSOR_DEFINITIONS" => "$(inherited) SQLITE_HAS_CODEC=1" }
-    s.dependency 'CICOPersistent/Core'
+    s.dependency "CICOFoundationKit"
+    s.dependency "CICOAutoCodable"
     s.dependency 'FMDB/SQLCipher'
     s.dependency 'SQLCipher'
   end

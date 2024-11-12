@@ -20,9 +20,9 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Remove result;
-    open func removeObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                  primaryKeyValue: Codable,
-                                                  customTableName: String? = nil) -> Bool {
+    public func removeObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
+                                                    primaryKeyValue: Codable,
+                                                    customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
         let objectTypeName = "\(objectType)"
@@ -33,8 +33,8 @@ extension ORMDBService {
             guard ORMTableInfoAide.isTableExist(database: database,
                                                 objectTypeName: objectTypeName,
                                                 tableName: tableName) else {
-                                                    result = true
-                                                    return
+                result = true
+                return
             }
 
             result = ORMDBServiceInnerAide.deleteRecord(database: database,
@@ -58,8 +58,8 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Remove result;
-    open func removeObjectTable<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                       customTableName: String? = nil) -> Bool {
+    public func removeObjectTable<T: ORMCodableProtocol>(ofType objectType: T.Type,
+                                                         customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let objectTypeName = "\(objectType)"
 
@@ -69,8 +69,8 @@ extension ORMDBService {
             guard ORMTableInfoAide.isTableExist(database: database,
                                                 objectTypeName: objectTypeName,
                                                 tableName: tableName) else {
-                                                    result = true
-                                                    return
+                result = true
+                return
             }
 
             result = DBAide.dropTable(database: database, tableName: tableName)

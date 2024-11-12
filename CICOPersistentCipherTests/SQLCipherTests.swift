@@ -300,3 +300,4 @@ class SQLCipherTests: XCTestCase {
         ormDBService3 = nil
     }
 }
+// swiftlint:enable function_body_length

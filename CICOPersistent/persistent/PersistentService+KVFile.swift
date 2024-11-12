@@ -22,7 +22,7 @@ extension PersistentService {
     /// - returns: Read object, nil when no object for this key;
     ///
     /// - see: KVFileService.readObject(_:forKey:)
-    open func readKVFileObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
+    public func readKVFileObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
         return self.kvFileService.readObject(objectType, forKey: userKey)
     }
 
@@ -34,7 +34,7 @@ extension PersistentService {
     /// - returns: Write result;
     ///
     /// - see: KVFileService.writeObject(_:forKey:)
-    open func writeKVFileObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
+    public func writeKVFileObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         return self.kvFileService.writeObject(object, forKey: userKey)
     }
 
@@ -51,10 +51,10 @@ extension PersistentService {
     /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
     ///
     /// - see: KVFileService.updateObject(_:forKey:updateClosure:completionClosure:)
-    open func updateKVFileObject<T: Codable>(_ objectType: T.Type,
-                                             forKey userKey: String,
-                                             updateClosure: (T?) -> T?,
-                                             completionClosure: ((Bool) -> Void)? = nil) {
+    public func updateKVFileObject<T: Codable>(_ objectType: T.Type,
+                                               forKey userKey: String,
+                                               updateClosure: (T?) -> T?,
+                                               completionClosure: ((Bool) -> Void)? = nil) {
         return self.kvFileService.updateObject(objectType,
                                                forKey: userKey,
                                                updateClosure: updateClosure,
@@ -68,7 +68,7 @@ extension PersistentService {
     /// - returns: Remove result;
     ///
     /// - see: KVFileService.removeObject(forKey:)
-    open func removeKVFileObject(forKey userKey: String) -> Bool {
+    public func removeKVFileObject(forKey userKey: String) -> Bool {
         return self.kvFileService.removeObject(forKey: userKey)
     }
 
@@ -77,7 +77,7 @@ extension PersistentService {
     /// - returns: Remove result;
     ///
     /// - see: KVFileService.clearAll()
-    open func clearAllKVFile() -> Bool {
+    public func clearAllKVFile() -> Bool {
         return self.kvFileService.clearAll()
     }
 }

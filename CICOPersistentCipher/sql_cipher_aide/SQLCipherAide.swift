@@ -5,6 +5,7 @@
 //  Created by lucky.li on 2019/9/19.
 //  Copyright © 2019 cico. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import CICOFoundationKit
@@ -221,3 +222,4 @@ public class SQLCipherAide {
         }
     }
 }
+// swiftlint:enable function_body_length

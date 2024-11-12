@@ -22,7 +22,7 @@ extension PersistentService {
     /// - returns: Read object, nil when no object for this key;
     ///
     /// - see: KVDBService.readObject(_:forKey:)
-    open func readKVDBObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
+    public func readKVDBObject<T: Codable>(_ objectType: T.Type, forKey userKey: String) -> T? {
         return self.kvDBService.readObject(objectType, forKey: userKey)
     }
 
@@ -36,7 +36,7 @@ extension PersistentService {
     /// - returns: Write result;
     ///
     /// - see: KVDBService.writeObject(_:forKey:)
-    open func writeKVDBObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
+    public func writeKVDBObject<T: Codable>(_ object: T, forKey userKey: String) -> Bool {
         return self.kvDBService.writeObject(object, forKey: userKey)
     }
 
@@ -53,10 +53,10 @@ extension PersistentService {
     /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
     ///
     /// - see: KVDBService.updateObject(_:forKey:updateClosure:completionClosure:)
-    open func updateKVDBObject<T: Codable>(_ objectType: T.Type,
-                                           forKey userKey: String,
-                                           updateClosure: (T?) -> T?,
-                                           completionClosure: ((Bool) -> Void)? = nil) {
+    public func updateKVDBObject<T: Codable>(_ objectType: T.Type,
+                                             forKey userKey: String,
+                                             updateClosure: (T?) -> T?,
+                                             completionClosure: ((Bool) -> Void)? = nil) {
         return self.kvDBService.updateObject(objectType,
                                              forKey: userKey,
                                              updateClosure: updateClosure,
@@ -70,7 +70,7 @@ extension PersistentService {
     /// - returns: Remove result;
     ///
     /// - see: KVDBService.removeObject(forKey:)
-    open func removeKVDBObject(forKey userKey: String) -> Bool {
+    public func removeKVDBObject(forKey userKey: String) -> Bool {
         return self.kvDBService.removeObject(forKey: userKey)
     }
 
@@ -79,7 +79,7 @@ extension PersistentService {
     /// - returns: Remove result;
     ///
     /// - see: KVDBService.clearAll()
-    open func clearAllKVDB() -> Bool {
+    public func clearAllKVDB() -> Bool {
         return self.kvDBService.clearAll()
     }
 }

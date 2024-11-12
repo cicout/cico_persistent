@@ -20,9 +20,9 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Read object, nil when no object for this primary key;
-    open func readObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                primaryKeyValue: Codable,
-                                                customTableName: String? = nil) -> T? {
+    public func readObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
+                                                  primaryKeyValue: Codable,
+                                                  customTableName: String? = nil) -> T? {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
         let objectTypeName = "\(objectType)"
@@ -33,7 +33,7 @@ extension ORMDBService {
             guard ORMTableInfoAide.isTableExist(database: database,
                                                 objectTypeName: objectTypeName,
                                                 tableName: tableName) else {
-                                                    return
+                return
             }
 
             object = ORMDBServiceInnerAide.readObject(database: database,
@@ -58,12 +58,12 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Read object, nil when no object for this primary key;
-    open func readObjectArray<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                     whereString: String? = nil,
-                                                     orderByName: String? = nil,
-                                                     descending: Bool = true,
-                                                     limit: Int? = nil,
-                                                     customTableName: String? = nil) -> [T]? {
+    public func readObjectArray<T: ORMCodableProtocol>(ofType objectType: T.Type,
+                                                       whereString: String? = nil,
+                                                       orderByName: String? = nil,
+                                                       descending: Bool = true,
+                                                       limit: Int? = nil,
+                                                       customTableName: String? = nil) -> [T]? {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let objectTypeName = "\(objectType)"
 
@@ -73,7 +73,7 @@ extension ORMDBService {
             guard ORMTableInfoAide.isTableExist(database: database,
                                                 objectTypeName: objectTypeName,
                                                 tableName: tableName) else {
-                                                    return
+                return
             }
 
             array = ORMDBServiceInnerAide.readObjectArray(database: database,

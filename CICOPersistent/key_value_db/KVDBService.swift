@@ -33,6 +33,7 @@ open class KVDBService {
     ///
     /// - parameter fileURL: Database file URL;
     /// - parameter password: Database encryption password; Database won't be encrypted when password is nil;
+    ///             It will be ignored if you don't have SQLCipher. (CICOPersistent/SQLCipher)
     /// - parameter customTableName: Table name; It will use default table name when passing nil;
     ///
     /// - returns: Init object;

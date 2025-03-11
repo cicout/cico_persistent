@@ -38,12 +38,12 @@ Just add `CICOPersistent.framework`, `CICOAutoCodable.framework` and `FMDB.frame
 ### Model And JSON Definition
 
 ```swift
-enum MyEnum: String, CICOAutoCodable {
+enum MyEnum: String, Codable {
     case one
     case two
 }
 
-class MyClass: CICOAutoCodable {
+class MyClass: Codable {
     var stringValue: String = "default_string"
     private(set) var dateValue: Date?
     private(set) var intValue: Int = 0

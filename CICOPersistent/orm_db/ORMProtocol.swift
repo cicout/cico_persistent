@@ -18,7 +18,7 @@ public protocol ORMProtocol {
     static func ormPrimaryKeyColumnName() -> CompositeType<String>
 
     /// You can define some index column from the codable properties in your class or struct;
-    static func ormIndexColumnNameArray() -> [String]?
+    static func ormIndexColumnNames() -> [CompositeType<String>]?
 
     /// You can use version number to upgrade database automaticaly
     /// when you add/delete/update any codable property in your class or struct;
@@ -32,7 +32,7 @@ public protocol ORMProtocol {
 }
 
 public extension ORMProtocol {
-    static func ormIndexColumnNameArray() -> [String]? {
+    static func ormIndexColumnNames() -> [CompositeType<String>]? {
         return nil
     }
 

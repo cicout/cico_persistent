@@ -52,7 +52,14 @@ extension TCodableStruct: ORMProtocol {
         return .single(CodingKeys.name.stringValue)
     }
 
-    static func cicoORMObjectTypeVersion() -> Int {
-        return 20
+    static func ormIndexColumnNames() -> [CompositeType<String>]? {
+        return [
+            .single(CodingKeys.dateValue.stringValue),
+            .composite([CodingKeys.intValue.stringValue, CodingKeys.doubleValue.stringValue])
+        ]
+    }
+
+    static func ormObjectTypeVersion() -> Int {
+        return 21
     }
 }

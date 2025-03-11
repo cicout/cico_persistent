@@ -20,8 +20,25 @@ class ORMDBServiceInnerAide {
         return tableName
     }
 
-    static func indexName(indexColumnName: String, tableName: String) -> String {
-        return "index_\(indexColumnName)_of_\(tableName)"
+    static func indexName(indexColumnName: CompositeType<String>, tableName: String) -> String? {
+        if case .single(let columnName) = indexColumnName {
+            return "index_\(columnName)_of_\(tableName)"
+        } else if case .composite(let columnNames) = indexColumnName, columnNames.count > 0 {
+            let name = columnNames.joined(separator: "_")
+            return "index_\(name)_of_\(tableName)"
+        } else {
+            return nil
+        }
+    }
+
+    static func indexColumnNameSQL(_ indexColumnName: CompositeType<String>) -> String? {
+        if case .single(let columnName) = indexColumnName {
+            return columnName
+        } else if case .composite(let columnNames) = indexColumnName, columnNames.count > 0 {
+            return columnNames.joined(separator: ", ")
+        } else {
+            return nil
+        }
     }
 
     static func primaryKeySQLAndValues<K>(primaryKeyColumnName: CompositeType<String>,
@@ -130,17 +147,19 @@ extension ORMDBServiceInnerAide {
     static func upgradeTableIndex<T: Codable>(database: FMDatabase,
                                               objectType: T.Type,
                                               tableName: String,
-                                              indexColumnNameArray: [String]?) -> Bool {
+                                              indexColumnNames: [CompositeType<String>]?) -> Bool {
         var result = false
 
         let indexSet = DBAide.queryTableIndexs(database: database, tableName: tableName)
         let newIndexSet: Set<String>
-        let newIndexDic: [String: String]
-        if let indexColumnNameArray = indexColumnNameArray {
+        let newIndexDic: [String: CompositeType<String>]
+        if let indexColumnNames {
             var tempSet = Set<String>.init()
-            var tempIndexDic = [String: String]()
-            indexColumnNameArray.forEach { (indexColumnName) in
-                let indexName = self.indexName(indexColumnName: indexColumnName, tableName: tableName)
+            var tempIndexDic = [String: CompositeType<String>]()
+            indexColumnNames.forEach { (indexColumnName) in
+                guard let indexName = self.indexName(indexColumnName: indexColumnName, tableName: tableName) else {
+                    return
+                }
                 tempSet.insert(indexName)
                 tempIndexDic[indexName] = indexColumnName
             }
@@ -148,7 +167,7 @@ extension ORMDBServiceInnerAide {
             newIndexDic = tempIndexDic
         } else {
             newIndexSet = Set<String>.init()
-            newIndexDic = [String: String]()
+            newIndexDic = [String: CompositeType<String>]()
         }
 
         let needAddIndexSet = newIndexSet.subtracting(indexSet)

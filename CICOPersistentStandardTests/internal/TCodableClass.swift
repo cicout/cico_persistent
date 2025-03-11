@@ -56,11 +56,7 @@ extension TCodableClass: ORMProtocol {
         return .single(CodingKeys.name.stringValue)
     }
 
-//    static func cicoORMIndexColumnNameArray() -> [String]? {
-//        return [CodingKeys.dateValue.stringValue, CodingKeys.intValue.stringValue]
-//    }
-
-    static func cicoORMObjectTypeVersion() -> Int {
+    static func ormObjectTypeVersion() -> Int {
         return 11
     }
 }

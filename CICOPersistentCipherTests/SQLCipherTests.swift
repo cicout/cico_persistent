@@ -25,6 +25,7 @@ class SQLCipherTests: XCTestCase {
 
     func testSQLCipher() {
         let url1 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_original.db")
+        print(url1)
         let url2 = PathAide.docFileURL(withSubPath: "orm_sql_cipher_export_nop2p.db")
         let originalPassword2 = "cico_test_2"
         let password2 = SecurityAide.md5HashString(originalPassword2)

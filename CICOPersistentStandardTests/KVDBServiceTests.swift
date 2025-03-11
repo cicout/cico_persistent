@@ -18,13 +18,13 @@ class KVDBServiceTests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
-//        let url = PathAide.docFileURL(withSubPath: "cico_persistent_tests/kv_db")!
-//        print("\(url)")
-//        self.service = KVDBService.init(fileURL: url)
+        let url = PathAide.docFileURL(withSubPath: "cico_persistent_tests/kv_db")
+        print("\(url)")
+        self.service = KVDBService.init(fileURL: url)
 
-        let url = PathAide.docFileURL(withSubPath: "cico_persistent_tests/custom_password_kv_db")
+//        let url = PathAide.docFileURL(withSubPath: "cico_persistent_tests/custom_password_kv_db")
 //        print("\(url)")
-        self.service = KVDBService.init(fileURL: url, password: "cico_test")
+//        self.service = KVDBService.init(fileURL: url, password: "cico_test")
 
         self.jsonString = JSONStringAide.jsonString(name: "default")
     }

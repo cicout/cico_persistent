@@ -135,8 +135,10 @@ class DBAide {
     static func createIndex(database: FMDatabase,
                             indexName: String,
                             tableName: String,
-                            indexColumnName: String) -> Bool {
-        let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(indexColumnName));"
+                            indexColumnName: CompositeType<String>) -> Bool {
+        guard let columnName = ORMDBServiceInnerAide.indexColumnNameSQL(indexColumnName) else { return false }
+
+        let createIndexSQL = "CREATE INDEX \(indexName) ON \(tableName)(\(columnName));"
 
         let result = database.executeUpdate(createIndexSQL, withArgumentsIn: [])
         if !result {

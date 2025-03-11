@@ -24,7 +24,7 @@ extension ORMDBService {
     public func writeObject<T: ORMCodableProtocol>(_ object: T, customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: T.self, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
-        let indexColumnNameArray = T.ormIndexColumnNameArray()
+        let indexColumnNames = T.ormIndexColumnNames()
         let objectTypeVersion = T.ormObjectTypeVersion()
         let autoIncrement = T.ormIntegerPrimaryKeyAutoIncrement()
         let objectType = T.self
@@ -35,7 +35,7 @@ extension ORMDBService {
             // create table if not exist and upgrade table if needed;
             let paramConfig = ParamConfigModel.init(tableName: tableName,
                                                     primaryKeyColumnName: primaryKeyColumnName,
-                                                    indexColumnNameArray: indexColumnNameArray,
+                                                    indexColumnNames: indexColumnNames,
                                                     objectTypeVersion: objectTypeVersion,
                                                     autoIncrement: autoIncrement)
             let isTableReady =
@@ -73,7 +73,7 @@ extension ORMDBService {
     public func writeObjectArray<T: ORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: T.self, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
-        let indexColumnNameArray = T.ormIndexColumnNameArray()
+        let indexColumnNames = T.ormIndexColumnNames()
         let objectTypeVersion = T.ormObjectTypeVersion()
         let autoIncrement = T.ormIntegerPrimaryKeyAutoIncrement()
         let objectType = T.self
@@ -84,7 +84,7 @@ extension ORMDBService {
             // create table if not exist and upgrade table if needed;
             let paramConfig = ParamConfigModel.init(tableName: tableName,
                                                     primaryKeyColumnName: primaryKeyColumnName,
-                                                    indexColumnNameArray: indexColumnNameArray,
+                                                    indexColumnNames: indexColumnNames,
                                                     objectTypeVersion: objectTypeVersion,
                                                     autoIncrement: autoIncrement)
             let isTableReady =
@@ -131,7 +131,7 @@ extension ORMDBService {
                                                        completionClosure: ((Bool) -> Void)? = nil) {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
-        let indexColumnNameArray = T.ormIndexColumnNameArray()
+        let indexColumnNames = T.ormIndexColumnNames()
         let objectTypeVersion = T.ormObjectTypeVersion()
         let autoIncrement = T.ormIntegerPrimaryKeyAutoIncrement()
         let objectTypeName = "\(objectType)"
@@ -162,7 +162,7 @@ extension ORMDBService {
             // create table if not exist and upgrade table if needed;
             let paramConfig = ParamConfigModel.init(tableName: tableName,
                                                     primaryKeyColumnName: primaryKeyColumnName,
-                                                    indexColumnNameArray: indexColumnNameArray,
+                                                    indexColumnNames: indexColumnNames,
                                                     objectTypeVersion: objectTypeVersion,
                                                     autoIncrement: autoIncrement)
             let isTableReady =
@@ -208,7 +208,7 @@ extension ORMDBService {
             result = self.upgradeTableAndIndexs(database: database,
                                                 objectType: objectType,
                                                 tableName: paramConfig.tableName,
-                                                indexColumnNameArray: paramConfig.indexColumnNameArray,
+                                                indexColumnNames: paramConfig.indexColumnNames,
                                                 objectTypeVersion: paramConfig.objectTypeVersion)
 
             return result
@@ -235,10 +235,12 @@ extension ORMDBService {
         }
 
         // create indexs;
-        if let indexColumnNameArray = paramConfig.indexColumnNameArray {
-            for indexColumnName in indexColumnNameArray {
-                let indexName = ORMDBServiceInnerAide.indexName(indexColumnName: indexColumnName,
-                                                                tableName: paramConfig.tableName)
+        if let indexColumnNames = paramConfig.indexColumnNames {
+            for indexColumnName in indexColumnNames {
+                guard let indexName = ORMDBServiceInnerAide.indexName(indexColumnName: indexColumnName,
+                                                                      tableName: paramConfig.tableName) else {
+                    return false
+                }
                 result = DBAide.createIndex(database: database,
                                             indexName: indexName,
                                             tableName: paramConfig.tableName,
@@ -262,7 +264,7 @@ extension ORMDBService {
     private func upgradeTableAndIndexs<T: Codable>(database: FMDatabase,
                                                    objectType: T.Type,
                                                    tableName: String,
-                                                   indexColumnNameArray: [String]?,
+                                                   indexColumnNames: [CompositeType<String>]?,
                                                    objectTypeVersion: Int) -> Bool {
         var result = false
 
@@ -278,7 +280,7 @@ extension ORMDBService {
         result = ORMDBServiceInnerAide.upgradeTableIndex(database: database,
                                                          objectType: objectType,
                                                          tableName: tableName,
-                                                         indexColumnNameArray: indexColumnNameArray)
+                                                         indexColumnNames: indexColumnNames)
         if !result {
             return result
         }

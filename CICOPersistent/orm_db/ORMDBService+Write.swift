@@ -124,11 +124,11 @@ extension ORMDBService {
     ///             the read object will be passed as parameter, you can return a new value to update in database;
     ///             It won't be updated to database when you return nil by this closure;
     /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
-    public func updateObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                    primaryKeyValue: Codable,
-                                                    customTableName: String? = nil,
-                                                    updateClosure: (T?) -> T?,
-                                                    completionClosure: ((Bool) -> Void)? = nil) {
+    public func updateObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type,
+                                                       primaryKeyValue: CompositeType<K>,
+                                                       customTableName: String? = nil,
+                                                       updateClosure: (T?) -> T?,
+                                                       completionClosure: ((Bool) -> Void)? = nil) {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
         let indexColumnNameArray = T.ormIndexColumnNameArray()

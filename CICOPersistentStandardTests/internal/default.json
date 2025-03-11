@@ -1,4 +1,6 @@
 {
+    "stringID": "stringID",
+    "intID": 123,
     "name": "name",
     "string": "string",
     "date": 1234567890123,
@@ -6,6 +8,8 @@
     "double": 2.5,
     "bool": true,
     "next": {
+        "stringID": "stringID",
+        "intID": 123,
         "name": "name",
         "string": "string",
         "int": 123,

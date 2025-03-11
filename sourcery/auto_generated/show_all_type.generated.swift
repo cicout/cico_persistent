@@ -13,13 +13,14 @@
  */
 
 
-/** Found 90 Types
+/** Found 92 Types
  * AppDelegate
  * Array
  * Bool
  * CICOPersistentCipherTests
  * CodableError
  * ColumnModel
+ * CompositeType
  * DBAide
  * DBSecurityAide
  * Date
@@ -90,6 +91,7 @@
  * TCodableClass.CodingKeys
  * TCodableStruct
  * TCodableStruct.CodingKeys
+ * TCompositeStruct
  * TDoubleStruct
  * TIntStruct
  * TStructOne

@@ -24,7 +24,7 @@ extension ORMTableInfoModel {
 }
 
 extension ORMTableInfoModel: ORMProtocol {
-    static func ormPrimaryKeyColumnName() -> String {
-        return CodingKeys.tableName.stringValue
+    static func ormPrimaryKeyColumnName() -> CompositeType<String> {
+        return .single(CodingKeys.tableName.stringValue)
     }
 }

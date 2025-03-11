@@ -20,9 +20,9 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Remove result;
-    public func removeObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                    primaryKeyValue: Codable,
-                                                    customTableName: String? = nil) -> Bool {
+    public func removeObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type,
+                                                       primaryKeyValue: CompositeType<K>,
+                                                       customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
         let objectTypeName = "\(objectType)"

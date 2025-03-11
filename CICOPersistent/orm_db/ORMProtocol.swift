@@ -8,9 +8,14 @@
 
 import Foundation
 
+public enum CompositeType<T> {
+    case single(T)
+    case composite([T])
+}
+
 public protocol ORMProtocol {
     /// You must choose one primary key name from the codable properties in your class or struct;
-    static func ormPrimaryKeyColumnName() -> String
+    static func ormPrimaryKeyColumnName() -> CompositeType<String>
 
     /// You can define some index column from the codable properties in your class or struct;
     static func ormIndexColumnNameArray() -> [String]?

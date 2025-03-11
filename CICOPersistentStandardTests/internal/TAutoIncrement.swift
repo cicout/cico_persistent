@@ -21,8 +21,8 @@ struct TAutoIncrement: CICOAutoCodable {
 }
 
 extension TAutoIncrement: ORMProtocol {
-    static func ormPrimaryKeyColumnName() -> String {
-        return "rowID"
+    static func ormPrimaryKeyColumnName() -> CompositeType<String> {
+        return .single("rowID")
     }
 
     static func ormIntegerPrimaryKeyAutoIncrement() -> Bool {

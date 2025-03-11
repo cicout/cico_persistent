@@ -40,7 +40,7 @@ class ORMTableInfoAide {
                                                                objectType: ORMTableInfoModel.self,
                                                                tableName: kORMTableName,
                                                                primaryKeyColumnName: primaryKeyColumnName,
-                                                               primaryKeyValue: tableName) else {
+                                                               primaryKeyValue: .single(tableName)) else {
                                                                 return nil
         }
 
@@ -62,6 +62,6 @@ class ORMTableInfoAide {
         return ORMDBServiceInnerAide.deleteRecord(database: database,
                                                   tableName: kORMTableName,
                                                   primaryKeyColumnName: primaryKeyColumnName,
-                                                  primaryKeyValue: tableName)
+                                                  primaryKeyValue: .single(tableName))
     }
 }

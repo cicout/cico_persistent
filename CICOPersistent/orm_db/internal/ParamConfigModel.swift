@@ -10,7 +10,7 @@ import Foundation
 
 struct ParamConfigModel {
     let tableName: String
-    let primaryKeyColumnName: String
+    let primaryKeyColumnName: CompositeType<String>
     let indexColumnNameArray: [String]?
     let objectTypeVersion: Int
     let autoIncrement: Bool

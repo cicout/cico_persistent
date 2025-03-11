@@ -20,9 +20,9 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Read object, nil when no object for this primary key;
-    public func readObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                  primaryKeyValue: Codable,
-                                                  customTableName: String? = nil) -> T? {
+    public func readObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type,
+                                                     primaryKeyValue: CompositeType<K>,
+                                                     customTableName: String? = nil) -> T? {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
         let objectTypeName = "\(objectType)"

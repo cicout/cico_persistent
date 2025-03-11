@@ -25,9 +25,9 @@ extension PersistentService {
     /// - returns: Read object, nil when no object for this primary key;
     ///
     /// - see: ORMDBService.readObject(ofType:primaryKeyValue:customTableName:)
-    public func readORMDBObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                       primaryKeyValue: Codable,
-                                                       customTableName: String? = nil) -> T? {
+    public func readORMDBObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type,
+                                                          primaryKeyValue: CompositeType<K>,
+                                                          customTableName: String? = nil) -> T? {
         return self.ormDBService.readObject(ofType: objectType,
                                             primaryKeyValue: primaryKeyValue,
                                             customTableName: customTableName)
@@ -111,11 +111,11 @@ extension PersistentService {
     /// - parameter completionClosure: It will be called when completed, passing update result as parameter;
     ///
     /// - see: ORMDBService.updateObject(ofType:primaryKeyValue:customTableName:updateClosure:completionClosure:)
-    public func updateORMDBObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                         primaryKeyValue: Codable,
-                                                         customTableName: String? = nil,
-                                                         updateClosure: (T?) -> T?,
-                                                         completionClosure: ((Bool) -> Void)? = nil) {
+    public func updateORMDBObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type,
+                                                            primaryKeyValue: CompositeType<K>,
+                                                            customTableName: String? = nil,
+                                                            updateClosure: (T?) -> T?,
+                                                            completionClosure: ((Bool) -> Void)? = nil) {
         return self.ormDBService.updateObject(ofType: objectType,
                                               primaryKeyValue: primaryKeyValue,
                                               customTableName: customTableName,
@@ -134,9 +134,9 @@ extension PersistentService {
     /// - returns: Remove result;
     ///
     /// - see: ORMDBService.removeObject(ofType:primaryKeyValue:customTableName: customTableName)
-    public func removeORMDBObject<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                         primaryKeyValue: Codable,
-                                                         customTableName: String? = nil) -> Bool {
+    public func removeORMDBObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type,
+                                                            primaryKeyValue: CompositeType<K>,
+                                                            customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObject(ofType: objectType,
                                               primaryKeyValue: primaryKeyValue,
                                               customTableName: customTableName)

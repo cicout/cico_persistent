@@ -18,13 +18,13 @@ class ORMDBServiceTests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
-//        let url = PathAide.docFileURL(withSubPath: "cico_persistent_tests/orm_db")
-//        print("\(url)")
-//        self.service = ORMDBService.init(fileURL: url)
+        let url = PathAide.docFileURL(withSubPath: "cico_persistent_tests/orm_db")
+        print("\(url)")
+        self.service = ORMDBService.init(fileURL: url)
 
-        let customURL = PathAide.docFileURL(withSubPath: "cico_persistent_tests/custom_password_orm_db")
-        print("\(customURL)")
-        self.service = ORMDBService.init(fileURL: customURL, password: "cico_test")
+        //        let customURL = PathAide.docFileURL(withSubPath: "cico_persistent_tests/custom_password_orm_db")
+        //        print("\(customURL)")
+        //        self.service = ORMDBService.init(fileURL: customURL, password: "cico_test")
 
         self.jsonString = JSONStringAide.jsonString(name: "default")
     }
@@ -55,13 +55,14 @@ class ORMDBServiceTests: XCTestCase {
         }, customKey: "writeObject")
 
         DebugAide.showDuration(closure: {
-            let readObject = self.service.readObject(ofType: TCodableClass.self, primaryKeyValue: object!.name)
+            let readObject = self.service.readObject(ofType: TCodableClass.self, primaryKeyValue: .single(object!.name))
             XCTAssertNotNil(readObject, "[FAILED]: read failed")
             XCTAssert(readObject! == object!, "[FAILED]: read object is not equal to original object")
         }, customKey: "readObject")
 
         DebugAide.showDuration(closure: {
-            let removeResult = self.service.removeObject(ofType: TCodableClass.self, primaryKeyValue: object!.name)
+            let removeResult = self.service.removeObject(ofType: TCodableClass.self,
+                                                         primaryKeyValue: .single(object!.name))
             XCTAssert(removeResult, "[FAILED]: write failed")
         }, customKey: "removeObject")
     }
@@ -76,14 +77,16 @@ class ORMDBServiceTests: XCTestCase {
         }, customKey: "writeObject")
 
         DebugAide.showDuration(closure: {
-            let readObject = self.service.readObject(ofType: TCodableStruct.self, primaryKeyValue: object!.name)
+            let readObject = self.service.readObject(ofType: TCodableStruct.self,
+                                                     primaryKeyValue: .single(object!.name))
             XCTAssertNotNil(readObject, "[FAILED]: read failed")
             XCTAssert(readObject! == object!, "[FAILED]: read object is not equal to original object")
         }, customKey: "readObject")
 
         DebugAide.showDuration(closure: {
-            let removeResult = self.service.removeObject(ofType: TCodableStruct.self, primaryKeyValue: object!.name)
-            XCTAssert(removeResult, "[FAILED]: write failed")
+            let removeResult = self.service.removeObject(ofType: TCodableStruct.self,
+                                                         primaryKeyValue: .single(object!.name))
+            XCTAssert(removeResult, "[FAILED]: remove failed")
         }, customKey: "removeObject")
     }
 
@@ -95,17 +98,18 @@ class ORMDBServiceTests: XCTestCase {
             object!.name = "name_\(index)"
             objectArray.append(object!)
         }
+
         let writeResult = self.service.writeObjectArray(objectArray)
         XCTAssert(writeResult, "[FAILED]: write failed")
 
         DebugAide.showDuration(closure: {
             let readObjectArray =
-                self.service
-                    .readObjectArray(ofType: TCodableClass.self,
-                                     whereString: nil,
-                                     orderByName: "name",
-                                     descending: true,
-                                     limit: 10)
+            self.service
+                .readObjectArray(ofType: TCodableClass.self,
+                                 whereString: nil,
+                                 orderByName: "name",
+                                 descending: true,
+                                 limit: 10)
             XCTAssertNotNil(readObjectArray, "[FAILED]: read failed")
             XCTAssert(readObjectArray!.count > 1, "[FAILED]: read failed")
 
@@ -127,45 +131,45 @@ class ORMDBServiceTests: XCTestCase {
 
         self.service
             .updateObject(ofType: TCodableClass.self,
-                          primaryKeyValue: key,
+                          primaryKeyValue: .single(object!.name),
                           customTableName: nil,
                           updateClosure: { (readObject) -> TCodableClass? in
-                            XCTAssertNil(readObject, "[FAILED]: read not exist object failed")
-                            return object
+                XCTAssertNil(readObject, "[FAILED]: read not exist object failed")
+                return object
             },
                           completionClosure: { (result) in
                 XCTAssert(result, "[FAILED]: update failed")
-        })
+            })
 
         self.service
             .updateObject(ofType: TCodableClass.self,
-                          primaryKeyValue: key,
+                          primaryKeyValue: .single(object!.name),
                           customTableName: nil,
                           updateClosure: { (readObject) -> TCodableClass? in
-                            XCTAssertNotNil(readObject, "[FAILED]: read exist object failed")
-                            readObject!.name = updatedKey
-                            return readObject
+                XCTAssertNotNil(readObject, "[FAILED]: read exist object failed")
+                readObject!.name = updatedKey
+                return readObject
             },
                           completionClosure: { (result) in
                 XCTAssert(result, "[FAILED]: update failed")
-        })
+            })
 
         self.service
             .updateObject(ofType: TCodableClass.self,
-                          primaryKeyValue: key,
+                          primaryKeyValue: .single(object!.name),
                           customTableName: nil,
                           updateClosure: { (readObject) -> TCodableClass? in
-                            XCTAssertNotNil(readObject, "[FAILED]: read exist object failed")
-                            return nil
+                XCTAssertNotNil(readObject, "[FAILED]: read exist object failed")
+                return nil
             },
                           completionClosure: { (result) in
                 XCTAssert(result, "[FAILED]: update failed")
-        })
+            })
 
-        let removeResult = self.service.removeObject(ofType: TCodableClass.self, primaryKeyValue: key)
+        let removeResult = self.service.removeObject(ofType: TCodableClass.self, primaryKeyValue: .single(object!.name))
         XCTAssert(removeResult, "[FAILED]: remove failed")
 
-        let removeResult2 = self.service.removeObject(ofType: TCodableClass.self, primaryKeyValue: updatedKey)
+        let removeResult2 = self.service.removeObject(ofType: TCodableClass.self, primaryKeyValue: .single(updatedKey))
         XCTAssert(removeResult2, "[FAILED]: remove failed")
     }
 
@@ -181,12 +185,12 @@ class ORMDBServiceTests: XCTestCase {
         XCTAssert(writeResult, "[FAILED]: write failed")
 
         let readObjectArray =
-            self.service
-                .readObjectArray(ofType: TCodableClass.self,
-                                 whereString: "name = 'name_5'",
-                                 orderByName: "name",
-                                 descending: false,
-                                 limit: 10)
+        self.service
+            .readObjectArray(ofType: TCodableClass.self,
+                             whereString: "name = 'name_5'",
+                             orderByName: "name",
+                             descending: false,
+                             limit: 10)
         XCTAssertNotNil(readObjectArray, "[FAILED]: read failed")
     }
 
@@ -232,12 +236,12 @@ class ORMDBServiceTests: XCTestCase {
         XCTAssert(writeResult, "[FAILED]: write failed")
 
         let readObjectArray =
-            self.service
-                .readObjectArray(ofType: TAutoIncrement.self,
-                                 whereString: nil,
-                                 orderByName: "rowID",
-                                 descending: true,
-                                 limit: 10)
+        self.service
+            .readObjectArray(ofType: TAutoIncrement.self,
+                             whereString: nil,
+                             orderByName: "rowID",
+                             descending: true,
+                             limit: 10)
         XCTAssertNotNil(readObjectArray, "[FAILED]: read failed")
         XCTAssert(readObjectArray!.count == 10, "[FAILED]: read failed")
 
@@ -247,5 +251,89 @@ class ORMDBServiceTests: XCTestCase {
         XCTAssertNotNil(object9.rowID, "[FAILED]: read failed")
         print("[#]: object0.rowID = \(object0.rowID!), object9.rowID = \(object9.rowID!)")
         XCTAssert(object0.rowID! - object9.rowID! == 9, "[FAILED]: read failed")
+    }
+}
+
+extension ORMDBServiceTests {
+    func test_Composite() {
+        let object = TCompositeStruct.init(jsonString: self.jsonString)
+        XCTAssertNotNil(object, "[FAILED]: invalid object")
+
+        DebugAide.showDuration(closure: {
+            let writeResult = self.service.writeObject(object!)
+            XCTAssert(writeResult, "[FAILED]: write failed")
+        }, customKey: "writeObject")
+
+        let keyValues: [Any] = [object!.stringID, object!.intID]
+
+        DebugAide.showDuration(closure: {
+            let readObject = self.service.readObject(ofType: TCompositeStruct.self,
+                                                     primaryKeyValue: .composite(keyValues))
+            XCTAssertNotNil(readObject, "[FAILED]: read failed")
+            XCTAssert(readObject! == object!, "[FAILED]: read object is not equal to original object")
+        }, customKey: "readObject")
+
+        let updatedName = "updated_name"
+
+        DebugAide.showDuration(closure: {
+            self.service
+                .updateObject(ofType: TCompositeStruct.self,
+                              primaryKeyValue: .composite(keyValues),
+                              updateClosure: { (readObject) -> TCompositeStruct? in
+                    XCTAssertNotNil(readObject, "[FAILED]: read exist object failed")
+                    var newObject = readObject
+                    newObject!.name = updatedName
+                    return newObject
+                },
+                              completionClosure: { (result) in
+                    XCTAssert(result, "[FAILED]: update failed")
+                })
+        }, customKey: "updateObject")
+
+        DebugAide.showDuration(closure: {
+            let readObject = self.service.readObject(ofType: TCompositeStruct.self,
+                                                     primaryKeyValue: .composite(keyValues))
+            XCTAssertNotNil(readObject, "[FAILED]: read failed")
+            XCTAssert(readObject!.name == updatedName, "[FAILED]: read object name is not updated")
+        }, customKey: "readObject")
+
+        DebugAide.showDuration(closure: {
+            let removeResult = self.service.removeObject(ofType: TCompositeStruct.self,
+                                                         primaryKeyValue: .composite(keyValues))
+            XCTAssert(removeResult, "[FAILED]: remove failed")
+        }, customKey: "removeObject")
+    }
+
+    func test_Composite_Array() {
+        var objects = [TCompositeStruct]()
+        for index in 0..<50 {
+            var object = TCompositeStruct.init(jsonString: self.jsonString)
+            XCTAssertNotNil(object, "[FAILED]: invalid object")
+            object!.stringID = "string_id_\(index)"
+            object!.intID = index
+            object!.name = "name_\(index)"
+            objects.append(object!)
+        }
+
+        let writeResult = self.service.writeObjectArray(objects)
+        XCTAssert(writeResult, "[FAILED]: write failed")
+
+        DebugAide.showDuration(closure: {
+            let readObjects =
+            self.service
+                .readObjectArray(ofType: TCompositeStruct.self,
+                                 whereString: nil,
+                                 orderByName: "name",
+                                 descending: true,
+                                 limit: 10)
+            XCTAssertNotNil(readObjects, "[FAILED]: read failed")
+            XCTAssert(readObjects!.count > 1, "[FAILED]: read failed")
+
+            let object0 = readObjects![0]
+            let object1 = readObjects![1]
+            XCTAssertNotNil(object0.name, "[FAILED]: read failed")
+            XCTAssertNotNil(object1.name, "[FAILED]: read failed")
+            XCTAssert(object0.name! > object1.name!, "[FAILED]: read failed")
+        }, customKey: "readObjects")
     }
 }

@@ -23,20 +23,47 @@ class ORMDBServiceInnerAide {
     static func indexName(indexColumnName: String, tableName: String) -> String {
         return "index_\(indexColumnName)_of_\(tableName)"
     }
+
+    static func primaryKeySQLAndValues<K>(primaryKeyColumnName: CompositeType<String>,
+                                          primaryKeyValue: CompositeType<K>) -> (String?, [K]?) {
+        let primaryKeySQL: String
+
+        if case .single(let primaryKeyName) = primaryKeyColumnName {
+            primaryKeySQL = "\(primaryKeyName) = ?"
+        } else if case .composite(let primaryKeyNames) = primaryKeyColumnName, primaryKeyNames.count > 0 {
+            primaryKeySQL = primaryKeyNames.map { "\($0) = ?" }.joined(separator: "AND ")
+        } else {
+            return (nil, nil)
+        }
+
+        let primaryKeyValues: [K]
+
+        if case .single(let value) = primaryKeyValue {
+            primaryKeyValues = [value]
+        } else if case .composite(let values) = primaryKeyValue, values.count > 0 {
+            primaryKeyValues = values
+        } else {
+            return (nil, nil)
+        }
+
+        return (primaryKeySQL, primaryKeyValues)
+    }
 }
 
 extension ORMDBServiceInnerAide {
     static func createTableIfNotExists<T: Codable>(database: FMDatabase,
                                                    objectType: T.Type,
                                                    tableName: String,
-                                                   primaryKeyColumnName: String,
+                                                   primaryKeyColumnName: CompositeType<String>,
                                                    autoIncrement: Bool) -> Bool {
         var result = false
 
         let sqliteTypeDic = SQLiteTypeDecoder.allTypeProperties(of: objectType)
 
         var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
+
         var isFirst = true
+
         sqliteTypeDic.forEach({ (name, sqliteType) in
             if isFirst {
                 isFirst = false
@@ -47,7 +74,7 @@ extension ORMDBServiceInnerAide {
 
             createTableSQL.append(" \(sqliteType.sqliteType.rawValue)")
 
-            if name == primaryKeyColumnName {
+            if case .single(let primaryKeyName) = primaryKeyColumnName, name == primaryKeyName {
                 createTableSQL.append(" NOT NULL")
                 createTableSQL.append(" PRIMARY KEY")
                 if autoIncrement && sqliteType.sqliteType == .INTEGER {
@@ -55,6 +82,12 @@ extension ORMDBServiceInnerAide {
                 }
             }
         })
+
+        if case .composite(let primaryKeyNames) = primaryKeyColumnName {
+            let names = primaryKeyNames.joined(separator: ", ")
+            createTableSQL.append(", PRIMARY KEY(\(names))")
+        }
+
         createTableSQL.append(");")
 
         result = database.executeUpdate(createTableSQL, withArgumentsIn: [])
@@ -145,16 +178,21 @@ extension ORMDBServiceInnerAide {
 }
 
 extension ORMDBServiceInnerAide {
-    static func readObject<T: Codable>(database: FMDatabase,
-                                       objectType: T.Type,
-                                       tableName: String,
-                                       primaryKeyColumnName: String,
-                                       primaryKeyValue: Codable) -> T? {
+    static func readObject<T: Codable, K>(database: FMDatabase,
+                                          objectType: T.Type,
+                                          tableName: String,
+                                          primaryKeyColumnName: CompositeType<String>,
+                                          primaryKeyValue: CompositeType<K>) -> T? {
         var object: T?
 
-        let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeyColumnName) = ? LIMIT 1;"
+        let (primaryKeySQL, primaryKeyValues) =
+        primaryKeySQLAndValues(primaryKeyColumnName: primaryKeyColumnName, primaryKeyValue: primaryKeyValue)
 
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: [primaryKeyValue]) else {
+        guard let primaryKeySQL, let primaryKeyValues else { return nil }
+
+        let querySQL = "SELECT * FROM \(tableName) WHERE \(primaryKeySQL) LIMIT 1;"
+
+        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: primaryKeyValues) else {
             print("[ERROR]: SQL = \(querySQL)")
             return object
         }
@@ -240,15 +278,20 @@ extension ORMDBServiceInnerAide {
         return result
     }
 
-    static func deleteRecord(database: FMDatabase,
-                             tableName: String,
-                             primaryKeyColumnName: String,
-                             primaryKeyValue: Codable) -> Bool {
+    static func deleteRecord<K>(database: FMDatabase,
+                                tableName: String,
+                                primaryKeyColumnName: CompositeType<String>,
+                                primaryKeyValue: CompositeType<K>) -> Bool {
         var result = false
 
-        let deleteSQL = "DELETE FROM \(tableName) WHERE \(primaryKeyColumnName) = ?;"
+        let (primaryKeySQL, primaryKeyValues) =
+        primaryKeySQLAndValues(primaryKeyColumnName: primaryKeyColumnName, primaryKeyValue: primaryKeyValue)
 
-        result = database.executeUpdate(deleteSQL, withArgumentsIn: [primaryKeyValue])
+        guard let primaryKeySQL, let primaryKeyValues else { return false }
+
+        let deleteSQL = "DELETE FROM \(tableName) WHERE \(primaryKeySQL);"
+
+        result = database.executeUpdate(deleteSQL, withArgumentsIn: primaryKeyValues)
         if !result {
             print("[ERROR]: SQL = \(deleteSQL)")
         }

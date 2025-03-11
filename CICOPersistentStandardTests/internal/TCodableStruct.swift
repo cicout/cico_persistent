@@ -48,8 +48,8 @@ extension TCodableStruct {
 }
 
 extension TCodableStruct: ORMProtocol {
-    static func ormPrimaryKeyColumnName() -> String {
-        return CodingKeys.name.stringValue
+    static func ormPrimaryKeyColumnName() -> CompositeType<String> {
+        return .single(CodingKeys.name.stringValue)
     }
 
     static func cicoORMObjectTypeVersion() -> Int {

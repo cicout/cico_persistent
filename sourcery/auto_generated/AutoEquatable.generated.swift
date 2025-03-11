@@ -51,6 +51,14 @@ internal func == (lhs: TCodableStruct, rhs: TCodableStruct) -> Bool {
     guard compareOptionals(lhs: lhs.dicValue, rhs: rhs.dicValue, compare: ==) else { return false }
     return true
 }
+// MARK: - TCompositeStruct AutoEquatable
+extension TCompositeStruct: Equatable {}
+internal func == (lhs: TCompositeStruct, rhs: TCompositeStruct) -> Bool {
+    guard lhs.stringID == rhs.stringID else { return false }
+    guard lhs.intID == rhs.intID else { return false }
+    guard compareOptionals(lhs: lhs.name, rhs: rhs.name, compare: ==) else { return false }
+    return true
+}
 // MARK: - TStructOne AutoEquatable
 extension TStructOne: Equatable {}
 public func == (lhs: TStructOne, rhs: TStructOne) -> Bool {

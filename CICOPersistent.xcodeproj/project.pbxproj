@@ -35,6 +35,9 @@
 		9628CE052CDCB85500965DC1 /* FMDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77302744E04A00194504 /* FMDB.xcframework */; };
 		9628CE062CDCB85600965DC1 /* FMDB.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 961B77302744E04A00194504 /* FMDB.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9628CE072CDCCA1500965DC1 /* CICOPersistentCipher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628CD3B2CDC9DCA00965DC1 /* CICOPersistentCipher.framework */; };
+		966ED88A2D7FDFA7004CEA5C /* TCompositeStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966ED8892D7FDF9C004CEA5C /* TCompositeStruct.swift */; };
+		966ED88B2D7FDFA7004CEA5C /* TCompositeStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966ED8892D7FDF9C004CEA5C /* TCompositeStruct.swift */; };
+		966ED88C2D7FDFA7004CEA5C /* TCompositeStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966ED8892D7FDF9C004CEA5C /* TCompositeStruct.swift */; };
 		967C34F22CDCD09000A909E4 /* DebugAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6C823B7421000B9C95D /* DebugAide.swift */; };
 		E4107D4F243EF65D0089A296 /* DebugAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442E6C823B7421000B9C95D /* DebugAide.swift */; };
 		E418B63F21C1301B00D042F0 /* KVDBServiceAide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */; };
@@ -177,6 +180,7 @@
 		9628CD782CDCA4F000965DC1 /* SQLCipher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SQLCipher.xcframework; path = CICOPersistentCipherCarthage/Carthage/Build/SQLCipher.xcframework; sourceTree = "<group>"; };
 		9628CD8E2CDCB05C00965DC1 /* CICOPersistentStandard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CICOPersistentStandard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9628CDFE2CDCB20000965DC1 /* CICOPersistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CICOPersistent.h; sourceTree = "<group>"; };
+		966ED8892D7FDF9C004CEA5C /* TCompositeStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCompositeStruct.swift; sourceTree = "<group>"; };
 		E418B63E21C1301B00D042F0 /* KVDBServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVDBServiceAide.swift; sourceTree = "<group>"; };
 		E418B64021C1315E00D042F0 /* KVFileServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVFileServiceAide.swift; sourceTree = "<group>"; };
 		E418B64221C131D000D042F0 /* ORMDBServiceAide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORMDBServiceAide.swift; sourceTree = "<group>"; };
@@ -581,16 +585,17 @@
 		E4FD6DB2211483BF00ECAF4E /* internal */ = {
 			isa = PBXGroup;
 			children = (
-				E41F767420C9384300399E42 /* default.json */,
-				E4FD6DF5211C34DE00ECAF4E /* my.json */,
-				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
 				E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */,
 				E442E6C823B7421000B9C95D /* DebugAide.swift */,
+				E41F767420C9384300399E42 /* default.json */,
+				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
 				E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */,
+				E4FD6DF5211C34DE00ECAF4E /* my.json */,
 				E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */,
 				E45C2FC1242B027600D2F49D /* TAutoIncrement.swift */,
 				E41F767520C9384300399E42 /* TCodableClass.swift */,
 				E41F767320C9384300399E42 /* TCodableStruct.swift */,
+				966ED8892D7FDF9C004CEA5C /* TCompositeStruct.swift */,
 				E47E294B24C14F2800F0B7D7 /* TDoubleStruct.swift */,
 				E47E294924C14E5800F0B7D7 /* TIntStruct.swift */,
 				E4E6380823600636009DE3A5 /* TMemoryBytes.swift */,
@@ -761,7 +766,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = cico;
 				TargetAttributes = {
 					9628CD3A2CDC9DCA00965DC1 = {
@@ -919,6 +924,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9628CD822CDCAC8000965DC1 /* AutoEquatable.generated.swift in Sources */,
+				966ED88B2D7FDFA7004CEA5C /* TCompositeStruct.swift in Sources */,
 				9628CD832CDCACE100965DC1 /* TMemoryBytes.swift in Sources */,
 				967C34F22CDCD09000A909E4 /* DebugAide.swift in Sources */,
 				9628CD862CDCAED000965DC1 /* MyClass.swift in Sources */,
@@ -983,6 +989,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E41F767620C9384300399E42 /* TCodableStruct.swift in Sources */,
+				966ED88C2D7FDFA7004CEA5C /* TCompositeStruct.swift in Sources */,
 				E4E6380A2360063F009DE3A5 /* TMemoryBytes.swift in Sources */,
 				E41F765F20C9302300399E42 /* ViewController.swift in Sources */,
 				E41F767820C9384300399E42 /* TCodableClass.swift in Sources */,
@@ -998,6 +1005,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */,
+				966ED88A2D7FDFA7004CEA5C /* TCompositeStruct.swift in Sources */,
 				E47E294C24C14F2800F0B7D7 /* TDoubleStruct.swift in Sources */,
 				E45C2FC2242B027600D2F49D /* TAutoIncrement.swift in Sources */,
 				E4710E682136C278003F6798 /* FileURLTests.swift in Sources */,

@@ -52,8 +52,8 @@ extension TCodableClass {
 }
 
 extension TCodableClass: ORMProtocol {
-    static func ormPrimaryKeyColumnName() -> String {
-        return CodingKeys.name.stringValue
+    static func ormPrimaryKeyColumnName() -> CompositeType<String> {
+        return .single(CodingKeys.name.stringValue)
     }
 
 //    static func cicoORMIndexColumnNameArray() -> [String]? {

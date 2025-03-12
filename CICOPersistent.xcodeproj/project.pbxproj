@@ -22,7 +22,7 @@
 		9628CD832CDCACE100965DC1 /* TMemoryBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E6380823600636009DE3A5 /* TMemoryBytes.swift */; };
 		9628CD842CDCACE900965DC1 /* TCodableStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767320C9384300399E42 /* TCodableStruct.swift */; };
 		9628CD852CDCAEBF00965DC1 /* AutoEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */; };
-		9628CD862CDCAED000965DC1 /* MyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */; };
+		9628CD862CDCAED000965DC1 /* MyStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyStruct.swift */; };
 		9628CD872CDCAFB800965DC1 /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = E41F767420C9384300399E42 /* default.json */; };
 		9628CD882CDCAFB800965DC1 /* my.json in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6DF5211C34DE00ECAF4E /* my.json */; };
 		9628CD942CDCB05D00965DC1 /* CICOPersistentStandard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628CD8E2CDCB05C00965DC1 /* CICOPersistentStandard.framework */; };
@@ -56,7 +56,7 @@
 		E41F767820C9384300399E42 /* TCodableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41F767520C9384300399E42 /* TCodableClass.swift */; };
 		E420CDB320F84EF900D1BA63 /* TypeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420CDB220F84EF900D1BA63 /* TypeProperty.swift */; };
 		E4231065211C39070057DCD4 /* my.json in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6DF5211C34DE00ECAF4E /* my.json */; };
-		E4231066211C39090057DCD4 /* MyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */; };
+		E4231066211C39090057DCD4 /* MyStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyStruct.swift */; };
 		E42B665C21002DDD006EBAC2 /* SQLiteRecordEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B665B21002DDD006EBAC2 /* SQLiteRecordEncoder.swift */; };
 		E42B66A42102CECE006EBAC2 /* ORMProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66A32102CECE006EBAC2 /* ORMProtocol.swift */; };
 		E42B66AF2102E320006EBAC2 /* URLKVFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B66AE2102E320006EBAC2 /* URLKVFileService.swift */; };
@@ -105,7 +105,7 @@
 		E4FD6DC52115566C00ECAF4E /* AutoEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */; };
 		E4FD6DC72115569000ECAF4E /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DC62115569000ECAF4E /* AutoEquatable.generated.swift */; };
 		E4FD6DF7211C34DE00ECAF4E /* my.json in Resources */ = {isa = PBXBuildFile; fileRef = E4FD6DF5211C34DE00ECAF4E /* my.json */; };
-		E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */; };
+		E4FD6DF8211C34DE00ECAF4E /* MyStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD6DF6211C34DE00ECAF4E /* MyStruct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,7 +248,7 @@
 		E4FD6DC3211555F900ECAF4E /* AutoEquatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.swift; sourceTree = "<group>"; };
 		E4FD6DC62115569000ECAF4E /* AutoEquatable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.generated.swift; sourceTree = "<group>"; };
 		E4FD6DF5211C34DE00ECAF4E /* my.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = my.json; sourceTree = "<group>"; };
-		E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyClass.swift; sourceTree = "<group>"; };
+		E4FD6DF6211C34DE00ECAF4E /* MyStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -591,7 +591,7 @@
 				E4FD6C9721129DBC00ECAF4E /* Info.plist */,
 				E4FD6DB621153E8600ECAF4E /* JSONStringAide.swift */,
 				E4FD6DF5211C34DE00ECAF4E /* my.json */,
-				E4FD6DF6211C34DE00ECAF4E /* MyClass.swift */,
+				E4FD6DF6211C34DE00ECAF4E /* MyStruct.swift */,
 				E45C2FC1242B027600D2F49D /* TAutoIncrement.swift */,
 				E41F767520C9384300399E42 /* TCodableClass.swift */,
 				E41F767320C9384300399E42 /* TCodableStruct.swift */,
@@ -927,7 +927,7 @@
 				966ED88B2D7FDFA7004CEA5C /* TCompositeStruct.swift in Sources */,
 				9628CD832CDCACE100965DC1 /* TMemoryBytes.swift in Sources */,
 				967C34F22CDCD09000A909E4 /* DebugAide.swift in Sources */,
-				9628CD862CDCAED000965DC1 /* MyClass.swift in Sources */,
+				9628CD862CDCAED000965DC1 /* MyStruct.swift in Sources */,
 				9628CD852CDCAEBF00965DC1 /* AutoEquatable.swift in Sources */,
 				9628CD802CDCABA900965DC1 /* JSONStringAide.swift in Sources */,
 				9628CD842CDCACE900965DC1 /* TCodableStruct.swift in Sources */,
@@ -996,7 +996,7 @@
 				E4FD6DC52115566C00ECAF4E /* AutoEquatable.swift in Sources */,
 				E4FD6DB821153E9000ECAF4E /* JSONStringAide.swift in Sources */,
 				E41F765D20C9302300399E42 /* AppDelegate.swift in Sources */,
-				E4231066211C39090057DCD4 /* MyClass.swift in Sources */,
+				E4231066211C39090057DCD4 /* MyStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1011,7 +1011,7 @@
 				E4710E682136C278003F6798 /* FileURLTests.swift in Sources */,
 				E4FD6DC0211550E400ECAF4E /* KVDBServiceTests.swift in Sources */,
 				E4107D4F243EF65D0089A296 /* DebugAide.swift in Sources */,
-				E4FD6DF8211C34DE00ECAF4E /* MyClass.swift in Sources */,
+				E4FD6DF8211C34DE00ECAF4E /* MyStruct.swift in Sources */,
 				E4FD6DB521153E4B00ECAF4E /* TCodableStruct.swift in Sources */,
 				E4FD6DC22115533000ECAF4E /* ORMDBServiceTests.swift in Sources */,
 				E4E6380923600636009DE3A5 /* TMemoryBytes.swift in Sources */,

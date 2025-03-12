@@ -1,13 +1,13 @@
 # CICOPersistent
 ![Swift5 compatible][Swift5Badge] [![CocoaPods][PodBadge]][PodLink] [![Carthage compatible][CartagheBadge]][CarthageLink] [![License MIT][MITBadge]][MITLink]
 
-CICOPersistent is a simple local storage service using codable, a new feature in Swift 4. It contains key-value file, key-value database, orm database, and key-value key chain. You can easily choose what you want. You can also use CICOAutoCodable, a simple extension for codable.
+CICOPersistent is a simple local storage service using codable. It contains orm database, key-value file, key-value database and key-value key chain. You can easily choose what you want. You can also use CICOAutoCodable, a simple extension for codable.
 
 ## Installation
 
 ### CocoaPod
 
-You can simply add CICOPersistent to your `Podfile`:  
+You can simply add CICOPersistent to your `Podfile`:
 
 ```
 pod "CICOPersistent"
@@ -29,13 +29,9 @@ github "cicout/cico_persistent"
 
 Just add `CICOPersistent.framework`, `CICOAutoCodable.framework` and `FMDB.framework` to your project.
 
-## About CICOAutoCodable
+## Sample code
 
-* [CICOAutoCodable](https://github.com/cicout/cico_auto_codable)
-
-## Sample Code
-
-### Model And JSON Definition
+### Model and Json
 
 ```swift
 enum MyEnum: String, Codable {
@@ -43,248 +39,61 @@ enum MyEnum: String, Codable {
     case two
 }
 
-class MyClass: Codable {
+struct MyStruct: Codable {
     var stringValue: String = "default_string"
-    private(set) var dateValue: Date?
-    private(set) var intValue: Int = 0
-    private(set) var doubleValue: Double = 1.0
-    private(set) var boolValue: Bool = false
-    private(set) var enumValue: MyEnum = .one
-    private(set) var urlValue: URL?
-    private(set) var nextValue: MyClass?
-    private(set) var arrayValue: [String]?
-    private(set) var dicValue: [String: String]?
+    var dateValue: Date?
+    var intValue: Int = 0
+    var doubleValue: Double = 1.0
+    var boolValue: Bool = false
+    var enumValue: MyEnum = .one
+    var urlValue: URL?
+    var arrayValue: [String]?
+    var dicValue: [String: String]?
 }
 
-extension MyClass: ORMProtocol {
-    static func cicoORMPrimaryKeyColumnName() -> String {
-        return "stringValue"
+extension MyStruct: ORMProtocol {
+    static func ormPrimaryKeyColumnName() -> CompositeType<String> {
+        return .single("stringValue")
     }
 }
 ```
 
-```json
-{
-    "stringValue": "string",
-    "dateValue": 1234567890123,
-    "intValue": 123,
-    "doubleValue": 2.5,
-    "boolValue": true,
-    "enumValue": "two",
-    "urlValue": "https://www.google.com",
-    "nextValue": {
-        "stringValue": "string",
-        "intValue": 123,
-        "doubleValue": 2.5,
-        "boolValue": true,
-        "enumValue": "two"
-    },
-    "arrayValue": [
-              "string0",
-              "string1",
-              ],
-    "dicValue": {
-        "key0": "value0",
-        "key1": "value1"
-    }
-}
-```
+* [default.json](https://github.com/cicout/cico_persistent/blob/master/CICOPersistentStandardTests/internal/default.json)
 
-### Key-Value File Service
+### ORMDBService
 
 * Initialization
-
-```swift
-let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/kv_file")!
-self.service = KVFileService.init(rootDirURL: url)
-// You can also use (Public/Private/Cache/Temp)KVFileService.shared instead.
-```
-
-* Read
-
-```swift
-let key = "test_my_class"
-let readValue = self.service.readObject(MyClass.self, forKey: key)
-```
-
-* Write
-
-```swift
-let key = "test_my_class"
-let value = MyClass.init(jsonString: myJSONString)!
-let writeResult = self.service.writeObject(value, forKey: key)
-```
-
-* Remove
-
-```swift
-let key = "test_my_class"
-let removeResult = self.service.removeObject(forKey: key)
-```
-
-* Update  
-
-It is a read-update-write sequence function during one lock.
-
-```swift
-let key = "test_my_class"
-self.service
-    .updateObject(MyClass.self,
-                  forKey: key,
-                  updateClosure: { (readObject) -> MyClass? in
-                    readObject?.stringValue = "updated_string"
-                    return readObject
-    }) { (result) in
-        print("result = \(result)")
-}
-```
-
-* ClearAll
-
-```swift
-let clearResult = self.service.clearAll()
-```
-
-### URL Key-Value File Service
-
-* Initialization
-
-```swift
-self.service = URLKVFileService.init()
-
-let dirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file")!
-let _ = CICOFileManagerAide.createDir(with: dirURL, option: false)
-```
-
-* Read
-
-```swift
-let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_class")!
-let readValue = self.service.readObject(MyClass.self, fromFileURL: url)
-```
-
-* Write
-
-```swift
-let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_class")!
-let value = MyClass.init(jsonString: myJSONString)!
-let writeResult = self.service.writeObject(value, toFileURL: url)
-```
-
-* Remove
-
-```swift
-let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_class")!
-let removeResult = self.service.removeObject(forFileURL: url)
-```
-
-* Update  
-
-It is a read-update-write sequence function during one lock.
-
-```swift
-let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_class")!
-self.service
-    .updateObject(MyClass.self,
-                  fromFileURL: url,
-                  updateClosure: { (readObject) -> MyClass? in
-                    readObject?.stringValue = "updated_string"
-                    return readObject
-    }) { (result) in
-        print("result = \(result)")
-}
-```
-
-### Key-Value DB Service
-
-* Initialization
-
-```swift
-let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/kv.db")!
-self.service = KVDBService.init(fileURL: url)
-// You can also use (Public/Private/Cache/Temp)KVDBService.shared instead.
-```
-
-* Read
-
-```swift
-let key = "test_my_class"
-let readValue = self.service.readObject(MyClass.self, forKey: key)
-```
-
-* Write
-
-```swift
-let key = "test_my_class"
-let value = MyClass.init(jsonString: myJSONString)!
-let writeResult = self.service.writeObject(value, forKey: key)
-```
-
-* Remove
-
-```swift
-let key = "test_my_class"
-let removeResult = self.service.removeObject(forKey: key)
-```
-
-* Update  
-
-It is a read-update-write sequence function during one 
-lock.
-
-```swift
-let key = "test_my_class"
-self.service
-    .updateObject(MyClass.self,
-                  forKey: key,
-                  updateClosure: { (readObject) -> MyClass? in
-                    readObject?.stringValue = "updated_string"
-                    return readObject
-    }) { (result) in
-        print("result = \(result)")
-}
-```
-
-* ClearAll
-
-```swift
-let clearResult = self.service.clearAll()
-```
-
-### ORM DB Service
 
 ```swift
 let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/orm.db")!
 self.service = ORMDBService.init(fileURL: url)
-// You can also use (Public/Private/Cache/Temp)ORMDBService.shared instead.
 ```
 
 * Read
 
 ```swift
-let key = "string"
-let readObject = self.service.readObject(ofType: MyClass.self, primaryKeyValue: key)
+let readObject = self.service.readObject(ofType: MyStruct.self, primaryKeyValue: .single("default_string"))
 ```
 
-* Read Array
+* Read array
 
 ```
-let readObjectArray = self.service.readObjectArray(ofType: MyClass.self, whereString: nil, orderByName: "stringValue", descending: false, limit: 10)
+let readObjectArray = self.service.readObjectArray(ofType: MyStruct.self, whereString: nil, orderByName: "stringValue", descending: false, limit: 10)
 ```
 
 * Write
 
 ```swift
-let value = MyClass.init(jsonString: myJSONString)!
+let value = MyStruct.init(jsonString: myJSONString)!
 let writeResult = self.service.writeObject(value)
 ```
 
-* Write Array
+* Write array
 
 ```
-var objectArray = [MyClass]()
+var objectArray = [MyStruct]()
 for i in 0..<20 {
-    let object = MyClass.init(jsonString: myJSONString)!
+    let object = MyStruct.init(jsonString: myJSONString)!
     object.stringValue = "string_\(i)"
     objectArray.append(object)
 }
@@ -294,14 +103,13 @@ let writeResult = self.service.writeObjectArray(objectArray)
 * Remove
 
 ```swift
-let key = "string"
-let removeResult = self.service.removeObject(ofType: MyClass.self, primaryKeyValue: key)
+let removeResult = self.service.removeObject(ofType: MyStruct.self, primaryKeyValue: .single("default_string"))
 ```
 
-* Remove Object Table
+* Remove object table
 
 ```
-let removeResult = self.service.removeObjectTable(ofType: MyClass.self)
+let removeResult = self.service.removeObjectTable(ofType: MyStruct.self)
 ```
 
 * Update  
@@ -309,12 +117,64 @@ let removeResult = self.service.removeObjectTable(ofType: MyClass.self)
 It is a read-update-write sequence function during one lock.
 
 ```swift
-let key = "string"
 self.service
-    .updateObject(ofType: MyClass.self,
-                  primaryKeyValue: key,
+    .updateObject(ofType: MyStruct.self,
+                  primaryKeyValue: .single("default_string"),
                   customTableName: nil,
-                  updateClosure: { (readObject) -> MyClass? in
+                  updateClosure: { (readObject) -> MyStruct? in
+                  	var newObject = readObject
+                    newObject?.stringValue = "updated_string"
+                    return newObject
+    }) { (result) in
+        print("result = \(result)")
+}
+```
+
+* ClearAll
+
+```swift
+let clearResult = self.service.clearAll()
+```
+
+### KVFileService
+
+* Initialization
+
+```swift
+let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/kv_file")!
+self.service = KVFileService.init(rootDirURL: url)
+```
+
+* Read
+
+```swift
+let key = "test_my_struct"
+let readValue = self.service.readObject(MyStruct.self, forKey: key)
+```
+
+* Write
+
+```swift
+let key = "test_my_struct"
+let value = MyStruct.init(jsonString: myJSONString)!
+let writeResult = self.service.writeObject(value, forKey: key)
+```
+
+* Remove
+
+```swift
+let key = "test_my_struct"
+let removeResult = self.service.removeObject(forKey: key)
+```
+
+* Update  
+
+```swift
+let key = "test_my_struct"
+self.service
+    .updateObject(MyStruct.self,
+                  forKey: key,
+                  updateClosure: { (readObject) -> MyStruct? in
                     readObject?.stringValue = "updated_string"
                     return readObject
     }) { (result) in
@@ -328,7 +188,108 @@ self.service
 let clearResult = self.service.clearAll()
 ```
 
-### Key-Value KeyChain Service
+### URLKVFileService
+
+* Initialization
+
+```swift
+self.service = URLKVFileService.init()
+let dirURL = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file")!
+let _ = CICOFileManagerAide.createDir(with: dirURL, option: false)
+```
+
+* Read
+
+```swift
+let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_struct")!
+let readValue = self.service.readObject(MyStruct.self, fromFileURL: url)
+```
+
+* Write
+
+```swift
+let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_struct")!
+let value = MyStruct.init(jsonString: myJSONString)!
+let writeResult = self.service.writeObject(value, toFileURL: url)
+```
+
+* Remove
+
+```swift
+let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_struct")!
+let removeResult = self.service.removeObject(forFileURL: url)
+```
+
+* Update
+
+```swift
+let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/url_kv_file/test_my_struct")!
+self.service
+    .updateObject(MyStruct.self,
+                  fromFileURL: url,
+                  updateClosure: { (readObject) -> MyStruct? in
+                  	var newObject = readObject
+                    newObject?.stringValue = "updated_string"
+                    return newObject
+    }) { (result) in
+        print("result = \(result)")
+}
+```
+
+### KVDBService
+
+* Initialization
+
+```swift
+let url = CICOPathAide.defaultPrivateFileURL(withSubPath: "cico_persistent_tests/kv.db")!
+self.service = KVDBService.init(fileURL: url)
+```
+
+* Read
+
+```swift
+let key = "test_my_struct"
+let readValue = self.service.readObject(MyStruct.self, forKey: key)
+```
+
+* Write
+
+```swift
+let key = "test_my_struct"
+let value = MyStruct.init(jsonString: myJSONString)!
+let writeResult = self.service.writeObject(value, forKey: key)
+```
+
+* Remove
+
+```swift
+let key = "test_my_struct"
+let removeResult = self.service.removeObject(forKey: key)
+```
+
+* Update  
+
+```swift
+let key = "test_my_struct"
+self.service
+    .updateObject(MyStruct.self,
+                  forKey: key,
+                  updateClosure: { (readObject) -> MyStruct? in
+                  	var newObject = readObject
+                    newObject?.stringValue = "updated_string"
+                    return newObject
+    }) { (result) in
+        print("result = \(result)")
+}
+```
+
+* ClearAll
+
+```swift
+let clearResult = self.service.clearAll()
+```
+
+### KVKeyChainService
 
 * Initialization
 
@@ -340,38 +301,37 @@ self.service = KVKeyChainService.init(encryptionKey: "test_encryption_key")
 * Read
 
 ```swift
-let key = "test_my_class"
-let readValue = KVKeyChainService.defaultService.readObject(MyClass.self, forKey: key)
+let key = "test_my_struct"
+let readValue = KVKeyChainService.defaultService.readObject(MyStruct.self, forKey: key)
 ```
 
 * Write
 
 ```swift
-let key = "test_my_class"
-let value = MyClass.init(jsonString: myJSONString)!
+let key = "test_my_struct"
+let value = MyStruct.init(jsonString: myJSONString)!
 let result = KVKeyChainService.defaultService.writeObject(value, forKey: key)
 ```
 
 * Remove
 
 ```swift
-let key = "test_my_class"
+let key = "test_my_struct"
 let removeResult = KVKeyChainService.defaultService.removeObject(forKey: key)
 ```
 
 * Update  
 
-It is a read-update-write sequence function during one lock.
-
 ```swift
-let key = "test_my_class"
+let key = "test_my_struct"
 KVKeyChainService
     .defaultService
-    .updateObject(MyClass.self,
+    .updateObject(MyStruct.self,
                   forKey: key,
-                  updateClosure: { (readObject) -> MyClass? in
-                    readObject?.stringValue = "updated_string"
-                    return readObject
+                  updateClosure: { (readObject) -> MyStruct? in
+                  	var newObject = readObject
+                    newObject?.stringValue = "updated_string"
+                    return newObject
     }) { (result) in
         print("result = \(result)")
 }
@@ -400,6 +360,10 @@ All cache files should be placed here.
 Use this directory to write temporary files that do not need to persist between launches of your app. Your app should remove files from this directory when they are no longer needed.
 
 Four shared services "**Public/Private/Cache/Temp**" have been created, you can use them directly.
+
+## About CICOAutoCodable
+
+* [CICOAutoCodable](https://github.com/cicout/cico_auto_codable)
 
 ## Requirements
 

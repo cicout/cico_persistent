@@ -3,9 +3,7 @@
 // swiftlint:disable file_length
 
 
-/** Found 6 CICOAutoCodable Types
- * MyClass
- * MyEnum
+/** Found 4 CICOAutoCodable Types
  * ORMTableInfoModel
  * TAutoIncrement
  * TCodableClass
@@ -55,8 +53,8 @@
  * KeyChainService
  * MemoryBytesAide
  * MemoryBytesWrapper
- * MyClass
  * MyEnum
+ * MyStruct
  * ORMDBService
  * ORMDBServiceAide
  * ORMDBServiceInnerAide

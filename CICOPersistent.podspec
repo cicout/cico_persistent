@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "CICOPersistent"
-  spec.version      = "0.38.59"
+  spec.version      = "0.39.60"
   spec.summary      = "A simple local storage service using codable."
 
   # This description is used to generate tags and improve search results.
@@ -25,7 +25,7 @@ Pod::Spec.new do |spec|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
-  CICOPersistent is a simple local storage service using codable, a new feature in Swift 4. It contains key-value file, key-value database, orm database, and key-value key chain. You can easily choose what you want. You can also use CICOAutoCodable, a simple extension for codable.
+  CICOPersistent is a simple local storage service using codable. It contains orm database, key-value file, key-value database and key-value key chain.
                    DESC
 
   spec.homepage     = "https://github.com/cicout/cico_persistent"

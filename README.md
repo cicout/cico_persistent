@@ -31,7 +31,7 @@ Just add `CICOPersistent.framework`, `CICOAutoCodable.framework` and `FMDB.frame
 
 ## Sample code
 
-### Model and Json
+### Model
 
 ```swift
 enum MyEnum: String, Codable {
@@ -58,7 +58,34 @@ extension MyStruct: ORMProtocol {
 }
 ```
 
-* [default.json](https://github.com/cicout/cico_persistent/blob/master/CICOPersistentStandardTests/internal/default.json)
+### Json
+
+```json
+{
+    "stringValue": "string",
+    "dateValue": 1234567890123,
+    "intValue": 123,
+    "doubleValue": 2.5,
+    "boolValue": true,
+    "enumValue": "two",
+    "urlValue": "https://www.google.com",
+    "nextValue": {
+        "stringValue": "string",
+        "intValue": 123,
+        "doubleValue": 2.5,
+        "boolValue": true,
+        "enumValue": "two"
+    },
+    "arrayValue": [
+              "string0",
+              "string1",
+              ],
+    "dicValue": {
+        "key0": "value0",
+        "key1": "value1"
+    }
+}
+```
 
 ### ORMDBService
 
@@ -337,11 +364,11 @@ KVKeyChainService
 }
 ```
 
-### Persistent Service
+### PersistentService
 
 It is all local storage API collection. It contains user defaults, key-value file, key-value database, orm database, and key-value key chain.
 
-## About Sandbox
+## About sandbox
 
 * [iOS File System Programming Guide](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)  
   

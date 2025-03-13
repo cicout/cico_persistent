@@ -69,13 +69,6 @@ extension MyStruct: ORMProtocol {
     "boolValue": true,
     "enumValue": "two",
     "urlValue": "https://www.google.com",
-    "nextValue": {
-        "stringValue": "string",
-        "intValue": 123,
-        "doubleValue": 2.5,
-        "boolValue": true,
-        "enumValue": "two"
-    },
     "arrayValue": [
               "string0",
               "string1",

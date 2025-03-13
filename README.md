@@ -142,7 +142,7 @@ self.service
                   primaryKeyValue: .single("default_string"),
                   customTableName: nil,
                   updateClosure: { (readObject) -> MyStruct? in
-                  	var newObject = readObject
+                    var newObject = readObject
                     newObject?.stringValue = "updated_string"
                     return newObject
     }) { (result) in
@@ -195,8 +195,9 @@ self.service
     .updateObject(MyStruct.self,
                   forKey: key,
                   updateClosure: { (readObject) -> MyStruct? in
-                    readObject?.stringValue = "updated_string"
-                    return readObject
+                    var newObject = readObject
+                    newObject?.stringValue = "updated_string"
+                    return newObject
     }) { (result) in
         print("result = \(result)")
 }
@@ -248,7 +249,7 @@ self.service
     .updateObject(MyStruct.self,
                   fromFileURL: url,
                   updateClosure: { (readObject) -> MyStruct? in
-                  	var newObject = readObject
+                    var newObject = readObject
                     newObject?.stringValue = "updated_string"
                     return newObject
     }) { (result) in
@@ -295,7 +296,7 @@ self.service
     .updateObject(MyStruct.self,
                   forKey: key,
                   updateClosure: { (readObject) -> MyStruct? in
-                  	var newObject = readObject
+                    var newObject = readObject
                     newObject?.stringValue = "updated_string"
                     return newObject
     }) { (result) in
@@ -349,7 +350,7 @@ KVKeyChainService
     .updateObject(MyStruct.self,
                   forKey: key,
                   updateClosure: { (readObject) -> MyStruct? in
-                  	var newObject = readObject
+                    var newObject = readObject
                     newObject?.stringValue = "updated_string"
                     return newObject
     }) { (result) in

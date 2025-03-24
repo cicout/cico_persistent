@@ -63,7 +63,7 @@ class ORMDBServiceTests: XCTestCase {
         DebugAide.showDuration(closure: {
             let removeResult = self.service.removeObject(ofType: TCodableClass.self,
                                                          primaryKeyValue: .single(object!.name))
-            XCTAssert(removeResult, "[FAILED]: write failed")
+            XCTAssert(removeResult, "[FAILED]: remove failed")
         }, customKey: "removeObject")
     }
 
@@ -119,6 +119,12 @@ class ORMDBServiceTests: XCTestCase {
             XCTAssertNotNil(object1.name, "[FAILED]: read failed")
             XCTAssert(object0.name! > object1.name!, "[FAILED]: read failed")
         }, customKey: "readObjectArray")
+
+        DebugAide.showDuration(closure: {
+            let removeResult = self.service.removeObjects(ofType: TCodableClass.self,
+                                                          whereString: "name LIKE 'name_%'")
+            XCTAssert(removeResult, "[FAILED]: remove failed")
+        }, customKey: "removeObjects")
     }
 
     func test_Class_updateObject() {
@@ -335,5 +341,11 @@ extension ORMDBServiceTests {
             XCTAssertNotNil(object1.name, "[FAILED]: read failed")
             XCTAssert(object0.name! > object1.name!, "[FAILED]: read failed")
         }, customKey: "readObjects")
+
+        DebugAide.showDuration(closure: {
+            let removeResult = self.service.removeObjects(ofType: TCompositeStruct.self,
+                                                          whereString: "name LIKE 'name_%'")
+            XCTAssert(removeResult, "[FAILED]: remove failed")
+        }, customKey: "removeObjects")
     }
 }

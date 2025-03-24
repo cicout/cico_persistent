@@ -50,6 +50,43 @@ extension ORMDBService {
         return result
     }
 
+    /// Remove object from database using primary key;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol;
+    /// - parameter whereString: Where string for SQL;
+    /// - parameter customTableName: One class or struct can be saved in different tables,
+    ///             you can define your custom table name here;
+    ///             It will use default table name according to the class or struct name when passing nil;
+    ///
+    /// - returns: Remove result;
+    public func removeObjects<T: ORMCodableProtocol>(ofType objectType: T.Type,
+                                                     whereString: String,
+                                                     customTableName: String? = nil) -> Bool {
+        let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
+        let objectTypeName = "\(objectType)"
+
+        var result = false
+
+        self.dbQueue?.inTransaction({ (database, rollback) in
+            guard ORMTableInfoAide.isTableExist(database: database,
+                                                objectTypeName: objectTypeName,
+                                                tableName: tableName) else {
+                result = true
+                return
+            }
+
+            result = ORMDBServiceInnerAide.deleteRecord(database: database,
+                                                        tableName: tableName,
+                                                        whereString: whereString)
+            if !result {
+                rollback.pointee = true
+                return
+            }
+        })
+
+        return result
+    }
+
     /// Remove the whole table from database by table name;
     ///
     /// - parameter objectType: Type of the object, it must conform to codable protocol;

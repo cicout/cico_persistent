@@ -317,4 +317,17 @@ extension ORMDBServiceInnerAide {
 
         return result
     }
+
+    static func deleteRecord(database: FMDatabase, tableName: String, whereString: String) -> Bool {
+        var result = false
+
+        let deleteSQL = "DELETE FROM \(tableName) WHERE \(whereString);"
+
+        result = database.executeUpdate(deleteSQL, withArgumentsIn: [])
+        if !result {
+            print("[ERROR]: SQL = \(deleteSQL)")
+        }
+
+        return result
+    }
 }

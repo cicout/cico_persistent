@@ -48,7 +48,7 @@ class ORMDBServiceInnerAide {
         if case .single(let primaryKeyName) = primaryKeyColumnName {
             primaryKeySQL = "\(primaryKeyName) = ?"
         } else if case .composite(let primaryKeyNames) = primaryKeyColumnName, primaryKeyNames.count > 0 {
-            primaryKeySQL = primaryKeyNames.map { "\($0) = ?" }.joined(separator: "AND ")
+            primaryKeySQL = primaryKeyNames.map { "\($0) = ?" }.joined(separator: " AND ")
         } else {
             return (nil, nil)
         }

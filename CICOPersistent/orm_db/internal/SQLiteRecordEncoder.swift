@@ -9,24 +9,24 @@
 import Foundation
 
 class SQLiteRecordEncoder: Encoder {
-    private var typePropertyArray = [TypeProperty]()
+    private var typePropertys = [TypeProperty]()
 
     static func encodeObjectToSQL<T: Encodable>(object: T, tableName: String) -> (String?, [Any]?) {
         var replaceSQL = "REPLACE INTO \(tableName) ("
-        var argumentArray = [Any]()
+        var arguments = [Any]()
 
-        let typePropertyArray: [TypeProperty]
+        let typePropertys: [TypeProperty]
         let encoder = SQLiteRecordEncoder.init()
         do {
             try object.encode(to: encoder)
-            typePropertyArray = encoder.typePropertyArray
+            typePropertys = encoder.typePropertys
         } catch let error {
             assert(false, "error = \(error)")
             return (nil, nil)
         }
 
         var isFirst = true
-        typePropertyArray.forEach({ (property) in
+        typePropertys.forEach({ (property) in
             if isFirst {
                 isFirst = false
                 replaceSQL.append("\(property.name)")
@@ -34,10 +34,10 @@ class SQLiteRecordEncoder: Encoder {
                 replaceSQL.append(", \(property.name)")
             }
 
-            argumentArray.append(property.value)
+            arguments.append(property.value)
         })
         replaceSQL.append(") VALUES (")
-        for index in 0..<typePropertyArray.count {
+        for index in 0..<typePropertys.count {
             if 0 == index {
                 replaceSQL.append("?")
             } else {
@@ -46,7 +46,7 @@ class SQLiteRecordEncoder: Encoder {
         }
         replaceSQL.append(");")
 
-        return (replaceSQL, argumentArray)
+        return (replaceSQL, arguments)
     }
 
     init() {
@@ -117,7 +117,7 @@ class SQLiteRecordEncoder: Encoder {
             if let data = KVJSONAide.transferObjectToJSONData(value) {
                 let property =
                     TypeProperty.init(name: key.stringValue, swiftType: T.self, sqliteType: .BLOB, value: data)
-                self.encoder.typePropertyArray.append(property)
+                self.encoder.typePropertys.append(property)
             } else {
                 assert(false, "encode key = \(key.stringValue), value = \(value)")
             }
@@ -130,7 +130,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: Bool.self,
                           sqliteType: Bool.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: Int, forKey key: KEY) throws {
@@ -140,7 +140,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: Int.self,
                           sqliteType: Int.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: Int8, forKey key: KEY) throws {
@@ -150,7 +150,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: Int8.self,
                           sqliteType: Int8.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: Int16, forKey key: KEY) throws {
@@ -160,7 +160,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: Int16.self,
                           sqliteType: Int16.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: Int32, forKey key: KEY) throws {
@@ -170,7 +170,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: Int32.self,
                           sqliteType: Int32.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: Int64, forKey key: KEY) throws {
@@ -180,7 +180,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: Int64.self,
                           sqliteType: Int64.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: UInt, forKey key: KEY) throws {
@@ -190,7 +190,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: UInt.self,
                           sqliteType: UInt.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: UInt8, forKey key: KEY) throws {
@@ -200,7 +200,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: UInt8.self,
                           sqliteType: UInt8.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: UInt16, forKey key: KEY) throws {
@@ -210,7 +210,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: UInt16.self,
                           sqliteType: UInt16.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: UInt32, forKey key: KEY) throws {
@@ -220,7 +220,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: UInt32.self,
                           sqliteType: UInt32.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: UInt64, forKey key: KEY) throws {
@@ -230,7 +230,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: UInt64.self,
                           sqliteType: UInt64.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: Float, forKey key: KEY) throws {
@@ -240,7 +240,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: Float.self,
                           sqliteType: Float.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: Double, forKey key: KEY) throws {
@@ -250,7 +250,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: Double.self,
                           sqliteType: Double.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: String, forKey key: KEY) throws {
@@ -260,7 +260,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: String.self,
                           sqliteType: String.sqliteType,
                           value: value)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: Date, forKey key: KEY) throws {
@@ -271,7 +271,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: Date.self,
                           sqliteType: Date.sqliteType,
                           value: time)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
 
         func encode(_ value: URL, forKey key: KEY) throws {
@@ -282,7 +282,7 @@ class SQLiteRecordEncoder: Encoder {
                           swiftType: URL.self,
                           sqliteType: URL.sqliteType,
                           value: urlString)
-            self.encoder.typePropertyArray.append(property)
+            self.encoder.typePropertys.append(property)
         }
     }
 }

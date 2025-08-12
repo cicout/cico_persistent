@@ -74,15 +74,15 @@ class SQLCipherTests: XCTestCase {
         let jsonString = JSONStringAide.jsonString(name: "default")
 
         // write array
-        var objectArray = [TCodableClass]()
+        var objects = [TCodableClass]()
         for index in 0..<10 {
             let object = TCodableClass.init(jsonString: jsonString)
             XCTAssertNotNil(object, "Invalid object.")
 
             object!.name = "name_\(index)"
-            objectArray.append(object!)
+            objects.append(object!)
         }
-        _ = ormDBService1?.writeObjectArray(objectArray)
+        _ = ormDBService1?.writeObjects(objects)
 
         ormDBService1 = nil
 
@@ -96,12 +96,12 @@ class SQLCipherTests: XCTestCase {
         let ormDBService2 = ORMDBService.init(fileURL: url2, password: originalPassword2)
 
         // read array
-        let array2 = ormDBService2.readObjectArray(ofType: TCodableClass.self,
-                                                   whereString: nil,
-                                                   orderByName: "name",
-                                                   descending: false,
-                                                   limit: 10)
-        XCTAssert(array2!.count == 10, "Invalid exported database.")
+        let array2 = ormDBService2.readObjects(ofType: TCodableClass.self,
+                                               whereString: nil,
+                                               orderByName: "name",
+                                               descending: false,
+                                               limit: 10)
+        XCTAssert(array2.count == 10, "Invalid exported database.")
 
         // export password to no password
         result = SQLCipherAide.exportDatabase(fromDBPath: url2.path,
@@ -113,12 +113,12 @@ class SQLCipherTests: XCTestCase {
         let ormDBService3 = ORMDBService.init(fileURL: url3, password: nil)
 
         // read array
-        let array3 = ormDBService3.readObjectArray(ofType: TCodableClass.self,
-                                                   whereString: nil,
-                                                   orderByName: "name",
-                                                   descending: false,
-                                                   limit: 10)
-        XCTAssert(array3!.count == 10, "Invalid exported database.")
+        let array3 = ormDBService3.readObjects(ofType: TCodableClass.self,
+                                               whereString: nil,
+                                               orderByName: "name",
+                                               descending: false,
+                                               limit: 10)
+        XCTAssert(array3.count == 10, "Invalid exported database.")
 
         // export password to password
         result = SQLCipherAide.exportDatabase(fromDBPath: url2.path,
@@ -130,12 +130,12 @@ class SQLCipherTests: XCTestCase {
         let ormDBService4 = ORMDBService.init(fileURL: url4, password: originalPassword4)
 
         // read array
-        let array4 = ormDBService4.readObjectArray(ofType: TCodableClass.self,
-                                                   whereString: nil,
-                                                   orderByName: "name",
-                                                   descending: false,
-                                                   limit: 10)
-        XCTAssert(array4!.count == 10, "Invalid exported database.")
+        let array4 = ormDBService4.readObjects(ofType: TCodableClass.self,
+                                               whereString: nil,
+                                               orderByName: "name",
+                                               descending: false,
+                                               limit: 10)
+        XCTAssert(array4.count == 10, "Invalid exported database.")
 
         // encrypt db
         result = SQLCipherAide.exportDatabase(fromDBPath: url1.path,
@@ -150,12 +150,12 @@ class SQLCipherTests: XCTestCase {
         let ormDBService5 = ORMDBService.init(fileURL: url5, password: originalPassword5)
 
         // read array
-        let array5 = ormDBService5.readObjectArray(ofType: TCodableClass.self,
-                                                   whereString: nil,
-                                                   orderByName: "name",
-                                                   descending: false,
-                                                   limit: 10)
-        XCTAssert(array5!.count == 10, "Invalid exported database.")
+        let array5 = ormDBService5.readObjects(ofType: TCodableClass.self,
+                                               whereString: nil,
+                                               orderByName: "name",
+                                               descending: false,
+                                               limit: 10)
+        XCTAssert(array5.count == 10, "Invalid exported database.")
 
         // decrypt db
         result = SQLCipherAide.exportDatabase(fromDBPath: url1.path,
@@ -170,12 +170,12 @@ class SQLCipherTests: XCTestCase {
         let ormDBService6 = ORMDBService.init(fileURL: url6, password: nil)
 
         // read array
-        let array6 = ormDBService6.readObjectArray(ofType: TCodableClass.self,
-                                                   whereString: nil,
-                                                   orderByName: "name",
-                                                   descending: false,
-                                                   limit: 10)
-        XCTAssert(array6!.count == 10, "Invalid exported database.")
+        let array6 = ormDBService6.readObjects(ofType: TCodableClass.self,
+                                               whereString: nil,
+                                               orderByName: "name",
+                                               descending: false,
+                                               limit: 10)
+        XCTAssert(array6.count == 10, "Invalid exported database.")
 
         // change password
         result = SQLCipherAide.exportDatabase(fromDBPath: url1.path,
@@ -192,12 +192,12 @@ class SQLCipherTests: XCTestCase {
         let ormDBService7 = ORMDBService.init(fileURL: url7, password: originalNewPassword7)
 
         // read array
-        let array7 = ormDBService7.readObjectArray(ofType: TCodableClass.self,
-                                                   whereString: nil,
-                                                   orderByName: "name",
-                                                   descending: false,
-                                                   limit: 10)
-        XCTAssert(array7!.count == 10, "Invalid exported database.")
+        let array7 = ormDBService7.readObjects(ofType: TCodableClass.self,
+                                               whereString: nil,
+                                               orderByName: "name",
+                                               descending: false,
+                                               limit: 10)
+        XCTAssert(array7.count == 10, "Invalid exported database.")
     }
 
     func testDBSecurity() {
@@ -226,15 +226,15 @@ class SQLCipherTests: XCTestCase {
         let jsonString = JSONStringAide.jsonString(name: "default")
 
         // write array
-        var objectArray = [TCodableClass]()
+        var objects = [TCodableClass]()
         for index in 0..<10 {
             let object = TCodableClass.init(jsonString: jsonString)
             XCTAssertNotNil(object, "Invalid object.")
 
             object!.name = "name_\(index)"
-            objectArray.append(object!)
+            objects.append(object!)
         }
-        _ = ormDBService1?.writeObjectArray(objectArray)
+        _ = ormDBService1?.writeObjects(objects)
 
         ormDBService1 = nil
 
@@ -245,11 +245,11 @@ class SQLCipherTests: XCTestCase {
         var ormDBService1x: ORMDBService? = ORMDBService.init(fileURL: url1, password: nil)
 
         // read array
-        let array1 = ormDBService1x?.readObjectArray(ofType: TCodableClass.self,
-                                                     whereString: nil,
-                                                     orderByName: "name",
-                                                     descending: false,
-                                                     limit: 10)
+        let array1 = ormDBService1x?.readObjects(ofType: TCodableClass.self,
+                                                 whereString: nil,
+                                                 orderByName: "name",
+                                                 descending: false,
+                                                 limit: 10)
         XCTAssert(array1!.count == 10, "Invalid database.")
 
         ormDBService1x = nil
@@ -267,11 +267,11 @@ class SQLCipherTests: XCTestCase {
         var ormDBService2: ORMDBService? = ORMDBService.init(fileURL: url2, password: password2)
 
         // read array
-        let array2 = ormDBService2?.readObjectArray(ofType: TCodableClass.self,
-                                                    whereString: nil,
-                                                    orderByName: "name",
-                                                    descending: false,
-                                                    limit: 10)
+        let array2 = ormDBService2?.readObjects(ofType: TCodableClass.self,
+                                                whereString: nil,
+                                                orderByName: "name",
+                                                descending: false,
+                                                limit: 10)
         XCTAssert(array2!.count == 10, "Invalid database.")
 
         ormDBService2 = nil
@@ -291,11 +291,11 @@ class SQLCipherTests: XCTestCase {
         var ormDBService3: ORMDBService? = ORMDBService.init(fileURL: url3, password: password3x)
 
         // read array
-        let array3 = ormDBService3?.readObjectArray(ofType: TCodableClass.self,
-                                                    whereString: nil,
-                                                    orderByName: "name",
-                                                    descending: false,
-                                                    limit: 10)
+        let array3 = ormDBService3?.readObjects(ofType: TCodableClass.self,
+                                                whereString: nil,
+                                                orderByName: "name",
+                                                descending: false,
+                                                limit: 10)
         XCTAssert(array3!.count == 10, "Invalid database.")
 
         ormDBService3 = nil

@@ -32,13 +32,13 @@ class KVTableService {
             return true
         }
 
-        let columnArray: [ColumnModel] = [
+        let columns: [ColumnModel] = [
             ColumnModel.init(name: kJSONKeyColumnName, type: .TEXT, isPrimaryKey: true),
             ColumnModel.init(name: kJSONDataColumnName, type: .BLOB),
             ColumnModel.init(name: kUpdateTimeColumnName, type: .REAL)
         ]
 
-        return DBAide.createTableIfNotExists(database: database, tableName: self.tableName, columnArray: columnArray)
+        return DBAide.createTableIfNotExists(database: database, tableName: self.tableName, columns: columns)
     }
 
     func readObject<T: Codable>(database: FMDatabase, objectType: T.Type, userKey: String) -> T? {

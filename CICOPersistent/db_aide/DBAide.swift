@@ -30,16 +30,16 @@ class DBAide {
         return result
     }
 
-    static func createTableIfNotExists(database: FMDatabase, tableName: String, columnArray: [ColumnModel]) -> Bool {
+    static func createTableIfNotExists(database: FMDatabase, tableName: String, columns: [ColumnModel]) -> Bool {
         var result = false
 
-        guard tableName.count > 0, columnArray.count > 0 else {
+        guard tableName.count > 0, columns.count > 0 else {
             return result
         }
 
         var createTableSQL = "CREATE TABLE IF NOT EXISTS \(tableName) ("
         var isFirst = true
-        columnArray.forEach({ column in
+        columns.forEach({ column in
             if isFirst {
                 isFirst = false
                 createTableSQL.append("\(column.name)")

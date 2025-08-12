@@ -63,7 +63,7 @@ class SQLiteTypeDecoder: Decoder {
     private class CICOTypeKeyedDecodingContainer<KEY: CodingKey>: KeyedDecodingContainerProtocol {
         private let decoder: SQLiteTypeDecoder
 
-        private var factoryArray: [Any] = [Any].init()
+        private var factorys: [Any] = [Any].init()
 
         init(with decoder: SQLiteTypeDecoder) {
             self.decoder = decoder
@@ -122,7 +122,7 @@ class SQLiteTypeDecoder: Decoder {
                 TypeProperty.init(name: key.stringValue, swiftType: T.self, sqliteType: .BLOB, value: 0)
 
             let factory = Factory<T>.init()
-            self.factoryArray.append(factory)
+            self.factorys.append(factory)
             return factory.instance()
         }
 

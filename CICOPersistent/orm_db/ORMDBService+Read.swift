@@ -20,7 +20,7 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Read object, nil when no object for this primary key;
-    public func readObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type,
+    public func readObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type = T.self,
                                                      primaryKeyValue: CompositeType<K>,
                                                      customTableName: String? = nil) -> T? {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
@@ -58,16 +58,16 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Read object, nil when no object for this primary key;
-    public func readObjectArray<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                       whereString: String? = nil,
-                                                       orderByName: String? = nil,
-                                                       descending: Bool = true,
-                                                       limit: Int? = nil,
-                                                       customTableName: String? = nil) -> [T]? {
+    public func readObjects<T: ORMCodableProtocol>(ofType objectType: T.Type = T.self,
+                                                   whereString: String? = nil,
+                                                   orderByName: String? = nil,
+                                                   descending: Bool = true,
+                                                   limit: Int? = nil,
+                                                   customTableName: String? = nil) -> [T] {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let objectTypeName = "\(objectType)"
 
-        var array: [T]?
+        var array = [T]()
 
         self.dbQueue?.inTransaction({ (database, _) in
             guard ORMTableInfoAide.isTableExist(database: database,
@@ -76,13 +76,46 @@ extension ORMDBService {
                 return
             }
 
-            array = ORMDBServiceInnerAide.readObjectArray(database: database,
-                                                          objectType: objectType,
-                                                          tableName: tableName,
-                                                          whereString: whereString,
-                                                          orderByName: orderByName,
-                                                          descending: descending,
-                                                          limit: limit)
+            array = ORMDBServiceInnerAide.readObjects(database: database,
+                                                      objectType: objectType,
+                                                      tableName: tableName,
+                                                      whereString: whereString,
+                                                      orderByName: orderByName,
+                                                      descending: descending,
+                                                      limit: limit)
+        })
+
+        return array
+    }
+
+    /// Read object array from database using SQL;
+    ///
+    /// - parameter objectType: Type of the object, it must conform to codable protocol and ORMProtocol;
+    /// - parameter sqlString: SQL string;
+    /// - parameter customTableName: One class or struct can be saved in different tables,
+    ///             you can define your custom table name here;
+    ///             It will use default table name according to the class or struct name when passing nil;
+    ///
+    /// - returns: Read object, nil when no object for this primary key;
+    public func readObjects<T: ORMCodableProtocol>(ofType objectType: T.Type = T.self,
+                                                   sqlString: String,
+                                                   arguments: [Any] = [],
+                                                   customTableName: String? = nil) -> [T] {
+        let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
+        let objectTypeName = "\(objectType)"
+
+        var array = [T]()
+
+        self.dbQueue?.inTransaction({ (database, _) in
+            guard ORMTableInfoAide.isTableExist(database: database,
+                                                objectTypeName: objectTypeName,
+                                                tableName: tableName) else {
+                return
+            }
+
+            array = ORMDBServiceInnerAide.readObjects(database: database,
+                                                      sqlString: sqlString,
+                                                      arguments: arguments)
         })
 
         return array

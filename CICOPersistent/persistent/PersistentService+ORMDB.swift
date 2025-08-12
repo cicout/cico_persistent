@@ -25,7 +25,7 @@ extension PersistentService {
     /// - returns: Read object, nil when no object for this primary key;
     ///
     /// - see: ORMDBService.readObject(ofType:primaryKeyValue:customTableName:)
-    public func readORMDBObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type,
+    public func readORMDBObject<T: ORMCodableProtocol, K>(ofType objectType: T.Type = T.self,
                                                           primaryKeyValue: CompositeType<K>,
                                                           customTableName: String? = nil) -> T? {
         return self.ormDBService.readObject(ofType: objectType,
@@ -46,19 +46,19 @@ extension PersistentService {
     ///
     /// - returns: Read object, nil when no object for this primary key;
     ///
-    /// - see: ORMDBService.readObjectArray(ofType:whereString:orderByName:descending:limit:customTableName:)
-    public func readORMDBObjectArray<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                            whereString: String? = nil,
-                                                            orderByName: String? = nil,
-                                                            descending: Bool = true,
-                                                            limit: Int? = nil,
-                                                            customTableName: String? = nil) -> [T]? {
-        return self.ormDBService.readObjectArray(ofType: objectType,
-                                                 whereString: whereString,
-                                                 orderByName: orderByName,
-                                                 descending: descending,
-                                                 limit: limit,
-                                                 customTableName: customTableName)
+    /// - see: ORMDBService.readObjects(ofType:whereString:orderByName:descending:limit:customTableName:)
+    public func readORMDBObjects<T: ORMCodableProtocol>(ofType objectType: T.Type = T.self,
+                                                        whereString: String? = nil,
+                                                        orderByName: String? = nil,
+                                                        descending: Bool = true,
+                                                        limit: Int? = nil,
+                                                        customTableName: String? = nil) -> [T] {
+        return self.ormDBService.readObjects(ofType: objectType,
+                                             whereString: whereString,
+                                             orderByName: orderByName,
+                                             descending: descending,
+                                             limit: limit,
+                                             customTableName: customTableName)
     }
 
     /// Write object into database of ORMDBService using primary key;
@@ -81,7 +81,7 @@ extension PersistentService {
     ///
     /// Add when it does not exist, update when it exists;
     ///
-    /// - parameter objectArray: The object array will be saved in database,
+    /// - parameter objects: The object array will be saved in database,
     ///             it must conform to codable protocol and ORMProtocol;
     /// - parameter customTableName: One class or struct can be saved in different tables,
     ///             you can define your custom table name here;
@@ -89,10 +89,10 @@ extension PersistentService {
     ///
     /// - returns: Write result;
     ///
-    /// - see: ORMDBService.writeObjectArray(_:customTableName:)
-    public func writeORMDBObjectArray<T: ORMCodableProtocol>(_ objectArray: [T],
-                                                             customTableName: String? = nil) -> Bool {
-        return self.ormDBService.writeObjectArray(objectArray, customTableName: customTableName)
+    /// - see: ORMDBService.writeObjects(_:customTableName:)
+    public func writeORMDBObjects<T: ORMCodableProtocol>(_ objects: [T],
+                                                         customTableName: String? = nil) -> Bool {
+        return self.ormDBService.writeObjects(objects, customTableName: customTableName)
     }
 
     /// Update object in database of ORMDBService using primary key;

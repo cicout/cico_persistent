@@ -63,14 +63,14 @@ extension ORMDBService {
     ///
     /// Add when it does not exist, update when it exists;
     ///
-    /// - parameter objectArray: The object array will be saved in database,
+    /// - parameter objects: The object array will be saved in database,
     ///             it must conform to codable protocol and ORMProtocol;
     /// - parameter customTableName: One class or struct can be saved in different tables,
     ///             you can define your custom table name here;
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Write result;
-    public func writeObjectArray<T: ORMCodableProtocol>(_ objectArray: [T], customTableName: String? = nil) -> Bool {
+    public func writeObjects<T: ORMCodableProtocol>(_ objects: [T], customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: T.self, customTableName: customTableName)
         let primaryKeyColumnName = T.ormPrimaryKeyColumnName()
         let indexColumnNames = T.ormIndexColumnNames()
@@ -97,7 +97,7 @@ extension ORMDBService {
                 return
             }
 
-            for object in objectArray {
+            for object in objects {
                 // replace table record;
                 result = ORMDBServiceInnerAide.replaceRecord(database: database, tableName: tableName, object: object)
                 if !result {

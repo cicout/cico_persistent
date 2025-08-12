@@ -225,17 +225,15 @@ extension ORMDBServiceInnerAide {
         return object
     }
 
-    static func readObjectArray<T: Codable>(database: FMDatabase,
-                                            objectType: T.Type,
-                                            tableName: String,
-                                            whereString: String? = nil,
-                                            orderByName: String? = nil,
-                                            descending: Bool = true,
-                                            limit: Int? = nil) -> [T]? {
-        var array: [T]?
-
+    static func readObjects<T: Codable>(database: FMDatabase,
+                                        objectType: T.Type = T.self,
+                                        tableName: String,
+                                        whereString: String? = nil,
+                                        orderByName: String? = nil,
+                                        descending: Bool = true,
+                                        limit: Int? = nil) -> [T] {
         var querySQL = "SELECT * FROM \(tableName)"
-        var argumentArray = [Any]()
+        var arguments = [Any]()
 
         if let whereString = whereString {
             querySQL.append(" WHERE \(whereString)")
@@ -252,13 +250,24 @@ extension ORMDBServiceInnerAide {
 
         if let limit = limit {
             querySQL.append(" LIMIT ?")
-            argumentArray.append(limit)
+            arguments.append(limit)
         }
 
         querySQL.append(";")
 
-        guard let resultSet = database.executeQuery(querySQL, withArgumentsIn: argumentArray) else {
-            print("[ERROR]: SQL = \(querySQL)")
+        return readObjects(database: database, sqlString: querySQL, arguments: arguments)
+    }
+
+    static func readObjects<T: Codable>(database: FMDatabase,
+                                        objectType: T.Type = T.self,
+                                        sqlString: String,
+                                        arguments: [Any] = []) -> [T] {
+        var array = [T]()
+
+        guard sqlString.count > 0 else { return array }
+
+        guard let resultSet = database.executeQuery(sqlString, withArgumentsIn: arguments) else {
+            print("[ERROR]: SQL = \(sqlString)")
             return array
         }
 
@@ -266,15 +275,13 @@ extension ORMDBServiceInnerAide {
             resultSet.close()
         }
 
-        var tempArray = [T]()
         while resultSet.next() {
             guard let object = SQLiteRecordDecoder.decodeSQLiteRecord(resultSet: resultSet,
                                                                       objectType: objectType) else {
-                                                                        return array
+                return [T]()
             }
-            tempArray.append(object)
+            array.append(object)
         }
-        array = tempArray
 
         return array
     }
@@ -285,11 +292,11 @@ extension ORMDBServiceInnerAide {
         let (sql, arguments) =
             SQLiteRecordEncoder.encodeObjectToSQL(object: object, tableName: tableName)
 
-        guard let replaceSQL = sql, let argumentArray = arguments else {
+        guard let replaceSQL = sql, let arguments else {
             return result
         }
 
-        result = database.executeUpdate(replaceSQL, withArgumentsIn: argumentArray)
+        result = database.executeUpdate(replaceSQL, withArgumentsIn: arguments)
         if !result {
             print("[ERROR]: SQL = \(replaceSQL)")
         }

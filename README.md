@@ -98,7 +98,7 @@ let readObject = self.service.readObject(ofType: MyStruct.self, primaryKeyValue:
 * Read array
 
 ```
-let readObjectArray = self.service.readObjectArray(ofType: MyStruct.self, whereString: nil, orderByName: "stringValue", descending: false, limit: 10)
+let readObjects = self.service.readObjects(ofType: MyStruct.self, whereString: nil, orderByName: "stringValue", descending: false, limit: 10)
 ```
 
 * Write
@@ -111,13 +111,13 @@ let writeResult = self.service.writeObject(value)
 * Write array
 
 ```
-var objectArray = [MyStruct]()
+var objects = [MyStruct]()
 for i in 0..<20 {
     let object = MyStruct.init(jsonString: myJSONString)!
     object.stringValue = "string_\(i)"
-    objectArray.append(object)
+    objects.append(object)
 }
-let writeResult = self.service.writeObjectArray(objectArray)
+let writeResult = self.service.writeObjects(objects)
 ```
 
 * Remove

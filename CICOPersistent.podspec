@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "CICOPersistent"
-  spec.version      = "0.41.64"
+  spec.version      = "0.42.65"
   spec.summary      = "A simple local storage service using codable."
 
   # This description is used to generate tags and improve search results.

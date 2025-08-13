@@ -47,12 +47,12 @@ extension PersistentService {
     /// - returns: Read object, nil when no object for this primary key;
     ///
     /// - see: ORMDBService.readObjects(ofType:whereString:orderByName:descending:limit:customTableName:)
-    public func readORMDBObjects<T: ORMCodableProtocol>(ofType objectType: T.Type = T.self,
-                                                        whereString: String? = nil,
-                                                        orderByName: String? = nil,
-                                                        descending: Bool = true,
-                                                        limit: Int? = nil,
-                                                        customTableName: String? = nil) -> [T] {
+    public func readORMDBObjects<T: Codable>(ofType objectType: T.Type = T.self,
+                                             whereString: String? = nil,
+                                             orderByName: String? = nil,
+                                             descending: Bool = true,
+                                             limit: Int? = nil,
+                                             customTableName: String? = nil) -> [T] {
         return self.ormDBService.readObjects(ofType: objectType,
                                              whereString: whereString,
                                              orderByName: orderByName,
@@ -152,8 +152,8 @@ extension PersistentService {
     /// - returns: Remove result;
     ///
     /// - see: ORMDBService.removeObjectTable(ofType:customTableName:)
-    public func removeORMDBObjectTable<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                              customTableName: String? = nil) -> Bool {
+    public func removeORMDBObjectTable<T: Codable>(ofType objectType: T.Type,
+                                                   customTableName: String? = nil) -> Bool {
         return self.ormDBService.removeObjectTable(ofType: objectType, customTableName: customTableName)
     }
 

@@ -59,9 +59,9 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Remove result;
-    public func removeObjects<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                     whereString: String,
-                                                     customTableName: String? = nil) -> Bool {
+    public func removeObjects<T: Codable>(ofType objectType: T.Type,
+                                          whereString: String,
+                                          customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let objectTypeName = "\(objectType)"
 
@@ -95,8 +95,8 @@ extension ORMDBService {
     ///             It will use default table name according to the class or struct name when passing nil;
     ///
     /// - returns: Remove result;
-    public func removeObjectTable<T: ORMCodableProtocol>(ofType objectType: T.Type,
-                                                         customTableName: String? = nil) -> Bool {
+    public func removeObjectTable<T: Codable>(ofType objectType: T.Type,
+                                              customTableName: String? = nil) -> Bool {
         let tableName = ORMDBServiceInnerAide.tableName(objectType: objectType, customTableName: customTableName)
         let objectTypeName = "\(objectType)"
 
